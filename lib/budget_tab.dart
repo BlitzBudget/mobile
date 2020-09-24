@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:mdi/mdi.dart';
 
 import 'utils.dart';
 import 'widgets.dart';
 
 class BudgetTab extends StatefulWidget {
   static const title = 'Budget';
-  static const androidIcon = Icon(Icons.library_books);
-  static const iosIcon = Icon(CupertinoIcons.news);
+  static const androidIcon = Icon(Mdi.sack);
+  static const iosIcon = Icon(Mdi.sack);
 
   @override
   _BudgetTabState createState() => _BudgetTabState();

@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:mdi/mdi.dart';
 
 import 'utils.dart';
 import 'widgets.dart';
 
 class GoalTab extends StatefulWidget {
   static const title = 'Goal';
-  static const androidIcon = Icon(Icons.library_books);
-  static const iosIcon = Icon(CupertinoIcons.news);
+  static const androidIcon = Icon(Mdi.bullseyeArrow);
+  static const iosIcon = Icon(Mdi.bullseyeArrow);
 
   @override
   _GoalTabState createState() => _GoalTabState();

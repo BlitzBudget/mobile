@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:mdi/mdi.dart';
 
 import 'utils.dart';
 import 'widgets.dart';
 
 class OverviewTab extends StatefulWidget {
   static const title = 'Overview';
-  static const androidIcon = Icon(Icons.library_books);
-  static const iosIcon = Icon(CupertinoIcons.news);
+  static const androidIcon = Icon(Mdi.chartArc);
+  static const iosIcon = Icon(Mdi.chartArc);
 
   @override
   _OverviewTabState createState() => _OverviewTabState();
