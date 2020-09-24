@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobile_blitzbudget/Screens/Login/components/background.dart';
 import 'package:mobile_blitzbudget/Screens/Signup/signup_screen.dart';
 import 'package:mobile_blitzbudget/components/already_have_an_account_acheck.dart';
 import 'package:mobile_blitzbudget/components/rounded_button.dart';
 import 'package:mobile_blitzbudget/components/rounded_input_field.dart';
 import 'package:mobile_blitzbudget/components/rounded_password_field.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
@@ -39,7 +41,16 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DashboardScreen();
+                    },
+                  ),
+                );
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
