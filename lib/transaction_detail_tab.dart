@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'widgets.dart';
 
-/// Page shown when a card in the songs tab is tapped.
+/// Page shown when a card in the transactions tab is tapped.
 ///
 /// On Android, this page sits at the top of your app. On iOS, this page is on
-/// top of the songs tab's content but is below the tab bar itself.
-class SongDetailTab extends StatelessWidget {
-  const SongDetailTab({this.id, this.song, this.color});
+/// top of the transactions tab's content but is below the tab bar itself.
+class TransactionDetailTab extends StatelessWidget {
+  const TransactionDetailTab({this.id, this.transaction, this.color});
 
   final int id;
-  final String song;
+  final String transaction;
   final Color color;
 
   Widget _buildBody() {
@@ -24,19 +24,19 @@ class SongDetailTab extends StatelessWidget {
         children: [
           Hero(
             tag: id,
-            child: HeroAnimatingSongCard(
-              song: song,
+            child: HeroAnimatingTransactionCard(
+              transaction: transaction,
               color: color,
               heroAnimation: AlwaysStoppedAnimation(1),
             ),
             // This app uses a flightShuttleBuilder to specify the exact widget
             // to build while the hero transition is mid-flight.
             //
-            // It could either be specified here or in SongsTab.
+            // It could either be specified here or in transactionsTab.
             flightShuttleBuilder: (context, animation, flightDirection,
                 fromHeroContext, toHeroContext) {
-              return HeroAnimatingSongCard(
-                song: song,
+              return HeroAnimatingTransactionCard(
+                transaction: transaction,
                 color: color,
                 heroAnimation: animation,
               );
@@ -63,8 +63,8 @@ class SongDetailTab extends StatelessWidget {
                     ),
                   );
                 }
-                // Just a bunch of boxes that simulates loading song choices.
-                return SongPlaceholderTile();
+                // Just a bunch of boxes that simulates loading transaction choices.
+                return transactionPlaceholderTile();
               },
             ),
           ),
@@ -79,7 +79,7 @@ class SongDetailTab extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(song)),
+      appBar: AppBar(title: Text(transaction)),
       body: _buildBody(),
     );
   }
@@ -87,8 +87,8 @@ class SongDetailTab extends StatelessWidget {
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text(song),
-        previousPageTitle: 'Songs',
+        middle: Text(transaction),
+        previousPageTitle: 'Transactions',
       ),
       child: _buildBody(),
     );

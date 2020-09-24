@@ -25,7 +25,7 @@ See https://youtu.be/svhbbFZg1IA for a longer non-gif format.
 ## Home
 
 Defines the top level navigation structure of the app and shows the contents
-of the songs tab on launch.
+of the transactions tab on launch.
 
 ### Android
 
@@ -35,7 +35,7 @@ of the songs tab on launch.
 
 * Uses bottom tab bars with parallel navigation stacks.
 
-## Songs feed tab
+## transactions feed tab
 
 Shows platform-agnostic cards that is tappable and that performs a hero
 transition on top of the platform native page transitions.
@@ -46,13 +46,13 @@ Both platforms also show a button in their app/nav bar to toggle the platform.
 
 * Android uses a static pull-to-refresh pattern with an additional refresh
 button in the app bar.
-* The song details page must be popped in order to change tabs on Android.
+* The transaction details page must be popped in order to change tabs on Android.
 
 ### iOS
 
-* The iOS songs tab uses a scrollable iOS 11 large title style navigation bar.
+* The iOS transactions tab uses a scrollable iOS 11 large title style navigation bar.
 * iOS uses an overscrolling pull-to-refresh pattern.
-* On iOS, parallel tabs are always accessible and the songs tab's navigation
+* On iOS, parallel tabs are always accessible and the transactions tab's navigation
 stack is preserved when changing tabs.
 
 ## News Tab
@@ -61,12 +61,12 @@ Shows platform-agnostic news boxes.
 
 ### Android
 
-* The news tab always appears on top of the songs tab when summoned from the
+* The news tab always appears on top of the transactions tab when summoned from the
 drawer.
 
 ### iOS
 
-* The news tab appears instead of the songs tab on iOS when switching tabs from
+* The news tab appears instead of the transactions tab on iOS when switching tabs from
 the tab bar.
 
 ## Profile Tab
@@ -75,13 +75,13 @@ Shows a number of user preferences.
 
 ### Android
 
-* The profile tab appears on top of the songs tab on Android.
+* The profile tab appears on top of the transactions tab on Android.
 * Has tappable preference cards which shows a multiple-choice dialog on Android.
 * The log out button shows a 2 button dialog on Android.
 
 ### iOS
 
-* The profile tab appears instead of the songs tab on iOS.
+* The profile tab appears instead of the transactions tab on iOS.
 * Has tappable preference cards which shows a picker on iOS.
 * The log out button shows a 3 choice action sheet on iOS.
 

@@ -6,16 +6,16 @@ import 'package:flutter_lorem/flutter_lorem.dart';
 import 'utils.dart';
 import 'widgets.dart';
 
-class NewsTab extends StatefulWidget {
-  static const title = 'News';
+class OverviewTab extends StatefulWidget {
+  static const title = 'Overview';
   static const androidIcon = Icon(Icons.library_books);
   static const iosIcon = Icon(CupertinoIcons.news);
 
   @override
-  _NewsTabState createState() => _NewsTabState();
+  _OverviewTabState createState() => _OverviewTabState();
 }
 
-class _NewsTabState extends State<NewsTab> {
+class _OverviewTabState extends State<OverviewTab> {
   static const _itemsLength = 20;
 
   List<Color> colors;
@@ -93,7 +93,7 @@ class _NewsTabState extends State<NewsTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(NewsTab.title),
+        title: Text(OverviewTab.title),
       ),
       body: Container(
         child: ListView.builder(

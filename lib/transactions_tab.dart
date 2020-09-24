@@ -2,30 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'song_detail_tab.dart';
+import 'transaction_detail_tab.dart';
 import 'utils.dart';
 import 'widgets.dart';
 
-class SongsTab extends StatefulWidget {
-  static const title = 'Songs';
+class TransactionsTab extends StatefulWidget {
+  static const title = 'Transactions';
   static const androidIcon = Icon(Icons.music_note);
   static const iosIcon = Icon(CupertinoIcons.music_note);
 
-  const SongsTab({Key key, this.androidDrawer}) : super(key: key);
+  const TransactionsTab({Key key, this.androidDrawer}) : super(key: key);
 
   final Widget androidDrawer;
 
   @override
-  _SongsTabState createState() => _SongsTabState();
+  _TransactionsTabState createState() => _TransactionsTabState();
 }
 
-class _SongsTabState extends State<SongsTab> {
+class _TransactionsTabState extends State<TransactionsTab> {
   static const _itemsLength = 50;
 
   final _androidRefreshKey = GlobalKey<RefreshIndicatorState>();
 
   List<MaterialColor> colors;
-  List<String> songNames;
+  List<String> transactionNames;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _SongsTabState extends State<SongsTab> {
 
   void _setData() {
     colors = getRandomColors(_itemsLength);
-    songNames = getRandomNames(_itemsLength);
+    transactionNames = getRandomNames(_itemsLength);
   }
 
   Future<void> _refreshData() {
@@ -60,15 +60,15 @@ class _SongsTabState extends State<SongsTab> {
       bottom: false,
       child: Hero(
         tag: index,
-        child: HeroAnimatingSongCard(
-          song: songNames[index],
+        child: HeroAnimatingTransactionCard(
+          transaction: transactionNames[index],
           color: color,
           heroAnimation: AlwaysStoppedAnimation(0),
           onPressed: () => Navigator.of(context).push<void>(
             MaterialPageRoute(
-              builder: (context) => SongDetailTab(
+              builder: (context) => TransactionDetailTab(
                 id: index,
-                song: songNames[index],
+                transaction: transactionNames[index],
                 color: color,
               ),
             ),
@@ -109,7 +109,7 @@ class _SongsTabState extends State<SongsTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(SongsTab.title),
+        title: Text(TransactionsTab.title),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),

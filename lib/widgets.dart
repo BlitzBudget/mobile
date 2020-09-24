@@ -126,18 +126,18 @@ class _PressableCardState extends State<PressableCard>
   }
 }
 
-/// A platform-agnostic card representing a song which can be in a card state,
+/// A platform-agnostic card representing a transaction which can be in a card state,
 /// a flat state or anything in between.
 ///
 /// When it's in a card state, it's pressable.
 ///
 /// This is an example of a custom widget that an app developer might create for
 /// use on both iOS and Android as part of their brand's unique design.
-class HeroAnimatingSongCard extends StatelessWidget {
-  HeroAnimatingSongCard(
-      {this.song, this.color, this.heroAnimation, this.onPressed});
+class HeroAnimatingTransactionCard extends StatelessWidget {
+  HeroAnimatingTransactionCard(
+      {this.transaction, this.color, this.heroAnimation, this.onPressed});
 
-  final String song;
+  final String transaction;
   final Color color;
   final Animation<double> heroAnimation;
   final VoidCallback onPressed;
@@ -164,7 +164,7 @@ class HeroAnimatingSongCard extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // The song title banner slides off in the hero animation.
+                // The transaction title banner slides off in the hero animation.
                 Positioned(
                   bottom: -80 * heroAnimation.value,
                   left: 0,
@@ -175,7 +175,7 @@ class HeroAnimatingSongCard extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
-                      song,
+                      transaction,
                       style: TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.w500,
@@ -208,11 +208,11 @@ class HeroAnimatingSongCard extends StatelessWidget {
   }
 }
 
-/// A loading song tile's silhouette.
+/// A loading transaction tile's silhouette.
 ///
 /// This is an example of a custom widget that an app developer might create for
 /// use on both iOS and Android as part of their brand's unique design.
-class SongPlaceholderTile extends StatelessWidget {
+class transactionPlaceholderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'news_tab.dart';
+import 'overview_tab.dart';
 import 'profile_tab.dart';
 import 'settings_tab.dart';
-import 'songs_tab.dart';
+import 'transactions_tab.dart';
 import 'widgets.dart';
 
 void main() => runApp(MyAdaptingApp());
@@ -49,20 +49,20 @@ class PlatformAdaptingHomePage extends StatefulWidget {
 }
 
 class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
-  // This app keeps a global key for the songs tab because it owns a bunch of
+  // This app keeps a global key for the transactions tab because it owns a bunch of
   // data. Since changing platform re-parents those tabs into different
   // scaffolds, keeping a global key to it lets this app keep that tab's data as
   // the platform toggles.
   //
   // This isn't needed for apps that doesn't toggle platforms while running.
-  final songsTabKey = GlobalKey();
+  final TransactionsTabKey = GlobalKey();
 
   // In Material, this app uses the hamburger menu paradigm and flatly lists
-  // all 4 possible tabs. This drawer is injected into the songs tab which is
+  // all 4 possible tabs. This drawer is injected into the transactions tab which is
   // actually building the scaffold around the drawer.
   Widget _buildAndroidHomePage(BuildContext context) {
-    return SongsTab(
-      key: songsTabKey,
+    return TransactionsTab(
+      key: TransactionsTabKey,
       androidDrawer: _AndroidDrawer(),
     );
   }
@@ -80,9 +80,9 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
       tabBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(
-              title: Text(SongsTab.title), icon: SongsTab.iosIcon),
+              title: Text(TransactionsTab.title), icon: TransactionsTab.iosIcon),
           BottomNavigationBarItem(
-              title: Text(NewsTab.title), icon: NewsTab.iosIcon),
+              title: Text(OverviewTab.title), icon: OverviewTab.iosIcon),
           BottomNavigationBarItem(
               title: Text(ProfileTab.title), icon: ProfileTab.iosIcon),
         ],
@@ -91,13 +91,13 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              defaultTitle: SongsTab.title,
-              builder: (context) => SongsTab(key: songsTabKey),
+              defaultTitle: TransactionsTab.title,
+              builder: (context) => TransactionsTab(key: TransactionsTabKey),
             );
           case 1:
             return CupertinoTabView(
-              defaultTitle: NewsTab.title,
-              builder: (context) => NewsTab(),
+              defaultTitle: OverviewTab.title,
+              builder: (context) => OverviewTab(),
             );
           case 2:
             return CupertinoTabView(
@@ -140,19 +140,19 @@ class _AndroidDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: SongsTab.androidIcon,
-            title: Text(SongsTab.title),
+            leading: TransactionsTab.androidIcon,
+            title: Text(TransactionsTab.title),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: NewsTab.androidIcon,
-            title: Text(NewsTab.title),
+            leading: OverviewTab.androidIcon,
+            title: Text(OverviewTab.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(
-                  context, MaterialPageRoute(builder: (context) => NewsTab()));
+                  context, MaterialPageRoute(builder: (context) => OverviewTab()));
             },
           ),
           ListTile(
