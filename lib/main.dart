@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/Screens/Welcome/welcome_screen.dart';
 import 'package:mobile_blitzbudget/constants.dart';
+import 'package:mobile_blitzbudget/routes.dart';
+
 
 void main() => runApp(MyAdaptingApp());
 
