@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mobile_blitzbudget/widgets.dart';
+import 'package:mobile_blitzbudget/Utils/widgets.dart';
 
 /// Page shown when a card in the transactions tab is tapped.
 ///

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
-import 'package:mobile_blitzbudget/widgets.dart';
+import 'package:mobile_blitzbudget/Utils/widgets.dart';
 
 class ProfileTab extends StatelessWidget {
   static const title = 'Profile';

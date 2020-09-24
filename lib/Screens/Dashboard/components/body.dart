@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/Screens/Dashboard/tab/overview_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/profile_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transactions_tab.dart';
-import 'package:mobile_blitzbudget/widgets.dart';
+import 'package:mobile_blitzbudget/Utils/widgets.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/goal_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/budget_tab.dart';
 
