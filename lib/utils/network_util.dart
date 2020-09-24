@@ -23,6 +23,7 @@ class NetworkUtil {
   }
 
   Future<dynamic> post(String url, {Map headers, body, encoding}) {
+    print(body.toString());
     return http
         .post(url, body: body, headers: headers, encoding: encoding)
         .then((http.Response response) {
