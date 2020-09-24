@@ -6,6 +6,8 @@ import 'profile_tab.dart';
 import 'settings_tab.dart';
 import 'transactions_tab.dart';
 import 'widgets.dart';
+import 'goal_tab.dart';
+import 'budget_tab.dart';
 
 void main() => runApp(MyAdaptingApp());
 
@@ -84,7 +86,9 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
           BottomNavigationBarItem(
               title: Text(OverviewTab.title), icon: OverviewTab.iosIcon),
           BottomNavigationBarItem(
-              title: Text(ProfileTab.title), icon: ProfileTab.iosIcon),
+              title: Text(BudgetTab.title), icon: BudgetTab.iosIcon),
+          BottomNavigationBarItem(
+              title: Text(GoalTab.title), icon: GoalTab.iosIcon),
         ],
       ),
       tabBuilder: (context, index) {
@@ -101,8 +105,13 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
             );
           case 2:
             return CupertinoTabView(
-              defaultTitle: ProfileTab.title,
-              builder: (context) => ProfileTab(),
+              defaultTitle: BudgetTab.title,
+              builder: (context) => BudgetTab(),
+            );
+          case 3:
+            return CupertinoTabView(
+              defaultTitle: GoalTab.title,
+              builder: (context) => GoalTab(),
             );
           default:
             assert(false, 'Unexpected tab');
@@ -156,14 +165,23 @@ class _AndroidDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: ProfileTab.androidIcon,
-            title: Text(ProfileTab.title),
+            leading: BudgetTab.androidIcon,
+            title: Text(BudgetTab.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => ProfileTab()));
+                  MaterialPageRoute(builder: (context) => BudgetTab()));
             },
-          ),
+           ),
+          ListTile(
+            leading: GoalTab.androidIcon,
+            title: Text(GoalTab.title),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push<void>(context,
+                  MaterialPageRoute(builder: (context) => GoalTab()));
+            },
+           ),
           // Long drawer contents are often segmented.
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

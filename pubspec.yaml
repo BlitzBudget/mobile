@@ -1,5 +1,5 @@
-name: platform_design
-description: A project showcasing a Flutter app following different platform IA conventions.
+name: mobile_blitzbudget
+description: A cross platform application for mobile IOS, Android and Mobile web
 version: 1.0.0+1
 
 environment:
