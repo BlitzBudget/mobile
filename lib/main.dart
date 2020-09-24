@@ -28,8 +28,8 @@ class MyAdaptingApp extends StatelessWidget {
           child: Material(child: child),
         );
       },
-      //home: PlatformAdaptingHomePage(),
-        home: WelcomeScreen(),
+      routes: routes,
+      //home: WelcomeScreen(),
     );
   }
 }
