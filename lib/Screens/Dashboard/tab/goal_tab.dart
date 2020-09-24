@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import '../utils.dart';
-import '../widgets.dart';
+import 'package:mobile_blitzbudget/utils.dart';
+import 'package:mobile_blitzbudget/widgets.dart';
 
-class BudgetTab extends StatefulWidget {
-  static const title = 'Budget';
-  static const androidIcon = Icon(Mdi.sack);
-  static const iosIcon = Icon(Mdi.sack);
+class GoalTab extends StatefulWidget {
+  static const title = 'Goal';
+  static const androidIcon = Icon(Mdi.bullseyeArrow);
+  static const iosIcon = Icon(Mdi.bullseyeArrow);
 
   @override
-  _BudgetTabState createState() => _BudgetTabState();
+  _GoalTabState createState() => _GoalTabState();
 }
 
-class _BudgetTabState extends State<BudgetTab> {
+class _GoalTabState extends State<GoalTab> {
   static const _itemsLength = 20;
 
   List<Color> colors;
@@ -94,7 +94,7 @@ class _BudgetTabState extends State<BudgetTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(BudgetTab.title),
+        title: Text(GoalTab.title),
       ),
       body: Container(
         child: ListView.builder(

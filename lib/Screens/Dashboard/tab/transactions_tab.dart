@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'transaction_detail_tab.dart';
-import '../utils.dart';
-import '../widgets.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transaction_detail_tab.dart';
+import 'package:mobile_blitzbudget/utils.dart';
+import 'package:mobile_blitzbudget/widgets.dart';
 
 class TransactionsTab extends StatefulWidget {
   static const title = 'Transactions';

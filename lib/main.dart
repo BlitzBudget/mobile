@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'tab/overview_tab.dart';
-import 'tab/profile_tab.dart';
-import 'tab/settings_tab.dart';
-import 'tab/transactions_tab.dart';
-import 'widgets.dart';
-import 'tab/goal_tab.dart';
-import 'tab/budget_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/overview_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/profile_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transactions_tab.dart';
+import 'package:mobile_blitzbudget/widgets.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/goal_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/budget_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Welcome/welcome_screen.dart';
+import 'package:mobile_blitzbudget/constants.dart';
 
 void main() => runApp(MyAdaptingApp());
 
@@ -21,6 +23,7 @@ class MyAdaptingApp extends StatelessWidget {
       theme: ThemeData(
         // Use the green theme for Material widgets.
         primarySwatch: Colors.green,
+        primaryColor: kPrimaryColor,
       ),
       darkTheme: ThemeData.dark(),
       builder: (context, child) {
@@ -32,7 +35,8 @@ class MyAdaptingApp extends StatelessWidget {
           child: Material(child: child),
         );
       },
-      home: PlatformAdaptingHomePage(),
+      //home: PlatformAdaptingHomePage(),
+        home: WelcomeScreen(),
     );
   }
 }
