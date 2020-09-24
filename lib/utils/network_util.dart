@@ -27,6 +27,7 @@ class NetworkUtil {
         .post(url, body: body, headers: headers, encoding: encoding)
         .then((http.Response response) {
       final String res = response.body;
+      print(response.body);
       final int statusCode = response.statusCode;
 
       if (statusCode < 200 || statusCode > 400 || json == null) {

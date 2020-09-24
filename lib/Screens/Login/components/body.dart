@@ -7,12 +7,20 @@ import 'package:mobile_blitzbudget/components/rounded_button.dart';
 import 'package:mobile_blitzbudget/components/rounded_input_field.dart';
 import 'package:mobile_blitzbudget/components/rounded_password_field.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/dashboard_screen.dart';
+import 'package:mobile_blitzbudget/data/rest_ds.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
+  RestDataSource _restDataSource = new RestDataSource();
+
+  void displayDialog(context, title, text) => showDialog(
+      context: context,
+      builder: (context) =>
+        AlertDialog(
+          title: Text(title),
+          content: Text(text)
+        ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +49,22 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DashboardScreen();
-                    },
-                  ),
-                );
+              press: () async {
+                var username = "";
+                var password = "";
+                var user = await _restDataSource.attemptLogin(username, password);
+                if(user != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return DashboardScreen();
+                        },
+                      ),
+                    );
+                } else {
+                    displayDialog(context, "An Error Occurred", "No account was found matching that username and password");
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),
