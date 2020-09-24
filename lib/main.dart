@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'overview_tab.dart';
-import 'profile_tab.dart';
-import 'settings_tab.dart';
-import 'transactions_tab.dart';
+import 'tab/overview_tab.dart';
+import 'tab/profile_tab.dart';
+import 'tab/settings_tab.dart';
+import 'tab/transactions_tab.dart';
 import 'widgets.dart';
-import 'goal_tab.dart';
-import 'budget_tab.dart';
+import 'tab/goal_tab.dart';
+import 'tab/budget_tab.dart';
 
 void main() => runApp(MyAdaptingApp());
 

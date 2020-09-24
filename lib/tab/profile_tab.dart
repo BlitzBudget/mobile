@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'settings_tab.dart';
-import 'widgets.dart';
+import '../settings_tab.dart';
+import '../widgets.dart';
 
 class ProfileTab extends StatelessWidget {
   static const title = 'Profile';

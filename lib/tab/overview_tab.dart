@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import 'utils.dart';
-import 'widgets.dart';
+import '../utils.dart';
+import '../widgets.dart';
 
 class OverviewTab extends StatefulWidget {
   static const title = 'Overview';
