@@ -12,6 +12,8 @@ import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
   RestDataSource _restDataSource = new RestDataSource();
+  TextEditingController controller;
+  String username, password;
 
   void displayDialog(context, title, text) => showDialog(
       context: context,
@@ -42,16 +44,18 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                  username = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                  password = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                var username = "nagarjun_nagesh@outlook.com";
-                var password = ".";
                 var user = await _restDataSource.attemptLogin(username, password);
                 if(user != null) {
                     Navigator.push(

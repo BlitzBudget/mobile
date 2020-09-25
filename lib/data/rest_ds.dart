@@ -20,9 +20,10 @@ class RestDataSource {
       "checkPassword": CHECK_PASSWORD
     }),
     headers: headers).then((dynamic res) {
-      print(res.toString());
-      if(res["error"]) throw new Exception(res["error_msg"]);
-      return new User.map(res["user"]);
+      print(res['AuthenticationResult']);
+      print("User Attributes" + res['UserAttributes'].toString());
+      if(res["errorType"] != null) throw new Exception(res["errorMessage"]);
+      return new User.map(res["UserAttributes"]);
     });
   }
 }
