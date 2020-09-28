@@ -8,6 +8,7 @@ import 'package:mobile_blitzbudget/components/rounded_input_field.dart';
 import 'package:mobile_blitzbudget/components/rounded_password_field.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/dashboard_screen.dart';
 import 'package:mobile_blitzbudget/data/rest_ds.dart';
+import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
@@ -62,7 +63,8 @@ class Body extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DashboardScreen();
+                          // Navigate to the second screen using a named route.
+                          Navigator.pushNamed(context, kDashboardRoute);
                         },
                       ),
                     );

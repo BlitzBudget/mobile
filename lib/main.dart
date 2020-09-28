@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mobile_blitzbudget/Screens/Welcome/welcome_screen.dart';
 import 'package:mobile_blitzbudget/constants.dart';
-import 'package:mobile_blitzbudget/routes.dart';
+import 'package:mobile_blitzbudget/data/rest_ds.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-
-void main() => runApp(MyAdaptingApp());
+const String initialRoutes = '/';
+void main() async => runApp(MyAdaptingApp());
 
 class MyAdaptingApp extends StatelessWidget {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.getString('token');
+
   @override
   Widget build(context) {
     // Either Material or Cupertino widgets work in either Material or Cupertino
@@ -30,8 +33,10 @@ class MyAdaptingApp extends StatelessWidget {
           child: Material(child: child),
         );
       },
+      initialRoute: kInitialRoute,
       routes: routes,
-      //home: WelcomeScreen(),
+      // Navigate to the second screen using a named route.
+      home: (token == null ? Navigator.pushNamed(context, kInitialRoute) : Navigator.pushNamed(context, kDashboardRoute)),
     );
   }
 }

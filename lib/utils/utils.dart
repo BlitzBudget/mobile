@@ -76,3 +76,30 @@ String capitalize(String word) {
 String capitalizePair(WordPair pair) {
   return '${capitalize(pair.first)} ${capitalize(pair.second)}';
 }
+
+dynamic lastElement(arr) {
+    if (arr.length == 0) {
+        return isEmpty(arr) ? arr : arr[arr.length - 1];
+    }
+    return arr;
+}
+
+List<String> splitElement(str, splitString) {
+    if (includesStr(str, splitString)) {
+        return isEmpty(str) ? str : str.split(splitString);
+    }
+
+    return str;
+}
+
+bool includesStr(arr, val) {
+    return isEmpty(arr) ? null : arr.contains(val);
+}
+
+bool isEmpty(obj) {
+    // Check if objext is a number or a boolean
+    if (["", null, false, 0].contains(obj)) return true;
+
+    return false;
+}
+

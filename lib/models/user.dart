@@ -1,3 +1,6 @@
+import 'package:mobile_blitzbudget/Utils/utils.dart';
+import 'dart:developer' as developer;
+
 class User {
   String _userid;
   String _email;
@@ -8,12 +11,28 @@ class User {
   User(this._userid, this._email);
 
   User.map(dynamic obj) {
-    this._userid = obj["custom:financialPortfolioId"];
-    this._email = obj["email"];
-    this._name =  obj["name"];
-    this._locale =  obj["locale"];
-    this._fileformat = obj["custom:exportFileFormat"];
-    this._familyname = obj["family_name"];
+    Map currentUserLocal = {};
+
+    dynamic userAttributes = obj;
+    // SUCCESS Scenarios
+    for (var i = 0; i < userAttributes.length; i++) {
+        developer.log("Printing User Attributes " + userAttributes[i]['Name']);
+        String name = userAttributes[i]['Name'];
+
+        if (name.contains('custom:')) {
+            // if custom values then remove custom:
+            var elemName = lastElement(splitElement(name, ':'));
+            currentUserLocal[elemName] = userAttributes[i]['Value'];
+        } else {
+            currentUserLocal[name] = userAttributes[i]['Value'];
+        }
+    }
+    this._userid = currentUserLocal["financialPortfolioId"];
+    this._email = currentUserLocal["email"];
+    this._name =  currentUserLocal["name"];
+    this._locale =  currentUserLocal["locale"];
+    this._fileformat = currentUserLocal["exportFileFormat"];
+    this._familyname = currentUserLocal["family_name"];
 
   }
 
@@ -31,4 +50,5 @@ class User {
 
     return map;
   }
+
 }
