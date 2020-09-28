@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/Screens/Login/components/background.dart';
-import 'package:mobile_blitzbudget/Screens/Signup/signup_screen.dart';
 import 'package:mobile_blitzbudget/components/already_have_an_account_acheck.dart';
 import 'package:mobile_blitzbudget/components/rounded_button.dart';
 import 'package:mobile_blitzbudget/components/rounded_input_field.dart';

@@ -4,14 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:mobile_blitzbudget/constants.dart';
 import 'package:mobile_blitzbudget/data/rest_ds.dart';
 import 'package:mobile_blitzbudget/routes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-const String initialRoutes = '/';
-void main() async => runApp(MyAdaptingApp());
+//void main() async => runApp(MyAdaptingApp());
+
+Future<void> main() async {
+    // Create storage
+    final storage = new FlutterSecureStorage();
+    // Read value
+    String token = await storage.read(key: 'token');
+    String homePage = token == null ?  initialRoute : dashboardRoute;
+    runApp(MyAdaptingApp(
+        homePage: homePage,
+    ));
+}
 
 class MyAdaptingApp extends StatelessWidget {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  var token = prefs.getString('token');
+  final String homePage;
+
+  // Constructor
+  MyAdaptingApp({this.homePage});
 
   @override
   Widget build(context) {
@@ -34,10 +46,8 @@ class MyAdaptingApp extends StatelessWidget {
           child: Material(child: child),
         );
       },
-      initialRoute: initialRoute,
+      initialRoute: homePage,
       routes: routes,
-      // Navigate to the second screen using a named route.
-      home: (token == null ? Navigator.pushNamed(context, initialRoute) : Navigator.pushNamed(context, dashboardRoute)),
     );
   }
 }
