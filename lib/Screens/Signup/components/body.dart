@@ -8,6 +8,7 @@ import 'package:mobile_blitzbudget/components/rounded_button.dart';
 import 'package:mobile_blitzbudget/components/rounded_input_field.dart';
 import 'package:mobile_blitzbudget/components/rounded_password_field.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/dashboard_screen.dart';
+import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
@@ -38,28 +39,16 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "SIGNUP",
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DashboardScreen();
-                    },
-                  ),
-                );
+                // Navigate to the second screen using a named route.
+                Navigator.pushNamed(context, dashboardRoute);
               },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
               login: false,
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
+                // Navigate to the second screen using a named route.
+                Navigator.pushNamed(context, loginRoute);
               },
             ),
             OrDivider(),

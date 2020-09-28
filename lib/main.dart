@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/constants.dart';
 import 'package:mobile_blitzbudget/data/rest_ds.dart';
+import 'package:mobile_blitzbudget/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String initialRoutes = '/';
@@ -21,7 +22,7 @@ class MyAdaptingApp extends StatelessWidget {
       theme: ThemeData(
         // Use the green theme for Material widgets.
         primarySwatch: Colors.green,
-        primaryColor: kPrimaryColor,
+        primaryColor: primaryColor,
       ),
       darkTheme: ThemeData.dark(),
       builder: (context, child) {
@@ -33,10 +34,10 @@ class MyAdaptingApp extends StatelessWidget {
           child: Material(child: child),
         );
       },
-      initialRoute: kInitialRoute,
+      initialRoute: initialRoute,
       routes: routes,
       // Navigate to the second screen using a named route.
-      home: (token == null ? Navigator.pushNamed(context, kInitialRoute) : Navigator.pushNamed(context, kDashboardRoute)),
+      home: (token == null ? Navigator.pushNamed(context, initialRoute) : Navigator.pushNamed(context, dashboardRoute)),
     );
   }
 }

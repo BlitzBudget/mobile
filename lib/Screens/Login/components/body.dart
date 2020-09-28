@@ -59,15 +59,8 @@ class Body extends StatelessWidget {
               press: () async {
                 var user = await _restDataSource.attemptLogin(username, password);
                 if(user != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          // Navigate to the second screen using a named route.
-                          Navigator.pushNamed(context, kDashboardRoute);
-                        },
-                      ),
-                    );
+                    // Navigate to the second screen using a named route.
+                    Navigator.pushNamed(context, dashboardRoute);
                 } else {
                     displayDialog(context, "An Error Occurred", "No account was found matching that username and password");
                 }
@@ -76,14 +69,8 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignUpScreen();
-                    },
-                  ),
-                );
+                // Navigate to the second screen using a named route.
+                Navigator.pushNamed(context, signupRoute);
               },
             ),
           ],
