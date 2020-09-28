@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 //void main() async => runApp(MyAdaptingApp());
 
 Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
     // Create storage
     final storage = new FlutterSecureStorage();
     // Read value
