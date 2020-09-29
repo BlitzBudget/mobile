@@ -13,18 +13,18 @@ Future<void> main() async {
     // Create storage
     final storage = new FlutterSecureStorage();
     // Read value
-    String token = await storage.read(key: 'token');
-    String homePage = token == null ?  initialRoute : dashboardRoute;
+    String token = await storage.read(key: authToken);
+    String homeRoute = token == null ?  initialRoute : dashboardRoute;
     runApp(MyAdaptingApp(
-        homePage: homePage,
+        homeRoute: homeRoute,
     ));
 }
 
 class MyAdaptingApp extends StatelessWidget {
-  final String homePage;
+  final String homeRoute;
 
   // Constructor
-  MyAdaptingApp({this.homePage});
+  MyAdaptingApp({this.homeRoute});
 
   @override
   Widget build(context) {
@@ -47,7 +47,7 @@ class MyAdaptingApp extends StatelessWidget {
           child: Material(child: child),
         );
       },
-      initialRoute: homePage,
+      initialRoute: homeRoute,
       routes: routes,
     );
   }
