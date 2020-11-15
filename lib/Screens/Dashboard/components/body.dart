@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/overview_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/profile_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transactions_tab.dart';
 import 'package:mobile_blitzbudget/Utils/widgets.dart';

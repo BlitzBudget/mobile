@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Welcome/welcome_screen.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_blitzbudget/Utils/widgets.dart';
+import 'package:mobile_blitzbudget/constants.dart';
 
 class ProfileTab extends StatelessWidget {
   static const title = 'Profile';
@@ -161,7 +165,7 @@ class PreferenceCard extends StatelessWidget {
 
 class LogOutButton extends StatelessWidget {
   static const _logoutMessage = Text(
-      "You can't actually log out! This is just a demo of how alerts work.");
+      logoutDescription);
 
   // ===========================================================================
   // Non-shared code below because this tab shows different interfaces. On
@@ -174,7 +178,7 @@ class LogOutButton extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return RaisedButton(
-      child: Text('LOG OUT', style: TextStyle(color: Colors.red)),
+      child: Text(logoutTitle, style: TextStyle(color: Colors.red)),
       onPressed: () {
         // You should do something with the result of the dialog prompt in a
         // real app but this is just a demo.
@@ -182,15 +186,19 @@ class LogOutButton extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Log out?'),
+              title: Text(logoutConfirmation),
               content: _logoutMessage,
               actions: [
                 FlatButton(
-                  child: const Text('Got it'),
-                  onPressed: () => Navigator.pop(context),
+                  child: const Text(logoutButton),
+                  onPressed: () => () async {
+                      _logoutAndRedirect();
+                      // Navigate to the second screen using a named route.
+                      Navigator.pushNamed(context, welcomeRoute);
+                  },
                 ),
                 FlatButton(
-                  child: const Text('Cancel'),
+                  child: const Text(logoutCancel),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -204,7 +212,7 @@ class LogOutButton extends StatelessWidget {
   Widget _buildIos(BuildContext context) {
     return CupertinoButton(
       color: CupertinoColors.destructiveRed,
-      child: Text('Log out'),
+      child: Text(logoutTitle),
       onPressed: () {
         // You should do something with the result of the action sheet prompt
         // in a real app but this is just a demo.
@@ -212,21 +220,20 @@ class LogOutButton extends StatelessWidget {
           context: context,
           builder: (context) {
             return CupertinoActionSheet(
-              title: Text('Log out?'),
+              title: Text(logoutConfirmation),
               message: _logoutMessage,
               actions: [
                 CupertinoActionSheetAction(
-                  child: const Text('Reprogram the night man'),
-                  isDestructiveAction: true,
-                  onPressed: () => Navigator.pop(context),
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Got it'),
-                  onPressed: () => Navigator.pop(context),
+                  child: const Text(logoutButton),
+                  onPressed: () async {
+                      _logoutAndRedirect();
+                      // Navigate to the second screen using a named route.
+                      Navigator.pushNamed(context, welcomeRoute);
+                  }
                 ),
               ],
               cancelButton: CupertinoActionSheetAction(
-                child: const Text('Cancel'),
+                child: const Text(logoutCancel),
                 isDefaultAction: true,
                 onPressed: () => Navigator.pop(context),
               ),
@@ -235,6 +242,16 @@ class LogOutButton extends StatelessWidget {
         );
       },
     );
+  }
+
+  /*
+  * Remove Storage and Redirect to Welcome screeen
+  */
+  void _logoutAndRedirect() async {
+      // Create storage
+      final storage = new FlutterSecureStorage();
+      // Delete all
+      await storage.deleteAll();
   }
 
   @override

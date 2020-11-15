@@ -15,3 +15,10 @@ const String authToken = 'auth_token';
 const String refreshToken = 'refresh_token';
 const String accessToken = 'access_token';
 const String userAttributes = 'user_attributes';
+
+// Profile Tab
+const String logoutDescription = "Are you sure?";
+const String logoutTitle = 'Log out';
+const String logoutConfirmation = 'Log out?';
+const String logoutButton = 'Logout';
+const String logoutCancel = 'Cancel';
