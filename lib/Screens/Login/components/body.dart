@@ -47,8 +47,9 @@ class Body extends StatelessWidget {
               onChanged: (value) {
                   username = value;
               },
+              autofocus: true
             ),
-            RoundedPasswordField(
+            RoundedPassword(
               onChanged: (value) {
                   password = value;
               },
