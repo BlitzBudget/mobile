@@ -54,7 +54,7 @@ class _RoundedPasswordField extends State<RoundedPassword> {
               ),
               onPressed: onPressVisibility,
           ),
-          border: InputBorder.none
+          border: InputBorder.none,
         ),
       ),
     );
@@ -63,7 +63,9 @@ class _RoundedPasswordField extends State<RoundedPassword> {
   // Toggles the password show status
   void onPressVisibility() {
     setState(() {
+      // Is password visible
       isPasswordVisible = !isPasswordVisible;
+      // Obscure text
       _obscureText = !_obscureText;
     });
   }
