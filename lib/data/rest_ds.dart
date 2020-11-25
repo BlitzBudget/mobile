@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
+
 import 'package:mobile_blitzbudget/utils/network_util.dart';
 import 'package:mobile_blitzbudget/models/user.dart';
 import 'package:mobile_blitzbudget/constants.dart';
@@ -19,17 +22,36 @@ class RestDataSource {
   static final CHECK_PASSWORD = false;
   // Create storage
   final storage = new FlutterSecureStorage();
+  static final RegExp passwordExp = new RegExp(r'^[a-zA-Z0-9!@#$&()\-`.+,/\"]*$');
 
-  Future<User> attemptLogin(String username, String password) async {
+  void displayDialog(context, title, text) => showDialog(
+      context: context,
+      builder: (context) =>
+        AlertDialog(
+          title: Text(title),
+          content: Text(text)
+        ),
+  );
+
+  Future<User> attemptLogin(BuildContext context, String email, String password) async {
+    if(email != null || !EmailValidator.validate(email)) {
+        displayDialog(context, "Email", "The email is not valid");
+    } else if(password != null || !passwordExp.hasMatch(password)) {
+        displayDialog(context, "Password", "The password is not valid");
+    }
+
     return _netUtil.post(LOGIN_URL,
     body: jsonEncode({
-      "username": username,
+      "username": email,
       "password": password,
       "checkPassword": CHECK_PASSWORD
     }),
     headers: headers).then((dynamic res) {
       developer.log("User Attributes" + res['UserAttributes'].toString());
-      if(res["errorType"] != null) throw new Exception(res["errorMessage"]);
+      if(res["errorType"] != null)  {
+          displayDialog(context, "An Error Occurred", res["errorMessage"]);
+          return null;
+      }
       // User
       User user = new User.map(res["UserAttributes"]);
       // Store User Attributes

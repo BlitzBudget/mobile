@@ -15,15 +15,6 @@ class Body extends StatelessWidget {
   TextEditingController controller;
   String username, password;
 
-  void displayDialog(context, title, text) => showDialog(
-      context: context,
-      builder: (context) =>
-        AlertDialog(
-          title: Text(title),
-          content: Text(text)
-        ),
-  );
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,12 +48,10 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                var user = await _restDataSource.attemptLogin(username, password);
+                var user = await _restDataSource.attemptLogin(context, username, password);
                 if(user != null) {
                     // Navigate to the second screen using a named route.
                     Navigator.pushNamed(context, dashboardRoute);
-                } else {
-                    displayDialog(context, "An Error Occurred", "No account was found matching that username and password");
                 }
               },
             ),

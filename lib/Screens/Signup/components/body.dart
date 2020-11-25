@@ -12,6 +12,8 @@ import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
+  String username, password;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -31,11 +33,15 @@ class Body extends StatelessWidget {
             ),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                  username = value;
+              },
               autofocus: true
             ),
             RoundedPassword(
-              onChanged: (value) {},
+              onChanged: (value) {
+                  password = value;
+              },
             ),
             RoundedButton(
               text: "SIGNUP",
