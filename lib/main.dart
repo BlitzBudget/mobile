@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:mobile_blitzbudget/constants.dart';
-import 'package:mobile_blitzbudget/data/rest_ds.dart';
-import 'package:mobile_blitzbudget/routes.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'constants.dart';
+import 'data/rest_ds.dart';
+import 'routes.dart';
 
 //void main() async => runApp(MyAdaptingApp());
 

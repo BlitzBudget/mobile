@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/Screens/Login/login_screen.dart';
-import 'package:mobile_blitzbudget/Screens/Signup/signup_screen.dart';
-import 'package:mobile_blitzbudget/Screens/Welcome/components/background.dart';
-import 'package:mobile_blitzbudget/components/rounded_button.dart';
+import 'package:mobile_blitzbudget/Screens/Authentication/Login/login_screen.dart';
+import 'package:mobile_blitzbudget/Screens/Authentication/Signup/signup_screen.dart';
+import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/components/background.dart';
+import 'package:mobile_blitzbudget/Screens/Authentication/components/rounded_button.dart';
 import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/svg.dart';
 

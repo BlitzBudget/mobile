@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/constants.dart';
+import '../../../constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;

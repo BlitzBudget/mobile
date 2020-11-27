@@ -4,11 +4,12 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-
-import 'package:mobile_blitzbudget/utils/network_util.dart';
-import 'package:mobile_blitzbudget/models/user.dart';
-import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../Utils/network_util.dart';
+import '../models/user.dart';
+import '../Utils/utils.dart';
+import '../constants.dart';
 
 class RestDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -24,20 +25,13 @@ class RestDataSource {
   final storage = new FlutterSecureStorage();
   static final RegExp passwordExp = new RegExp(r'^[a-zA-Z0-9!@#$&()\-`.+,/\"]*$');
 
-  void displayDialog(context, title, text) => showDialog(
-      context: context,
-      builder: (context) =>
-        AlertDialog(
-          title: Text(title),
-          content: Text(text)
-        ),
-  );
-
   Future<User> attemptLogin(BuildContext context, String email, String password) async {
-    if(email != null || !EmailValidator.validate(email)) {
+    if(!EmailValidator.validate(email)) {
         displayDialog(context, "Email", "The email is not valid");
+        return null;
     } else if(password != null || !passwordExp.hasMatch(password)) {
         displayDialog(context, "Password", "The password is not valid");
+        return null;
     }
 
     return _netUtil.post(LOGIN_URL,

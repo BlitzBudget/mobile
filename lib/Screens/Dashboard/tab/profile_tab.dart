@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Welcome/welcome_screen.dart';
+import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/welcome_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_blitzbudget/Utils/widgets.dart';
 import 'package:mobile_blitzbudget/constants.dart';

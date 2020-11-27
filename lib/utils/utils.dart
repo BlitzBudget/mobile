@@ -103,3 +103,16 @@ bool isEmpty(obj) {
     return false;
 }
 
+bool isNotEmpty(obj) {
+    return !isEmpty(obj);
+}
+
+void displayDialog(context, title, text) => showDialog(
+    context: context,
+    builder: (context) =>
+      AlertDialog(
+        title: Text(title),
+        content: Text(text)
+      ),
+);
+
