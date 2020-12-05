@@ -16,24 +16,23 @@ class User {
     dynamic userAttributes = obj;
     // SUCCESS Scenarios
     for (var i = 0; i < userAttributes.length; i++) {
-        developer.log("Printing User Attributes " + userAttributes[i]['Name']);
-        String name = userAttributes[i]['Name'];
+      developer.log("Printing User Attributes " + userAttributes[i]['Name']);
+      String name = userAttributes[i]['Name'];
 
-        if (name.contains('custom:')) {
-            // if custom values then remove custom:
-            var elemName = lastElement(splitElement(name, ':'));
-            currentUserLocal[elemName] = userAttributes[i]['Value'];
-        } else {
-            currentUserLocal[name] = userAttributes[i]['Value'];
-        }
+      if (name.contains('custom:')) {
+        // if custom values then remove custom:
+        var elemName = lastElement(splitElement(name, ':'));
+        currentUserLocal[elemName] = userAttributes[i]['Value'];
+      } else {
+        currentUserLocal[name] = userAttributes[i]['Value'];
+      }
     }
     this._userid = currentUserLocal["financialPortfolioId"];
     this._email = currentUserLocal["email"];
-    this._name =  currentUserLocal["name"];
-    this._locale =  currentUserLocal["locale"];
+    this._name = currentUserLocal["name"];
+    this._locale = currentUserLocal["locale"];
     this._fileformat = currentUserLocal["exportFileFormat"];
     this._familyname = currentUserLocal["family_name"];
-
   }
 
   String get username => _userid;
@@ -50,5 +49,4 @@ class User {
 
     return map;
   }
-
 }

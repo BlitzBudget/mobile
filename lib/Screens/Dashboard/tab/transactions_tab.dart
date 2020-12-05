@@ -138,26 +138,20 @@ class _TransactionsTabState extends State<TransactionsTab> {
     return CustomScrollView(
       slivers: [
         CupertinoSliverNavigationBar(
-          trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Icon(CupertinoIcons.shuffle),
-                    onPressed: () => Navigator.of(context).push<void>(
-                      MaterialPageRoute(
-                        builder: (context) => ProfileTab()
-                      ),
-                    ),
-                  ),
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Icon(CupertinoIcons.shuffle),
-                    onPressed: _togglePlatform,
-                  ),
-              ]
-            )
-        ),
+            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: Icon(CupertinoIcons.shuffle),
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute(builder: (context) => ProfileTab()),
+            ),
+          ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: Icon(CupertinoIcons.shuffle),
+            onPressed: _togglePlatform,
+          ),
+        ])),
         CupertinoSliverRefreshControl(
           onRefresh: _refreshData,
         ),

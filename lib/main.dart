@@ -9,15 +9,15 @@ import 'routes.dart';
 //void main() async => runApp(MyAdaptingApp());
 
 Future<void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    // Create storage
-    final storage = new FlutterSecureStorage();
-    // Read value
-    String token = await storage.read(key: authToken);
-    String homeRoute = token == null ?  initialRoute : dashboardRoute;
-    runApp(MyAdaptingApp(
-        homeRoute: homeRoute,
-    ));
+  WidgetsFlutterBinding.ensureInitialized();
+  // Create storage
+  final storage = new FlutterSecureStorage();
+  // Read value
+  String token = await storage.read(key: authToken);
+  String homeRoute = token == null ? initialRoute : dashboardRoute;
+  runApp(MyAdaptingApp(
+    homeRoute: homeRoute,
+  ));
 }
 
 class MyAdaptingApp extends StatelessWidget {

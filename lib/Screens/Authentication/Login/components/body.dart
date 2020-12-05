@@ -35,26 +35,24 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
-              hintText: "Your Email",
-              onChanged: (value) {
+                hintText: "Your Email",
+                onChanged: (value) {
                   username = value;
-              },
-              autofocus: true
-            ),
+                },
+                autofocus: true),
             RoundedPassword(
               onChanged: (value) {
-                  password = value;
+                password = value;
               },
             ),
             RoundedButton(
-              text: "LOGIN",
+              text: "CONTINUE",
               press: () async {
-                if(isNotEmpty(username) && isNotEmpty(password)) {
-                    var user = await _restDataSource.attemptLogin(context, username, password);
-                    if(user != null) {
-                        // Navigate to the second screen using a named route.
-                        Navigator.pushNamed(context, dashboardRoute);
-                    }
+                var user = await _restDataSource.attemptLogin(
+                    context, username, password);
+                if (user != null) {
+                  // Navigate to the second screen using a named route.
+                  Navigator.pushNamed(context, dashboardRoute);
                 }
               },
             ),

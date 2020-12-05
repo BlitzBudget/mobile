@@ -7,14 +7,10 @@ class RoundedPassword extends StatefulWidget {
   final onChanged;
 
   // Constructor that accepts the onchanged variable
-  const RoundedPassword({
-    Key key,
-    @required this.onChanged
-  }) : super(key: key);
+  const RoundedPassword({Key key, @required this.onChanged}) : super(key: key);
 
   @override
   _RoundedPasswordField createState() => _RoundedPasswordField(this.onChanged);
-
 }
 
 // Private Class
@@ -26,9 +22,9 @@ class _RoundedPasswordField extends State<RoundedPassword> {
 
   @override
   void initState() {
-      _obscureText = true;
-      isPasswordVisible = false;
-      super.initState();
+    _obscureText = true;
+    isPasswordVisible = false;
+    super.initState();
   }
 
   // Constructor for the private class
@@ -48,11 +44,11 @@ class _RoundedPasswordField extends State<RoundedPassword> {
             color: primaryColor,
           ),
           suffixIcon: IconButton(
-              icon: Icon(
-                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                color: primaryColor,
-              ),
-              onPressed: onPressVisibility,
+            icon: Icon(
+              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+              color: primaryColor,
+            ),
+            onPressed: onPressVisibility,
           ),
           border: InputBorder.none,
         ),

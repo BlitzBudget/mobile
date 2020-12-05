@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/welcome_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -164,8 +163,7 @@ class PreferenceCard extends StatelessWidget {
 }
 
 class LogOutButton extends StatelessWidget {
-  static const _logoutMessage = Text(
-      logoutDescription);
+  static const _logoutMessage = Text(logoutDescription);
 
   // ===========================================================================
   // Non-shared code below because this tab shows different interfaces. On
@@ -192,9 +190,9 @@ class LogOutButton extends StatelessWidget {
                 FlatButton(
                   child: const Text(logoutButton),
                   onPressed: () => () async {
-                      _logoutAndRedirect();
-                      // Navigate to the second screen using a named route.
-                      Navigator.pushNamed(context, welcomeRoute);
+                    _logoutAndRedirect();
+                    // Navigate to the second screen using a named route.
+                    Navigator.pushNamed(context, welcomeRoute);
                   },
                 ),
                 FlatButton(
@@ -224,13 +222,12 @@ class LogOutButton extends StatelessWidget {
               message: _logoutMessage,
               actions: [
                 CupertinoActionSheetAction(
-                  child: const Text(logoutButton),
-                  onPressed: () async {
+                    child: const Text(logoutButton),
+                    onPressed: () async {
                       _logoutAndRedirect();
                       // Navigate to the second screen using a named route.
                       Navigator.pushNamed(context, welcomeRoute);
-                  }
-                ),
+                    }),
               ],
               cancelButton: CupertinoActionSheetAction(
                 child: const Text(logoutCancel),
@@ -248,10 +245,10 @@ class LogOutButton extends StatelessWidget {
   * Remove Storage and Redirect to Welcome screeen
   */
   void _logoutAndRedirect() async {
-      // Create storage
-      final storage = new FlutterSecureStorage();
-      // Delete all
-      await storage.deleteAll();
+    // Create storage
+    final storage = new FlutterSecureStorage();
+    // Delete all
+    await storage.deleteAll();
   }
 
   @override

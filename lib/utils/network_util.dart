@@ -30,10 +30,14 @@ class NetworkUtil {
         .then((http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
-      debugPrint(" The response code is " + statusCode.toString() + " with the response " + res);
+      debugPrint(" The response code is " +
+          statusCode.toString() +
+          " with the response " +
+          res);
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
-        developer.log("Error while fetching data with status code " + statusCode.toString());
+        developer.log("Error while fetching data with status code " +
+            statusCode.toString());
       }
       return _decoder.convert(res);
     });

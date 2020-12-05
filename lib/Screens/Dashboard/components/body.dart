@@ -15,9 +15,10 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return PlatformAdaptingHomePage();
+    return PlatformAdaptingHomePage();
   }
 }
+
 // Shows a different type of scaffold depending on the platform.
 //
 // This file has the most amount of non-sharable code since it behaves the most
@@ -63,7 +64,8 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
       tabBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(
-              title: Text(TransactionsTab.title), icon: TransactionsTab.iosIcon),
+              title: Text(TransactionsTab.title),
+              icon: TransactionsTab.iosIcon),
           BottomNavigationBarItem(
               title: Text(OverviewTab.title), icon: OverviewTab.iosIcon),
           BottomNavigationBarItem(
@@ -141,8 +143,8 @@ class _AndroidDrawer extends StatelessWidget {
             title: Text(OverviewTab.title),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(
-                  context, MaterialPageRoute(builder: (context) => OverviewTab()));
+              Navigator.push<void>(context,
+                  MaterialPageRoute(builder: (context) => OverviewTab()));
             },
           ),
           ListTile(
@@ -153,16 +155,16 @@ class _AndroidDrawer extends StatelessWidget {
               Navigator.push<void>(context,
                   MaterialPageRoute(builder: (context) => BudgetTab()));
             },
-           ),
+          ),
           ListTile(
             leading: GoalTab.androidIcon,
             title: Text(GoalTab.title),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => GoalTab()));
+              Navigator.push<void>(
+                  context, MaterialPageRoute(builder: (context) => GoalTab()));
             },
-           ),
+          ),
           // Long drawer contents are often segmented.
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
