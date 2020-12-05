@@ -102,3 +102,15 @@ iOS. This is a common pattern since there are conventionally more items in the
 drawer than there are tabs.
 * On iOS, the settings page is shown as a full screen dialog instead of a tab
 in the tab scaffold.
+
+
+### Flutter
+
+* Flutter run command line
+flutter run
+
+* Flutter Format all the code
+flutter format .
+
+* Upgrade Flutter Package
+flutter upgrade

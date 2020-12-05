@@ -11,6 +11,13 @@ import '../models/user.dart';
 import '../Utils/utils.dart';
 import '../constants.dart';
 
+class Name{
+    String firstName;
+    String surName;
+
+    Name(this.firstName, this.surName);
+}
+
 class RestDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
   static final BASE_URL = "https://api.blitzbudget.com";
@@ -26,14 +33,14 @@ class RestDataSource {
   final storage = new FlutterSecureStorage();
   static final RegExp passwordExp = new RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
-  static final RegExp emailExp = new RegExp(r"^[!#$%&'*+-\/=?^_`{|}~]");
+  static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
 
   Future<User> attemptLogin(
       BuildContext context, String email, String password) async {
     if (isEmpty(email)) {
       displayDialog(context, "Empty Email", "The email cannot be empty");
       return null;
-    } else if (!EmailValidator.validate(email)) {
+    } else if (!EmailValidator.validate(email.trim())) {
       displayDialog(context, "Invalid Email", "The email is not valid");
       return null;
     } else if (isEmpty(password)) {
@@ -44,6 +51,8 @@ class RestDataSource {
       return null;
     }
 
+    // Convert email to lowercase and trim
+    email = email.toLowerCase().trim();
     return _netUtil
         .post(LOGIN_URL,
             body: jsonEncode({
@@ -90,9 +99,20 @@ class RestDataSource {
     });
   }
 
-  void fetchNames(String fullname) {
-    Iterable<RegExpMatch> matchFound = emailExp.allMatches(fullname);
-    debugPrint('First match: ${matchFound.length}');
+  Name fetchNames(String fullname) {
+    Match match = emailExp.firstMatch(fullname);
+    Name name;
+
+    if (match == null) {
+        developer.log('No match found for ${fullname}');
+        // Sur name cannot be empty
+        name = Name(fullname,' ');
+    } else {
+        // TODO
+        debugPrint('Fullname ${fullname}, First match: ${match.end}');
+    }
+
+    return name;
   }
 
   void _storeUserAttributes(User user, FlutterSecureStorage storage) async {
