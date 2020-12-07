@@ -121,7 +121,7 @@ class RestDataSource {
   ///
   /// Used to signup the user with email & password
   /// Also invokes the Verification module
-  void signupUser(BuildContext context, String email, String password) async {
+  Future<bool> signupUser(BuildContext context, String email, String password) async {
     var fullname = email.split('@')[0];
     var names = fetchNames(fullname);
 
@@ -138,10 +138,11 @@ class RestDataSource {
             headers: headers)
         .then((dynamic res) {
       if (res["errorType"] != null) {
-        return null;
+        return false;
       }
       // Navigate to the second screen using a named route.
       //Navigator.pushNamed(context, verifyRoute);
+      return true;
     });
   }
 

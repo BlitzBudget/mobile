@@ -12,7 +12,6 @@ import '../../components/rounded_password_field.dart';
 import '../../../Dashboard/dashboard_screen.dart';
 import '../../../../data/rest_ds.dart';
 import '../../../../constants.dart';
-import '../../../../routes.dart';
 
 class Body extends StatelessWidget {
   RestDataSource _restDataSource = RestDataSource();
@@ -49,7 +48,11 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "SIGNUP",
               press: () async {
-                await _restDataSource.signupUser(context, username, password);
+                bool success = await _restDataSource.signupUser(context, username, password);
+                if (success) {
+                  // Navigate to the second screen using a named route.
+                  Navigator.pushNamed(context, verifyRoute);
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),

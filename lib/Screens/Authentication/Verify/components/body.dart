@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
-import '../../../../routes.dart';
+import '../../../../constants.dart';
 import '../../../../data/rest_ds.dart';
 import '../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
@@ -42,7 +42,7 @@ class Body extends StatelessWidget {
                     context, verificationCode);
                 if (success) {
                   // Navigate to the second screen using a named route.
-                  // Navigator.pushNamed(context, dashboardRoute);
+                  Navigator.pushNamed(context, dashboardRoute);
                 }
               },
             ),
