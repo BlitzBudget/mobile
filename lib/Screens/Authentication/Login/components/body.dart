@@ -15,9 +15,9 @@ class Body extends StatelessWidget {
   RestDataSource _restDataSource = RestDataSource();
   TextEditingController controller;
   String username, password;
-  static final login = "LOGIN";
-  static final yourEmail = "Your Email";
-  static final continueButton = "CONTINUE";
+  final login = "LOGIN";
+  final yourEmail = "Your Email";
+  final continueButton = "CONTINUE";
 
   @override
   Widget build(BuildContext context) {

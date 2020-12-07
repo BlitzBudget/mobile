@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:devicelocale/devicelocale.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -26,7 +27,7 @@ class RestDataSource {
   static final LOGIN_URL = BASE_URL + "/profile/sign-in";
   static final SIGNUP_URL = BASE_URL + "/profile/sign-up";
   static final APPLICAION_JSON = "application/json";
-  static final headers = {
+  var headers = {
     'Content-type': 'application/json;charset=UTF-8',
     'Accept': 'application/json'
   };
@@ -41,7 +42,7 @@ class RestDataSource {
   ///
   /// Logging in with Username and Password
   /// If user is not found then signup the user
-  Future<User> attemptLogin (
+  Future<User> attemptLogin(
       BuildContext context, String email, String password) async {
     if (isEmpty(email)) {
       displayDialog(context, "Empty Email", "The email cannot be empty");
@@ -121,9 +122,13 @@ class RestDataSource {
   ///
   /// Used to signup the user with email & password
   /// Also invokes the Verification module
-  Future<bool> signupUser(BuildContext context, String email, String password) async {
+  Future<bool> signupUser(
+      BuildContext context, String email, String password) async {
     var fullname = email.split('@')[0];
     var names = fetchNames(fullname);
+
+    /// Add accept language headers
+    headers['Accept-Language'] = await Devicelocale.currentLocale;
 
     // Start signup process
     return _netUtil
@@ -138,10 +143,9 @@ class RestDataSource {
             headers: headers)
         .then((dynamic res) {
       if (res["errorType"] != null) {
+        displayDialog(context, "Error signing up", res["errorMessage"]);
         return false;
       }
-      // Navigate to the second screen using a named route.
-      //Navigator.pushNamed(context, verifyRoute);
       return true;
     });
   }
@@ -168,7 +172,5 @@ class RestDataSource {
   /// Verification Module
   ///
   /// Verify Email with confirmation code
-  bool verifyEmail(BuildContext context, String verificationCode) {
-
-  }
+  bool verifyEmail(BuildContext context, String verificationCode) {}
 }

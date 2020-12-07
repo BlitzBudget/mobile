@@ -10,9 +10,9 @@ import '../../components/rounded_input_field.dart';
 class Body extends StatelessWidget {
   RestDataSource _restDataSource = RestDataSource();
   String verificationCode;
-  static final verifyEmail = "Verify Email";
-  static final verificationCodeText = "Your verification code";
-  static final verifyButton = "VERIFY";
+  final verifyEmail = "Verify Email";
+  final verificationCodeText = "Your verification code";
+  final verifyButton = "VERIFY";
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +36,7 @@ class Body extends StatelessWidget {
                 onChanged: (value) {
                   verificationCode = value;
                 },
-                autofocus: true
-            ),
+                autofocus: true),
             RoundedButton(
               text: verifyButton,
               press: () async {

@@ -11,9 +11,9 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    static final welcomeToBlitzBudget = "WELCOME TO BlitzBudget";
-    static final loginButton = "LOGIN";
-    static final signupButton = "SIGN UP";
+    final welcomeToBlitzBudget = "WELCOME TO BlitzBudget";
+    final loginButton = "LOGIN";
+    final signupButton = "SIGN UP";
 
     // This size provide us total height and width of our screen
     return Background(
