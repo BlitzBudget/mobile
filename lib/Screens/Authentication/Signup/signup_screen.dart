@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Signup/components/body.dart';
+import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override

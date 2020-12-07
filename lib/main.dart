@@ -22,6 +22,7 @@ Future<void> main() async {
 
 class MyAdaptingApp extends StatelessWidget {
   final String homeRoute;
+  static final appName = 'BlitzBudget';
 
   // Constructor
   MyAdaptingApp({this.homeRoute});
@@ -31,7 +32,7 @@ class MyAdaptingApp extends StatelessWidget {
     // Either Material or Cupertino widgets work in either Material or Cupertino
     // Apps.
     return MaterialApp(
-      title: 'BlitzBudget',
+      title: appName,
       theme: ThemeData(
         // Use the green theme for Material widgets.
         primarySwatch: Colors.green,

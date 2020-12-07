@@ -16,6 +16,9 @@ import '../../../../constants.dart';
 class Body extends StatelessWidget {
   RestDataSource _restDataSource = RestDataSource();
   String username, password;
+  static final signupText = "SIGNUP";
+  static final yourEmail = "Your Email";
+  static final signupButton = "SIGNUP";
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "SIGNUP",
+              signupText,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.03),
@@ -35,7 +38,7 @@ class Body extends StatelessWidget {
               height: size.height * 0.35,
             ),
             RoundedInputField(
-                hintText: "Your Email",
+                hintText: yourEmail,
                 onChanged: (value) {
                   username = value;
                 },
@@ -46,7 +49,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "SIGNUP",
+              text: signupButton,
               press: () async {
                 bool success = await _restDataSource.signupUser(context, username, password);
                 if (success) {

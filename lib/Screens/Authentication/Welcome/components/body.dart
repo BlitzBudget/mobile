@@ -11,6 +11,10 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    static final welcomeToBlitzBudget = "WELCOME TO BlitzBudget";
+    static final loginButton = "LOGIN";
+    static final signupButton = "SIGN UP";
+
     // This size provide us total height and width of our screen
     return Background(
       child: SingleChildScrollView(
@@ -18,7 +22,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "WELCOME TO BlitzBudget",
+              welcomeToBlitzBudget,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.05),
@@ -28,14 +32,14 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
-              text: "LOGIN",
+              text: loginButton,
               press: () {
                 // Navigate to the second screen using a named route.
                 Navigator.pushNamed(context, loginRoute);
               },
             ),
             RoundedButton(
-              text: "SIGN UP",
+              text: signupButton,
               color: primaryLightColor,
               textColor: Colors.black,
               press: () {

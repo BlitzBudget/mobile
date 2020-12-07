@@ -15,6 +15,9 @@ class Body extends StatelessWidget {
   RestDataSource _restDataSource = RestDataSource();
   TextEditingController controller;
   String username, password;
+  static final login = "LOGIN";
+  static final yourEmail = "Your Email";
+  static final continueButton = "CONTINUE";
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "LOGIN",
+              login,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.03),
@@ -35,7 +38,7 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
-                hintText: "Your Email",
+                hintText: yourEmail,
                 onChanged: (value) {
                   username = value;
                 },
@@ -46,7 +49,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "CONTINUE",
+              text: continueButton,
               press: () async {
                 var user = await _restDataSource.attemptLogin(
                     context, username, password);
