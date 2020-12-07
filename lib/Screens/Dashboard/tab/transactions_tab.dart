@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transaction_detail_tab.dart';
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/profile_tab.dart';
-import 'package:mobile_blitzbudget/Utils/utils.dart';
-import 'package:mobile_blitzbudget/Utils/widgets.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
+import 'package:mobile_blitzbudget/utils/widgets.dart';
 
 class TransactionsTab extends StatefulWidget {
   static const title = 'Transactions';

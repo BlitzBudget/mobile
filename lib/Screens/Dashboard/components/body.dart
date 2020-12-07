@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/overview_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transactions_tab.dart';
-import 'package:mobile_blitzbudget/Utils/widgets.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/goal_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/budget_tab.dart';
+import '../tab/goal_tab.dart';
+import '../tab/budget_tab.dart';
+import '../tab/overview_tab.dart';
+import '../tab/settings_tab.dart';
+import '../tab/transactions_tab.dart';
+import '../../../utils/widgets.dart';
 
 class Body extends StatelessWidget {
   const Body({

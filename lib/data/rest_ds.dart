@@ -6,16 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../Utils/network_util.dart';
+import '../utils/network_util.dart';
 import '../models/user.dart';
-import '../Utils/utils.dart';
+import '../utils/utils.dart';
 import '../constants.dart';
+import '../routes.dart';
 
-class Name{
-    String firstName;
-    String surName;
+/// Name Object for firstname and lastName
+class Name {
+  String firstName;
+  String surName;
 
-    Name(this.firstName, this.surName);
+  Name(this.firstName, this.surName);
 }
 
 class RestDataSource {
@@ -35,7 +37,11 @@ class RestDataSource {
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
   static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
 
-  Future<User> attemptLogin(
+  /// Login Screen
+  ///
+  /// Logging in with Username and Password
+  /// If user is not found then signup the user
+  Future<User> attemptLogin (
       BuildContext context, String email, String password) async {
     if (isEmpty(email)) {
       displayDialog(context, "Empty Email", "The email cannot be empty");
@@ -66,19 +72,8 @@ class RestDataSource {
       if (res["errorType"] != null) {
         // Conditionally process error messages
         if (includesStr(res["errorMessage"], 'UserNotFoundException')) {
-          var fullname = email.split('@')[0];
-          var names = fetchNames(fullname);
-          // Start signup process
-          /*return _netUtil.post(SIGNUP_URL,
-                    body: jsonEncode({
-                      "username": email.toLowerCase(),
-                      "password": password,
-                      "firstname": fullname,
-                      "lastname": fullname,
-                      "checkPassword": CHECK_PASSWORD
-                    }),
-                    headers: headers).then((dynamic res) {
-                    }*/
+          // Signup user and parse the response
+          // TODO call signup
         } else {
           displayDialog(context, "Not Authorized",
               "The email or password entered is incorrect");
@@ -97,22 +92,6 @@ class RestDataSource {
       _storeAuthToken(res, storage);
       return user;
     });
-  }
-
-  Name fetchNames(String fullname) {
-    Match match = emailExp.firstMatch(fullname);
-    Name name;
-
-    if (match == null) {
-        developer.log('No match found for ${fullname}');
-        // Sur name cannot be empty
-        name = Name(fullname,' ');
-    } else {
-        // TODO
-        debugPrint('Fullname ${fullname}, First match: ${match.end}');
-    }
-
-    return name;
   }
 
   void _storeUserAttributes(User user, FlutterSecureStorage storage) async {
@@ -136,5 +115,59 @@ class RestDataSource {
     // Write Id Token
     await storage.write(
         key: authToken, value: res["AuthenticationResult"]["IdToken"]);
+  }
+
+  /// SIGNUP module
+  ///
+  /// Used to signup the user with email & password
+  /// Also invokes the Verification module
+  void signupUser(BuildContext context, String email, String password) async {
+    var fullname = email.split('@')[0];
+    var names = fetchNames(fullname);
+
+    // Start signup process
+    return _netUtil
+        .post(SIGNUP_URL,
+            body: jsonEncode({
+              "username": email,
+              "password": password,
+              "firstname": names.firstName,
+              "lastname": names.surName,
+              "checkPassword": CHECK_PASSWORD
+            }),
+            headers: headers)
+        .then((dynamic res) {
+      if (res["errorType"] != null) {
+        return null;
+      }
+      // Navigate to the second screen using a named route.
+      //Navigator.pushNamed(context, verifyRoute);
+    });
+  }
+
+  /// Parse the user name with Email
+  Name fetchNames(String fullname) {
+    Match match = emailExp.firstMatch(fullname);
+    Name name;
+
+    if (match == null) {
+      developer.log('No match found for ${fullname}');
+      // Sur name cannot be empty
+      name = Name(fullname, ' ');
+    } else {
+      // TODO SPLIT the name and then assign it to first and surname
+      name = Name(fullname, ' ');
+      debugPrint(
+          'Fullname ${fullname}, First match: ${match.start}, end Match: ${match.input}');
+    }
+
+    return name;
+  }
+
+  /// Verification Module
+  ///
+  /// Verify Email with confirmation code
+  bool verifyEmail(BuildContext context, String verificationCode) {
+
   }
 }

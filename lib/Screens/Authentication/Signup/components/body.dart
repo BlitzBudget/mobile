@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Login/login_screen.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Signup/components/background.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Signup/components/or_divider.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Signup/components/social_icon.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/components/already_have_an_account_acheck.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/components/rounded_button.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/components/rounded_input_field.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/components/rounded_password_field.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/dashboard_screen.dart';
-import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'background.dart';
+import 'or_divider.dart';
+import 'social_icon.dart';
+import '../../Login/login_screen.dart';
+import '../../components/already_have_an_account_check.dart';
+import '../../components/rounded_button.dart';
+import '../../components/rounded_input_field.dart';
+import '../../components/rounded_password_field.dart';
+import '../../../Dashboard/dashboard_screen.dart';
+import '../../../../data/rest_ds.dart';
+import '../../../../constants.dart';
+import '../../../../routes.dart';
+
 class Body extends StatelessWidget {
+  RestDataSource _restDataSource = RestDataSource();
   String username, password;
 
   @override
@@ -44,9 +48,8 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "SIGNUP",
-              press: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, dashboardRoute);
+              press: () async {
+                await _restDataSource.signupUser(context, username, password);
               },
             ),
             SizedBox(height: size.height * 0.03),

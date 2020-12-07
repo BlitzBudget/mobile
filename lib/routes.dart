@@ -4,6 +4,7 @@ import 'Screens/Dashboard/dashboard_screen.dart';
 import 'Screens/Authentication/Welcome/welcome_screen.dart';
 import 'Screens/Authentication/Login/login_screen.dart';
 import 'Screens/Authentication/Signup/signup_screen.dart';
+import 'Screens/Authentication/Verify/verify_screen.dart';
 import 'constants.dart';
 
 final routes = {

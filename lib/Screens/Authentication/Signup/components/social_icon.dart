@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../constants.dart';
 
 class SocalIcon extends StatelessWidget {
   final String iconSrc;

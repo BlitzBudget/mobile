@@ -104,7 +104,7 @@ bool isEmpty(obj) {
 }
 
 bool isNotEmpty(obj) {
-  return obj.isNotEmpty;
+  return !isEmpty(obj);
 }
 
 void displayDialog(context, title, text) => showDialog(

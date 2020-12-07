@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import 'package:mobile_blitzbudget/Utils/utils.dart';
-import 'package:mobile_blitzbudget/Utils/widgets.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
+import 'package:mobile_blitzbudget/utils/widgets.dart';
 
 class BudgetTab extends StatefulWidget {
   static const title = 'Budget';

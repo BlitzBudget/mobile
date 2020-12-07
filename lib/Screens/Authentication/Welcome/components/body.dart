@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Login/login_screen.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Signup/signup_screen.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/components/background.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/components/rounded_button.dart';
-import 'package:mobile_blitzbudget/constants.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'background.dart';
+import '../../../../constants.dart';
+import '../../Signup/signup_screen.dart';
+import '../../Login/login_screen.dart';
+import '../../components/rounded_button.dart';
 
 class Body extends StatelessWidget {
   @override

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
-import '../../components/already_have_an_account_acheck.dart';
+import '../../components/already_have_an_account_check.dart';
 import '../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
 import '../../../Dashboard/dashboard_screen.dart';
 import '../../../../data/rest_ds.dart';
-import '../../../../Utils/utils.dart';
+import '../../../../utils/utils.dart';
 import '../../../../constants.dart';
-import 'package:flutter_svg/svg.dart';
+import '../../../../routes.dart';
 
 class Body extends StatelessWidget {
-  RestDataSource _restDataSource = new RestDataSource();
+  RestDataSource _restDataSource = RestDataSource();
   TextEditingController controller;
   String username, password;
 
@@ -50,7 +51,7 @@ class Body extends StatelessWidget {
               press: () async {
                 var user = await _restDataSource.attemptLogin(
                     context, username, password);
-                if (user != null) {
+                if (isNotEmpty(user)) {
                   // Navigate to the second screen using a named route.
                   Navigator.pushNamed(context, dashboardRoute);
                 }
