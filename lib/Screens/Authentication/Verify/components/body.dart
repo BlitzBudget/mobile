@@ -46,7 +46,7 @@ class Body extends StatelessWidget {
                   // If the length of the string is == 6 then submit the code for verification
                   if (isNotEmpty(verificationCode) &&
                       verificationCode.length >= 6) {
-                    await _verifyEmail(
+                    await _restDataSource.verifyEmail(
                         context, email, password, verificationCode);
                   }
                 },
@@ -54,7 +54,7 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: verifyButton,
               press: () async {
-                await _verifyEmail(context, email, password, verificationCode);
+                await _restDataSource.verifyEmail(context, email, password, verificationCode);
               },
             ),
             SizedBox(height: size.height * 0.03),
