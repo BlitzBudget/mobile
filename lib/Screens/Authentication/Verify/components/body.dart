@@ -5,7 +5,7 @@ import 'background.dart';
 import 'resend_verification.dart';
 import '../../../../constants.dart';
 import '../../../../utils/utils.dart';
-import '../../../../data/rest_ds.dart';
+import '../../../../data/authentication.dart';
 import '../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 
@@ -58,9 +58,7 @@ class Body extends StatelessWidget {
               },
             ),
             SizedBox(height: size.height * 0.03),
-            ResendVerification(
-                email: email
-            ),
+            ResendVerification(email: email),
           ],
         ),
       ),

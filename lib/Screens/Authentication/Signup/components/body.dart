@@ -12,7 +12,7 @@ import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
 import '../../../Dashboard/dashboard_screen.dart';
 import '../../verify/verify_screen.dart';
-import '../../../../data/rest_ds.dart';
+import '../../../../data/authentication.dart';
 import '../../../../constants.dart';
 
 class Body extends StatelessWidget {

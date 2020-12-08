@@ -24,22 +24,24 @@ class Name {
 
 class RestDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
-  static final BASE_URL = "https://api.blitzbudget.com";
-  static final LOGIN_URL = BASE_URL + "/profile/sign-in";
-  static final SIGNUP_URL = BASE_URL + "/profile/sign-up";
-  static final APPLICAION_JSON = "application/json";
+  static final baseURL = "https://api.blitzbudget.com";
+  static final loginURL = baseURL + "/profile/sign-in";
+  static final signupURL = baseURL + "/profile/sign-up";
+  static final confirmSignupURL = baseURL + '/profile/confirm-sign-up';
+  static final resendVerificationCodeURL =
+      baseURL + '/profile/resend-confirmation-code';
   var headers = {
     'Content-type': 'application/json;charset=UTF-8',
     'Accept': 'application/json'
   };
-  static final CHECK_PASSWORD = false;
+  static final checkPassword = false;
   // Create storage
   final storage = new FlutterSecureStorage();
   static final RegExp passwordExp = new RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
   static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
-  static final String userNotFoundException = 'UserNotFoundException';
-  static final String userNotConfirmedException = 'UserNotConfirmedException';
+  static final userNotFoundException = 'UserNotFoundException';
+  static final userNotConfirmedException = 'UserNotConfirmedException';
 
   /// Login Screen
   ///
@@ -64,11 +66,11 @@ class RestDataSource {
     // Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     return _netUtil
-        .post(LOGIN_URL,
+        .post(loginURL,
             body: jsonEncode({
               "username": email,
               "password": password,
-              "checkPassword": CHECK_PASSWORD
+              "checkPassword": checkPassword
             }),
             headers: headers)
         .then((dynamic res) {
@@ -147,13 +149,13 @@ class RestDataSource {
 
     // Start signup process
     return _netUtil
-        .post(SIGNUP_URL,
+        .post(signupURL,
             body: jsonEncode({
               "username": email,
               "password": password,
               "firstname": names.firstName,
               "lastname": names.surName,
-              "checkPassword": CHECK_PASSWORD
+              "checkPassword": checkPassword
             }),
             headers: headers)
         .then((dynamic res) {
@@ -192,12 +194,12 @@ class RestDataSource {
       String verificationCode) {
     // Start signup process
     return _netUtil
-        .post(SIGNUP_URL,
+        .post(confirmSignupURL,
             body: jsonEncode({
               "username": email,
               "password": password,
               "confirmationCode": verificationCode,
-              "confirmationCode": false
+              "doNotCreateWallet": false
             }),
             headers: headers)
         .then((dynamic res) {
@@ -211,7 +213,18 @@ class RestDataSource {
   }
 
   /// Resend Verification Code
-  Future<bool>  resendVerificationCode(String email) {
-      // TODO
+  Future<bool> resendVerificationCode(String email) {
+    // Start resending the verification code
+    return _netUtil
+        .post(resendVerificationCodeURL,
+            body: jsonEncode({"username": email}), headers: headers)
+        .then((dynamic res) {
+      // Error Type for signup
+      if (res["errorType"] != null) {
+        displayDialog(context, "Error", res["errorMessage"]);
+        return false;
+      }
+      return true;
+    });
   }
 }

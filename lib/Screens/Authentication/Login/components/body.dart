@@ -8,7 +8,7 @@ import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
 import '../../components/password_constraint_container.dart';
 import '../../../Dashboard/dashboard_screen.dart';
-import '../../../../data/rest_ds.dart';
+import '../../../../data/authentication.dart';
 import '../../../../utils/utils.dart';
 import '../../../../constants.dart';
 

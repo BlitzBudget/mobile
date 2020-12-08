@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
-import '../../../../data/rest_ds.dart';
+import '../../../../data/authentication.dart';
 
 class ResendVerification extends StatelessWidget {
   final String email;
@@ -22,7 +22,7 @@ class ResendVerification extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () async {
-              await _resendVerificationCode(email);
+            await _resendVerificationCode(email);
           },
           child: Text(
             "Verification Code",
