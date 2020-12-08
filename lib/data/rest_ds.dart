@@ -7,6 +7,7 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../screens/authentication/verify/verify_screen.dart';
 import '../utils/network_util.dart';
 import '../models/user.dart';
 import '../utils/utils.dart';
@@ -37,6 +38,8 @@ class RestDataSource {
   static final RegExp passwordExp = new RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
   static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
+  static final String userNotFoundException = 'UserNotFoundException';
+  static final String userNotConfirmedException = 'UserNotConfirmedException';
 
   /// Login Screen
   ///
@@ -72,9 +75,19 @@ class RestDataSource {
       developer.log("User Attributes" + res['UserAttributes'].toString());
       if (res["errorType"] != null) {
         // Conditionally process error messages
-        if (includesStr(res["errorMessage"], 'UserNotFoundException')) {
+        if (includesStr(res["errorMessage"], userNotFoundException)) {
           // Signup user and parse the response
           // TODO call signup
+        } else if (includesStr(
+            res["errorMessage"], userNotConfirmedException)) {
+          // Navigate to the second screen using a named route.
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  VerifyScreen(email: email, password: password),
+            ),
+          );
         } else {
           displayDialog(context, "Not Authorized",
               "The email or password entered is incorrect");
@@ -124,10 +137,12 @@ class RestDataSource {
   /// Also invokes the Verification module
   Future<bool> signupUser(
       BuildContext context, String email, String password) async {
+    // Convert email to lowercase and trim
+    email = email.toLowerCase().trim();
     var fullname = email.split('@')[0];
     var names = fetchNames(fullname);
 
-    /// Add accept language headers
+    // Add accept language headers
     headers['Accept-Language'] = await Devicelocale.currentLocale;
 
     // Start signup process
@@ -142,6 +157,7 @@ class RestDataSource {
             }),
             headers: headers)
         .then((dynamic res) {
+      // Error Type for signup
       if (res["errorType"] != null) {
         displayDialog(context, "Error signing up", res["errorMessage"]);
         return false;
@@ -162,15 +178,40 @@ class RestDataSource {
     } else {
       // TODO SPLIT the name and then assign it to first and surname
       name = Name(fullname, ' ');
-      debugPrint(
+      developer.log(
           'Fullname ${fullname}, First match: ${match.start}, end Match: ${match.input}');
     }
 
     return name;
   }
 
-  /// Verification Module
+  /// Verification Code
   ///
   /// Verify Email with confirmation code
-  bool verifyEmail(BuildContext context, String verificationCode) {}
+  Future<bool> verifyEmail(BuildContext context, String email, String password,
+      String verificationCode) {
+    // Start signup process
+    return _netUtil
+        .post(SIGNUP_URL,
+            body: jsonEncode({
+              "username": email,
+              "password": password,
+              "confirmationCode": verificationCode,
+              "confirmationCode": false
+            }),
+            headers: headers)
+        .then((dynamic res) {
+      // Error Type for signup
+      if (res["errorType"] != null) {
+        displayDialog(context, "Error Verifying", res["errorMessage"]);
+        return false;
+      }
+      return true;
+    });
+  }
+
+  /// Resend Verification Code
+  Future<bool>  resendVerificationCode(String email) {
+      // TODO
+  }
 }

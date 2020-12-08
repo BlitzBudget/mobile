@@ -6,6 +6,7 @@ import '../../components/already_have_an_account_check.dart';
 import '../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
+import '../../components/password_constraint_container.dart';
 import '../../../Dashboard/dashboard_screen.dart';
 import '../../../../data/rest_ds.dart';
 import '../../../../utils/utils.dart';
@@ -48,6 +49,7 @@ class Body extends StatelessWidget {
                 password = value;
               },
             ),
+            PasswordConstraint(),
             RoundedButton(
               text: continueButton,
               press: () async {
