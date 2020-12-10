@@ -16,7 +16,7 @@ import '../../../../data/authentication.dart';
 import '../../../../constants.dart';
 
 class Body extends StatelessWidget {
-  RestDataSource _restDataSource = RestDataSource();
+  final RestDataSource _restDataSource = RestDataSource();
   String email, password;
   final signupText = "SIGNUP";
   final yourEmail = "Your Email";

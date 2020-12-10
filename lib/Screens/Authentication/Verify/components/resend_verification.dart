@@ -5,7 +5,7 @@ import '../../../../data/authentication.dart';
 
 class ResendVerification extends StatelessWidget {
   final String email;
-  RestDataSource _restDataSource = RestDataSource();
+  final RestDataSource _restDataSource = RestDataSource();
 
   const ResendVerification({
     Key key,
@@ -23,7 +23,7 @@ class ResendVerification extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () async {
-            await _restDataSource.resendVerificationCode(email);
+            await _restDataSource.resendVerificationCode(context, email);
           },
           child: Text(
             "Verification Code",

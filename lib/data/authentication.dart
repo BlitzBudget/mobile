@@ -213,7 +213,7 @@ class RestDataSource {
   }
 
   /// Resend Verification Code
-  Future<bool> resendVerificationCode(String email) {
+  Future<bool> resendVerificationCode(BuildContext context, String email) {
     // Start resending the verification code
     return _netUtil
         .post(resendVerificationCodeURL,
