@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
+import '../../../utils/utils.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
   final Function press;
-  final Color color, textColor;
+  final Color color, textColor, disabledColor;
+  final bool enabled;
   const RoundedButton({
     Key key,
     this.text,
     this.press,
     this.color = primaryColor,
     this.textColor = Colors.white,
+    this.enabled = true,
+    this.disabledColor = primaryDisabledColor,
   }) : super(key: key);
 
   @override
@@ -24,7 +28,8 @@ class RoundedButton extends StatelessWidget {
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           color: color,
-          onPressed: press,
+          disabledColor: disabledColor,
+          onPressed: enabled ? press : null,
           child: Text(
             text,
             style: TextStyle(color: textColor),

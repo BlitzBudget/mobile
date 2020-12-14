@@ -7,7 +7,7 @@ class ResendVerification extends StatelessWidget {
   final String email;
   final RestDataSource _restDataSource = RestDataSource();
 
-  const ResendVerification({
+  ResendVerification({
     Key key,
     this.email,
   }) : super(key: key);

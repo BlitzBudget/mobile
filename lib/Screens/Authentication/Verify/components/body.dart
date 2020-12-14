@@ -54,7 +54,8 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: verifyButton,
               press: () async {
-                await _restDataSource.verifyEmail(context, email, password, verificationCode);
+                await _restDataSource.verifyEmail(
+                    context, email, password, verificationCode);
               },
             ),
             SizedBox(height: size.height * 0.03),

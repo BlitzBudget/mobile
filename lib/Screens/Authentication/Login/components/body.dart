@@ -12,13 +12,22 @@ import '../../../../data/authentication.dart';
 import '../../../../utils/utils.dart';
 import '../../../../constants.dart';
 
-class Body extends StatelessWidget {
+// Public exposed class
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  // States
+  bool _btnEnabled = true;
+
   RestDataSource _restDataSource = RestDataSource();
   TextEditingController controller;
   String username, password;
   final login = "LOGIN";
   final yourEmail = "Your Email";
-  final continueButton = "CONTINUE";
+  String continueButton = "CONTINUE";
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +37,10 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            //  Linear Progress indicator for loading
+            _btnEnabled ? Container() : LinearProgressIndicator(
+                backgroundColor: primaryLightColor
+            ) ,
             Text(
               login,
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -52,14 +65,25 @@ class Body extends StatelessWidget {
             PasswordConstraint(),
             RoundedButton(
               text: continueButton,
+              // Disable press if button is disabled
               press: () async {
+                setState(() {
+                  continueButton = "Loading";
+                  _btnEnabled = false;
+                });
                 var user = await _restDataSource.attemptLogin(
                     context, username, password);
+                setState(() {
+                  continueButton = "CONTINUE";
+                  _btnEnabled = true;
+                });
                 if (isNotEmpty(user)) {
                   // Navigate to the second screen using a named route.
                   Navigator.pushNamed(context, dashboardRoute);
                 }
               },
+              color: primaryColor,
+              enabled: _btnEnabled,
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
