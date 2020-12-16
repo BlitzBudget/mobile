@@ -8,19 +8,33 @@ import '../../../../utils/utils.dart';
 import '../../../../data/authentication.dart';
 import '../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
+import '../../../components/linear_loading_indicator.dart';
 
-class Body extends StatelessWidget {
-  RestDataSource _restDataSource = RestDataSource();
-  String verificationCode;
-  final String verifyEmail = "Verify Email";
-  final String verificationCodeText = "Your verification code";
-  final String verifyButton = "VERIFY";
-  final String email;
-  final String password;
+// Public exposed class
+class Body extends StatefulWidget {
+  final String email, password;
 
   // In the constructor, require a Todo.
   Body({Key key, @required this.email, @required this.password})
       : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState(this.email, this.password);
+}
+
+class _BodyState extends State<Body> {
+  // States
+  bool _btnEnabled = true;
+
+  RestDataSource _restDataSource = RestDataSource();
+  String verificationCode;
+  final String verifyEmail = "Verify Email";
+  final String verificationCodeText = "Your verification code";
+  String verifyButton = "VERIFY";
+  final String email, password;
+
+  // In the constructor, require a body state.
+  _BodyState(this.email, this.password);
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +44,15 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              verifyEmail,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            //  Linear Progress indicator for loading
+            // Show text only when the button is enabled
+            Visibility(
+                visible: _btnEnabled,
+                child: Text(
+                  verifyEmail,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                replacement: LinearLoadingIndicator()),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               "assets/icons/signup.svg",
@@ -54,9 +73,18 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: verifyButton,
               press: () async {
+                setState(() {
+                  verifyButton = "Loading";
+                  _btnEnabled = false;
+                });
                 await _restDataSource.verifyEmail(
                     context, email, password, verificationCode);
+                setState(() {
+                  verifyButton = "VERIFY";
+                  _btnEnabled = true;
+                });
               },
+              enabled: _btnEnabled,
             ),
             SizedBox(height: size.height * 0.03),
             ResendVerification(email: email),
@@ -64,16 +92,5 @@ class Body extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  /// Verify the email with the given verification code
-  void _verifyEmail(BuildContext context, final String email,
-      final String password, final String verificationCode) async {
-    bool success = await _restDataSource.verifyEmail(
-        context, email, password, verificationCode);
-    if (success) {
-      // Navigate to the second screen using a named route.
-      Navigator.pushNamed(context, dashboardRoute);
-    }
   }
 }

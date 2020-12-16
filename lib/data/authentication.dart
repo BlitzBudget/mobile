@@ -8,6 +8,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../screens/authentication/verify/verify_screen.dart';
+import '../screens/authentication/signup/signup_screen.dart';
 import '../utils/network_util.dart';
 import '../models/user.dart';
 import '../utils/utils.dart';
@@ -79,7 +80,13 @@ class RestDataSource {
         // Conditionally process error messages
         if (includesStr(res["errorMessage"], userNotFoundException)) {
           // Signup user and parse the response
-          // TODO call signup
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  SignUpScreen(email: email, password: password),
+            ),
+          );
         } else if (includesStr(
             res["errorMessage"], userNotConfirmedException)) {
           // Navigate to the second screen using a named route.
@@ -137,8 +144,18 @@ class RestDataSource {
   ///
   /// Used to signup the user with email & password
   /// Also invokes the Verification module
-  Future<bool> signupUser(
-      BuildContext context, String email, String password) async {
+  Future<void> signupUser(BuildContext context, String email, String password,
+      String confirmPassword) async {
+    if (isEmpty(confirmPassword)) {
+      displayDialog(
+          context, "Empty Password", "The confirm password cannot be empty");
+      return;
+    } else if (!passwordExp.hasMatch(confirmPassword)) {
+      displayDialog(
+          context, "Invalid Password", "The confirm password is not valid");
+      return;
+    }
+
     // Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     var fullname = email.split('@')[0];
@@ -162,9 +179,18 @@ class RestDataSource {
       // Error Type for signup
       if (res["errorType"] != null) {
         displayDialog(context, "Error signing up", res["errorMessage"]);
-        return false;
+        return;
       }
-      return true;
+
+      // Navigate to the second screen using a named route.
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerifyScreen(email: email, password: password),
+        ),
+      );
+
+      return;
     });
   }
 
@@ -190,7 +216,7 @@ class RestDataSource {
   /// Verification Code
   ///
   /// Verify Email with confirmation code
-  Future<bool> verifyEmail(BuildContext context, String email, String password,
+  Future<void> verifyEmail(BuildContext context, String email, String password,
       String verificationCode) {
     // Start signup process
     return _netUtil
@@ -206,9 +232,13 @@ class RestDataSource {
       // Error Type for signup
       if (res["errorType"] != null) {
         displayDialog(context, "Error Verifying", res["errorMessage"]);
-        return false;
+        return;
       }
-      return true;
+
+      // Navigate to the second screen using a named route.
+      Navigator.pushNamed(context, dashboardRoute);
+
+      return;
     });
   }
 

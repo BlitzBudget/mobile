@@ -12,8 +12,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final welcomeToBlitzBudget = "WELCOME TO BlitzBudget";
-    final loginButton = "LOGIN";
-    final signupButton = "SIGN UP";
+    final startButton = "START";
 
     // This size provide us total height and width of our screen
     return Background(
@@ -32,24 +31,35 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
-              text: loginButton,
+              text: startButton,
               press: () {
+                //Navigator.of(context).push(_createRoute());
                 // Navigate to the second screen using a named route.
                 Navigator.pushNamed(context, loginRoute);
               },
-            ),
-            RoundedButton(
-              text: signupButton,
-              color: primaryLightColor,
-              textColor: Colors.black,
-              press: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, signupRoute);
-              },
-            ),
+            )
           ],
         ),
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

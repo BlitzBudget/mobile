@@ -15,17 +15,17 @@ Future<void> main() async {
   // Read value
   String token = await storage.read(key: authToken);
   String homeRoute = token == null ? initialRoute : dashboardRoute;
-  runApp(MyAdaptingApp(
+  runApp(BlitzBudgetApp(
     homeRoute: homeRoute,
   ));
 }
 
-class MyAdaptingApp extends StatelessWidget {
+class BlitzBudgetApp extends StatelessWidget {
   final String homeRoute;
   static final appName = 'BlitzBudget';
 
   // Constructor
-  MyAdaptingApp({this.homeRoute});
+  BlitzBudgetApp({this.homeRoute});
 
   @override
   Widget build(context) {

@@ -14,13 +14,33 @@ import '../../../Dashboard/dashboard_screen.dart';
 import '../../verify/verify_screen.dart';
 import '../../../../data/authentication.dart';
 import '../../../../constants.dart';
+import '../../../components/linear_loading_indicator.dart';
 
-class Body extends StatelessWidget {
+// Public exposed class
+class Body extends StatefulWidget {
+  final String email, password;
+
+  // In the constructor, require a Todo.
+  Body({Key key, @required this.email, @required this.password})
+      : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState(this.email, this.password);
+}
+
+class _BodyState extends State<Body> {
+  // States
+  bool _btnEnabled = true;
+
   final RestDataSource _restDataSource = RestDataSource();
-  String email, password;
+  final String email, password;
+  String confirmPassword;
   final signupText = "SIGNUP";
   final yourEmail = "Your Email";
-  final signupButton = "SIGNUP";
+  String signupButton = "SIGNUP";
+
+  // Constructor for the private class
+  _BodyState(this.email, this.password);
 
   @override
   Widget build(BuildContext context) {
@@ -30,43 +50,45 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              signupText,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            //  Linear Progress indicator for loading
+            // Show text only when the button is enabled
+            Visibility(
+                visible: _btnEnabled,
+                child: Text(
+                  signupText,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                replacement: LinearLoadingIndicator()),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               "assets/icons/signup.svg",
               height: size.height * 0.35,
             ),
-            RoundedInputField(
-                hintText: yourEmail,
+            Text(
+              email,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            RoundedPassword(
                 onChanged: (value) {
-                  email = value;
+                  confirmPassword = value;
                 },
                 autofocus: true),
-            RoundedPassword(
-              onChanged: (value) {
-                password = value;
-              },
-            ),
             PasswordConstraint(),
             RoundedButton(
               text: signupButton,
               press: () async {
-                bool success =
-                    await _restDataSource.signupUser(context, email, password);
-                if (success) {
-                  // Navigate to the second screen using a named route.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          VerifyScreen(email: email, password: password),
-                    ),
-                  );
-                }
+                setState(() {
+                  signupButton = "Loading";
+                  _btnEnabled = false;
+                });
+                await _restDataSource.signupUser(
+                    context, email, password, confirmPassword);
+                setState(() {
+                  signupButton = "SIGNUP";
+                  _btnEnabled = true;
+                });
               },
+              enabled: _btnEnabled,
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
