@@ -28,6 +28,7 @@ class RestDataSource {
   static final baseURL = "https://api.blitzbudget.com";
   static final loginURL = baseURL + "/profile/sign-in";
   static final signupURL = baseURL + "/profile/sign-up";
+  static final forgotPasswordURL = baseURL + '/profile/forgot-password';
   static final confirmSignupURL = baseURL + '/profile/confirm-sign-up';
   static final resendVerificationCodeURL =
       baseURL + '/profile/resend-confirmation-code';
@@ -255,6 +256,45 @@ class RestDataSource {
         return false;
       }
       return true;
+    });
+  }
+
+  // Forgot Password Scenario to create a new one
+  Future<void> forgotPassword(BuildContext context, String email, String password) {
+    if (isEmpty(email)) {
+      displayDialog(context, "Empty Email", "The email cannot be empty");
+      return;
+    } else if (!EmailValidator.validate(email.trim())) {
+      displayDialog(context, "Invalid Email", "The email is not valid");
+      return;
+    } else if (isEmpty(password)) {
+      displayDialog(context, "Empty Password", "The password cannot be empty");
+      return;
+    } else if (!passwordExp.hasMatch(password)) {
+      displayDialog(context, "Invalid Password", "The password is not valid");
+      return;
+    }
+
+      // Start resending the verification code
+    return _netUtil
+        .post(forgotPasswordURL,
+            body: jsonEncode({"username": email}), headers: headers)
+        .then((dynamic res) {
+      // Error Type for signup
+      if (res["errorType"] != null) {
+        displayDialog(context, "Error", res["errorMessage"]);
+        return;
+      }
+
+      // Navigate to the second screen using a named route.
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerifyScreen(email: email, password: password),
+        ),
+      );
+
+      return;
     });
   }
 }

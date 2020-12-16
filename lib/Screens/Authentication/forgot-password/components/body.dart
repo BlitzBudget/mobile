@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
   final String forgotPasswordText = "Forgot Password";
   String forgotPasswordButton = "FORGOT PASSWORD";
   final yourEmail = "Your Email";
-  final String email;
+  final String email, password;
 
   // In the constructor, require a body state.
   _BodyState(this.email);
@@ -63,6 +63,11 @@ class _BodyState extends State<Body> {
                 },
                 autofocus: true
             ),
+            RoundedPassword(
+              onChanged: (value) {
+                password = value;
+              },
+            ),
             RoundedButton(
               text: forgotPasswordButton,
               press: () async {
@@ -70,8 +75,8 @@ class _BodyState extends State<Body> {
                   forgotPasswordButton = "Loading";
                   _btnEnabled = false;
                 });
-                await _restDataSource.verifyEmail(
-                    context, email, password, verificationCode);
+                await _restDataSource.forgotPassword(
+                    context, email, password);
                 setState(() {
                   forgotPasswordButton = "FORGOT PASSWORD";
                   _btnEnabled = true;
@@ -80,7 +85,13 @@ class _BodyState extends State<Body> {
               enabled: _btnEnabled,
             ),
             SizedBox(height: size.height * 0.03),
-            ResendVerification(email: email),
+            AlreadyHaveAnAccountCheck(
+              login: false,
+              press: () {
+                // Navigate to the second screen using a named route.
+                Navigator.pushNamed(context, loginRoute);
+              },
+            ),
           ],
         ),
       ),

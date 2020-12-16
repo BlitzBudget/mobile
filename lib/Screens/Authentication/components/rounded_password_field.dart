@@ -40,6 +40,7 @@ class _RoundedPasswordField extends State<RoundedPassword> {
     return TextFieldContainer(
       child: TextField(
         obscureText: _obscureText,
+        autocorrect: false,
         onChanged: onChanged,
         cursorColor: primaryColor,
         decoration: InputDecoration(
