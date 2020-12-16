@@ -8,17 +8,14 @@ import '../../../../data/authentication.dart';
 import '../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../../components/linear_loading_indicator.dart';
+import '../../components/already_have_an_account_check.dart';
+import '../../components/rounded_password_field.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
-  final String email;
-
-  // In the constructor, require a Todo.
-  Body({Key key, @required this.email})
-      : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(this.email);
+  _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
@@ -29,10 +26,7 @@ class _BodyState extends State<Body> {
   final String forgotPasswordText = "Forgot Password";
   String forgotPasswordButton = "FORGOT PASSWORD";
   final yourEmail = "Your Email";
-  final String email, password;
-
-  // In the constructor, require a body state.
-  _BodyState(this.email);
+  String email, password;
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +55,7 @@ class _BodyState extends State<Body> {
                 onChanged: (value) {
                   email = value;
                 },
-                autofocus: true
-            ),
+                autofocus: true),
             RoundedPassword(
               onChanged: (value) {
                 password = value;
@@ -75,8 +68,7 @@ class _BodyState extends State<Body> {
                   forgotPasswordButton = "Loading";
                   _btnEnabled = false;
                 });
-                await _restDataSource.forgotPassword(
-                    context, email, password);
+                await _restDataSource.forgotPassword(context, email, password);
                 setState(() {
                   forgotPasswordButton = "FORGOT PASSWORD";
                   _btnEnabled = true;

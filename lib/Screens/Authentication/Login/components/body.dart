@@ -91,7 +91,7 @@ class _BodyState extends State<Body> {
             AlreadyHaveAnAccountCheck(
               press: () {
                 // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, signupRoute);
+                Navigator.pushNamed(context, forgotPasswordRoute);
               },
             ),
           ],

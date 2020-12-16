@@ -11,6 +11,7 @@ const String signupRoute = '/signup';
 const String initialRoute = '/';
 const String welcomeRoute = '/welcome';
 const String verifyRoute = '/verify';
+const String forgotPasswordRoute = '/forgot-password';
 
 // Secure Storage
 const String authToken = 'auth_token';

@@ -260,22 +260,23 @@ class RestDataSource {
   }
 
   // Forgot Password Scenario to create a new one
-  Future<void> forgotPassword(BuildContext context, String email, String password) {
+  Future<void> forgotPassword(
+      BuildContext context, String email, String password) {
     if (isEmpty(email)) {
       displayDialog(context, "Empty Email", "The email cannot be empty");
-      return;
+      return null;
     } else if (!EmailValidator.validate(email.trim())) {
       displayDialog(context, "Invalid Email", "The email is not valid");
-      return;
+      return null;
     } else if (isEmpty(password)) {
       displayDialog(context, "Empty Password", "The password cannot be empty");
-      return;
+      return null;
     } else if (!passwordExp.hasMatch(password)) {
       displayDialog(context, "Invalid Password", "The password is not valid");
-      return;
+      return null;
     }
 
-      // Start resending the verification code
+    // Start resending the verification code
     return _netUtil
         .post(forgotPasswordURL,
             body: jsonEncode({"username": email}), headers: headers)
