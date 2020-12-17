@@ -20,7 +20,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // States
+ /// States
   bool _btnEnabled = true;
 
   RestDataSource _restDataSource = RestDataSource();
@@ -38,8 +38,8 @@ class _BodyState extends State<Body> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            //  Linear Progress indicator for loading
-            // Show text only when the button is enabled
+           ///  Linear Progress indicator for loading
+           /// Show text only when the button is enabled
             Visibility(
                 visible: _btnEnabled,
                 child: Text(
@@ -67,13 +67,13 @@ class _BodyState extends State<Body> {
             PasswordConstraint(),
             RoundedButton(
               text: continueButton,
-              // Disable press if button is disabled
+             /// Disable press if button is disabled
               press: () async {
                 setState(() {
                   continueButton = "Loading";
                   _btnEnabled = false;
                 });
-                // Attempt login
+               /// Attempt login
                 await _restDataSource.attemptLogin(context, username, password);
                 setState(() {
                   continueButton = "CONTINUE";
@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
               press: () {
-                // Navigate to the second screen using a named route.
+               /// Navigate to the second screen using a named route.
                 Navigator.pushNamed(context, forgotPasswordRoute);
               },
             ),

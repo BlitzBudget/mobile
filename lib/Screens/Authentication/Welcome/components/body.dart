@@ -14,7 +14,7 @@ class Body extends StatelessWidget {
     final welcomeToBlitzBudget = "WELCOME TO BlitzBudget";
     final startButton = "START";
 
-    // This size provide us total height and width of our screen
+   /// This size provide us total height and width of our screen
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -34,7 +34,7 @@ class Body extends StatelessWidget {
               text: startButton,
               press: () {
                 //Navigator.of(context).push(_createRoute());
-                // Navigate to the second screen using a named route.
+               /// Navigate to the second screen using a named route.
                 Navigator.pushNamed(context, loginRoute);
               },
             )

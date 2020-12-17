@@ -5,12 +5,12 @@ class VerifyScreen extends StatelessWidget {
   final String email, password;
   final bool useVerifyURL;
 
-  // In the constructor, require a Todo.
+ /// In the constructor, require a Todo.
   VerifyScreen(
       {Key key,
       @required this.email,
       @required this.password,
-      this.useVerifyURL})
+      this.useVerifyURL = true})
       : super(key: key);
 
   @override

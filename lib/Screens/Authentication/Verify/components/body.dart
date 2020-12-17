@@ -21,7 +21,7 @@ class Body extends StatefulWidget {
       {Key key,
       @required this.email,
       @required this.password,
-      this.useVerifyURL = true})
+      this.useVerifyURL})
       : super(key: key);
 
   @override

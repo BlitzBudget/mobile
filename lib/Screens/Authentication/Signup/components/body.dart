@@ -20,7 +20,7 @@ import '../../../components/linear_loading_indicator.dart';
 class Body extends StatefulWidget {
   final String email, password;
 
-  // In the constructor, require a Todo.
+ /// In the constructor, require a Todo.
   Body({Key key, @required this.email, @required this.password})
       : super(key: key);
 
@@ -29,7 +29,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // States
+ /// States
   bool _btnEnabled = true;
 
   final RestDataSource _restDataSource = RestDataSource();
@@ -39,7 +39,7 @@ class _BodyState extends State<Body> {
   final yourEmail = "Your Email";
   String signupButton = "SIGNUP";
 
-  // Constructor for the private class
+ /// Constructor for the private class
   _BodyState(this.email, this.password);
 
   @override
@@ -50,8 +50,8 @@ class _BodyState extends State<Body> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            //  Linear Progress indicator for loading
-            // Show text only when the button is enabled
+           ///  Linear Progress indicator for loading
+           /// Show text only when the button is enabled
             Visibility(
                 visible: _btnEnabled,
                 child: Text(
@@ -94,7 +94,7 @@ class _BodyState extends State<Body> {
             AlreadyHaveAnAccountCheck(
               login: false,
               press: () {
-                // Navigate to the second screen using a named route.
+               /// Navigate to the second screen using a named route.
                 Navigator.pushNamed(context, loginRoute);
               },
             ),

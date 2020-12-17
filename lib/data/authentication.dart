@@ -39,7 +39,7 @@ class RestDataSource {
     'Accept': 'application/json'
   };
   static final checkPassword = false;
-  // Create storage
+ /// Create storage
   final storage = new FlutterSecureStorage();
   static final RegExp passwordExp = new RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
@@ -67,7 +67,7 @@ class RestDataSource {
       return null;
     }
 
-    // Convert email to lowercase and trim
+   /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     return _netUtil
         .post(loginURL,
@@ -80,9 +80,9 @@ class RestDataSource {
         .then((dynamic res) {
       developer.log("User Attributes" + res['UserAttributes'].toString());
       if (res["errorType"] != null) {
-        // Conditionally process error messages
+       /// Conditionally process error messages
         if (includesStr(res["errorMessage"], userNotFoundException)) {
-          // Signup user and parse the response
+         /// Signup user and parse the response
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -92,7 +92,7 @@ class RestDataSource {
           );
         } else if (includesStr(
             res["errorMessage"], userNotConfirmedException)) {
-          // Navigate to the second screen using a named route.
+         /// Navigate to the second screen using a named route.
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -106,42 +106,42 @@ class RestDataSource {
         }
         return null;
       }
-      // User
+     /// User
       User user = new User.map(res["UserAttributes"]);
-      // Store User Attributes
+     /// Store User Attributes
       _storeUserAttributes(user, storage);
-      // Store Refresh Token
+     /// Store Refresh Token
       _storeRefreshToken(res, storage);
-      // Store Access Token
+     /// Store Access Token
       _storeAccessToken(res, storage);
-      // Store Auth Token
+     /// Store Auth Token
       _storeAuthToken(res, storage);
 
-      // Navigate to the second screen using a named route.
+     /// Navigate to the second screen using a named route.
       Navigator.pushNamed(context, dashboardRoute);
       return;
     });
   }
 
   void _storeUserAttributes(User user, FlutterSecureStorage storage) async {
-    // Write User Attributes
+   /// Write User Attributes
     await storage.write(key: userAttributes, value: user.toString());
   }
 
   void _storeRefreshToken(dynamic res, FlutterSecureStorage storage) async {
-    // Write Refresh Token
+   /// Write Refresh Token
     await storage.write(
         key: refreshToken, value: res["AuthenticationResult"]["RefreshToken"]);
   }
 
   void _storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
-    // Write Access Token
+   /// Write Access Token
     await storage.write(
         key: accessToken, value: res["AuthenticationResult"]["AccessToken"]);
   }
 
   void _storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
-    // Write Id Token
+   /// Write Id Token
     await storage.write(
         key: authToken, value: res["AuthenticationResult"]["IdToken"]);
   }
@@ -162,15 +162,15 @@ class RestDataSource {
       return;
     }
 
-    // Convert email to lowercase and trim
+   /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     var fullname = email.split('@')[0];
     var names = fetchNames(fullname);
 
-    // Add accept language headers
+   /// Add accept language headers
     headers['Accept-Language'] = await Devicelocale.currentLocale;
 
-    // Start signup process
+   /// Start signup process
     return _netUtil
         .post(signupURL,
             body: jsonEncode({
@@ -182,13 +182,13 @@ class RestDataSource {
             }),
             headers: headers)
         .then((dynamic res) {
-      // Error Type for signup
+     /// Error Type for signup
       if (res["errorType"] != null) {
         displayDialog(context, "Error signing up", res["errorMessage"]);
         return;
       }
 
-      // Navigate to the second screen using a named route.
+     /// Navigate to the second screen using a named route.
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -207,10 +207,10 @@ class RestDataSource {
 
     if (match == null) {
       developer.log('No match found for ${fullname}');
-      // Sur name cannot be empty
+     /// Sur name cannot be empty
       name = Name(fullname, ' ');
     } else {
-      // TODO SPLIT the name and then assign it to first and surname
+     /// TODO SPLIT the name and then assign it to first and surname
       name = Name(fullname, ' ');
       developer.log(
           'Fullname ${fullname}, First match: ${match.start}, end Match: ${match.input}');
@@ -224,10 +224,10 @@ class RestDataSource {
   /// Verify Email with confirmation code
   Future<void> verifyEmail(BuildContext context, String email, String password,
       String verificationCode, bool useVerifyURL) {
-    // Call verify / Confirm forgot password url
+   /// Call verify / Confirm forgot password url
     final String urlForAPICall =
         useVerifyURL ? confirmSignupURL : confirmForgotPasswordURL;
-    // Start signup process
+   /// Start signup process
     return _netUtil
         .post(urlForAPICall,
             body: jsonEncode({
@@ -238,13 +238,13 @@ class RestDataSource {
             }),
             headers: headers)
         .then((dynamic res) async {
-          // Error Type for signup
+         /// Error Type for signup
           if (res["errorType"] != null) {
             displayDialog(context, "Error Verifying", res["errorMessage"]);
             return;
           }
 
-          // Attempt to login after completing verification
+         /// Attempt to login after completing verification
           await attemptLogin(context, email, password);
           return;
         });
@@ -252,12 +252,12 @@ class RestDataSource {
 
   /// Resend Verification Code
   Future<bool> resendVerificationCode(BuildContext context, String email) {
-    // Start resending the verification code
+   /// Start resending the verification code
     return _netUtil
         .post(resendVerificationCodeURL,
             body: jsonEncode({"username": email}), headers: headers)
         .then((dynamic res) {
-      // Error Type for signup
+     /// Error Type for signup
       if (res["errorType"] != null) {
         displayDialog(context, "Error", res["errorMessage"]);
         return false;
@@ -266,8 +266,8 @@ class RestDataSource {
     });
   }
 
-  // Forgot Password Scenario to create a new one
-  // Redirects to Verify Email
+ /// Forgot Password Scenario to create a new one
+ /// Redirects to Verify Email
   Future<void> forgotPassword(
       BuildContext context, String email, String password) {
     if (isEmpty(email)) {
@@ -284,18 +284,18 @@ class RestDataSource {
       return null;
     }
 
-    // Start resending the verification code
+   /// Start resending the verification code
     return _netUtil
         .post(forgotPasswordURL,
             body: jsonEncode({"username": email}), headers: headers)
         .then((dynamic res) {
-      // Error Type for signup
+     /// Error Type for signup
       if (res["errorType"] != null) {
         displayDialog(context, "Error", res["errorMessage"]);
         return;
       }
 
-      // Navigate to the second screen using a named route.
+     /// Navigate to the second screen using a named route.
       Navigator.push(
         context,
         MaterialPageRoute(
