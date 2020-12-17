@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
 import '../../components/already_have_an_account_check.dart';
-import '../../components/rounded_button.dart';
+import '../../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
 import '../../components/password_constraint_container.dart';

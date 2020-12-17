@@ -34,7 +34,7 @@ class _SettingsTabState extends State<SettingsTab> {
         ),
         SizedBox(height: size.height * 0.01),
         ListTile(
-          title: Text('All Categories'),
+          title: Text('Categories'),
 
           /// The Material switch has a platform adaptive constructor.
           trailing: Switch.adaptive(
@@ -43,14 +43,14 @@ class _SettingsTabState extends State<SettingsTab> {
           ),
         ),
         ListTile(
-          title: Text('Wallet Currency'),
+          title: Text('Currency'),
           trailing: Switch.adaptive(
             value: switch2,
             onChanged: (value) => setState(() => switch2 = value),
           ),
         ),
         ListTile(
-          title: Text('Notification Settings'),
+          title: Text('Notifications'),
           trailing: Switch.adaptive(
             value: switch5,
             onChanged: (value) => setState(() => switch5 = value),
@@ -58,6 +58,13 @@ class _SettingsTabState extends State<SettingsTab> {
         ),
         ListTile(
           title: Text('Language'),
+          trailing: Switch.adaptive(
+            value: switch6,
+            onChanged: (value) => setState(() => switch6 = value),
+          ),
+        ),
+        ListTile(
+          title: Text('Country'),
           trailing: Switch.adaptive(
             value: switch6,
             onChanged: (value) => setState(() => switch6 = value),
@@ -96,12 +103,12 @@ class _SettingsTabState extends State<SettingsTab> {
         ListTile(
           title: Text('Help center'),
           trailing: Switch.adaptive(
-            value: switch4,
-            onChanged: (value) => setState(() => switch4 = value),
+            value: switch3,
+            onChanged: (value) => setState(() => switch3 = value),
           ),
         ),
         ListTile(
-          title: Text('Ask us directly'),
+          title: Text('Ask a question'),
           trailing: Switch.adaptive(
             value: switch4,
             onChanged: (value) => setState(() => switch4 = value),
@@ -110,8 +117,8 @@ class _SettingsTabState extends State<SettingsTab> {
         ListTile(
           title: Text('Send a feature request'),
           trailing: Switch.adaptive(
-            value: switch3,
-            onChanged: (value) => setState(() => switch3 = value),
+            value: switch4,
+            onChanged: (value) => setState(() => switch4 = value),
           ),
         ),
       ],

@@ -6,7 +6,7 @@ import 'resend_verification.dart';
 import '../../../../constants.dart';
 import '../../../../utils/utils.dart';
 import '../../../../data/authentication.dart';
-import '../../components/rounded_button.dart';
+import '../../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../../components/linear_loading_indicator.dart';
 

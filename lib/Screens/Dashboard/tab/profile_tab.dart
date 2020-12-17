@@ -6,6 +6,7 @@ import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/welcome_screen
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_blitzbudget/utils/widgets.dart';
 import 'package:mobile_blitzbudget/constants.dart';
+import '../../components/rounded_button.dart';
 
 class ProfileTab extends StatelessWidget {
   static const title = 'Profile';
@@ -77,23 +78,6 @@ class ProfileTab extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: SettingsTab.iosIcon,
-          onPressed: () {
-            /// This pushes the settings page as a full page modal dialog on top
-            /// of the tab bar and everything.
-            Navigator.of(context, rootNavigator: true).push<void>(
-              CupertinoPageRoute(
-                title: SettingsTab.title,
-                fullscreenDialog: true,
-                builder: (context) => SettingsTab(),
-              ),
-            );
-          },
-        ),
-      ),
       child: _buildBody(context),
     );
   }
@@ -175,9 +159,9 @@ class LogOutButton extends StatelessWidget {
   /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
-    return RaisedButton(
-      child: Text(logoutTitle, style: TextStyle(color: Colors.red)),
-      onPressed: () {
+    return RoundedButton(
+      text: logoutTitle,
+      press: () {
         /// You should do something with the result of the dialog prompt in a
         /// real app but this is just a demo.
         showDialog<void>(
@@ -209,10 +193,9 @@ class LogOutButton extends StatelessWidget {
   }
 
   Widget _buildIos(BuildContext context) {
-    return CupertinoButton(
-      color: CupertinoColors.destructiveRed,
-      child: Text(logoutTitle),
-      onPressed: () {
+    return RoundedButton(
+      text: logoutTitle,
+      press: () {
         /// You should do something with the result of the action sheet prompt
         /// in a real app but this is just a demo.
         showCupertinoModalPopup<void>(

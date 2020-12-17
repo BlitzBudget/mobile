@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transaction_detail_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/profile_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/tab/wallet_tab.dart';
 import 'package:mobile_blitzbudget/utils/utils.dart';
 import 'package:mobile_blitzbudget/utils/widgets.dart';
 
@@ -142,9 +142,9 @@ class _TransactionsTabState extends State<TransactionsTab> {
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           CupertinoButton(
             padding: EdgeInsets.zero,
-            child: Icon(CupertinoIcons.shuffle),
+            child: Icon(CupertinoIcons.square_grid_2x2),
             onPressed: () => Navigator.of(context).push<void>(
-              MaterialPageRoute(builder: (context) => ProfileTab()),
+              MaterialPageRoute(builder: (context) => WalletTab()),
             ),
           ),
           CupertinoButton(

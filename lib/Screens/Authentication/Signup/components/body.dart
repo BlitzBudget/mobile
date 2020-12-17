@@ -7,7 +7,7 @@ import 'social_icon.dart';
 import '../../Login/login_screen.dart';
 import '../../components/already_have_an_account_check.dart';
 import '../../components/password_constraint_container.dart';
-import '../../components/rounded_button.dart';
+import '../../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
 import '../../../Dashboard/dashboard_screen.dart';

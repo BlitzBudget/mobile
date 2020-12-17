@@ -5,7 +5,7 @@ import 'background.dart';
 import '../../../../constants.dart';
 import '../../../../utils/utils.dart';
 import '../../../../data/authentication.dart';
-import '../../components/rounded_button.dart';
+import '../../../components/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../../components/linear_loading_indicator.dart';
 import '../../components/already_have_an_account_check.dart';
