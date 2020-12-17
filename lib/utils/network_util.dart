@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
 class NetworkUtil {
-  // next three lines makes this class a Singleton
+ /// next three lines makes this class a Singleton
   static NetworkUtil _instance = new NetworkUtil.internal();
   NetworkUtil.internal();
   factory NetworkUtil() => _instance;

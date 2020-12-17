@@ -15,8 +15,8 @@ class Body extends StatefulWidget {
   final String email, password;
   final bool useVerifyURL;
 
-  // In the constructor, require a Todo.
-  // The verify URL is true by default
+ /// In the constructor, require a Todo.
+ /// The verify URL is true by default
   Body(
       {Key key,
       @required this.email,
@@ -30,7 +30,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // States
+  /// States
   bool _btnEnabled = true;
 
   RestDataSource _restDataSource = RestDataSource();
@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
   final String email, password;
   final bool useVerifyURL;
 
-  // In the constructor, require a body state.
+ /// In the constructor, require a body state.
   _BodyState(this.email, this.password, this.useVerifyURL);
 
   @override
@@ -52,8 +52,8 @@ class _BodyState extends State<Body> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            //  Linear Progress indicator for loading
-            // Show text only when the button is enabled
+           ///  Linear Progress indicator for loading
+           /// Show text only when the button is enabled
             Visibility(
                 visible: _btnEnabled,
                 child: Text(
@@ -70,7 +70,7 @@ class _BodyState extends State<Body> {
                 hintText: verificationCodeText,
                 onChanged: (value) async {
                   verificationCode = value;
-                  // If the length of the string is == 6 then submit the code for verification
+                 /// If the length of the string is == 6 then submit the code for verification
                   if (isNotEmpty(verificationCode) &&
                       verificationCode.length >= 6) {
                     await _verifyEmailAndSetState(context, email, password, verificationCode, useVerifyURL);
@@ -92,7 +92,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  // Verify Email And set state of the widget
+ /// Verify Email And set state of the widget
   void _verifyEmailAndSetState(BuildContext context,final String email,final String password,final String verificationCode,final bool useVerifyURL) async {
       _loadingState();
                 await _restDataSource.verifyEmail(
@@ -100,7 +100,7 @@ class _BodyState extends State<Body> {
                 _defaultState();
   }
 
-  // Set the state of the verification widget to loading
+ /// Set the state of the verification widget to loading
   void _loadingState() {
       setState(() {
                   verifyButton = "Loading";
@@ -108,7 +108,7 @@ class _BodyState extends State<Body> {
                 });
   }
 
-  // Set the state of the verification widget back to default
+ /// Set the state of the verification widget back to default
   void _defaultState() {
       setState(() {
                   verifyButton = "VERIFY";

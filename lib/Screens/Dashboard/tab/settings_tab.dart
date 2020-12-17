@@ -27,7 +27,7 @@ class _SettingsTabState extends State<SettingsTab> {
         Padding(padding: EdgeInsets.only(top: 24)),
         ListTile(
           title: Text('Send me marketing emails'),
-          // The Material switch has a platform adaptive constructor.
+         /// The Material switch has a platform adaptive constructor.
           trailing: Switch.adaptive(
             value: switch1,
             onChanged: (value) => setState(() => switch1 = value),
@@ -79,9 +79,9 @@ class _SettingsTabState extends State<SettingsTab> {
     );
   }
 
-  // ===========================================================================
-  // Non-shared code below because this tab uses different scaffolds.
-  // ===========================================================================
+ /// ===========================================================================
+ /// Non-shared code below because this tab uses different scaffolds.
+ /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(

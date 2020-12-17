@@ -93,18 +93,18 @@ class _PressableCardState extends State<PressableCard>
             widget.onPressed();
           }
         },
-        // This widget both internally drives an animation when pressed and
-        // responds to an external animation to flatten the card when in a
-        // hero animation. You likely want to modularize them more in your own
-        // app.
+       /// This widget both internally drives an animation when pressed and
+       /// responds to an external animation to flatten the card when in a
+       /// hero animation. You likely want to modularize them more in your own
+       /// app.
         child: AnimatedBuilder(
           animation:
               Listenable.merge([elevationAnimation, widget.flattenAnimation]),
           child: widget.child,
           builder: (context, child) {
             return Transform.scale(
-              // This is just a sample. You likely want to keep the math cleaner
-              // in your own app.
+             /// This is just a sample. You likely want to keep the math cleaner
+             /// in your own app.
               scale: 1 - elevationAnimation.value * 0.03,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16) *
@@ -146,12 +146,12 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
 
   @override
   Widget build(context) {
-    // This is an inefficient usage of AnimatedBuilder since it's rebuilding
-    // the entire subtree instead of passing in a non-changing child and
-    // building a transition widget in between.
+   /// This is an inefficient usage of AnimatedBuilder since it's rebuilding
+   /// the entire subtree instead of passing in a non-changing child and
+   /// building a transition widget in between.
     //
-    // Left simple in this demo because this card doesn't have any real inner
-    // content so this just rebuilds everything while animating.
+   /// Left simple in this demo because this card doesn't have any real inner
+   /// content so this just rebuilds everything while animating.
     return AnimatedBuilder(
       animation: heroAnimation,
       builder: (context, child) {
@@ -164,7 +164,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // The transaction title banner slides off in the hero animation.
+               /// The transaction title banner slides off in the hero animation.
                 Positioned(
                   bottom: -80 * heroAnimation.value,
                   left: 0,
@@ -183,7 +183,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // The play button grows in the hero animation.
+               /// The play button grows in the hero animation.
                 Padding(
                   padding:
                       EdgeInsets.only(bottom: 45) * (1 - heroAnimation.value),
@@ -295,7 +295,7 @@ void showChoices(BuildContext context, List<String> choices) {
                       title: Text(choices[index]),
                       value: index,
                       groupValue: selectedRadio,
-                      // ignore: avoid_types_on_closure_parameters
+                     /// ignore: avoid_types_on_closure_parameters
                       onChanged: (int value) {
                         setState(() => selectedRadio = value);
                       },
