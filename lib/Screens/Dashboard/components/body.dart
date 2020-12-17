@@ -33,17 +33,17 @@ class PlatformAdaptingHomePage extends StatefulWidget {
 }
 
 class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
- /// This app keeps a global key for the transactions tab because it owns a bunch of
- /// data. Since changing platform re-parents those tabs into different
- /// scaffolds, keeping a global key to it lets this app keep that tab's data as
- /// the platform toggles.
+  /// This app keeps a global key for the transactions tab because it owns a bunch of
+  /// data. Since changing platform re-parents those tabs into different
+  /// scaffolds, keeping a global key to it lets this app keep that tab's data as
+  /// the platform toggles.
   //
- /// This isn't needed for apps that doesn't toggle platforms while running.
+  /// This isn't needed for apps that doesn't toggle platforms while running.
   final TransactionsTabKey = GlobalKey();
 
- /// In Material, this app uses the hamburger menu paradigm and flatly lists
- /// all 4 possible tabs. This drawer is injected into the transactions tab which is
- /// actually building the scaffold around the drawer.
+  /// In Material, this app uses the hamburger menu paradigm and flatly lists
+  /// all 4 possible tabs. This drawer is injected into the transactions tab which is
+  /// actually building the scaffold around the drawer.
   Widget _buildAndroidHomePage(BuildContext context) {
     return TransactionsTab(
       key: TransactionsTabKey,
@@ -51,14 +51,14 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
     );
   }
 
- /// On iOS, the app uses a bottom tab paradigm. Here, each tab view sits inside
- /// a tab in the tab scaffold. The tab scaffold also positions the tab bar
- /// in a row at the bottom.
+  /// On iOS, the app uses a bottom tab paradigm. Here, each tab view sits inside
+  /// a tab in the tab scaffold. The tab scaffold also positions the tab bar
+  /// in a row at the bottom.
   //
- /// An important thing to note is that while a Material Drawer can display a
- /// large number of items, a tab bar cannot. To illustrate one way of adjusting
- /// for this, the app folds its fourth tab (the settings page) into the
- /// third tab. This is a common pattern on iOS.
+  /// An important thing to note is that while a Material Drawer can display a
+  /// large number of items, a tab bar cannot. To illustrate one way of adjusting
+  /// for this, the app folds its fourth tab (the settings page) into the
+  /// third tab. This is a common pattern on iOS.
   Widget _buildIosHomePage(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
@@ -164,7 +164,8 @@ class _AndroidDrawer extends StatelessWidget {
                   context, MaterialPageRoute(builder: (context) => GoalTab()));
             },
           ),
-         /// Long drawer contents are often segmented.
+
+          /// Long drawer contents are often segmented.
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Divider(),

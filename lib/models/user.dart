@@ -14,13 +14,14 @@ class User {
     Map currentUserLocal = {};
 
     dynamic userAttributes = obj;
-   /// SUCCESS Scenarios
+
+    /// SUCCESS Scenarios
     for (var i = 0; i < userAttributes.length; i++) {
       developer.log("Printing User Attributes " + userAttributes[i]['Name']);
       String name = userAttributes[i]['Name'];
 
       if (name.contains('custom:')) {
-       /// if custom values then remove custom:
+        /// if custom values then remove custom:
         var elemName = lastElement(splitElement(name, ':'));
         currentUserLocal[elemName] = userAttributes[i]['Value'];
       } else {

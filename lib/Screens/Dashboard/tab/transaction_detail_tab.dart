@@ -29,10 +29,11 @@ class TransactionDetailTab extends StatelessWidget {
               color: color,
               heroAnimation: AlwaysStoppedAnimation(1),
             ),
-           /// This app uses a flightShuttleBuilder to specify the exact widget
-           /// to build while the hero transition is mid-flight.
+
+            /// This app uses a flightShuttleBuilder to specify the exact widget
+            /// to build while the hero transition is mid-flight.
             //
-           /// It could either be specified here or in transactionsTab.
+            /// It could either be specified here or in transactionsTab.
             flightShuttleBuilder: (context, animation, flightDirection,
                 fromHeroContext, toHeroContext) {
               return HeroAnimatingTransactionCard(
@@ -63,7 +64,8 @@ class TransactionDetailTab extends StatelessWidget {
                     ),
                   );
                 }
-               /// Just a bunch of boxes that simulates loading transaction choices.
+
+                /// Just a bunch of boxes that simulates loading transaction choices.
                 return transactionPlaceholderTile();
               },
             ),
@@ -73,9 +75,9 @@ class TransactionDetailTab extends StatelessWidget {
     );
   }
 
- /// ===========================================================================
- /// Non-shared code below because we're using different scaffolds.
- /// ===========================================================================
+  /// ===========================================================================
+  /// Non-shared code below because we're using different scaffolds.
+  /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(

@@ -61,10 +61,10 @@ class ProfileTab extends StatelessWidget {
     );
   }
 
- /// ===========================================================================
- /// Non-shared code below because on iOS, the settings tab is nested inside of
- /// the profile tab as a button in the nav bar.
- /// ===========================================================================
+  /// ===========================================================================
+  /// Non-shared code below because on iOS, the settings tab is nested inside of
+  /// the profile tab as a button in the nav bar.
+  /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
@@ -82,8 +82,8 @@ class ProfileTab extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: SettingsTab.iosIcon,
           onPressed: () {
-           /// This pushes the settings page as a full page modal dialog on top
-           /// of the tab bar and everything.
+            /// This pushes the settings page as a full page modal dialog on top
+            /// of the tab bar and everything.
             Navigator.of(context, rootNavigator: true).push<void>(
               CupertinoPageRoute(
                 title: SettingsTab.title,
@@ -165,21 +165,21 @@ class PreferenceCard extends StatelessWidget {
 class LogOutButton extends StatelessWidget {
   static const _logoutMessage = Text(logoutDescription);
 
- /// ===========================================================================
- /// Non-shared code below because this tab shows different interfaces. On
- /// Android, it's showing an alert dialog with 2 buttons and on iOS,
- /// it's showing an action sheet with 3 choices.
+  /// ===========================================================================
+  /// Non-shared code below because this tab shows different interfaces. On
+  /// Android, it's showing an alert dialog with 2 buttons and on iOS,
+  /// it's showing an action sheet with 3 choices.
   //
- /// This is a design choice and you may want to do something different in your
- /// app.
- /// ===========================================================================
+  /// This is a design choice and you may want to do something different in your
+  /// app.
+  /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
     return RaisedButton(
       child: Text(logoutTitle, style: TextStyle(color: Colors.red)),
       onPressed: () {
-       /// You should do something with the result of the dialog prompt in a
-       /// real app but this is just a demo.
+        /// You should do something with the result of the dialog prompt in a
+        /// real app but this is just a demo.
         showDialog<void>(
           context: context,
           builder: (context) {
@@ -191,7 +191,8 @@ class LogOutButton extends StatelessWidget {
                   child: const Text(logoutButton),
                   onPressed: () => () async {
                     _logoutAndRedirect();
-                   /// Navigate to the second screen using a named route.
+
+                    /// Navigate to the second screen using a named route.
                     Navigator.pushNamed(context, welcomeRoute);
                   },
                 ),
@@ -212,8 +213,8 @@ class LogOutButton extends StatelessWidget {
       color: CupertinoColors.destructiveRed,
       child: Text(logoutTitle),
       onPressed: () {
-       /// You should do something with the result of the action sheet prompt
-       /// in a real app but this is just a demo.
+        /// You should do something with the result of the action sheet prompt
+        /// in a real app but this is just a demo.
         showCupertinoModalPopup<void>(
           context: context,
           builder: (context) {
@@ -225,7 +226,8 @@ class LogOutButton extends StatelessWidget {
                     child: const Text(logoutButton),
                     onPressed: () async {
                       _logoutAndRedirect();
-                     /// Navigate to the second screen using a named route.
+
+                      /// Navigate to the second screen using a named route.
                       Navigator.pushNamed(context, welcomeRoute);
                     }),
               ],
@@ -245,9 +247,10 @@ class LogOutButton extends StatelessWidget {
   * Remove Storage and Redirect to Welcome screeen
   */
   void _logoutAndRedirect() async {
-   /// Create storage
+    /// Create storage
     final storage = new FlutterSecureStorage();
-   /// Delete all
+
+    /// Delete all
     await storage.deleteAll();
   }
 

@@ -41,7 +41,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
 
   Future<void> _refreshData() {
     return Future.delayed(
-     /// This is just an arbitrary delay that simulates some network activity.
+      /// This is just an arbitrary delay that simulates some network activity.
       const Duration(seconds: 2),
       () => setState(() => _setData()),
     );
@@ -50,8 +50,8 @@ class _TransactionsTabState extends State<TransactionsTab> {
   Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) return null;
 
-   /// Show a slightly different color palette. Show poppy-ier colors on iOS
-   /// due to lighter contrasting bars and tone it down on Android.
+    /// Show a slightly different color palette. Show poppy-ier colors on iOS
+    /// due to lighter contrasting bars and tone it down on Android.
     final color = defaultTargetPlatform == TargetPlatform.iOS
         ? colors[index]
         : colors[index].shade400;
@@ -89,24 +89,25 @@ class _TransactionsTabState extends State<TransactionsTab> {
     }
 
     debugDefaultTargetPlatformOverride = _getOppositePlatform();
-   /// This rebuilds the application. This should obviously never be
-   /// done in a real app but it's done here since this app
-   /// unrealistically toggles the current platform for demonstration
-   /// purposes.
+
+    /// This rebuilds the application. This should obviously never be
+    /// done in a real app but it's done here since this app
+    /// unrealistically toggles the current platform for demonstration
+    /// purposes.
     WidgetsBinding.instance.reassembleApplication();
   }
 
- /// ===========================================================================
- /// Non-shared code below because:
- /// - Android and iOS have different scaffolds
- /// - There are differenc items in the app bar / nav bar
- /// - Android has a hamburger drawer, iOS has bottom tabs
- /// - The iOS nav bar is scrollable, Android is not
- /// - Pull-to-refresh works differently, and Android has a button to trigger it too
+  /// ===========================================================================
+  /// Non-shared code below because:
+  /// - Android and iOS have different scaffolds
+  /// - There are differenc items in the app bar / nav bar
+  /// - Android has a hamburger drawer, iOS has bottom tabs
+  /// - The iOS nav bar is scrollable, Android is not
+  /// - Pull-to-refresh works differently, and Android has a button to trigger it too
   //
- /// And these are all design time choices that doesn't have a single 'right'
- /// answer.
- /// ===========================================================================
+  /// And these are all design time choices that doesn't have a single 'right'
+  /// answer.
+  /// ===========================================================================
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

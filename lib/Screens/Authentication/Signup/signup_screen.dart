@@ -5,7 +5,7 @@ class SignUpScreen extends StatelessWidget {
   final String email;
   final String password;
 
- /// In the constructor, require a Todo.
+  /// In the constructor, require a Todo.
   SignUpScreen({Key key, @required this.email, @required this.password})
       : super(key: key);
 

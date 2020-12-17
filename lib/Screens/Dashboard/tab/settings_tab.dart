@@ -22,66 +22,105 @@ class _SettingsTabState extends State<SettingsTab> {
   var switch7 = true;
 
   Widget _buildList() {
+    Size size = MediaQuery.of(context).size;
     return ListView(
       children: [
         Padding(padding: EdgeInsets.only(top: 24)),
         ListTile(
-          title: Text('Send me marketing emails'),
-         /// The Material switch has a platform adaptive constructor.
+          title: Text(
+            "General",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: size.height * 0.01),
+        ListTile(
+          title: Text('All Categories'),
+
+          /// The Material switch has a platform adaptive constructor.
           trailing: Switch.adaptive(
             value: switch1,
             onChanged: (value) => setState(() => switch1 = value),
           ),
         ),
         ListTile(
-          title: Text('Enable notifications'),
+          title: Text('Wallet Currency'),
           trailing: Switch.adaptive(
             value: switch2,
             onChanged: (value) => setState(() => switch2 = value),
           ),
         ),
         ListTile(
-          title: Text('Remind me to rate this app'),
-          trailing: Switch.adaptive(
-            value: switch3,
-            onChanged: (value) => setState(() => switch3 = value),
-          ),
-        ),
-        ListTile(
-          title: Text('Background transaction refresh'),
-          trailing: Switch.adaptive(
-            value: switch4,
-            onChanged: (value) => setState(() => switch4 = value),
-          ),
-        ),
-        ListTile(
-          title: Text('Recommend me transactions based on my location'),
+          title: Text('Notification Settings'),
           trailing: Switch.adaptive(
             value: switch5,
             onChanged: (value) => setState(() => switch5 = value),
           ),
         ),
         ListTile(
-          title: Text('Auto-transition playback to cast devices'),
+          title: Text('Language'),
           trailing: Switch.adaptive(
             value: switch6,
             onChanged: (value) => setState(() => switch6 = value),
           ),
         ),
+        SizedBox(height: size.height * 0.01),
         ListTile(
-          title: Text('Find friends from my contact list'),
+          title: Text(
+            "Extra Security",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: size.height * 0.01),
+        ListTile(
+          title: Text('Passcode'),
           trailing: Switch.adaptive(
-            value: switch7,
-            onChanged: (value) => setState(() => switch7 = value),
+            value: switch3,
+            onChanged: (value) => setState(() => switch3 = value),
+          ),
+        ),
+        ListTile(
+          title: Text('Face ID'),
+          trailing: Switch.adaptive(
+            value: switch4,
+            onChanged: (value) => setState(() => switch4 = value),
+          ),
+        ),
+        SizedBox(height: size.height * 0.01),
+        ListTile(
+          title: Text(
+            "Got a question?",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: size.height * 0.01),
+        ListTile(
+          title: Text('Help center'),
+          trailing: Switch.adaptive(
+            value: switch4,
+            onChanged: (value) => setState(() => switch4 = value),
+          ),
+        ),
+        ListTile(
+          title: Text('Ask us directly'),
+          trailing: Switch.adaptive(
+            value: switch4,
+            onChanged: (value) => setState(() => switch4 = value),
+          ),
+        ),
+        ListTile(
+          title: Text('Send a feature request'),
+          trailing: Switch.adaptive(
+            value: switch3,
+            onChanged: (value) => setState(() => switch3 = value),
           ),
         ),
       ],
     );
   }
 
- /// ===========================================================================
- /// Non-shared code below because this tab uses different scaffolds.
- /// ===========================================================================
+  /// ===========================================================================
+  /// Non-shared code below because this tab uses different scaffolds.
+  /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(

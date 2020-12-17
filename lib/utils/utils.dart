@@ -97,7 +97,7 @@ bool includesStr(arr, val) {
 }
 
 bool isEmpty(obj) {
- /// Check if objext is a number or a boolean
+  /// Check if objext is a number or a boolean
   if (["", null, false, 0].contains(obj)) return true;
 
   return false;

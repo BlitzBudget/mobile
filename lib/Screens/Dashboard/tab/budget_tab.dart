@@ -45,8 +45,8 @@ class _BudgetTabState extends State<BudgetTab> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: InkWell(
-         /// Make it splash on Android. It would happen automatically if this
-         /// was a real card but this is just a demo. Skip the splash on iOS.
+          /// Make it splash on Android. It would happen automatically if this
+          /// was a real card but this is just a demo. Skip the splash on iOS.
           onTap: defaultTargetPlatform == TargetPlatform.iOS ? null : () {},
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -87,9 +87,9 @@ class _BudgetTabState extends State<BudgetTab> {
     );
   }
 
- /// ===========================================================================
- /// Non-shared code below because this tab uses different scaffolds.
- /// ===========================================================================
+  /// ===========================================================================
+  /// Non-shared code below because this tab uses different scaffolds.
+  /// ===========================================================================
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(

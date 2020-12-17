@@ -8,7 +8,7 @@ class RoundedPassword extends StatefulWidget {
   final bool autofocus;
   final String hintText;
 
- /// Constructor that accepts the onchanged variable
+  /// Constructor that accepts the onchanged variable
   const RoundedPassword(
       {Key key,
       @required this.onChanged,
@@ -25,7 +25,8 @@ class RoundedPassword extends StatefulWidget {
 class _RoundedPasswordField extends State<RoundedPassword> {
   final ValueChanged<String> onChanged;
   final bool autofocus;
- /// Initially password is obscure
+
+  /// Initially password is obscure
   bool _obscureText;
   bool isPasswordVisible;
   final String hintText;
@@ -37,7 +38,7 @@ class _RoundedPasswordField extends State<RoundedPassword> {
     super.initState();
   }
 
- /// Constructor for the private class
+  /// Constructor for the private class
   _RoundedPasswordField(this.onChanged, this.autofocus, this.hintText);
 
   @override
@@ -67,12 +68,13 @@ class _RoundedPasswordField extends State<RoundedPassword> {
     );
   }
 
- /// Toggles the password show status
+  /// Toggles the password show status
   void onPressVisibility() {
     setState(() {
-     /// Is password visible
+      /// Is password visible
       isPasswordVisible = !isPasswordVisible;
-     /// Obscure text
+
+      /// Obscure text
       _obscureText = !_obscureText;
     });
   }
