@@ -13,13 +13,20 @@ import '../../../components/linear_loading_indicator.dart';
 // Public exposed class
 class Body extends StatefulWidget {
   final String email, password;
+  final bool useVerifyURL;
 
   // In the constructor, require a Todo.
-  Body({Key key, @required this.email, @required this.password})
+  // The verify URL is true by default
+  Body(
+      {Key key,
+      @required this.email,
+      @required this.password,
+      this.useVerifyURL = true})
       : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(this.email, this.password);
+  _BodyState createState() =>
+      _BodyState(this.email, this.password, this.useVerifyURL);
 }
 
 class _BodyState extends State<Body> {
@@ -32,9 +39,10 @@ class _BodyState extends State<Body> {
   final String verificationCodeText = "Your verification code";
   String verifyButton = "VERIFY";
   final String email, password;
+  final bool useVerifyURL;
 
   // In the constructor, require a body state.
-  _BodyState(this.email, this.password);
+  _BodyState(this.email, this.password, this.useVerifyURL);
 
   @override
   Widget build(BuildContext context) {
@@ -65,24 +73,14 @@ class _BodyState extends State<Body> {
                   // If the length of the string is == 6 then submit the code for verification
                   if (isNotEmpty(verificationCode) &&
                       verificationCode.length >= 6) {
-                    await _restDataSource.verifyEmail(
-                        context, email, password, verificationCode);
+                    await _verifyEmailAndSetState(context, email, password, verificationCode, useVerifyURL);
                   }
                 },
                 autofocus: true),
             RoundedButton(
               text: verifyButton,
               press: () async {
-                setState(() {
-                  verifyButton = "Loading";
-                  _btnEnabled = false;
-                });
-                await _restDataSource.verifyEmail(
-                    context, email, password, verificationCode);
-                setState(() {
-                  verifyButton = "VERIFY";
-                  _btnEnabled = true;
-                });
+                await _verifyEmailAndSetState(context, email, password, verificationCode, useVerifyURL);
               },
               enabled: _btnEnabled,
             ),
@@ -92,5 +90,29 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+
+  // Verify Email And set state of the widget
+  void _verifyEmailAndSetState(BuildContext context,final String email,final String password,final String verificationCode,final bool useVerifyURL) async {
+      _loadingState();
+                await _restDataSource.verifyEmail(
+                    context, email, password, verificationCode, useVerifyURL);
+                _defaultState();
+  }
+
+  // Set the state of the verification widget to loading
+  void _loadingState() {
+      setState(() {
+                  verifyButton = "Loading";
+                  _btnEnabled = false;
+                });
+  }
+
+  // Set the state of the verification widget back to default
+  void _defaultState() {
+      setState(() {
+                  verifyButton = "VERIFY";
+                  _btnEnabled = true;
+                });
   }
 }

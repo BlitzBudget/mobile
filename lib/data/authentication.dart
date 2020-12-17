@@ -30,6 +30,8 @@ class RestDataSource {
   static final signupURL = baseURL + "/profile/sign-up";
   static final forgotPasswordURL = baseURL + '/profile/forgot-password';
   static final confirmSignupURL = baseURL + '/profile/confirm-sign-up';
+  static final confirmForgotPasswordURL =
+      baseURL + '/profile/confirm-forgot-password';
   static final resendVerificationCodeURL =
       baseURL + '/profile/resend-confirmation-code';
   var headers = {
@@ -49,7 +51,7 @@ class RestDataSource {
   ///
   /// Logging in with Username and Password
   /// If user is not found then signup the user
-  Future<User> attemptLogin(
+  Future<void> attemptLogin(
       BuildContext context, String email, String password) async {
     if (isEmpty(email)) {
       displayDialog(context, "Empty Email", "The email cannot be empty");
@@ -114,7 +116,10 @@ class RestDataSource {
       _storeAccessToken(res, storage);
       // Store Auth Token
       _storeAuthToken(res, storage);
-      return user;
+
+      // Navigate to the second screen using a named route.
+      Navigator.pushNamed(context, dashboardRoute);
+      return;
     });
   }
 
@@ -218,10 +223,13 @@ class RestDataSource {
   ///
   /// Verify Email with confirmation code
   Future<void> verifyEmail(BuildContext context, String email, String password,
-      String verificationCode) {
+      String verificationCode, bool useVerifyURL) {
+    // Call verify / Confirm forgot password url
+    final String urlForAPICall =
+        useVerifyURL ? confirmSignupURL : confirmForgotPasswordURL;
     // Start signup process
     return _netUtil
-        .post(confirmSignupURL,
+        .post(urlForAPICall,
             body: jsonEncode({
               "username": email,
               "password": password,
@@ -229,18 +237,17 @@ class RestDataSource {
               "doNotCreateWallet": false
             }),
             headers: headers)
-        .then((dynamic res) {
-      // Error Type for signup
-      if (res["errorType"] != null) {
-        displayDialog(context, "Error Verifying", res["errorMessage"]);
-        return;
-      }
+        .then((dynamic res) async {
+          // Error Type for signup
+          if (res["errorType"] != null) {
+            displayDialog(context, "Error Verifying", res["errorMessage"]);
+            return;
+          }
 
-      // Navigate to the second screen using a named route.
-      Navigator.pushNamed(context, dashboardRoute);
-
-      return;
-    });
+          // Attempt to login after completing verification
+          await attemptLogin(context, email, password);
+          return;
+        });
   }
 
   /// Resend Verification Code
@@ -260,6 +267,7 @@ class RestDataSource {
   }
 
   // Forgot Password Scenario to create a new one
+  // Redirects to Verify Email
   Future<void> forgotPassword(
       BuildContext context, String email, String password) {
     if (isEmpty(email)) {
@@ -291,7 +299,8 @@ class RestDataSource {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VerifyScreen(email: email, password: password),
+          builder: (context) => VerifyScreen(
+              email: email, password: password, useVerifyURL: false),
         ),
       );
 

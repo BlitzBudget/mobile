@@ -13,7 +13,6 @@ import '../../components/rounded_password_field.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
-
   @override
   _BodyState createState() => _BodyState();
 }
@@ -26,6 +25,7 @@ class _BodyState extends State<Body> {
   final String forgotPasswordText = "Forgot Password";
   String forgotPasswordButton = "FORGOT PASSWORD";
   final yourEmail = "Your Email";
+  final String hintPassword = "New Password";
   String email, password;
 
   @override
@@ -57,10 +57,10 @@ class _BodyState extends State<Body> {
                 },
                 autofocus: true),
             RoundedPassword(
-              onChanged: (value) {
-                password = value;
-              },
-            ),
+                onChanged: (value) {
+                  password = value;
+                },
+                hintText: hintPassword),
             RoundedButton(
               text: forgotPasswordButton,
               press: () async {

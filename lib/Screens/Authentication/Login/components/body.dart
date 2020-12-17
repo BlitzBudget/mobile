@@ -73,16 +73,12 @@ class _BodyState extends State<Body> {
                   continueButton = "Loading";
                   _btnEnabled = false;
                 });
-                var user = await _restDataSource.attemptLogin(
-                    context, username, password);
+                // Attempt login
+                await _restDataSource.attemptLogin(context, username, password);
                 setState(() {
                   continueButton = "CONTINUE";
                   _btnEnabled = true;
                 });
-                if (isNotEmpty(user)) {
-                  // Navigate to the second screen using a named route.
-                  Navigator.pushNamed(context, dashboardRoute);
-                }
               },
               color: primaryColor,
               enabled: _btnEnabled,
