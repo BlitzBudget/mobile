@@ -78,6 +78,7 @@ class ProfileTab extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(),
       child: _buildBody(context),
     );
   }
@@ -161,6 +162,7 @@ class LogOutButton extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return RoundedButton(
       text: logoutTitle,
+      color: secondaryColor,
       press: () {
         /// You should do something with the result of the dialog prompt in a
         /// real app but this is just a demo.
@@ -195,6 +197,7 @@ class LogOutButton extends StatelessWidget {
   Widget _buildIos(BuildContext context) {
     return RoundedButton(
       text: logoutTitle,
+      color: secondaryColor,
       press: () {
         /// You should do something with the result of the action sheet prompt
         /// in a real app but this is just a demo.

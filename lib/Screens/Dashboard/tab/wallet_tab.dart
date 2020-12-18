@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/profile_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/welcome_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mobile_blitzbudget/utils/widgets.dart';
-import 'package:mobile_blitzbudget/constants.dart';
+
+import 'settings_tab.dart';
+import 'profile_tab.dart';
+import '../../../constants.dart';
+import '../../../utils/widgets.dart';
+import '../../components/rounded_button.dart';
+import '../../authentication/welcome/welcome_screen.dart';
 
 class WalletTab extends StatelessWidget {
   static const title = 'Wallets';
@@ -34,6 +35,7 @@ class WalletTab extends StatelessWidget {
             Expanded(
               child: Container(),
             ),
+            AddNewWalletButton(),
           ],
         ),
       ),
@@ -80,7 +82,7 @@ class WalletTab extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   child: ProfileTab.iosIcon,
                   onPressed: () {
-                    /// This pushes the settings page as a full page modal dialog on top
+                    /// This pushes the profile page as a full page modal dialog on top
                     /// of the tab bar and everything.
                     Navigator.of(context, rootNavigator: true).push<void>(
                       CupertinoPageRoute(
@@ -93,6 +95,93 @@ class WalletTab extends StatelessWidget {
                 ),
               ])),
       child: _buildBody(context),
+    );
+  }
+
+  @override
+  Widget build(context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
+    );
+  }
+}
+
+class AddNewWalletButton extends StatelessWidget {
+  static const _logoutMessage = Text(logoutDescription);
+
+  /// ===========================================================================
+  /// Non-shared code below because this tab shows different interfaces. On
+  /// Android, it's showing an alert dialog with 2 buttons and on iOS,
+  /// it's showing an action sheet with 3 choices.
+  //
+  /// This is a design choice and you may want to do something different in your
+  /// app.
+  /// ===========================================================================
+
+  Widget _buildAndroid(BuildContext context) {
+    return RoundedButton(
+      text: logoutTitle,
+      color: secondaryColor,
+      press: () {
+        /// You should do something with the result of the dialog prompt in a
+        /// real app but this is just a demo.
+        showDialog<void>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(logoutConfirmation),
+              content: _logoutMessage,
+              actions: [
+                FlatButton(
+                  child: const Text(logoutButton),
+                  onPressed: () => () async {
+                    /// Navigate to the second screen using a named route.
+                    Navigator.pushNamed(context, welcomeRoute);
+                  },
+                ),
+                FlatButton(
+                  child: const Text(logoutCancel),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildIos(BuildContext context) {
+    return RoundedButton(
+      text: logoutTitle,
+      color: secondaryColor,
+      press: () {
+        /// You should do something with the result of the action sheet prompt
+        /// in a real app but this is just a demo.
+        showCupertinoModalPopup<void>(
+          context: context,
+          builder: (context) {
+            return CupertinoActionSheet(
+              title: Text(logoutConfirmation),
+              message: _logoutMessage,
+              actions: [
+                CupertinoActionSheetAction(
+                    child: const Text(logoutButton),
+                    onPressed: () async {
+                      /// Navigate to the second screen using a named route.
+                      Navigator.pushNamed(context, welcomeRoute);
+                    }),
+              ],
+              cancelButton: CupertinoActionSheetAction(
+                child: const Text(logoutCancel),
+                isDefaultAction: true,
+                onPressed: () => Navigator.pop(context),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

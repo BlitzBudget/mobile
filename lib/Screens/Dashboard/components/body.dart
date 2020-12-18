@@ -6,6 +6,7 @@ import '../tab/budget_tab.dart';
 import '../tab/overview_tab.dart';
 import '../tab/settings_tab.dart';
 import '../tab/transactions_tab.dart';
+import '../tab/profile_tab.dart';
 import '../../../utils/widgets.dart';
 
 class Body extends StatelessWidget {
@@ -120,17 +121,23 @@ class _AndroidDrawer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: Colors.green),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Icon(
-                Icons.account_circle,
-                color: Colors.green.shade800,
-                size: 96,
-              ),
-            ),
-          ),
+          new GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push<void>(context,
+                    MaterialPageRoute(builder: (context) => ProfileTab()));
+              },
+              child: DrawerHeader(
+                decoration: BoxDecoration(color: Colors.green),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Icon(
+                    Icons.account_circle,
+                    color: Colors.green.shade800,
+                    size: 96,
+                  ),
+                ),
+              )),
           ListTile(
             leading: TransactionsTab.androidIcon,
             title: Text(TransactionsTab.title),
@@ -143,7 +150,8 @@ class _AndroidDrawer extends StatelessWidget {
             title: Text(OverviewTab.title),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).push(_createRoute(OverviewTab()));
+              Navigator.push<void>(context,
+                  MaterialPageRoute(builder: (context) => OverviewTab()));
             },
           ),
           ListTile(
@@ -183,22 +191,4 @@ class _AndroidDrawer extends StatelessWidget {
       ),
     );
   }
-}
-
-Route _createRoute(Widget widgetTab) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => widgetTab,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }

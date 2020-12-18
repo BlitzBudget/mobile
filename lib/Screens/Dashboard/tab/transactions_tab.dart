@@ -143,8 +143,16 @@ class _TransactionsTabState extends State<TransactionsTab> {
           CupertinoButton(
             padding: EdgeInsets.zero,
             child: Icon(CupertinoIcons.square_grid_2x2),
-            onPressed: () => Navigator.of(context).push<void>(
-              MaterialPageRoute(builder: (context) => WalletTab()),
+            onPressed: () =>
+
+                /// This pushes the Wallets page as a full page modal dialog on top
+                /// of the tab bar and everything.
+                Navigator.of(context, rootNavigator: true).push<void>(
+              CupertinoPageRoute(
+                title: WalletTab.title,
+                fullscreenDialog: true,
+                builder: (context) => WalletTab(),
+              ),
             ),
           ),
           CupertinoButton(
