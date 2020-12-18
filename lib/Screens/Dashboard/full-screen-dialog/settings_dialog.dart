@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/utils/widgets.dart';
 
-class SettingsTab extends StatefulWidget {
+class SettingsDialog extends StatefulWidget {
   static const title = 'Settings';
   static const androidIcon = Icon(Icons.settings);
   static const iosIcon = Icon(CupertinoIcons.gear);
 
   @override
-  _SettingsTabState createState() => _SettingsTabState();
+  _SettingsDialogState createState() => _SettingsDialogState();
 }
 
-class _SettingsTabState extends State<SettingsTab> {
+class _SettingsDialogState extends State<SettingsDialog> {
   var switch1 = false;
   var switch2 = true;
   var switch3 = true;
@@ -132,7 +132,7 @@ class _SettingsTabState extends State<SettingsTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(SettingsTab.title),
+        title: Text(SettingsDialog.title),
       ),
       body: _buildList(),
     );

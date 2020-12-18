@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import '../tab/goal_tab.dart';
 import '../tab/budget_tab.dart';
 import '../tab/overview_tab.dart';
-import '../tab/settings_tab.dart';
+import '../full-screen-dialog/settings_dialog.dart';
 import '../tab/transactions_tab.dart';
-import '../tab/profile_tab.dart';
+import '../full-screen-dialog/profile_dialog.dart';
 import '../../../utils/widgets.dart';
 
 class Body extends StatelessWidget {
@@ -125,7 +125,7 @@ class _AndroidDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push<void>(context,
-                    MaterialPageRoute(builder: (context) => ProfileTab()));
+                    MaterialPageRoute(builder: (context) => ProfileDialog()));
               },
               child: DrawerHeader(
                 decoration: BoxDecoration(color: Colors.green),
@@ -179,12 +179,12 @@ class _AndroidDrawer extends StatelessWidget {
             child: Divider(),
           ),
           ListTile(
-            leading: SettingsTab.androidIcon,
-            title: Text(SettingsTab.title),
+            leading: SettingsDialog.androidIcon,
+            title: Text(SettingsDialog.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => SettingsTab()));
+                  MaterialPageRoute(builder: (context) => SettingsDialog()));
             },
           ),
         ],

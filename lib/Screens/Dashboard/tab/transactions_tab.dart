@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transaction_detail_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/wallet_tab.dart';
+import 'package:mobile_blitzbudget/Screens/Dashboard/full-screen-dialog/wallet_dialog.dart';
 import 'package:mobile_blitzbudget/utils/utils.dart';
 import 'package:mobile_blitzbudget/utils/widgets.dart';
 
@@ -149,9 +149,9 @@ class _TransactionsTabState extends State<TransactionsTab> {
                 /// of the tab bar and everything.
                 Navigator.of(context, rootNavigator: true).push<void>(
               CupertinoPageRoute(
-                title: WalletTab.title,
+                title: WalletDialog.title,
                 fullscreenDialog: true,
-                builder: (context) => WalletTab(),
+                builder: (context) => WalletDialog(),
               ),
             ),
           ),

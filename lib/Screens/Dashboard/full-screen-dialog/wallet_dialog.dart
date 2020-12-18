@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/settings_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Authentication/Welcome/welcome_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mobile_blitzbudget/utils/widgets.dart';
-import 'package:mobile_blitzbudget/constants.dart';
-import '../../components/rounded_button.dart';
 
-class ProfileTab extends StatelessWidget {
-  static const title = 'Profile';
+import 'settings_dialog.dart';
+import 'profile_dialog.dart';
+import '../../../constants.dart';
+import '../../../utils/widgets.dart';
+import '../../components/rounded_button.dart';
+import '../../authentication/welcome/welcome_screen.dart';
+
+class WalletDialog extends StatelessWidget {
+  static const title = 'Wallets';
   static const androidIcon = Icon(Icons.person);
   static const iosIcon = Icon(CupertinoIcons.profile_circled);
 
@@ -31,31 +32,10 @@ class ProfileTab extends StatelessWidget {
                 ),
               ),
             ),
-            PreferenceCard(
-              header: 'MY INTENSITY PREFERENCE',
-              content: '🔥',
-              preferenceChoices: [
-                'Super heavy',
-                'Dial it to 11',
-                "Head bangin'",
-                '1000W',
-                'My neighbor hates me',
-              ],
-            ),
-            PreferenceCard(
-              header: 'CURRENT MOOD',
-              content: '🤘🏾🚀',
-              preferenceChoices: [
-                'Over the moon',
-                'Basking in sunlight',
-                'Hello fellow Martians',
-                'Into the darkness',
-              ],
-            ),
             Expanded(
               child: Container(),
             ),
-            LogOutButton(),
+            AddNewWalletButton(),
           ],
         ),
       ),
@@ -78,7 +58,42 @@ class ProfileTab extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: CupertinoNavigationBar(
+          /*automaticallyImplyLeading: false,*/
+          trailing: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: SettingsDialog.iosIcon,
+                  onPressed: () {
+                    /// This pushes the settings page as a full page modal dialog on top
+                    /// of the tab bar and everything.
+                    Navigator.of(context, rootNavigator: true).push<void>(
+                      CupertinoPageRoute(
+                        title: SettingsDialog.title,
+                        fullscreenDialog: true,
+                        builder: (context) => SettingsDialog(),
+                      ),
+                    );
+                  },
+                ),
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: ProfileDialog.iosIcon,
+                  onPressed: () {
+                    /// This pushes the profile page as a full page modal dialog on top
+                    /// of the tab bar and everything.
+                    Navigator.of(context, rootNavigator: true).push<void>(
+                      CupertinoPageRoute(
+                        title: ProfileDialog.title,
+                        fullscreenDialog: true,
+                        builder: (context) => ProfileDialog(),
+                      ),
+                    );
+                  },
+                ),
+              ])),
       child: _buildBody(context),
     );
   }
@@ -92,63 +107,9 @@ class ProfileTab extends StatelessWidget {
   }
 }
 
-class PreferenceCard extends StatelessWidget {
-  const PreferenceCard({this.header, this.content, this.preferenceChoices});
-
-  final String header;
-  final String content;
-  final List<String> preferenceChoices;
-
-  @override
-  Widget build(context) {
-    return PressableCard(
-      color: Colors.green,
-      flattenAnimation: AlwaysStoppedAnimation(0),
-      child: Stack(
-        children: [
-          Container(
-            height: 120,
-            width: 250,
-            child: Padding(
-              padding: EdgeInsets.only(top: 40),
-              child: Center(
-                child: Text(
-                  content,
-                  style: TextStyle(fontSize: 48),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: Colors.black12,
-              height: 40,
-              padding: EdgeInsets.only(left: 12),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                header,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      onPressed: () {
-        showChoices(context, preferenceChoices);
-      },
-    );
-  }
-}
-
-class LogOutButton extends StatelessWidget {
-  static const _logoutMessage = Text(logoutDescription);
+class AddNewWalletButton extends StatelessWidget {
+  static const _newWalletMessage = Text(logoutDescription);
+  static const addNewWallet = "Add new wallet";
 
   /// ===========================================================================
   /// Non-shared code below because this tab shows different interfaces. On
@@ -161,7 +122,7 @@ class LogOutButton extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return RoundedButton(
-      text: logoutTitle,
+      text: addNewWallet,
       color: secondaryColor,
       press: () {
         /// You should do something with the result of the dialog prompt in a
@@ -171,13 +132,11 @@ class LogOutButton extends StatelessWidget {
           builder: (context) {
             return AlertDialog(
               title: Text(logoutConfirmation),
-              content: _logoutMessage,
+              content: _newWalletMessage,
               actions: [
                 FlatButton(
                   child: const Text(logoutButton),
                   onPressed: () => () async {
-                    _logoutAndRedirect();
-
                     /// Navigate to the second screen using a named route.
                     Navigator.pushNamed(context, welcomeRoute);
                   },
@@ -196,7 +155,7 @@ class LogOutButton extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return RoundedButton(
-      text: logoutTitle,
+      text: addNewWallet,
       color: secondaryColor,
       press: () {
         /// You should do something with the result of the action sheet prompt
@@ -206,13 +165,11 @@ class LogOutButton extends StatelessWidget {
           builder: (context) {
             return CupertinoActionSheet(
               title: Text(logoutConfirmation),
-              message: _logoutMessage,
+              message: _newWalletMessage,
               actions: [
                 CupertinoActionSheetAction(
                     child: const Text(logoutButton),
                     onPressed: () async {
-                      _logoutAndRedirect();
-
                       /// Navigate to the second screen using a named route.
                       Navigator.pushNamed(context, welcomeRoute);
                     }),
@@ -227,17 +184,6 @@ class LogOutButton extends StatelessWidget {
         );
       },
     );
-  }
-
-  /*
-  * Remove Storage and Redirect to Welcome screeen
-  */
-  void _logoutAndRedirect() async {
-    /// Create storage
-    final storage = new FlutterSecureStorage();
-
-    /// Delete all
-    await storage.deleteAll();
   }
 
   @override
