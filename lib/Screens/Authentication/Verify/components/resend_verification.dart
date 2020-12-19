@@ -68,7 +68,8 @@ class _ResendVerificationState extends State<ResendVerification> {
   }
 
   /// Toggle the text state
-  void _toggleTextState(bool btnEnabled) {
+  /// btnEnabled is optional and the default value is true
+  void _toggleTextState([bool btnEnabled = true]) {
     setState(() {
       _btnEnabled = btnEnabled;
     });
@@ -76,10 +77,6 @@ class _ResendVerificationState extends State<ResendVerification> {
 
   /// Starts a count down timer that executes the function after hitting 0
   startTimeoutThenShowText() {
-    return new Timer(timeout, () {
-      setState(() {
-        _btnEnabled = true;
-      });
-    });
+    return new Timer(timeout, _toggleTextState);
   }
 }

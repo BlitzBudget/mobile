@@ -304,11 +304,13 @@ class RestDataSource {
       }
 
       /// Navigate to the second screen using a named route.
+      /// Show resend verification code is false
+      /// User verification URL as false
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => VerifyScreen(
-              email: email, password: password, useVerifyURL: false),
+              email: email, password: password, useVerifyURL: false, showResendVerificationCode: false),
         ),
       );
 

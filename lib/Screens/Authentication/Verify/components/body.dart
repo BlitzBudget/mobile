@@ -14,6 +14,7 @@ import '../../../components/linear_loading_indicator.dart';
 class Body extends StatefulWidget {
   final String email, password;
   final bool useVerifyURL;
+  final bool showResendVerificationCode;
 
   /// In the constructor, require a Todo.
   /// The verify URL is true by default
@@ -21,12 +22,13 @@ class Body extends StatefulWidget {
       {Key key,
       @required this.email,
       @required this.password,
-      this.useVerifyURL})
+      this.useVerifyURL,
+      this.showResendVerificationCode})
       : super(key: key);
 
   @override
-  _BodyState createState() =>
-      _BodyState(this.email, this.password, this.useVerifyURL);
+  _BodyState createState() => _BodyState(this.email, this.password,
+      this.useVerifyURL, this.showResendVerificationCode);
 }
 
 class _BodyState extends State<Body> {
@@ -38,11 +40,14 @@ class _BodyState extends State<Body> {
   final String verifyEmail = "Verify Email";
   final String verificationCodeText = "Your verification code";
   String verifyButton = "VERIFY";
+  // Required parameters
   final String email, password;
   final bool useVerifyURL;
+  final bool showResendVerificationCode;
 
   /// In the constructor, require a body state.
-  _BodyState(this.email, this.password, this.useVerifyURL);
+  _BodyState(this.email, this.password, this.useVerifyURL,
+      this.showResendVerificationCode);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +93,12 @@ class _BodyState extends State<Body> {
               enabled: _btnEnabled,
             ),
             SizedBox(height: size.height * 0.03),
-            ResendVerification(email: email),
+
+            /// Show text only when the showResendVerificationCode is enabled
+            Visibility(
+              visible: showResendVerificationCode,
+              child: ResendVerification(email: email),
+            ),
           ],
         ),
       ),

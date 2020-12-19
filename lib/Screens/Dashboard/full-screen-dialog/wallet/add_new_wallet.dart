@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/widgets.dart';
+
 class AddNewWallet extends StatelessWidget {
   static const title = 'Add new wallet';
 
@@ -53,10 +55,9 @@ class AddNewWallet extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return Scaffold();
-    /*return PlatformWidget(
+    return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
-    );*/
+    );
   }
 }

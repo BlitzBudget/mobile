@@ -21,7 +21,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   /// States
-  bool _btnEnabled = false;
+  bool _btnEnabled = true;
 
   RestDataSource _restDataSource = RestDataSource();
   TextEditingController controller;
