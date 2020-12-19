@@ -1,39 +1,85 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import '../../../../constants.dart';
 import '../../../../data/authentication.dart';
 
-class ResendVerification extends StatelessWidget {
+// Public exposed class
+class ResendVerification extends StatefulWidget {
   final String email;
+
+  /// In the constructor, require an email.
+  ResendVerification({Key key, @required this.email}) : super(key: key);
+
+  @override
+  _ResendVerificationState createState() =>
+      _ResendVerificationState(this.email);
+}
+
+class _ResendVerificationState extends State<ResendVerification> {
+  /// States
+  bool _btnEnabled = true;
+  Timer _timer;
+  final String email;
+  final timeout = const Duration(seconds: 60);
   final RestDataSource _restDataSource = RestDataSource();
 
-  ResendVerification({
-    Key key,
-    this.email,
-  }) : super(key: key);
+  _ResendVerificationState(this.email);
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          "Resend ",
-          style: TextStyle(color: primaryColor),
-        ),
+        /// Show text only when the button is enabled
+        Visibility(
+            visible: _btnEnabled,
+            child: Text(
+              "Resend ",
+              style: TextStyle(color: primaryColor),
+            )),
         GestureDetector(
           onTap: () async {
+            _toggleTextState(false);
             await _restDataSource.resendVerificationCode(context, email);
+            // Show the text again after a period in time
+            startTimeoutThenShowText();
           },
-          child: Text(
-            "Verification Code",
-            style: TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.bold,
-            ),
+          child:
+
+              /// Show text only when the button is enabled
+              Visibility(
+            visible: _btnEnabled,
+            child: Text("Verification Code",
+                style: TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                )),
           ),
         )
       ],
     );
+  }
+
+  /// Toggle the text state
+  void _toggleTextState(bool btnEnabled) {
+    setState(() {
+      _btnEnabled = btnEnabled;
+    });
+  }
+
+  /// Starts a count down timer that executes the function after hitting 0
+  startTimeoutThenShowText() {
+    return new Timer(timeout, () {
+      setState(() {
+        _btnEnabled = true;
+      });
+    });
   }
 }

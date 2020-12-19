@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'settings_dialog.dart';
 import 'profile_dialog.dart';
 import '../../../constants.dart';
+import 'wallet/add_new_wallet.dart';
 import '../../../utils/widgets.dart';
 import '../../components/rounded_button.dart';
 import '../../authentication/welcome/welcome_screen.dart';
@@ -60,40 +61,39 @@ class WalletDialog extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
           /*automaticallyImplyLeading: false,*/
-          trailing: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  child: SettingsDialog.iosIcon,
-                  onPressed: () {
-                    /// This pushes the settings page as a full page modal dialog on top
-                    /// of the tab bar and everything.
-                    Navigator.of(context, rootNavigator: true).push<void>(
-                      CupertinoPageRoute(
-                        title: SettingsDialog.title,
-                        fullscreenDialog: true,
-                        builder: (context) => SettingsDialog(),
-                      ),
-                    );
-                  },
-                ),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  child: ProfileDialog.iosIcon,
-                  onPressed: () {
-                    /// This pushes the profile page as a full page modal dialog on top
-                    /// of the tab bar and everything.
-                    Navigator.of(context, rootNavigator: true).push<void>(
-                      CupertinoPageRoute(
-                        title: ProfileDialog.title,
-                        fullscreenDialog: true,
-                        builder: (context) => ProfileDialog(),
-                      ),
-                    );
-                  },
-                ),
-              ])),
+          trailing:
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: SettingsDialog.iosIcon,
+          onPressed: () {
+            /// This pushes the settings page as a full page modal dialog on top
+            /// of the tab bar and everything.
+            Navigator.of(context, rootNavigator: true).push<void>(
+              CupertinoPageRoute(
+                title: SettingsDialog.title,
+                fullscreenDialog: true,
+                builder: (context) => SettingsDialog(),
+              ),
+            );
+          },
+        ),
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: ProfileDialog.iosIcon,
+          onPressed: () {
+            /// This pushes the profile page as a full page modal dialog on top
+            /// of the tab bar and everything.
+            Navigator.of(context, rootNavigator: true).push<void>(
+              CupertinoPageRoute(
+                title: ProfileDialog.title,
+                fullscreenDialog: true,
+                builder: (context) => ProfileDialog(),
+              ),
+            );
+          },
+        ),
+      ])),
       child: _buildBody(context),
     );
   }
@@ -125,30 +125,9 @@ class AddNewWalletButton extends StatelessWidget {
       text: addNewWallet,
       color: secondaryColor,
       press: () {
-        /// You should do something with the result of the dialog prompt in a
-        /// real app but this is just a demo.
-        showDialog<void>(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(logoutConfirmation),
-              content: _newWalletMessage,
-              actions: [
-                FlatButton(
-                  child: const Text(logoutButton),
-                  onPressed: () => () async {
-                    /// Navigate to the second screen using a named route.
-                    Navigator.pushNamed(context, welcomeRoute);
-                  },
-                ),
-                FlatButton(
-                  child: const Text(logoutCancel),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            );
-          },
-        );
+        Navigator.pop(context);
+        Navigator.push<void>(
+            context, MaterialPageRoute(builder: (context) => AddNewWallet()));
       },
     );
   }
@@ -158,29 +137,14 @@ class AddNewWalletButton extends StatelessWidget {
       text: addNewWallet,
       color: secondaryColor,
       press: () {
-        /// You should do something with the result of the action sheet prompt
-        /// in a real app but this is just a demo.
-        showCupertinoModalPopup<void>(
-          context: context,
-          builder: (context) {
-            return CupertinoActionSheet(
-              title: Text(logoutConfirmation),
-              message: _newWalletMessage,
-              actions: [
-                CupertinoActionSheetAction(
-                    child: const Text(logoutButton),
-                    onPressed: () async {
-                      /// Navigate to the second screen using a named route.
-                      Navigator.pushNamed(context, welcomeRoute);
-                    }),
-              ],
-              cancelButton: CupertinoActionSheetAction(
-                child: const Text(logoutCancel),
-                isDefaultAction: true,
-                onPressed: () => Navigator.pop(context),
-              ),
-            );
-          },
+        /// This pushes the Wallets page as a full page modal dialog on top
+        /// of the tab bar and everything.
+        Navigator.of(context, rootNavigator: true).push<void>(
+          CupertinoPageRoute(
+            title: WalletDialog.title,
+            fullscreenDialog: true,
+            builder: (context) => AddNewWallet(),
+          ),
         );
       },
     );

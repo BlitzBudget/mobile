@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mobile_blitzbudget/utils/widgets.dart';
+import '../../../utils/widgets.dart';
 
 class SettingsDialog extends StatefulWidget {
   static const title = 'Settings';
