@@ -310,7 +310,10 @@ class RestDataSource {
         context,
         MaterialPageRoute(
           builder: (context) => VerifyScreen(
-              email: email, password: password, useVerifyURL: false, showResendVerificationCode: false),
+              email: email,
+              password: password,
+              useVerifyURL: false,
+              showResendVerificationCode: false),
         ),
       );
 

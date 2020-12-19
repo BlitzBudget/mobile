@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mobile_blitzbudget/Screens/Dashboard/tab/transaction_detail_tab.dart';
-import 'package:mobile_blitzbudget/Screens/Dashboard/full-screen-dialog/wallet_dialog.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
-import 'package:mobile_blitzbudget/utils/widgets.dart';
+import 'transaction_detail_tab.dart';
+import '../full-screen-dialog/wallet_dialog.dart';
+import '../../../utils/utils.dart';
+import '../../../utils/widgets.dart';
 
 class TransactionsTab extends StatefulWidget {
   static const title = 'Transactions';

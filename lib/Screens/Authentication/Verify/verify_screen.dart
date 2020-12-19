@@ -38,8 +38,8 @@ class VerifyScreen extends StatelessWidget {
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          backgroundColor: Colors.transparent,
-          border: Border(bottom: BorderSide(color: Colors.transparent)),
+        backgroundColor: Colors.transparent,
+        border: Border(bottom: BorderSide(color: Colors.transparent)),
       ),
       child: Body(
           email: email,

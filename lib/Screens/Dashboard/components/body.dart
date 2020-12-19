@@ -8,6 +8,7 @@ import '../full-screen-dialog/settings_dialog.dart';
 import '../tab/transactions_tab.dart';
 import '../full-screen-dialog/profile_dialog.dart';
 import '../../../utils/widgets.dart';
+import '../../../constants.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -34,6 +35,12 @@ class PlatformAdaptingHomePage extends StatefulWidget {
 }
 
 class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
+  static const plusIcon = Icon(
+    CupertinoIcons.plus_circle_fill,
+    color: primaryColor,
+    size: 48.0,
+  );
+
   /// This app keeps a global key for the transactions tab because it owns a bunch of
   /// data. Since changing platform re-parents those tabs into different
   /// scaffolds, keeping a global key to it lets this app keep that tab's data as
@@ -69,6 +76,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
               icon: TransactionsTab.iosIcon),
           BottomNavigationBarItem(
               title: Text(OverviewTab.title), icon: OverviewTab.iosIcon),
+          BottomNavigationBarItem(icon: plusIcon),
           BottomNavigationBarItem(
               title: Text(BudgetTab.title), icon: BudgetTab.iosIcon),
           BottomNavigationBarItem(
@@ -88,11 +96,12 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
               builder: (context) => OverviewTab(),
             );
           case 2:
+          case 3:
             return CupertinoTabView(
               defaultTitle: BudgetTab.title,
               builder: (context) => BudgetTab(),
             );
-          case 3:
+          case 4:
             return CupertinoTabView(
               defaultTitle: GoalTab.title,
               builder: (context) => GoalTab(),
