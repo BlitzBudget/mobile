@@ -38,7 +38,8 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
   static const plusIcon = Icon(
     CupertinoIcons.plus_circle_fill,
     color: primaryColor,
-    size: 48.0,
+    size: 50.0,
+    semanticLabel: 'Add'
   );
 
   /// This app keeps a global key for the transactions tab because it owns a bunch of
