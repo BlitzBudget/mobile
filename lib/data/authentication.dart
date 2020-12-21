@@ -169,6 +169,7 @@ class RestDataSource {
     } else if (confirmPassword != password) {
        displayDialog(
           context, "Password Mismatch", "The confirm password and the password do not match");
+       return;
     }
 
     /// Convert email to lowercase and trim
@@ -192,7 +193,8 @@ class RestDataSource {
             headers: headers)
         .then((dynamic res) {
       /// Error Type for signup
-      if (res["errorType"] != null) {
+      /// UsernameExistsException is excluded from showing error message
+      if (res["errorType"] != null && !res["errorMessage"].contains('UsernameExistsException')) {
         displayDialog(context, "Error signing up", res["errorMessage"]);
         return;
       }

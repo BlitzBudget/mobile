@@ -20,9 +20,11 @@ class User {
       developer.log("Printing User Attributes " + userAttributes[i]['Name']);
       String name = userAttributes[i]['Name'];
 
+      developer.log('User:: The name is $name');
       if (name.contains('custom:')) {
         /// if custom values then remove custom:
         var elemName = lastElement(splitElement(name, ':'));
+        developer.log('User:: The elemName is $elemName');
         currentUserLocal[elemName] = userAttributes[i]['Value'];
       } else {
         currentUserLocal[name] = userAttributes[i]['Value'];

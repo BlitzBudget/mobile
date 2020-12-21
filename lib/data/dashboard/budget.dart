@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../utils/network_util.dart';
 import '../authentication.dart';
 import '../../constants.dart';
+import '../../models/user.dart';
 
 class BudgetRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -28,12 +31,14 @@ class BudgetRestData {
   Future<void> get() async {
     // Read value
     final String value = await _storage.read(key: userAttributes);
-    debugPrint('User Attributes retrieved: $value');
+    // Decode the json user
+    Map<String, dynamic> user = jsonDecode(value);
+    developer.log('User Attributes retrieved for: ${user["userid"]}');
     /*return _netUtil
         .get(_budgetURL,
             body: jsonEncode({
               "walletId": email,
-              "userId": password,
+              "userId": user["userid"],
               "startsWithDate": _checkPassword,
               "endsWithDate": _checkPassword
             }),
