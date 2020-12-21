@@ -41,7 +41,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    map["_userid"] = _userid;
+    map["userid"] = _userid;
     map["email"] = _email;
     map["name"] = _name;
     map["locale"] = _locale;
@@ -50,4 +50,13 @@ class User {
 
     return map;
   }
+
+  Map<String, dynamic> toJSON() => {
+        'userid': _userid,
+        'email': _email,
+        'name': _name,
+        'locale': _locale,
+        'fileformat': _fileformat,
+        'familyname': _familyname,
+      };
 }

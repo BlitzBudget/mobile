@@ -13,8 +13,13 @@ import '../../components/rounded_password_field.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
+  final String email, password;
+
+  /// In the constructor, require a Todo.
+  Body({Key key, this.email, this.password}) : super(key: key);
+
   @override
-  _BodyState createState() => _BodyState();
+  _BodyState createState() => _BodyState(this.email, this.password);
 }
 
 class _BodyState extends State<Body> {
@@ -27,6 +32,9 @@ class _BodyState extends State<Body> {
   final yourEmail = "Your Email";
   final String hintPassword = "New Password";
   String email, password;
+
+  /// In the constructor, require a body state.
+  _BodyState(this.email, this.password);
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +59,14 @@ class _BodyState extends State<Body> {
               height: size.height * 0.35,
             ),
             RoundedInputField(
+                initialValue: email,
                 hintText: yourEmail,
                 onChanged: (value) {
                   email = value;
                 },
                 autofocus: true),
             RoundedPassword(
+                initialValue: password,
                 onChanged: (value) {
                   password = value;
                 },

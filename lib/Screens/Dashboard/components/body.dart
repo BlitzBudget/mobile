@@ -35,12 +35,8 @@ class PlatformAdaptingHomePage extends StatefulWidget {
 }
 
 class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
-  static const plusIcon = Icon(
-    CupertinoIcons.plus_circle_fill,
-    color: primaryColor,
-    size: 50.0,
-    semanticLabel: 'Add'
-  );
+  static const plusIcon = Icon(CupertinoIcons.plus_circle_fill,
+      color: primaryColor, size: 50.0, semanticLabel: 'Add');
 
   /// This app keeps a global key for the transactions tab because it owns a bunch of
   /// data. Since changing platform re-parents those tabs into different

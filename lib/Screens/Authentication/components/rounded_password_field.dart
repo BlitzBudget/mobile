@@ -6,19 +6,20 @@ import '../../../constants.dart';
 class RoundedPassword extends StatefulWidget {
   final onChanged;
   final bool autofocus;
-  final String hintText;
+  final String hintText, initialValue;
 
   /// Constructor that accepts the onchanged variable
   const RoundedPassword(
       {Key key,
       @required this.onChanged,
       this.autofocus = false,
-      this.hintText = "Password"})
+      this.hintText = "Password",
+      this.initialValue = ""})
       : super(key: key);
 
   @override
-  _RoundedPasswordField createState() =>
-      _RoundedPasswordField(this.onChanged, this.autofocus, this.hintText);
+  _RoundedPasswordField createState() => _RoundedPasswordField(
+      this.onChanged, this.autofocus, this.hintText, this.initialValue);
 }
 
 // Private Class
@@ -29,7 +30,7 @@ class _RoundedPasswordField extends State<RoundedPassword> {
   /// Initially password is obscure
   bool _obscureText;
   bool isPasswordVisible;
-  final String hintText;
+  final String hintText, initialValue;
 
   @override
   void initState() {
@@ -39,12 +40,14 @@ class _RoundedPasswordField extends State<RoundedPassword> {
   }
 
   /// Constructor for the private class
-  _RoundedPasswordField(this.onChanged, this.autofocus, this.hintText);
+  _RoundedPasswordField(
+      this.onChanged, this.autofocus, this.hintText, this.initialValue);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        initialValue: initialValue,
         obscureText: _obscureText,
         autocorrect: false,
         onChanged: onChanged,

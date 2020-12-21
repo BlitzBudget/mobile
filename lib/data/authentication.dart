@@ -16,37 +16,37 @@ import '../constants.dart';
 import '../routes.dart';
 
 /// Name Object for firstname and lastName
-class Name {
+class _Name {
   String firstName;
   String surName;
 
-  Name(this.firstName, this.surName);
+  _Name(this.firstName, this.surName);
 }
 
 class RestDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
   static final baseURL = "https://api.blitzbudget.com";
-  static final loginURL = baseURL + "/profile/sign-in";
-  static final signupURL = baseURL + "/profile/sign-up";
-  static final forgotPasswordURL = baseURL + '/profile/forgot-password';
-  static final confirmSignupURL = baseURL + '/profile/confirm-sign-up';
-  static final confirmForgotPasswordURL =
+  static final _loginURL = baseURL + "/profile/sign-in";
+  static final _signupURL = baseURL + "/profile/sign-up";
+  static final _forgotPasswordURL = baseURL + '/profile/forgot-password';
+  static final _confirmSignupURL = baseURL + '/profile/confirm-sign-up';
+  static final _confirmForgotPasswordURL =
       baseURL + '/profile/confirm-forgot-password';
-  static final resendVerificationCodeURL =
+  static final _resendVerificationCodeURL =
       baseURL + '/profile/resend-confirmation-code';
   var headers = {
     'Content-type': 'application/json;charset=UTF-8',
     'Accept': 'application/json'
   };
-  static final checkPassword = false;
+  static final _checkPassword = false;
 
   /// Create storage
   final storage = new FlutterSecureStorage();
   static final RegExp passwordExp = new RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
   static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
-  static final userNotFoundException = 'UserNotFoundException';
-  static final userNotConfirmedException = 'UserNotConfirmedException';
+  static final _userNotFoundException = 'UserNotFoundException';
+  static final _userNotConfirmedException = 'UserNotConfirmedException';
 
   /// Login Screen
   ///
@@ -71,18 +71,18 @@ class RestDataSource {
     /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     return _netUtil
-        .post(loginURL,
+        .post(_loginURL,
             body: jsonEncode({
               "username": email,
               "password": password,
-              "checkPassword": checkPassword
+              "checkPassword": _checkPassword
             }),
             headers: headers)
         .then((dynamic res) {
       developer.log("User Attributes" + res['UserAttributes'].toString());
       if (res["errorType"] != null) {
         /// Conditionally process error messages
-        if (includesStr(res["errorMessage"], userNotFoundException)) {
+        if (includesStr(res["errorMessage"], _userNotFoundException)) {
           /// Signup user and parse the response
           Navigator.push(
             context,
@@ -92,7 +92,7 @@ class RestDataSource {
             ),
           );
         } else if (includesStr(
-            res["errorMessage"], userNotConfirmedException)) {
+            res["errorMessage"], _userNotConfirmedException)) {
           /// Navigate to the second screen using a named route.
           Navigator.push(
             context,
@@ -131,7 +131,7 @@ class RestDataSource {
 
   void _storeUserAttributes(User user, FlutterSecureStorage storage) async {
     /// Write User Attributes
-    await storage.write(key: userAttributes, value: user.toString());
+    await storage.write(key: userAttributes, value: jsonEncode(user.toJSON()));
   }
 
   void _storeRefreshToken(dynamic res, FlutterSecureStorage storage) async {
@@ -166,25 +166,28 @@ class RestDataSource {
       displayDialog(
           context, "Invalid Password", "The confirm password is not valid");
       return;
+    } else if (confirmPassword != password) {
+       displayDialog(
+          context, "Password Mismatch", "The confirm password and the password do not match");
     }
 
     /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     var fullname = email.split('@')[0];
-    var names = fetchNames(fullname);
+    _Name names = fetchNames(fullname);
 
     /// Add accept language headers
     headers['Accept-Language'] = await Devicelocale.currentLocale;
 
     /// Start signup process
     return _netUtil
-        .post(signupURL,
+        .post(_signupURL,
             body: jsonEncode({
               "username": email,
               "password": password,
               "firstname": names.firstName,
               "lastname": names.surName,
-              "checkPassword": checkPassword
+              "checkPassword": _checkPassword
             }),
             headers: headers)
         .then((dynamic res) {
@@ -207,18 +210,18 @@ class RestDataSource {
   }
 
   /// Parse the user name with Email
-  Name fetchNames(String fullname) {
+  _Name fetchNames(String fullname) {
     Match match = emailExp.firstMatch(fullname);
-    Name name;
+    _Name name;
 
     if (match == null) {
       developer.log('No match found for ${fullname}');
 
       /// Sur name cannot be empty
-      name = Name(fullname, ' ');
+      name = _Name(fullname, ' ');
     } else {
       /// TODO SPLIT the name and then assign it to first and surname
-      name = Name(fullname, ' ');
+      name = _Name(fullname, ' ');
       developer.log(
           'Fullname ${fullname}, First match: ${match.start}, end Match: ${match.input}');
     }
@@ -233,7 +236,7 @@ class RestDataSource {
       String verificationCode, bool useVerifyURL) {
     /// Call verify / Confirm forgot password url
     final String urlForAPICall =
-        useVerifyURL ? confirmSignupURL : confirmForgotPasswordURL;
+        useVerifyURL ? _confirmSignupURL : _confirmForgotPasswordURL;
 
     /// Start signup process
     return _netUtil
@@ -262,7 +265,7 @@ class RestDataSource {
   Future<bool> resendVerificationCode(BuildContext context, String email) {
     /// Start resending the verification code
     return _netUtil
-        .post(resendVerificationCodeURL,
+        .post(_resendVerificationCodeURL,
             body: jsonEncode({"username": email}), headers: headers)
         .then((dynamic res) {
       /// Error Type for signup
@@ -292,9 +295,12 @@ class RestDataSource {
       return null;
     }
 
+    /// Convert email to lowercase and trim
+    email = email.toLowerCase().trim();
+
     /// Start resending the verification code
     return _netUtil
-        .post(forgotPasswordURL,
+        .post(_forgotPasswordURL,
             body: jsonEncode({"username": email}), headers: headers)
         .then((dynamic res) {
       /// Error Type for signup

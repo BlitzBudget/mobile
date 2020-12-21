@@ -12,6 +12,7 @@ import '../../../../data/authentication.dart';
 import '../../../components/linear_loading_indicator.dart';
 import '../../../../utils/utils.dart';
 import '../../../../constants.dart';
+import '../../forgot-password/forgot_password_screen.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
@@ -89,7 +90,13 @@ class _BodyState extends State<Body> {
             AlreadyHaveAnAccountCheck(
               press: () {
                 /// Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, forgotPasswordRoute);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ForgotPasswordScreen(
+                        email: username, password: password),
+                  ),
+                );
               },
             ),
           ],

@@ -6,6 +6,7 @@ import 'package:mdi/mdi.dart';
 
 import '../../../utils/utils.dart';
 import '../../../utils/widgets.dart';
+import '../../../data/dashboard/budget.dart';
 
 class BudgetTab extends StatefulWidget {
   static const title = 'Budget';
@@ -18,6 +19,7 @@ class BudgetTab extends StatefulWidget {
 
 class _BudgetTabState extends State<BudgetTab> {
   static const _itemsLength = 20;
+  BudgetRestData _budgetRestData = BudgetRestData();
 
   List<Color> colors;
   List<String> titles;
@@ -34,6 +36,9 @@ class _BudgetTabState extends State<BudgetTab> {
 
   Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) return null;
+
+    // Get Budget Data
+    _getBudgetData();
 
     return SafeArea(
       top: false,
@@ -119,5 +124,10 @@ class _BudgetTabState extends State<BudgetTab> {
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
+  }
+
+  /// Get budget data
+  void _getBudgetData() async {
+    await _budgetRestData.get();
   }
 }
