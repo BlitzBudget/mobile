@@ -29,3 +29,6 @@ const String logoutTitle = 'Log out';
 const String logoutConfirmation = 'Log out?';
 const String logoutButton = 'Logout';
 const String logoutCancel = 'Cancel';
+
+// Date format
+const String dateFormatStartAndEndDate = 'yyyy-MM-dd';
