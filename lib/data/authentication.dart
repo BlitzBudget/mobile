@@ -12,8 +12,15 @@ import '../screens/authentication/signup/signup_screen.dart';
 import '../utils/network_util.dart';
 import '../models/user.dart';
 import '../utils/utils.dart';
-import '../constants.dart';
+import '../constants.dart' as constants;
 import '../routes.dart';
+
+// Header for API calls
+var headers = {
+  'Content-type': 'application/json;charset=UTF-8',
+  'Accept': 'application/json'
+};
+const String baseURL = "https://api.blitzbudget.com";
 
 /// Name Object for firstname and lastName
 class _Name {
@@ -25,7 +32,6 @@ class _Name {
 
 class RestDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
-  static final baseURL = "https://api.blitzbudget.com";
   static final _loginURL = baseURL + "/profile/sign-in";
   static final _signupURL = baseURL + "/profile/sign-up";
   static final _forgotPasswordURL = baseURL + '/profile/forgot-password';
@@ -34,14 +40,10 @@ class RestDataSource {
       baseURL + '/profile/confirm-forgot-password';
   static final _resendVerificationCodeURL =
       baseURL + '/profile/resend-confirmation-code';
-  var headers = {
-    'Content-type': 'application/json;charset=UTF-8',
-    'Accept': 'application/json'
-  };
   static final _checkPassword = false;
 
   /// Create storage
-  final storage = new FlutterSecureStorage();
+  final _storage = new FlutterSecureStorage();
   static final RegExp passwordExp = new RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
   static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
@@ -112,44 +114,48 @@ class RestDataSource {
       User user = new User.map(res["UserAttributes"]);
 
       /// Store User Attributes
-      _storeUserAttributes(user, storage);
+      _storeUserAttributes(user, _storage);
 
       /// Store Refresh Token
-      _storeRefreshToken(res, storage);
+      _storeRefreshToken(res, _storage);
 
       /// Store Access Token
-      _storeAccessToken(res, storage);
+      _storeAccessToken(res, _storage);
 
       /// Store Auth Token
-      _storeAuthToken(res, storage);
+      _storeAuthToken(res, _storage);
 
       /// Navigate to the second screen using a named route.
-      Navigator.pushNamed(context, dashboardRoute);
+      Navigator.pushNamed(context, constants.dashboardRoute);
       return;
     });
   }
 
   void _storeUserAttributes(User user, FlutterSecureStorage storage) async {
     /// Write User Attributes
-    await storage.write(key: userAttributes, value: jsonEncode(user.toJSON()));
+    await storage.write(
+        key: constants.userAttributes, value: jsonEncode(user.toJSON()));
   }
 
   void _storeRefreshToken(dynamic res, FlutterSecureStorage storage) async {
     /// Write Refresh Token
     await storage.write(
-        key: refreshToken, value: res["AuthenticationResult"]["RefreshToken"]);
+        key: constants.refreshToken,
+        value: res["AuthenticationResult"]["RefreshToken"]);
   }
 
   void _storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
     /// Write Access Token
     await storage.write(
-        key: accessToken, value: res["AuthenticationResult"]["AccessToken"]);
+        key: constants.accessToken,
+        value: res["AuthenticationResult"]["AccessToken"]);
   }
 
   void _storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
     /// Write Id Token
     await storage.write(
-        key: authToken, value: res["AuthenticationResult"]["IdToken"]);
+        key: constants.authToken,
+        value: res["AuthenticationResult"]["IdToken"]);
   }
 
   /// SIGNUP module
@@ -167,9 +173,9 @@ class RestDataSource {
           context, "Invalid Password", "The confirm password is not valid");
       return;
     } else if (confirmPassword != password) {
-       displayDialog(
-          context, "Password Mismatch", "The confirm password and the password do not match");
-       return;
+      displayDialog(context, "Password Mismatch",
+          "The confirm password and the password do not match");
+      return;
     }
 
     /// Convert email to lowercase and trim
@@ -194,7 +200,8 @@ class RestDataSource {
         .then((dynamic res) {
       /// Error Type for signup
       /// UsernameExistsException is excluded from showing error message
-      if (res["errorType"] != null && !res["errorMessage"].contains('UsernameExistsException')) {
+      if (res["errorType"] != null &&
+          !res["errorMessage"].contains('UsernameExistsException')) {
         displayDialog(context, "Error signing up", res["errorMessage"]);
         return;
       }

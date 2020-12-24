@@ -78,8 +78,8 @@ String capitalizePair(WordPair pair) {
 }
 
 dynamic lastElement(arr) {
-  if(isEmpty(arr)) {
-      return arr;
+  if (isEmpty(arr)) {
+    return arr;
   } else if (arr.length > 0) {
     return arr[arr.length - 1];
   }
