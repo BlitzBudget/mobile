@@ -1,4 +1,4 @@
-package dev.flutter.platform_design
+package dev.flutter.mobile_blitzbudget
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
