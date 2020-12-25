@@ -176,10 +176,7 @@ class LogOutButton extends StatelessWidget {
                 FlatButton(
                   child: const Text(logoutButton),
                   onPressed: () => () async {
-                    _logoutAndRedirect();
-
-                    /// Navigate to the second screen using a named route.
-                    Navigator.pushNamed(context, welcomeRoute);
+                    logoutAndRedirect(context);
                   },
                 ),
                 FlatButton(
@@ -211,10 +208,7 @@ class LogOutButton extends StatelessWidget {
                 CupertinoActionSheetAction(
                     child: const Text(logoutButton),
                     onPressed: () async {
-                      _logoutAndRedirect();
-
-                      /// Navigate to the second screen using a named route.
-                      Navigator.pushNamed(context, welcomeRoute);
+                      logoutAndRedirect(context);
                     }),
               ],
               cancelButton: CupertinoActionSheetAction(
@@ -229,17 +223,6 @@ class LogOutButton extends StatelessWidget {
     );
   }
 
-  /*
-  * Remove Storage and Redirect to Welcome screeen
-  */
-  void _logoutAndRedirect() async {
-    /// Create storage
-    final storage = new FlutterSecureStorage();
-
-    /// Delete all
-    await storage.deleteAll();
-  }
-
   @override
   Widget build(context) {
     return PlatformWidget(
@@ -247,4 +230,16 @@ class LogOutButton extends StatelessWidget {
       iosBuilder: _buildIos,
     );
   }
+}
+
+/*
+  * Remove Storage and Redirect to Welcome screeen
+  */
+void logoutAndRedirect(BuildContext context) async {
+  /// Create storage
+  /// Delete all
+  await new FlutterSecureStorage().deleteAll();
+
+  /// Navigate to the second screen using a named route.
+  Navigator.pushNamed(context, welcomeRoute);
 }

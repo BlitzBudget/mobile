@@ -120,10 +120,10 @@ class RestDataSource {
       _storeRefreshToken(res, _storage);
 
       /// Store Access Token
-      _storeAccessToken(res, _storage);
+      storeAccessToken(res, _storage);
 
       /// Store Auth Token
-      _storeAuthToken(res, _storage);
+      storeAuthToken(res, _storage);
 
       /// Navigate to the second screen using a named route.
       Navigator.pushNamed(context, constants.dashboardRoute);
@@ -144,14 +144,14 @@ class RestDataSource {
         value: res["AuthenticationResult"]["RefreshToken"]);
   }
 
-  void _storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
+  void storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
     /// Write Access Token
     await storage.write(
         key: constants.accessToken,
         value: res["AuthenticationResult"]["AccessToken"]);
   }
 
-  void _storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
+  void storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
     /// Write Id Token
     await storage.write(
         key: constants.authToken,
