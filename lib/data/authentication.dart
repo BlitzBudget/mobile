@@ -114,10 +114,10 @@ class RestDataSource {
       User user = new User.map(res["UserAttributes"]);
 
       /// Store User Attributes
-      _storeUserAttributes(user, _storage);
+      _storeUserAttributes(user);
 
       /// Store Refresh Token
-      _storeRefreshToken(res, _storage);
+      _storeRefreshToken(res);
 
       /// Store Access Token
       storeAccessToken(res, _storage);
@@ -131,31 +131,17 @@ class RestDataSource {
     });
   }
 
-  void _storeUserAttributes(User user, FlutterSecureStorage storage) async {
+  void _storeUserAttributes(User user) async {
     /// Write User Attributes
-    await storage.write(
+    await _storage.write(
         key: constants.userAttributes, value: jsonEncode(user.toJSON()));
   }
 
-  void _storeRefreshToken(dynamic res, FlutterSecureStorage storage) async {
+  void _storeRefreshToken(dynamic res) async {
     /// Write Refresh Token
-    await storage.write(
+    await _storage.write(
         key: constants.refreshToken,
         value: res["AuthenticationResult"]["RefreshToken"]);
-  }
-
-  void storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
-    /// Write Access Token
-    await storage.write(
-        key: constants.accessToken,
-        value: res["AuthenticationResult"]["AccessToken"]);
-  }
-
-  void storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
-    /// Write Id Token
-    await storage.write(
-        key: constants.authToken,
-        value: res["AuthenticationResult"]["IdToken"]);
   }
 
   /// SIGNUP module
@@ -335,4 +321,17 @@ class RestDataSource {
       return;
     });
   }
+}
+
+void storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
+  /// Write Access Token
+  await storage.write(
+      key: constants.accessToken,
+      value: res["AuthenticationResult"]["AccessToken"]);
+}
+
+void storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
+  /// Write Id Token
+  await storage.write(
+      key: constants.authToken, value: res["AuthenticationResult"]["IdToken"]);
 }

@@ -37,9 +37,6 @@ class _BudgetTabState extends State<BudgetTab> {
   Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) return null;
 
-    // Get Budget Data
-    _getBudgetData();
-
     return SafeArea(
       top: false,
       bottom: false,
@@ -120,6 +117,9 @@ class _BudgetTabState extends State<BudgetTab> {
 
   @override
   Widget build(context) {
+    // Get Budget Data
+    _getBudgetData();
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
