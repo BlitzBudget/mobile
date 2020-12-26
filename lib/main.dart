@@ -6,7 +6,10 @@ import 'constants.dart';
 import 'data/authentication.dart';
 import 'routes.dart';
 
-//void main() async => runApp(MyAdaptingApp());
+/// Global Navigation Key
+///
+/// Use it to navigate through the app without context
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +37,7 @@ class BlitzBudgetApp extends StatelessWidget {
     /// Either Material or Cupertino widgets work in either Material or Cupertino
     /// Apps.
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: appName,
       theme: ThemeData(
         /// Use the green theme for Material widgets.

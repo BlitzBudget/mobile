@@ -61,7 +61,9 @@ class NetworkUtil {
   }
 
   /// Refresh authorization token
-  /// If successful call the post again
+  ///
+  /// If successful call the API again
+  /// If unsuccessful then logout
   Future<dynamic> refreshAuthToken(String url, String apiCallToMake,
       {Map headers, body, encoding}) async {
     debugPrint(
@@ -87,8 +89,9 @@ class NetworkUtil {
       if (statusCode < 200 || statusCode > 400 || response == null) {
         debugPrint(
             "Error while fetching data with status code ${statusCode.toString()}");
+
         /// Logout And Redirect User
-        // TODO profile.logoutAndRedirect(context);
+        profile.logoutAndRedirect();
         return;
       }
 

@@ -5,6 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'settings_dialog.dart';
 import '../../authentication/welcome/welcome_screen.dart';
 import '../../../utils/widgets.dart';
+import '../../../utils/utils.dart';
+import '../../../main.dart';
 import '../../../constants.dart';
 import '../../components/rounded_button.dart';
 
@@ -176,7 +178,7 @@ class LogOutButton extends StatelessWidget {
                 FlatButton(
                   child: const Text(logoutButton),
                   onPressed: () => () async {
-                    logoutAndRedirect(context);
+                    logoutAndRedirect(context: context);
                   },
                 ),
                 FlatButton(
@@ -208,7 +210,7 @@ class LogOutButton extends StatelessWidget {
                 CupertinoActionSheetAction(
                     child: const Text(logoutButton),
                     onPressed: () async {
-                      logoutAndRedirect(context);
+                      logoutAndRedirect(context: context);
                     }),
               ],
               cancelButton: CupertinoActionSheetAction(
@@ -235,11 +237,16 @@ class LogOutButton extends StatelessWidget {
 /*
   * Remove Storage and Redirect to Welcome screeen
   */
-void logoutAndRedirect(BuildContext context) async {
+void logoutAndRedirect({BuildContext context}) async {
   /// Create storage
   /// Delete all
   await new FlutterSecureStorage().deleteAll();
 
-  /// Navigate to the second screen using a named route.
-  Navigator.pushNamed(context, welcomeRoute);
+  if (isEmpty(context)) {
+    /// Navigate using the global navigation key
+    navigatorKey.currentState.pushNamed(welcomeRoute);
+  } else {
+    /// Navigate to the second screen using a named route.
+    Navigator.pushNamed(context, welcomeRoute);
+  }
 }
