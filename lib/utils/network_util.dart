@@ -60,6 +60,12 @@ class NetworkUtil {
     });
   }
 
+  /// Generic PUT api call
+  Future<dynamic> put(String url, {Map headers, body, encoding}) {}
+
+  /// Generic PATCH api call
+  Future<dynamic> patch(String url, {Map headers, body, encoding}) {}
+
   /// Refresh authorization token
   ///
   /// If successful call the API again
@@ -108,8 +114,11 @@ class NetworkUtil {
 
       switch (apiCallToMake) {
         case "Patch":
+          // Call the PATCH again
+          return patch(url, body: body, headers: headers, encoding: encoding);
         case "Put":
-        // TODO
+          // Call the POST again
+          return put(url, body: body, headers: headers, encoding: encoding);
         case "Post":
         default:
           // Call the POST again
