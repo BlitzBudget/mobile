@@ -87,6 +87,8 @@ class NetworkUtil {
       if (statusCode < 200 || statusCode > 400 || response == null) {
         debugPrint(
             "Error while fetching data with status code ${statusCode.toString()}");
+        /// Logout And Redirect User
+        // TODO profile.logoutAndRedirect(context);
         return;
       }
 
@@ -111,8 +113,5 @@ class NetworkUtil {
           return post(url, body: body, headers: headers, encoding: encoding);
       }
     });
-
-    /// Logout And Redirect User
-    // TODO profile.logoutAndRedirect(context);
   }
 }

@@ -122,8 +122,6 @@ class _BudgetTabState extends State<BudgetTab> {
     // Get Budget Data
     _getBudgetData();
 
-    debugPrint("The Budget tab has been clicked");
-
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
