@@ -234,9 +234,7 @@ class LogOutButton extends StatelessWidget {
   }
 }
 
-/*
-  * Remove Storage and Redirect to Welcome screeen
-  */
+/// Remove Storage and Redirect to Welcome screeen
 void logoutAndRedirect({BuildContext context}) async {
   /// Create storage
   /// Delete all
