@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class BudgetTab extends StatefulWidget {
 }
 
 class _BudgetTabState extends State<BudgetTab> {
+  /// States
   static const _itemsLength = 20;
   BudgetRestData _budgetRestData = BudgetRestData();
 
@@ -119,6 +121,8 @@ class _BudgetTabState extends State<BudgetTab> {
   Widget build(context) {
     // Get Budget Data
     _getBudgetData();
+
+    debugPrint("The Budget tab has been clicked");
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,
