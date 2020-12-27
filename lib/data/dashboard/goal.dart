@@ -1,5 +1,4 @@
 import '../../utils/network_util.dart';
-
 import '../authentication.dart' as authentication;
 
 class GoalRestData {
@@ -23,7 +22,7 @@ class GoalRestData {
     Map<String, dynamic> _user = jsonDecode(_userAttributes);
     developer.log('User Attributes retrieved for: ${_user["userid"]}');
 
-    // JSON for Get budget [_jsonForGetGoal]
+    // JSON for Get goal [_jsonForGetGoal]
     Map<String, dynamic> _jsonForGetGoal = {
       "startsWithDate": _startsWithDate,
       "endsWithDate": _endsWithDate
@@ -37,19 +36,19 @@ class GoalRestData {
       _jsonForGetGoal["userId"] = _user["userid"];
     }
 
-    developer.log(
-        "The Map for getting the budget is  ${_jsonForGetGoal.toString()}");
+    developer
+        .log("The Map for getting the goal is  ${_jsonForGetGoal.toString()}");
 
     // Set Authorization header
     authentication.headers['Authorization'] =
         await _storage.read(key: constants.authToken);
 
-    developer.log('The response from the budget is ${authentication.headers}');
+    developer.log('The response from the goal is ${authentication.headers}');
     return _netUtil
         .post(_goalURL,
             body: jsonEncode(_jsonForGetGoal), headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+      debugPrint('The response from the goal is $res');
     });
   }
 

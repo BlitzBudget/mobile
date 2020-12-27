@@ -1,5 +1,4 @@
 import '../../utils/network_util.dart';
-
 import '../authentication.dart' as authentication;
 
 class OverviewRestData {
@@ -23,7 +22,7 @@ class OverviewRestData {
     Map<String, dynamic> _user = jsonDecode(_userAttributes);
     developer.log('User Attributes retrieved for: ${_user["userid"]}');
 
-    // JSON for Get budget [_jsonForGetOverview]
+    // JSON for Get overview [_jsonForGetOverview]
     Map<String, dynamic> _jsonForGetOverview = {
       "startsWithDate": _startsWithDate,
       "endsWithDate": _endsWithDate
@@ -38,19 +37,20 @@ class OverviewRestData {
     }
 
     developer.log(
-        "The Map for getting the budget is  ${_jsonForGetOverview.toString()}");
+        "The Map for getting the overview is  ${_jsonForGetOverview.toString()}");
 
     // Set Authorization header
     authentication.headers['Authorization'] =
         await _storage.read(key: constants.authToken);
 
-    developer.log('The response from the budget is ${authentication.headers}');
+    developer
+        .log('The response from the overview is ${authentication.headers}');
     return _netUtil
         .post(_overviewURL,
             body: jsonEncode(_jsonForGetOverview),
             headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+      debugPrint('The response from the overview is $res');
     });
   }
 

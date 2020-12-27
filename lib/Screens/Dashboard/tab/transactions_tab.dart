@@ -6,6 +6,7 @@ import 'transaction_detail_tab.dart';
 import '../full-screen-dialog/wallet_dialog.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/widgets.dart';
+import '../../../data/dashboard/transaction.dart';
 
 class TransactionsTab extends StatefulWidget {
   static const title = 'Transactions';

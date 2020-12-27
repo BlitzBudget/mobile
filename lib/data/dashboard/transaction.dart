@@ -1,5 +1,4 @@
 import '../../utils/network_util.dart';
-
 import '../authentication.dart' as authentication;
 
 class TransactionRestData {
@@ -23,7 +22,7 @@ class TransactionRestData {
     Map<String, dynamic> _user = jsonDecode(_userAttributes);
     developer.log('User Attributes retrieved for: ${_user["userid"]}');
 
-    // JSON for Get budget [_jsonForGetTransaction]
+    // JSON for Get transaction [_jsonForGetTransaction]
     Map<String, dynamic> _jsonForGetTransaction = {
       "startsWithDate": _startsWithDate,
       "endsWithDate": _endsWithDate
@@ -38,19 +37,20 @@ class TransactionRestData {
     }
 
     developer.log(
-        "The Map for getting the budget is  ${_jsonForGetTransaction.toString()}");
+        "The Map for getting the transaction is  ${_jsonForGetTransaction.toString()}");
 
     // Set Authorization header
     authentication.headers['Authorization'] =
         await _storage.read(key: constants.authToken);
 
-    developer.log('The response from the budget is ${authentication.headers}');
+    developer
+        .log('The response from the transaction is ${authentication.headers}');
     return _netUtil
         .post(_transactionURL,
             body: jsonEncode(_jsonForGetTransaction),
             headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+      debugPrint('The response from the transaction is $res');
     });
   }
 
