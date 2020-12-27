@@ -124,7 +124,7 @@ class _GoalTabState extends State<GoalTab> {
     );
   }
 
-  /// Get budget data
+  /// Get goal data
   void _getGoalData() async {
     await _goalRestData.get();
   }

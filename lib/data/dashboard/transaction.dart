@@ -4,7 +4,6 @@ import '../authentication.dart' as authentication;
 
 class TransactionRestData {
   NetworkUtil _netUtil = new NetworkUtil();
-
   static final _transactionURL = authentication.baseURL + "/transactions";
 
   /// Get Transaction

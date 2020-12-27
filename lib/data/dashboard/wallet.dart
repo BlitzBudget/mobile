@@ -4,7 +4,6 @@ import '../authentication.dart' as authentication;
 
 class WalletRestData {
   NetworkUtil _netUtil = new NetworkUtil();
-
   static final _walletURL = authentication.baseURL + "/wallet";
 
   /// Get Wallet

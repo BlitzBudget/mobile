@@ -4,7 +4,6 @@ import '../authentication.dart' as authentication;
 
 class GoalRestData {
   NetworkUtil _netUtil = new NetworkUtil();
-
   static final _goalURL = authentication.baseURL + "/goals";
 
   /// Get Goals

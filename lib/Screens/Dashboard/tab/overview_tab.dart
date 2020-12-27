@@ -124,7 +124,7 @@ class _OverviewTabState extends State<OverviewTab> {
     );
   }
 
-  /// Get budget data
+  /// Get overview data
   void _getOverviewData() async {
     await _overviewRestData.get();
   }

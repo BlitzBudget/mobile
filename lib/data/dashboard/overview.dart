@@ -4,7 +4,6 @@ import '../authentication.dart' as authentication;
 
 class OverviewRestData {
   NetworkUtil _netUtil = new NetworkUtil();
-
   static final _overviewURL = authentication.baseURL + "/overview";
 
   /// Get Wallet

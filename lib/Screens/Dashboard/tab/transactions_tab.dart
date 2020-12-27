@@ -188,7 +188,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
     );
   }
 
-  /// Get budget data
+  /// Get transaction data
   void _getTransactionData() async {
     await _transactionRestData.get();
   }
