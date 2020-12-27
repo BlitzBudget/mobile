@@ -18,6 +18,9 @@ class NetworkUtil {
   NetworkUtil.internal();
   factory NetworkUtil() => _instance;
 
+  /// Create storage
+  final _storage = new FlutterSecureStorage();
+
   final JsonDecoder _decoder = new JsonDecoder();
   // Refresh Token
   static final refreshTokenURI =
@@ -36,7 +39,14 @@ class NetworkUtil {
   }
 
   /// Generic POST api call
-  Future<dynamic> post(String url, {Map headers, body, encoding}) {
+  Future<dynamic> post(String url, {Map headers, body, encoding}) async {
+    // Set Authorization header
+    headers['Authorization'] =
+        await _storage.read(key: constants.authToken);
+
+    developer
+        .log('The header is $headers');
+
     return http
         .post(url, body: body, headers: headers, encoding: encoding)
         .then((http.Response response) {
@@ -61,10 +71,20 @@ class NetworkUtil {
   }
 
   /// Generic PUT api call
-  Future<dynamic> put(String url, {Map headers, body, encoding}) {}
+  Future<dynamic> put(String url, {Map headers, body, encoding}) async {
+      // Set Authorization header
+    headers['Authorization'] =
+        await _storage.read(key: constants.authToken);
+
+  }
 
   /// Generic PATCH api call
-  Future<dynamic> patch(String url, {Map headers, body, encoding}) {}
+  Future<dynamic> patch(String url, {Map headers, body, encoding}) async {
+      // Set Authorization header
+    headers['Authorization'] =
+        await _storage.read(key: constants.authToken);
+
+  }
 
   /// Refresh authorization token
   ///
@@ -76,8 +96,6 @@ class NetworkUtil {
         " The authorization token has expired, Trying to refresh the token.");
 
     /// Store Access token and Authentication Token
-    /// Create storage
-    final _storage = new FlutterSecureStorage();
     final refreshToken = await _storage.read(key: constants.refreshToken);
 
     return http

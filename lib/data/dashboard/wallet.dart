@@ -69,7 +69,35 @@ class WalletRestData {
   }
 
   /// Update Wallet
-  Future<void> update() {}
+  Future<void> update({String name, String currency}, String walletId, String userId) {
+
+    // JSON for Get budget [_jsonForUpdateWallet]
+    Map<String, dynamic> _jsonForUpdateWallet = {
+        'walletId': walletId,
+        'userId': userId
+    };
+
+    if(isNotEmpty(name)) {
+        _jsonForUpdateWallet["name"] = name;
+    }
+
+     if(isNotEmpty(currency)) {
+        _jsonForUpdateWallet["currency"] = currency;
+    }
+
+    developer.log(
+        "The Map for patching the budget is  ${_jsonForUpdateWallet.toString()}");
+
+    return _netUtil
+        .patch(_walletURL,
+            body: jsonEncode(_jsonForUpdateWallet),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+
+
+   }
 
   /// Delete Wallet
   Future<void> delete() {}

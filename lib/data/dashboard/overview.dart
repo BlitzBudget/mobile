@@ -54,12 +54,6 @@ class OverviewRestData {
     developer.log(
         "The Map for getting the overview is  ${_jsonForGetOverview.toString()}");
 
-    // Set Authorization header
-    authentication.headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
-    developer
-        .log('The response from the overview is ${authentication.headers}');
     return _netUtil
         .post(_overviewURL,
             body: jsonEncode(_jsonForGetOverview),
@@ -69,9 +63,4 @@ class OverviewRestData {
     });
   }
 
-  /// Update Wallet
-  Future<void> update() {}
-
-  /// Delete Wallet
-  Future<void> delete() {}
 }

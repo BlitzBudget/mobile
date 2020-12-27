@@ -70,8 +70,45 @@ class TransactionRestData {
   }
 
   /// Update Transaction
-  Future<void> update() {}
+  Future<void> update(String walletId, String transactionId,{ List<String> tags, String description, String amount, String categoryId, String accountId}) {
 
-  /// Delete Transaction
-  Future<void> delete() {}
+    // JSON for Get budget [_jsonForUpdateTransaction]
+    Map<String, dynamic> _jsonForUpdateTransaction = {
+        'walletId' : walletId,
+        'transactionId': transactionId
+    };
+
+    if(isNotEmpty(tags)) {
+        _jsonForUpdateTransaction["tags"] = tags;
+    }
+
+    if(isNotEmpty(description)) {
+        _jsonForUpdateTransaction["description"] = description;
+    }
+
+    if(isNotEmpty(amount)) {
+        _jsonForUpdateTransaction["amount"] = amount;
+    }
+
+    if(isNotEmpty(categoryId)) {
+        _jsonForUpdateTransaction["category"] = categoryId;
+    }
+
+    if(isNotEmpty(accountId)) {
+        _jsonForUpdateTransaction["account"] = accountId;
+    }
+
+    developer.log(
+        "The Map for patching the budget is  ${_jsonForUpdateTransaction.toString()}");
+
+    return _netUtil
+        .patch(_transactionURL,
+            body: jsonEncode(_jsonForUpdateTransaction),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+
+
+   }
 }

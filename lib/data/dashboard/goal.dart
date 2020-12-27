@@ -67,9 +67,33 @@ class GoalRestData {
     });
   }
 
-  /// Update Goal
-  Future<void> update() {}
+  /// Update Budget
+  Future<void> update(String budgetId, String walletId, String dateMeantFor, String category, {String categoryType}) {
 
-  /// Delete Goal
-  Future<void> delete() {}
+    // JSON for Get budget [_jsonForGetBudget]
+    Map<String, dynamic> _jsonForGetBudget = {
+        'budgetId' : budgetId,
+        'walletId': walletId,
+        'dateMeantFor': dateMeantFor,
+        'category': category
+    };
+
+    if(isNotEmpty(categoryType)) {
+        _jsonForGetBudget["categoryType"] = categoryType;
+    }
+
+    developer.log(
+        "The Map for patching the budget is  ${_jsonForGetBudget.toString()}");
+
+    return _netUtil
+        .patch(_goalURL,
+            body: jsonEncode(_jsonForGetBudget),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+
+
+   }
+
 }

@@ -54,10 +54,6 @@ class BudgetRestData {
     developer.log(
         "The Map for getting the budget is  ${_jsonForGetBudget.toString()}");
 
-    // Set Authorization header
-    authentication.headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
     developer.log('The response from the budget is ${authentication.headers}');
     return _netUtil
         .post(_budgetURL,
@@ -69,7 +65,33 @@ class BudgetRestData {
   }
 
   /// Update Budget
-  Future<void> update() {}
+  Future<void> update(String budgetId, String walletId, String dateMeantFor, String category, {String categoryType}) {
+
+    // JSON for Get budget [_jsonForGetBudget]
+    Map<String, dynamic> _jsonForGetBudget = {
+        'budgetId' : budgetId,
+        'walletId': walletId,
+        'dateMeantFor': dateMeantFor,
+        'category': category
+    };
+
+    if(isNotEmpty(categoryType)) {
+        _jsonForGetBudget["categoryType"] = categoryType;
+    }
+
+    developer.log(
+        "The Map for patching the budget is  ${_jsonForGetBudget.toString()}");
+
+    return _netUtil
+        .patch(_budgetURL,
+            body: jsonEncode(_jsonForGetBudget),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+
+
+   }
 
   /// Delete Budget
   Future<void> delete() {}
