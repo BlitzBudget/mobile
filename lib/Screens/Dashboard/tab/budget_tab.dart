@@ -119,6 +119,7 @@ class _BudgetTabState extends State<BudgetTab> {
 
   @override
   Widget build(context) {
+    debugPrint("The Budget tab has been clicked");
     // Get Budget Data
     _getBudgetData();
 

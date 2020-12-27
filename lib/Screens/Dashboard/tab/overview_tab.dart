@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +119,7 @@ class _OverviewTabState extends State<OverviewTab> {
 
   @override
   Widget build(context) {
+    debugPrint("The Overview tab has been clicked");
     _getOverviewData();
 
     return PlatformWidget(

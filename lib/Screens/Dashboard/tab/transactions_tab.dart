@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -181,6 +183,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
 
   @override
   Widget build(context) {
+    debugPrint("The Transaction tab has been clicked");
     _getTransactionData();
 
     return PlatformWidget(

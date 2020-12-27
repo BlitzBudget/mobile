@@ -1,12 +1,27 @@
+import 'dart:convert';
+import 'dart:developer' as developer;
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+
 import '../../utils/network_util.dart';
+import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
+import '../../constants.dart' as constants;
+import 'common/dashboard-utils.dart' as dashboardUtils;
+import '../../models/user.dart';
 
 class GoalRestData {
   NetworkUtil _netUtil = new NetworkUtil();
+
+  /// Create storage
+  final _storage = new FlutterSecureStorage();
   static final _goalURL = authentication.baseURL + "/goals";
 
   /// Get Goals
-  Future<void> get() {
+  Future<void> get() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
     /// Get from shared preferences
