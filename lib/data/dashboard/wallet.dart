@@ -22,14 +22,6 @@ class WalletRestData {
 
   /// Get Wallet
   Future<void> get() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    /// Get from shared preferences
-    final String _defaultWallet = _prefs.getString(constants.defaultWallet);
-    final String _startsWithDate =
-        await dashboardUtils.fetchStartsWithDate(_prefs);
-    final String _endsWithDate = await dashboardUtils.fetchEndsWithDate(_prefs);
-
     // Read [_userAttributes] from User Attributes
     final String _userAttributes =
         await _storage.read(key: constants.userAttributes);
@@ -39,26 +31,12 @@ class WalletRestData {
 
     // JSON for Get wallet [_jsonForGetWallet]
     Map<String, dynamic> _jsonForGetWallet = {
-      "startsWithDate": _startsWithDate,
-      "endsWithDate": _endsWithDate
+      "userId": _user["userid"],
     };
-
-    /// Ensure that the wallet is chosen if not empty
-    /// If not then use userid
-    if (isNotEmpty(_defaultWallet)) {
-      _jsonForGetWallet["walletId"] = _defaultWallet;
-    } else {
-      _jsonForGetWallet["userId"] = _user["userid"];
-    }
 
     developer.log(
         "The Map for getting the wallet is  ${_jsonForGetWallet.toString()}");
 
-    // Set Authorization header
-    authentication.headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
-    developer.log('The response from the wallet is ${authentication.headers}');
     return _netUtil
         .post(_walletURL,
             body: jsonEncode(_jsonForGetWallet),
@@ -69,20 +47,20 @@ class WalletRestData {
   }
 
   /// Update Wallet
-  Future<void> update({String name, String currency}, String walletId, String userId) {
-
+  Future<void> update(String walletId, String userId,
+      {String name, String currency}) {
     // JSON for Get budget [_jsonForUpdateWallet]
     Map<String, dynamic> _jsonForUpdateWallet = {
-        'walletId': walletId,
-        'userId': userId
+      'walletId': walletId,
+      'userId': userId
     };
 
-    if(isNotEmpty(name)) {
-        _jsonForUpdateWallet["name"] = name;
+    if (isNotEmpty(name)) {
+      _jsonForUpdateWallet["name"] = name;
     }
 
-     if(isNotEmpty(currency)) {
-        _jsonForUpdateWallet["currency"] = currency;
+    if (isNotEmpty(currency)) {
+      _jsonForUpdateWallet["currency"] = currency;
     }
 
     developer.log(
@@ -95,10 +73,23 @@ class WalletRestData {
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
     });
-
-
-   }
+  }
 
   /// Delete Wallet
-  Future<void> delete() {}
+  Future<void> delete(String walletId, String userId) {
+    // JSON for Get wallet [_jsonForGetWallet]
+    Map<String, dynamic> _jsonForDeleteWallet = {
+      "walletId": walletId,
+      "deleteAccount": false,
+      "referenceNumber": userId
+    };
+
+    return _netUtil
+        .post(_walletURL,
+            body: jsonEncode(_jsonForDeleteWallet),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+  }
 }

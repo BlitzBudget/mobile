@@ -54,7 +54,6 @@ class BudgetRestData {
     developer.log(
         "The Map for getting the budget is  ${_jsonForGetBudget.toString()}");
 
-    developer.log('The response from the budget is ${authentication.headers}');
     return _netUtil
         .post(_budgetURL,
             body: jsonEncode(_jsonForGetBudget),
@@ -65,34 +64,58 @@ class BudgetRestData {
   }
 
   /// Update Budget
-  Future<void> update(String budgetId, String walletId, String dateMeantFor, String category, {String categoryType}) {
-
-    // JSON for Get budget [_jsonForGetBudget]
-    Map<String, dynamic> _jsonForGetBudget = {
-        'budgetId' : budgetId,
-        'walletId': walletId,
-        'dateMeantFor': dateMeantFor,
-        'category': category
+  Future<void> update(
+      String budgetId, String walletId, String dateMeantFor, String category,
+      {String categoryType, String plannedAmount}) {
+    // JSON for Get budget [_jsonForUpdateBudget]
+    Map<String, dynamic> _jsonForUpdateBudget = {
+      'budgetId': budgetId,
+      'walletId': walletId,
+      'dateMeantFor': dateMeantFor,
+      'category': category
     };
 
-    if(isNotEmpty(categoryType)) {
-        _jsonForGetBudget["categoryType"] = categoryType;
+    if (isNotEmpty(categoryType)) {
+      _jsonForUpdateBudget["categoryType"] = categoryType;
+    }
+
+    if (isNotEmpty(planned)) {
+      _jsonForUpdateBudget["planned"] = plannedAmount;
     }
 
     developer.log(
-        "The Map for patching the budget is  ${_jsonForGetBudget.toString()}");
+        "The Map for patching the budget is  ${_jsonForUpdateBudget.toString()}");
 
     return _netUtil
         .patch(_budgetURL,
-            body: jsonEncode(_jsonForGetBudget),
+            body: jsonEncode(_jsonForUpdateBudget),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
     });
+  }
 
+  /// Add Budget
+  Future<void> add(String walletId, String dateMeantFor, String category,
+      {String categoryType}) {
+    // JSON for Get budget [_jsonForUpdateBudget]
+    Map<String, dynamic> _jsonForUpdateBudget = {
+      'walletId': walletId,
+      'dateMeantFor': dateMeantFor,
+      'category': category,
+      'planned': 0,
+    };
 
-   }
+    if (isNotEmpty(categoryType)) {
+      _jsonForUpdateBudget["categoryType"] = categoryType;
+    }
 
-  /// Delete Budget
-  Future<void> delete() {}
+    return _netUtil
+        .put(_budgetURL,
+            body: jsonEncode(_jsonForAddBudget),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+  }
 }

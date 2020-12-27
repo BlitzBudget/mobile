@@ -54,11 +54,6 @@ class GoalRestData {
     developer
         .log("The Map for getting the goal is  ${_jsonForGetGoal.toString()}");
 
-    // Set Authorization header
-    authentication.headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
-    developer.log('The response from the goal is ${authentication.headers}');
     return _netUtil
         .post(_goalURL,
             body: jsonEncode(_jsonForGetGoal), headers: authentication.headers)
@@ -68,18 +63,19 @@ class GoalRestData {
   }
 
   /// Update Budget
-  Future<void> update(String budgetId, String walletId, String dateMeantFor, String category, {String categoryType}) {
-
+  Future<void> update(
+      String budgetId, String walletId, String dateMeantFor, String category,
+      {String categoryType}) {
     // JSON for Get budget [_jsonForGetBudget]
     Map<String, dynamic> _jsonForGetBudget = {
-        'budgetId' : budgetId,
-        'walletId': walletId,
-        'dateMeantFor': dateMeantFor,
-        'category': category
+      'budgetId': budgetId,
+      'walletId': walletId,
+      'dateMeantFor': dateMeantFor,
+      'category': category
     };
 
-    if(isNotEmpty(categoryType)) {
-        _jsonForGetBudget["categoryType"] = categoryType;
+    if (isNotEmpty(categoryType)) {
+      _jsonForGetBudget["categoryType"] = categoryType;
     }
 
     developer.log(
@@ -92,8 +88,5 @@ class GoalRestData {
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
     });
-
-
-   }
-
+  }
 }

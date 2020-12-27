@@ -54,12 +54,6 @@ class TransactionRestData {
     developer.log(
         "The Map for getting the transaction is  ${_jsonForGetTransaction.toString()}");
 
-    // Set Authorization header
-    authentication.headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
-    developer
-        .log('The response from the transaction is ${authentication.headers}');
     return _netUtil
         .post(_transactionURL,
             body: jsonEncode(_jsonForGetTransaction),
@@ -70,32 +64,36 @@ class TransactionRestData {
   }
 
   /// Update Transaction
-  Future<void> update(String walletId, String transactionId,{ List<String> tags, String description, String amount, String categoryId, String accountId}) {
-
+  Future<void> update(String walletId, String transactionId,
+      {List<String> tags,
+      String description,
+      String amount,
+      String categoryId,
+      String accountId}) {
     // JSON for Get budget [_jsonForUpdateTransaction]
     Map<String, dynamic> _jsonForUpdateTransaction = {
-        'walletId' : walletId,
-        'transactionId': transactionId
+      'walletId': walletId,
+      'transactionId': transactionId
     };
 
-    if(isNotEmpty(tags)) {
-        _jsonForUpdateTransaction["tags"] = tags;
+    if (isNotEmpty(tags)) {
+      _jsonForUpdateTransaction["tags"] = tags;
     }
 
-    if(isNotEmpty(description)) {
-        _jsonForUpdateTransaction["description"] = description;
+    if (isNotEmpty(description)) {
+      _jsonForUpdateTransaction["description"] = description;
     }
 
-    if(isNotEmpty(amount)) {
-        _jsonForUpdateTransaction["amount"] = amount;
+    if (isNotEmpty(amount)) {
+      _jsonForUpdateTransaction["amount"] = amount;
     }
 
-    if(isNotEmpty(categoryId)) {
-        _jsonForUpdateTransaction["category"] = categoryId;
+    if (isNotEmpty(categoryId)) {
+      _jsonForUpdateTransaction["category"] = categoryId;
     }
 
-    if(isNotEmpty(accountId)) {
-        _jsonForUpdateTransaction["account"] = accountId;
+    if (isNotEmpty(accountId)) {
+      _jsonForUpdateTransaction["account"] = accountId;
     }
 
     developer.log(
@@ -108,7 +106,5 @@ class TransactionRestData {
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
     });
-
-
-   }
+  }
 }

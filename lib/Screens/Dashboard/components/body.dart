@@ -178,6 +178,7 @@ class _AndroidDrawer extends StatelessWidget {
                   context, MaterialPageRoute(builder: (context) => GoalTab()));
             },
           ),
+
           /// Long drawer contents are often segmented.
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

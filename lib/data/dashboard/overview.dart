@@ -62,5 +62,4 @@ class OverviewRestData {
       debugPrint('The response from the overview is $res');
     });
   }
-
 }

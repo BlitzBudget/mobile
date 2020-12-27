@@ -41,11 +41,9 @@ class NetworkUtil {
   /// Generic POST api call
   Future<dynamic> post(String url, {Map headers, body, encoding}) async {
     // Set Authorization header
-    headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
+    headers['Authorization'] = await _storage.read(key: constants.authToken);
 
-    developer
-        .log('The header is $headers');
+    developer.log('The header is $headers');
 
     return http
         .post(url, body: body, headers: headers, encoding: encoding)
@@ -72,18 +70,14 @@ class NetworkUtil {
 
   /// Generic PUT api call
   Future<dynamic> put(String url, {Map headers, body, encoding}) async {
-      // Set Authorization header
-    headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
+    // Set Authorization header
+    headers['Authorization'] = await _storage.read(key: constants.authToken);
   }
 
   /// Generic PATCH api call
   Future<dynamic> patch(String url, {Map headers, body, encoding}) async {
-      // Set Authorization header
-    headers['Authorization'] =
-        await _storage.read(key: constants.authToken);
-
+    // Set Authorization header
+    headers['Authorization'] = await _storage.read(key: constants.authToken);
   }
 
   /// Refresh authorization token
