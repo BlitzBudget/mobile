@@ -26,11 +26,13 @@ class BudgetRestData {
 
     /// Get from shared preferences
     final String _defaultWallet = _prefs.getString(constants.defaultWallet);
-    final String _startsWithDate = await dashboardUtils.fetchStartsWithDate(_prefs);
+    final String _startsWithDate =
+        await dashboardUtils.fetchStartsWithDate(_prefs);
     final String _endsWithDate = await dashboardUtils.fetchEndsWithDate(_prefs);
 
     // Read [_userAttributes] from User Attributes
-    final String _userAttributes = await _storage.read(key: constants.userAttributes);
+    final String _userAttributes =
+        await _storage.read(key: constants.userAttributes);
     // Decode the json user
     Map<String, dynamic> _user = jsonDecode(_userAttributes);
     developer.log('User Attributes retrieved for: ${_user["userid"]}');

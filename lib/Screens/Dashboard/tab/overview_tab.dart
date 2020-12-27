@@ -17,6 +17,7 @@ class OverviewTab extends StatefulWidget {
 }
 
 class _OverviewTabState extends State<OverviewTab> {
+  OverviewRestData _overviewRestData = OverviewRestData();
   static const _itemsLength = 20;
 
   List<Color> colors;
@@ -115,9 +116,16 @@ class _OverviewTabState extends State<OverviewTab> {
 
   @override
   Widget build(context) {
+    _getOverviewData();
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
+  }
+
+  /// Get budget data
+  void _getOverviewData() async {
+    await _overviewRestData.get();
   }
 }

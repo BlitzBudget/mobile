@@ -21,6 +21,7 @@ class TransactionsTab extends StatefulWidget {
 }
 
 class _TransactionsTabState extends State<TransactionsTab> {
+  TransactionRestData _transactionRestData = TransactionRestData();
   static const _itemsLength = 50;
 
   final _androidRefreshKey = GlobalKey<RefreshIndicatorState>();
@@ -179,9 +180,16 @@ class _TransactionsTabState extends State<TransactionsTab> {
 
   @override
   Widget build(context) {
+    _getTransactionData();
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
+  }
+
+  /// Get budget data
+  void _getTransactionData() async {
+    await _transactionRestData.get();
   }
 }

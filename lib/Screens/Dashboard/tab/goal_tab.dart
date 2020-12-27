@@ -17,6 +17,7 @@ class GoalTab extends StatefulWidget {
 }
 
 class _GoalTabState extends State<GoalTab> {
+  GoalRestData _goalRestData = GoalRestData();
   static const _itemsLength = 20;
 
   List<Color> colors;
@@ -115,9 +116,16 @@ class _GoalTabState extends State<GoalTab> {
 
   @override
   Widget build(context) {
+    _getGoalData();
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
+  }
+
+  /// Get budget data
+  void _getGoalData() async {
+    await _goalRestData.get();
   }
 }
