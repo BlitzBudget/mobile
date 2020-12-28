@@ -12,6 +12,7 @@ import '../authentication.dart' as authentication;
 import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
+import '../../models/budget/budget.dart';
 
 class BudgetRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -64,31 +65,14 @@ class BudgetRestData {
   }
 
   /// Update Budget
-  Future<void> update(
-      String budgetId, String walletId, String dateMeantFor, String category,
-      {String categoryType, String plannedAmount}) {
-    // JSON for Get budget [_jsonForUpdateBudget]
-    Map<String, dynamic> _jsonForUpdateBudget = {
-      'budgetId': budgetId,
-      'walletId': walletId,
-      'dateMeantFor': dateMeantFor,
-      'category': category
-    };
-
-    if (isNotEmpty(categoryType)) {
-      _jsonForUpdateBudget["categoryType"] = categoryType;
-    }
-
-    if (isNotEmpty(plannedAmount)) {
-      _jsonForUpdateBudget["planned"] = plannedAmount;
-    }
+  Future<void> update(Budget updateBudget) {
 
     developer.log(
-        "The Map for patching the budget is  ${_jsonForUpdateBudget.toString()}");
+        "The Map for patching the budget is  ${updateBudget.toString()}");
 
     return _netUtil
         .patch(_budgetURL,
-            body: jsonEncode(_jsonForUpdateBudget),
+            body: jsonEncode(updateBudget.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
@@ -96,23 +80,11 @@ class BudgetRestData {
   }
 
   /// Add Budget
-  Future<void> add(String walletId, String dateMeantFor, String category,
-      {String categoryType}) {
-    // JSON for Get budget [_jsonForAddBudget]
-    Map<String, dynamic> _jsonForAddBudget = {
-      'walletId': walletId,
-      'dateMeantFor': dateMeantFor,
-      'category': category,
-      'planned': 0,
-    };
-
-    if (isNotEmpty(categoryType)) {
-      _jsonForAddBudget["categoryType"] = categoryType;
-    }
+  Future<void> add(Budget addBudget) {
 
     return _netUtil
         .put(_budgetURL,
-            body: jsonEncode(_jsonForAddBudget),
+            body: jsonEncode(addBudget.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');

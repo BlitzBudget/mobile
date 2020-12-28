@@ -8,7 +8,7 @@ class Budget {
 
   // Optional category type and Budget id fields
   Budget(this.walletId, this.planned, this.dateMeantFor, this.category,
-      [this.categoryType, this.budgetId]);
+         {this.categoryType, this.budgetId});
 
   /// Budget to JSON
   Map<String, dynamic> toJSON() => {

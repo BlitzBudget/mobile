@@ -65,27 +65,14 @@ class GoalRestData {
   }
 
   /// Update Budget
-  Future<void> update(
-      String budgetId, String walletId, String dateMeantFor, String category,
-      {String categoryType}) {
-    // JSON for Get budget [_jsonForGetBudget]
-    Map<String, dynamic> _jsonForGetBudget = {
-      'budgetId': budgetId,
-      'walletId': walletId,
-      'dateMeantFor': dateMeantFor,
-      'category': category
-    };
-
-    if (isNotEmpty(categoryType)) {
-      _jsonForGetBudget["categoryType"] = categoryType;
-    }
+  Future<void> update(Goal updateGoal) {
 
     developer.log(
-        "The Map for patching the budget is  ${_jsonForGetBudget.toString()}");
+        "The Map for patching the budget is  ${updateGoal.toString()}");
 
     return _netUtil
         .patch(_goalURL,
-            body: jsonEncode(_jsonForGetBudget),
+            body: jsonEncode(updateGoal.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
@@ -93,28 +80,11 @@ class GoalRestData {
   }
 
   /// Add Goal
-  Future<void> add(
-      String walletId,
-      GoalType goalType,
-      TargetType targetType,
-      String monthlyContribution,
-      String targetAmount,
-      String targetDate,
-      String targetId) {
-    // JSON for Add Goal [_jsonForAddGoal]
-    Map<String, dynamic> _jsonForAddGoal = {
-      'walletId': walletId,
-      'goalType': goalType,
-      'targetType': targetType,
-      'monthlyContribution': monthlyContribution,
-      'targetAmount': targetAmount,
-      'targetDate': targetDate,
-      'targetId': targetId
-    };
+  Future<void> add(Goal addGoal) {
 
     return _netUtil
         .put(_goalURL,
-            body: jsonEncode(_jsonForAddGoal), headers: authentication.headers)
+            body: jsonEncode(addGoal.toJSON()), headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the goal is $res');
     });

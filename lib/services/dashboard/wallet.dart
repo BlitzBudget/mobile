@@ -10,8 +10,8 @@ import '../../utils/network_util.dart';
 import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
 import '../../constants/constants.dart' as constants;
-import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
+import '../../models/wallet/wallet.dart';
 
 class WalletRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -47,28 +47,14 @@ class WalletRestData {
   }
 
   /// Update Wallet
-  Future<void> update(String walletId, String userId,
-      {String name, String currency}) {
-    // JSON for Get budget [_jsonForUpdateWallet]
-    Map<String, dynamic> _jsonForUpdateWallet = {
-      'walletId': walletId,
-      'userId': userId
-    };
-
-    if (isNotEmpty(name)) {
-      _jsonForUpdateWallet["name"] = name;
-    }
-
-    if (isNotEmpty(currency)) {
-      _jsonForUpdateWallet["currency"] = currency;
-    }
+  Future<void> update(Wallet updateWallet) {
 
     developer.log(
-        "The Map for patching the budget is  ${_jsonForUpdateWallet.toString()}");
+        "The Map for patching the budget is  ${updateWallet.toString()}");
 
     return _netUtil
         .patch(_walletURL,
-            body: jsonEncode(_jsonForUpdateWallet),
+            body: jsonEncode(updateWallet.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');

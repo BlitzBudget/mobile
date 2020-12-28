@@ -12,8 +12,7 @@ import '../authentication.dart' as authentication;
 import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
-import '../../models/transaction/recurrence.dart';
-import '../../models/category/category_type.dart';
+import '../../models/transaction/transaction.dart';
 
 class TransactionRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -66,87 +65,28 @@ class TransactionRestData {
   }
 
   /// Update Transaction
-  Future<void> update(String walletId, String transactionId,
-      {List<String> tags,
-      String description,
-      String amount,
-      String categoryId,
-      String accountId}) {
-    // JSON for Get budget [_jsonForUpdateTransaction]
-    Map<String, dynamic> _jsonForUpdateTransaction = {
-      'walletId': walletId,
-      'transactionId': transactionId
-    };
-
-    if (isNotEmpty(tags)) {
-      _jsonForUpdateTransaction["tags"] = tags;
-    }
-
-    if (isNotEmpty(description)) {
-      _jsonForUpdateTransaction["description"] = description;
-    }
-
-    if (isNotEmpty(amount)) {
-      _jsonForUpdateTransaction["amount"] = amount;
-    }
-
-    if (isNotEmpty(categoryId)) {
-      _jsonForUpdateTransaction["category"] = categoryId;
-    }
-
-    if (isNotEmpty(accountId)) {
-      _jsonForUpdateTransaction["account"] = accountId;
-    }
-
+  Future<void> update(Transaction updateTransaction) {
     developer.log(
-        "The Map for patching the budget is  ${_jsonForUpdateTransaction.toString()}");
+        "The Map for patching the transaction is  ${updateTransaction.toString()}");
 
     return _netUtil
         .patch(_transactionURL,
-            body: jsonEncode(_jsonForUpdateTransaction),
+            body: jsonEncode(updateTransaction.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+      debugPrint('The response from the transaction is $res');
     });
   }
 
   /// Add Transaction
-  Future<void> add(String walletId, String amount, String categoryId,
-      String accountId, String dateMeantFor,
-      {List<String> tags,
-      String description,
-      Recurrence recurrence,
-      CategoryType categoryType,
-      String categoryName}) {
-    // JSON for Get budget [_jsonForAddTransaction]
-    Map<String, dynamic> _jsonForAddTransaction = {
-      'walletId': walletId,
-      'amount': amount,
-      'description': description,
-      'account': accountId,
-      'dateMeantFor': dateMeantFor,
-      'category': categoryId,
-      'recurrence': recurrence ?? Recurrence.NEVER
-    };
-
-    if (isNotEmpty(categoryType)) {
-      _jsonForAddTransaction["categoryType"] = categoryType;
-    }
-
-    if (isNotEmpty(categoryName)) {
-      _jsonForAddTransaction["categoryName"] = categoryName;
-    }
-
-    if (isNotEmpty(tags)) {
-      _jsonForAddTransaction["tags"] = tags;
-    }
+  Future<void> add(Transaction addTransaction) {
 
     return _netUtil
         .put(_transactionURL,
-            body: jsonEncode(_jsonForAddTransaction),
+            body: jsonEncode(addTransaction.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+      debugPrint('The response from the transaction is $res');
     });
   }
 }

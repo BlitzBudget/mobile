@@ -19,33 +19,17 @@ class BankAccountRestData {
   /// Create storage
   final _storage = new FlutterSecureStorage();
   static final _bankAccountURL = authentication.baseURL + "/bank-accounts";
+  static final _deleteBankAccountURL = _bankAccountURL + '/delete';
 
   /// Update BankAccount
-  Future<void> update(String bankAccountId, String walletId,
-      String dateMeantFor, String category,
-      {String categoryType, String plannedAmount}) {
-    // JSON for Get bankAccount [_jsonForUpdateBankAccount]
-    Map<String, dynamic> _jsonForUpdateBankAccount = {
-      'bankAccountId': bankAccountId,
-      'walletId': walletId,
-      'dateMeantFor': dateMeantFor,
-      'category': category
-    };
-
-    if (isNotEmpty(categoryType)) {
-      _jsonForUpdateBankAccount["categoryType"] = categoryType;
-    }
-
-    if (isNotEmpty(plannedAmount)) {
-      _jsonForUpdateBankAccount["planned"] = plannedAmount;
-    }
+  Future<void> update(BankAccount updateBankAccount) {
 
     developer.log(
-        "The Map for patching the bankAccount is  ${_jsonForUpdateBankAccount.toString()}");
+        "The Map for patching the bankAccount is  ${updateBankAccount.toString()}");
 
     return _netUtil
         .patch(_bankAccountURL,
-            body: jsonEncode(_jsonForUpdateBankAccount),
+            body: jsonEncode(updateBankAccount.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the bankAccount is $res');
@@ -53,26 +37,32 @@ class BankAccountRestData {
   }
 
   /// Add BankAccount
-  Future<void> add(String walletId, String dateMeantFor, String category,
-      {String categoryType}) {
-    // JSON for Get bankAccount [_jsonForAddBankAccount]
-    Map<String, dynamic> _jsonForAddBankAccount = {
-      'walletId': walletId,
-      'dateMeantFor': dateMeantFor,
-      'category': category,
-      'planned': 0,
-    };
-
-    if (isNotEmpty(categoryType)) {
-      _jsonForAddBankAccount["categoryType"] = categoryType;
-    }
+  Future<void> add(BankAccount addBankAccount) {
 
     return _netUtil
         .put(_bankAccountURL,
-            body: jsonEncode(_jsonForAddBankAccount),
+            body: jsonEncode(addBankAccount.toJSON()),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the bankAccount is $res');
+    });
+  }
+
+  /// Delete Wallet
+  Future<void> delete(String walletId, String account) {
+
+    // JSON for Get wallet [_jsonForGetWallet]
+    Map<String, dynamic> _jsonForDeleteCategory = {
+      "walletId": walletId,
+      "account": account
+    };
+
+    return _netUtil
+        .post(_deleteBankAccountURL,
+            body: jsonEncode(_jsonForDeleteCategory),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
     });
   }
 }

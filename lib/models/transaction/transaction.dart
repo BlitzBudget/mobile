@@ -17,12 +17,12 @@ class Transaction {
   /// Optional Transactions id, description, recurrence, category type, category name and tags
   Transaction(this.walletId, this.amount, this.accountId, this.dateMeantFor,
       this.categoryId,
-      [this.transactionId,
-      this.description,
-      this.recurrence,
+      {this.transactionId,
+      this.description = '',
+      this.recurrence = Recurrence.NEVER,
       this.categoryType,
       this.categoryName,
-      this.tags]);
+      this.tags});
 
   /// Map JSON transactions to List of object
   Transaction.map(dynamic transactions) {}

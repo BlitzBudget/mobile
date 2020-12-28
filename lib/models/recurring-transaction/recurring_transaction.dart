@@ -14,12 +14,12 @@ class RecurringTransaction {
 
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
   RecurringTransaction(this.walletId, this.amount, this.accountId,
-      [this.recurringTransactionId,
+                       {this.recurringTransactionId,
       this.description,
       this.recurrence,
       this.categoryType,
       this.categoryName,
-      this.tags]);
+      this.tags});
 
   /// Recurring Transaction to JSON
   Map<String, dynamic> toJSON() => {
