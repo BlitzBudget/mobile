@@ -5,8 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
-import '../constants.dart' as constants;
-import '../data/authentication.dart' as authentication;
+import '../constants/constants.dart' as constants;
+import '../services/authentication.dart' as authentication;
 import '../screens/dashboard/full-screen-dialog/profile_dialog.dart' as profile;
 
 /// API calls allowed

@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../../utils/network_util.dart';
 import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
-import '../../constants.dart' as constants;
+import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
 
@@ -79,7 +79,7 @@ class BudgetRestData {
       _jsonForUpdateBudget["categoryType"] = categoryType;
     }
 
-    if (isNotEmpty(planned)) {
+    if (isNotEmpty(plannedAmount)) {
       _jsonForUpdateBudget["planned"] = plannedAmount;
     }
 
@@ -98,8 +98,8 @@ class BudgetRestData {
   /// Add Budget
   Future<void> add(String walletId, String dateMeantFor, String category,
       {String categoryType}) {
-    // JSON for Get budget [_jsonForUpdateBudget]
-    Map<String, dynamic> _jsonForUpdateBudget = {
+    // JSON for Get budget [_jsonForAddBudget]
+    Map<String, dynamic> _jsonForAddBudget = {
       'walletId': walletId,
       'dateMeantFor': dateMeantFor,
       'category': category,
@@ -107,7 +107,7 @@ class BudgetRestData {
     };
 
     if (isNotEmpty(categoryType)) {
-      _jsonForUpdateBudget["categoryType"] = categoryType;
+      _jsonForAddBudget["categoryType"] = categoryType;
     }
 
     return _netUtil

@@ -9,9 +9,11 @@ import 'package:intl/intl.dart';
 import '../../utils/network_util.dart';
 import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
-import '../../constants.dart' as constants;
+import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
+import '../../models/transaction/recurrence.dart';
+import '../../models/category/category_type.dart';
 
 class TransactionRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -102,6 +104,46 @@ class TransactionRestData {
     return _netUtil
         .patch(_transactionURL,
             body: jsonEncode(_jsonForUpdateTransaction),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+  }
+
+  /// Add Transaction
+  Future<void> add(String walletId, String amount, String categoryId,
+      String accountId, String dateMeantFor,
+      {List<String> tags,
+      String description,
+      Recurrence recurrence,
+      CategoryType categoryType,
+      String categoryName}) {
+    // JSON for Get budget [_jsonForAddTransaction]
+    Map<String, dynamic> _jsonForAddTransaction = {
+      'walletId': walletId,
+      'amount': amount,
+      'description': description,
+      'account': accountId,
+      'dateMeantFor': dateMeantFor,
+      'category': categoryId,
+      'recurrence': recurrence ?? Recurrence.NEVER
+    };
+
+    if (isNotEmpty(categoryType)) {
+      _jsonForAddTransaction["categoryType"] = categoryType;
+    }
+
+    if (isNotEmpty(categoryName)) {
+      _jsonForAddTransaction["categoryName"] = categoryName;
+    }
+
+    if (isNotEmpty(tags)) {
+      _jsonForAddTransaction["tags"] = tags;
+    }
+
+    return _netUtil
+        .put(_transactionURL,
+            body: jsonEncode(_jsonForAddTransaction),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');

@@ -8,7 +8,7 @@ import 'package:mdi/mdi.dart';
 
 import '../../../utils/utils.dart';
 import '../../../utils/widgets.dart';
-import '../../../data/dashboard/overview.dart';
+import '../../../services/dashboard/overview.dart';
 
 class OverviewTab extends StatefulWidget {
   static const title = 'Overview';

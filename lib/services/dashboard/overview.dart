@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../../utils/network_util.dart';
 import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
-import '../../constants.dart' as constants;
+import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
 

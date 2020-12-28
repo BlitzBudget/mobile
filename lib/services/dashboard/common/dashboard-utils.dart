@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
-import '../../../constants.dart' as constants;
+import '../../../constants/constants.dart' as constants;
 import '../../../utils/utils.dart';
 
 /// Fetch Starts With Date from Shared preferences

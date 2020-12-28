@@ -7,8 +7,8 @@ import '../../authentication/welcome/welcome_screen.dart';
 import '../../../utils/widgets.dart';
 import '../../../utils/utils.dart';
 import '../../../main.dart';
-import '../../../constants.dart';
-import '../../components/rounded_button.dart';
+import '../../../constants/constants.dart';
+import '../../../widgets/rounded_button.dart';
 
 class ProfileDialog extends StatelessWidget {
   static const title = 'Profile';

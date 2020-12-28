@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
-import '../../../../constants.dart';
+import '../../../../constants/constants.dart';
 import '../../../../utils/utils.dart';
-import '../../../../data/authentication.dart';
-import '../../../components/rounded_button.dart';
+import '../../../../services/authentication.dart';
+import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
-import '../../../components/linear_loading_indicator.dart';
+import '../../../../widgets/linear_loading_indicator.dart';
 import '../../components/already_have_an_account_check.dart';
 import '../../components/rounded_password_field.dart';
 

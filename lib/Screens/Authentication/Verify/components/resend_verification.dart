@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import '../../../../constants.dart';
-import '../../../../data/authentication.dart';
+import '../../../../constants/constants.dart';
+import '../../../../services/authentication.dart';
 
 // Public exposed class
 class ResendVerification extends StatefulWidget {

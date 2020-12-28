@@ -4,10 +4,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'settings_dialog.dart';
 import 'profile_dialog.dart';
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 import 'wallet/add_new_wallet.dart';
 import '../../../utils/widgets.dart';
-import '../../components/rounded_button.dart';
+import '../../../widgets/rounded_button.dart';
 import '../../authentication/welcome/welcome_screen.dart';
 
 class WalletDialog extends StatelessWidget {

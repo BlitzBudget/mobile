@@ -1,4 +1,4 @@
-import 'package:mobile_blitzbudget/utils/utils.dart';
+import '../utils/utils.dart';
 import 'dart:developer' as developer;
 
 class User {

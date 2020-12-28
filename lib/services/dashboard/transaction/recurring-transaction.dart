@@ -1,6 +1,6 @@
 import '../../utils/network_util.dart';
 import '../authentication.dart' as authentication;
-import '../../constants.dart' as constants;
+import '../../constants/constants.dart' as constants;
 
 class RecurringTransactionRestData {
   NetworkUtil _netUtil = new NetworkUtil();

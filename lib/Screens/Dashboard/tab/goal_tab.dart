@@ -8,7 +8,7 @@ import 'package:mdi/mdi.dart';
 
 import '../../../utils/utils.dart';
 import '../../../utils/widgets.dart';
-import '../../../data/dashboard/goal.dart';
+import '../../../services/dashboard/goal.dart';
 
 class GoalTab extends StatefulWidget {
   static const title = 'Goal';

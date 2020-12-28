@@ -9,9 +9,11 @@ import 'package:intl/intl.dart';
 import '../../utils/network_util.dart';
 import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
-import '../../constants.dart' as constants;
+import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
+import '../../models/goal/goal_type.dart';
+import '../../models/goal/target_type.dart';
 
 class GoalRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -87,6 +89,28 @@ class GoalRestData {
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
+    });
+  }
+
+  /// Add Goal
+  Future<void> add(String walletId, GoalType goalType, TargetType targetType,
+      String monthlyContribution, String targetAmount, String targetDate, String targetId) {
+    // JSON for Add Goal [_jsonForAddGoal]
+    Map<String, dynamic> _jsonForAddGoal = {
+      'walletId': walletId,
+      'goalType': goalType,
+      'targetType': targetType,
+      'monthlyContribution': monthlyContribution,
+      'targetAmount': targetAmount,
+      'targetDate': targetDate,
+      'targetId': targetId
+    };
+
+    return _netUtil
+        .put(_goalURL,
+            body: jsonEncode(_jsonForAddGoal), headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the goal is $res');
     });
   }
 }

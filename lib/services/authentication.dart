@@ -12,7 +12,7 @@ import '../screens/authentication/signup/signup_screen.dart';
 import '../utils/network_util.dart';
 import '../models/user.dart';
 import '../utils/utils.dart';
-import '../constants.dart' as constants;
+import '../constants/constants.dart' as constants;
 import '../routes.dart';
 
 // Header for API calls

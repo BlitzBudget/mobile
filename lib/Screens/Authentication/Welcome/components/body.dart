@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
-import '../../../../constants.dart';
+import '../../../../constants/constants.dart';
 import '../../Signup/signup_screen.dart';
 import '../../Login/login_screen.dart';
-import '../../../components/rounded_button.dart';
+import '../../../../widgets/rounded_button.dart';
 
 class Body extends StatelessWidget {
   @override

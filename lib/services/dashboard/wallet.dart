@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../../utils/network_util.dart';
 import '../../utils/utils.dart';
 import '../authentication.dart' as authentication;
-import '../../constants.dart' as constants;
+import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
 
@@ -87,6 +87,23 @@ class WalletRestData {
     return _netUtil
         .post(_walletURL,
             body: jsonEncode(_jsonForDeleteWallet),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the budget is $res');
+    });
+  }
+
+  /// Add Wallet
+  Future<void> add(String userId, String currency) {
+    // JSON for Get budget [_jsonForAddWallet]
+    Map<String, dynamic> _jsonForAddWallet = {
+      'userId': userId,
+      'currency': currency,
+    };
+
+    return _netUtil
+        .put(_walletURL,
+            body: jsonEncode(_jsonForAddWallet),
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
