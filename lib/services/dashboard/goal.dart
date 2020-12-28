@@ -60,6 +60,7 @@ class GoalRestData {
             body: jsonEncode(_jsonForGetGoal), headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the goal is $res');
+            //TODO
     });
   }
 
@@ -74,6 +75,7 @@ class GoalRestData {
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
+            //TODO
     });
   }
 
@@ -84,6 +86,7 @@ class GoalRestData {
             body: jsonEncode(addGoal.toJSON()), headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the goal is $res');
+            //TODO
     });
   }
 }

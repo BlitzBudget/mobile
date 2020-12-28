@@ -43,6 +43,7 @@ class WalletRestData {
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the wallet is $res');
+            //TODO
     });
   }
 
@@ -57,6 +58,7 @@ class WalletRestData {
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
+            //TODO
     });
   }
 
@@ -75,6 +77,7 @@ class WalletRestData {
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
+            //TODO
     });
   }
 
@@ -92,6 +95,7 @@ class WalletRestData {
             headers: authentication.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
+            //TODO
     });
   }
 }
