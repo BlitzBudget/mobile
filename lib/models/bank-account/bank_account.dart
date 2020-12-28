@@ -20,6 +20,18 @@ class BankAccount {
       this.accountType,
       this.bankAccountName});
 
+  /// Map JSON BankAccount to List of object
+  BankAccount.map(dynamic bankAccount) {
+    this.accountId = bankAccount['accountId'];
+    this.walletId = bankAccount['walletId'];
+    this.accountBalance = bankAccount['account_balance'];
+    this.linked = bankAccount['linked'];
+    this.selectedAccount = bankAccount['selected_account'];
+    this.accountType = bankAccount['account_type'];
+    this.accountSubType = bankAccount['account_sub_type'];
+    this.bankAccountName = bankAccount['bank_account_name'];
+  }
+
   /// Bank Account to JSON
   Map<String, dynamic> toJSON() => {
         'walletId': walletId,

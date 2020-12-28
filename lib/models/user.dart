@@ -10,10 +10,8 @@ class User {
   String _familyname;
   User(this._userid, this._email);
 
-  User.map(dynamic obj) {
+  User.map(dynamic userAttributes) {
     Map currentUserLocal = {};
-
-    dynamic userAttributes = obj;
 
     /// SUCCESS Scenarios
     for (var i = 0; i < userAttributes.length; i++) {

@@ -10,6 +10,7 @@ class RecurringTransaction {
   Recurrence recurrence;
   CategoryType categoryType;
   String categoryName;
+  String category;
   List<String> tags;
 
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
@@ -20,6 +21,21 @@ class RecurringTransaction {
       this.categoryType,
       this.categoryName,
       this.tags});
+
+  /// Map JSON recurring transactions to List of object
+  RecurringTransaction.map(dynamic recurringTransaction) {
+    this.recurringTransactionId =
+        recurringTransaction['recurringTransactionsId'];
+    this.walletId = recurringTransaction['walletId'];
+    this.amount = recurringTransaction['amount'];
+    this.description = recurringTransaction['description'];
+    this.accountId = recurringTransaction['account'];
+    this.recurrence = recurringTransaction['recurrence'];
+    this.categoryType = recurringTransaction['category_type'];
+    this.categoryName = recurringTransaction['category_name'];
+    this.tags = recurringTransaction['tags'];
+    this.category = recurringTransaction['category'];
+  }
 
   /// Recurring Transaction to JSON
   Map<String, dynamic> toJSON() => {

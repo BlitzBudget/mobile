@@ -21,6 +21,18 @@ class Goal {
       this.targetDate,
       this.targetId});
 
+  /// Map JSON Goal to List of object
+  Goal.map(dynamic goal) {
+    this.walletId = goal['userId'];
+    this.goalId = goal['goalId'];
+    this.goalType = goal['goal_type'];
+    this.targetType = goal['target_type'];
+    this.monthlyContribution = goal['monthly_contribution'];
+    this.targetAmount = goal['final_amount'];
+    this.targetDate = goal['preferable_target_date'];
+    this.targetId = goal['target_id'];
+  }
+
   // JSON for Goal
   Map<String, dynamic> toJSON() => {
         'walletId': walletId,

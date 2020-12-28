@@ -25,7 +25,17 @@ class Transaction {
       this.tags});
 
   /// Map JSON transactions to List of object
-  Transaction.map(dynamic transactions) {}
+  Transaction.map(dynamic transaction) {
+    this.transactionId = transaction['transactionId'];
+    this.walletId = transaction['walletId'];
+    this.amount = transaction['amount'];
+    this.description = transaction['description'];
+    this.accountId = transaction['account'];
+    this.dateMeantFor = transaction['date_meant_for'];
+    this.categoryId = transaction['category'];
+    this.recurrence = transaction['recurrence'];
+    this.tags = transaction['tags'];
+  }
 
   /// Transaction to JSON
   Map<String, dynamic> toJSON() => {
