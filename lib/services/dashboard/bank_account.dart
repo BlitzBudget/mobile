@@ -14,16 +14,15 @@ import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
 
 class BankAccountRestData {
-    NetworkUtil _netUtil = new NetworkUtil();
+  NetworkUtil _netUtil = new NetworkUtil();
 
   /// Create storage
   final _storage = new FlutterSecureStorage();
   static final _bankAccountURL = authentication.baseURL + "/bank-accounts";
 
-
-    /// Update BankAccount
-  Future<void> update(
-      String bankAccountId, String walletId, String dateMeantFor, String category,
+  /// Update BankAccount
+  Future<void> update(String bankAccountId, String walletId,
+      String dateMeantFor, String category,
       {String categoryType, String plannedAmount}) {
     // JSON for Get bankAccount [_jsonForUpdateBankAccount]
     Map<String, dynamic> _jsonForUpdateBankAccount = {

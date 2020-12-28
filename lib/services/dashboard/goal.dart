@@ -93,8 +93,14 @@ class GoalRestData {
   }
 
   /// Add Goal
-  Future<void> add(String walletId, GoalType goalType, TargetType targetType,
-      String monthlyContribution, String targetAmount, String targetDate, String targetId) {
+  Future<void> add(
+      String walletId,
+      GoalType goalType,
+      TargetType targetType,
+      String monthlyContribution,
+      String targetAmount,
+      String targetDate,
+      String targetId) {
     // JSON for Add Goal [_jsonForAddGoal]
     Map<String, dynamic> _jsonForAddGoal = {
       'walletId': walletId,

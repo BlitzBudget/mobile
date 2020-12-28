@@ -6,7 +6,7 @@ import 'screens/authentication/login/login_screen.dart';
 import 'screens/authentication/signup/signup_screen.dart';
 import 'screens/authentication/verify/verify_screen.dart';
 import 'screens/authentication/forgot-password/forgot_password_screen.dart';
-import 'constants.dart';
+import 'constants/constants.dart';
 
 final routes = {
   welcomeRoute: (BuildContext context) => new WelcomeScreen(),

@@ -1,43 +1,35 @@
-import 'recurrence.dart';
+import '../transaction/recurrence.dart';
 import '../category/category_type.dart';
 
-class Transaction {
-  String transactionId;
+class RecurringTransaction {
+  String recurringTransactionId;
   String walletId;
   Double amount;
   String description;
   String accountId;
-  String dateMeantFor;
-  String categoryId;
   Recurrence recurrence;
   CategoryType categoryType;
   String categoryName;
   List<String> tags;
 
-  /// Optional Transactions id, description, recurrence, category type, category name and tags
-  Transaction(this.walletId, this.amount, this.accountId, this.dateMeantFor,
-      this.categoryId,
-      [this.transactionId,
+  /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
+  RecurringTransaction(this.walletId, this.amount, this.accountId,
+      [this.recurringTransactionId,
       this.description,
       this.recurrence,
       this.categoryType,
       this.categoryName,
       this.tags]);
 
-  /// Map JSON transactions to List of object
-  Transaction.map(dynamic transactions) {}
-
-  /// Transaction to JSON
+  /// Recurring Transaction to JSON
   Map<String, dynamic> toJSON() => {
         'walletId': walletId,
-        'transactionId': transactionId,
+        'recurringTransactionId': recurringTransactionId,
         'amount': amount,
         'recurrence': recurrence,
         'account': accountId,
-        'dateMeantFor': dateMeantFor,
         'description': description,
         'tags': tags,
-        'category': categoryId,
         'categoryType': categoryType,
         'categoryName': categoryName
       };
