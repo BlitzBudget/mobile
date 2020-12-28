@@ -80,7 +80,6 @@ class TransactionRestData {
 
   /// Add Transaction
   Future<void> add(Transaction addTransaction) {
-
     return _netUtil
         .put(_transactionURL,
             body: jsonEncode(addTransaction.toJSON()),

@@ -23,7 +23,6 @@ class BankAccountRestData {
 
   /// Update BankAccount
   Future<void> update(BankAccount updateBankAccount) {
-
     developer.log(
         "The Map for patching the bankAccount is  ${updateBankAccount.toString()}");
 
@@ -38,7 +37,6 @@ class BankAccountRestData {
 
   /// Add BankAccount
   Future<void> add(BankAccount addBankAccount) {
-
     return _netUtil
         .put(_bankAccountURL,
             body: jsonEncode(addBankAccount.toJSON()),
@@ -50,7 +48,6 @@ class BankAccountRestData {
 
   /// Delete Wallet
   Future<void> delete(String walletId, String account) {
-
     // JSON for Get wallet [_jsonForGetWallet]
     Map<String, dynamic> _jsonForDeleteCategory = {
       "walletId": walletId,

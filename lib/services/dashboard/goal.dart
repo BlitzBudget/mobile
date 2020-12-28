@@ -12,8 +12,7 @@ import '../authentication.dart' as authentication;
 import '../../constants/constants.dart' as constants;
 import 'common/dashboard-utils.dart' as dashboardUtils;
 import '../../models/user.dart';
-import '../../models/goal/goal_type.dart';
-import '../../models/goal/target_type.dart';
+import '../../models/goal/goal.dart';
 
 class GoalRestData {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -66,9 +65,8 @@ class GoalRestData {
 
   /// Update Budget
   Future<void> update(Goal updateGoal) {
-
-    developer.log(
-        "The Map for patching the budget is  ${updateGoal.toString()}");
+    developer
+        .log("The Map for patching the budget is  ${updateGoal.toString()}");
 
     return _netUtil
         .patch(_goalURL,
@@ -81,7 +79,6 @@ class GoalRestData {
 
   /// Add Goal
   Future<void> add(Goal addGoal) {
-
     return _netUtil
         .put(_goalURL,
             body: jsonEncode(addGoal.toJSON()), headers: authentication.headers)

@@ -48,9 +48,8 @@ class WalletRestData {
 
   /// Update Wallet
   Future<void> update(Wallet updateWallet) {
-
-    developer.log(
-        "The Map for patching the budget is  ${updateWallet.toString()}");
+    developer
+        .log("The Map for patching the budget is  ${updateWallet.toString()}");
 
     return _netUtil
         .patch(_walletURL,

@@ -4,7 +4,7 @@ import '../category/category_type.dart';
 class RecurringTransaction {
   String recurringTransactionId;
   String walletId;
-  Double amount;
+  double amount;
   String description;
   String accountId;
   Recurrence recurrence;
@@ -14,7 +14,7 @@ class RecurringTransaction {
 
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
   RecurringTransaction(this.walletId, this.amount, this.accountId,
-                       {this.recurringTransactionId,
+      {this.recurringTransactionId,
       this.description,
       this.recurrence,
       this.categoryType,

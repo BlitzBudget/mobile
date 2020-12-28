@@ -3,9 +3,9 @@ class Wallet {
   String userId;
   String walletName;
   String currency;
-  Double totalDebtBalance;
-  Double walletBalance;
-  Double totalAssetBalance;
+  doubletotalDebtBalance;
+  doublewalletBalance;
+  doubletotalAssetBalance;
 
   /// Optional field: wallet id, wallet name, total debt balance, wallet balance, total asset balance
   Wallet(this.userId, this.currency,

@@ -66,9 +66,8 @@ class BudgetRestData {
 
   /// Update Budget
   Future<void> update(Budget updateBudget) {
-
-    developer.log(
-        "The Map for patching the budget is  ${updateBudget.toString()}");
+    developer
+        .log("The Map for patching the budget is  ${updateBudget.toString()}");
 
     return _netUtil
         .patch(_budgetURL,
@@ -81,7 +80,6 @@ class BudgetRestData {
 
   /// Add Budget
   Future<void> add(Budget addBudget) {
-
     return _netUtil
         .put(_budgetURL,
             body: jsonEncode(addBudget.toJSON()),

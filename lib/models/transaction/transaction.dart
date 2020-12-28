@@ -4,7 +4,7 @@ import '../category/category_type.dart';
 class Transaction {
   String transactionId;
   String walletId;
-  Double amount;
+  double amount;
   String description;
   String accountId;
   String dateMeantFor;

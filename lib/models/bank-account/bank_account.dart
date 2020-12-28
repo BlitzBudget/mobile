@@ -5,7 +5,7 @@ class BankAccount {
   String accountId;
   String walletId;
   String primaryWallet;
-  Double accountBalance;
+  double accountBalance;
   bool linked;
   bool selectedAccount;
   AccountType accountType;
@@ -14,7 +14,7 @@ class BankAccount {
 
   /// Optional account id, linked, selected account, account type, bank account name
   BankAccount(this.walletId, this.accountBalance,
-              {this.accountId,
+      {this.accountId,
       this.linked,
       this.selectedAccount,
       this.accountType,

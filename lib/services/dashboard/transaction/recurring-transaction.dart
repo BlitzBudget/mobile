@@ -9,7 +9,6 @@ class RecurringTransactionRestData {
 
   /// Update Transaction
   Future<void> update(RecurringTransaction updateRecurringTransaction) {
-
     developer.log(
         "The Map for patching the recurring transactions is  ${updateRecurringTransaction.toString()}");
 
