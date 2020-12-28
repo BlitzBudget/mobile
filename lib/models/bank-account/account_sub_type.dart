@@ -12,15 +12,13 @@ class AccountSubType {
   static const AccountSubType CREDIT_CARD = const AccountSubType('Credit Card');
   static const AccountSubType LIABILITY = const AccountSubType('Liability');
 
-  /*static const AccountTypeAsset = AccountType.ASSET;
-    static const AccountTypeDebt = AccountType.ASSET;
-    /// GET Account Subtype vs Account type relationship
-    Map<AccountSubType, AccountType> = {
-        SAVINGS_ACCOUNT: AccountTypeAsset,
-        CURRENT_ACCOUNT: AccountTypeAsset,
-        CASH: AccountTypeAsset,
-        ASSETS: AccountTypeAsset,
-        CREDIT_CARD: AccountTypeDebt,
-        LIABILITY: AccountTypeDebt
-    }*/
+  /// GET Account Subtype vs Account type relationship
+  Map<AccountSubType, AccountType> toJSON() => {
+        SAVINGS_ACCOUNT: AccountType.ASSET.toString(),
+        CURRENT_ACCOUNT: AccountType.ASSET,
+        CASH: AccountType.ASSET,
+        ASSETS: AccountType.ASSET,
+        CREDIT_CARD: AccountType.ASSET,
+        LIABILITY: AccountType.ASSET
+      };
 }
