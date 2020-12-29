@@ -3,6 +3,7 @@ import '../error/exceptions.dart';
 class HttpClient {
   final AuthTokenRepository authTokenRepository;
   final NetworkHelper networkHelper = NetworkHelper();
+  final RefreshTokenHelper refreshTokenHelper = RefreshTokenHelper();
 
   HttpClient(this.authTokenRepository);
 
