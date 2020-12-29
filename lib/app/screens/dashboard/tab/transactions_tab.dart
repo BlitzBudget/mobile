@@ -188,5 +188,4 @@ class _TransactionsTabState extends State<TransactionsTab> {
       iosBuilder: _buildIos,
     );
   }
-
 }

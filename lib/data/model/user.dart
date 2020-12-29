@@ -10,7 +10,7 @@ class User {
   String _familyname;
   User(this._userid, this._email);
 
-  User.fromJSON(dynamic userAttributes) {
+  factory User.fromJSON(Map<String, dynamic> userAttributes) {
     Map currentUserLocal = {};
 
     /// SUCCESS Scenarios

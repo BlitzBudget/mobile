@@ -21,7 +21,7 @@ class BankAccount {
       this.bankAccountName});
 
   /// Map JSON BankAccount to List of object
-  BankAccount.fromJSON(dynamic bankAccount) {
+  factory BankAccount.fromJSON(Map<String, dynamic> bankAccount) {
     this.accountId = bankAccount['accountId'];
     this.walletId = bankAccount['walletId'];
     this.accountBalance = bankAccount['account_balance'];
