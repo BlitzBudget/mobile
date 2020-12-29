@@ -32,8 +32,7 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource =
-      AuthenticationRemoteDataSource();
+  final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   final String email, password;
   String confirmPassword;
   final signupText = "SIGNUP";
