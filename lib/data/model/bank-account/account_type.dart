@@ -1,0 +1,1 @@
+enum AccountType { ASSET, DEBT }

@@ -1,0 +1,1 @@
+enum TargetType { Wallet, Account }
