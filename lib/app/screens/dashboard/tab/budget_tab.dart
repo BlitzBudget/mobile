@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import '../../../utils/utils.dart';
-import '../../../app/widgets/dashboard_widget.dart';
-import '../../../data/remote/dashboard/budget.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/dashboard_widget.dart';
 
 class BudgetTab extends StatefulWidget {
   static const title = 'Budget';
@@ -21,7 +20,6 @@ class BudgetTab extends StatefulWidget {
 class _BudgetTabState extends State<BudgetTab> {
   /// States
   static const _itemsLength = 20;
-  BudgetRestData _budgetRestData = BudgetRestData();
 
   List<Color> colors;
   List<String> titles;
@@ -120,17 +118,10 @@ class _BudgetTabState extends State<BudgetTab> {
   @override
   Widget build(context) {
     debugPrint("The Budget tab has been clicked");
-    // Get Budget Data
-    _getBudgetData();
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
-  }
-
-  /// Get budget data
-  void _getBudgetData() async {
-    await _budgetRestData.get();
   }
 }

@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import '../../../utils/utils.dart';
-import '../../../app/widgets/dashboard_widget.dart';
-import '../../../data/remote/dashboard/overview.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/dashboard_widget.dart';
 
 class OverviewTab extends StatefulWidget {
   static const title = 'Overview';
@@ -20,7 +19,6 @@ class OverviewTab extends StatefulWidget {
 }
 
 class _OverviewTabState extends State<OverviewTab> {
-  OverviewRestData _overviewRestData = OverviewRestData();
   static const _itemsLength = 20;
 
   List<Color> colors;
@@ -120,16 +118,10 @@ class _OverviewTabState extends State<OverviewTab> {
   @override
   Widget build(context) {
     debugPrint("The Overview tab has been clicked");
-    _getOverviewData();
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
-  }
-
-  /// Get overview data
-  void _getOverviewData() async {
-    await _overviewRestData.get();
   }
 }

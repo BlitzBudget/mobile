@@ -7,13 +7,13 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../app/screens/authentication/verify/verify_screen.dart';
-import '../app/screens/authentication/signup/signup_screen.dart';
-import '../data/utils/network_helper.dart';
-import '../data/model/user.dart';
-import '../utils/utils.dart';
-import '../app/constants/constants.dart' as constants;
-import '../app/routes.dart';
+import '../../../app/screens/authentication/verify/verify_screen.dart';
+import '../../../app/screens/authentication/signup/signup_screen.dart';
+import '../../utils/network_helper.dart';
+import '../../model/user.dart';
+import '../../../utils/utils.dart';
+import '../../../app/constants/constants.dart' as constants;
+import '../../../app/routes.dart';
 
 // Header for API calls
 var headers = {
@@ -46,7 +46,7 @@ abstract class AuthenticationRemoteDataSource {
       BuildContext context, String email, String password);
 }
 
-class AuthenticationRemoteDataSourceImpl
+class _AuthenticationRemoteDataSourceImpl
     implements AuthenticationRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
   static final _loginURL = baseURL + "/profile/sign-in";
@@ -129,7 +129,7 @@ class AuthenticationRemoteDataSourceImpl
       }
 
       /// User
-      User user = new User.map(res["UserAttributes"]);
+      User user = new User.fromJSON(res["UserAttributes"]);
 
       /// Store User Attributes
       _storeUserAttributes(user);

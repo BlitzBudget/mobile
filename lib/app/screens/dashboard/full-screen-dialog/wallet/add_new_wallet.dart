@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../app/widgets/dashboard_widget.dart';
+import '../../../../widgets/dashboard_widget.dart';
 
 class AddNewWallet extends StatelessWidget {
   static const title = 'Add new wallet';

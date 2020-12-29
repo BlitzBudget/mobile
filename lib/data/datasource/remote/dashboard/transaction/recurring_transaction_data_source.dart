@@ -1,12 +1,13 @@
-import '../../data/utils/network_helper.dart';
-import '../remote/authentication_remote_data_source.dart' as authentication;
+import '../../../utils/network_helper.dart';
+import '../datasource/remote/authentication_remote_data_source.dart'
+    as authentication;
 import '../../app/constants/constants.dart' as constants;
 
 abstract class RecurringTransactionRemoteDataSource {
   Future<void> update(RecurringTransaction updateRecurringTransaction);
 }
 
-class RecurringTransactionRemoteDataSourceImpl
+class _RecurringTransactionRemoteDataSourceImpl
     implements RecurringTransactionRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
   static final _recurringTransactionURL =

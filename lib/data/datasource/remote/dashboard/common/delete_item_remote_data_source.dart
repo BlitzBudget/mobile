@@ -1,11 +1,12 @@
-import '../../data/utils/network_helper.dart';
-import '../remote/authentication_remote_data_source.dart' as authentication;
+import '../../../utils/network_helper.dart';
+import '../datasource/remote/authentication_remote_data_source.dart'
+    as authentication;
 
 abstract class DeleteItemRemoteDataSource {
   Future<void> delete(String walletId, String itemId);
 }
 
-class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
+class _DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
   static final _deleteItemURL = authentication.baseURL + "/delete-item";
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app/widgets/dashboard_widget.dart';
+import '../../../widgets/dashboard_widget.dart';
 
 /// Page shown when a card in the transactions tab is tapped.
 ///

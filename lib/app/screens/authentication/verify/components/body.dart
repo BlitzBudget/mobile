@@ -3,12 +3,12 @@ import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
 import 'resend_verification.dart';
-import '../../../../app/constants/constants.dart';
-import '../../../../utils/utils.dart';
-import '../../../../data/remote/authentication_remote_data_source.dart';
-import '../../../../app/widgets/rounded_button.dart';
+import '../../../../constants/constants.dart';
+import '../../../../../utils/utils.dart';
+import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
+import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
-import '../../../../app/widgets/linear_loading_indicator.dart';
+import '../../../../widgets/linear_loading_indicator.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {

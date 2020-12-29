@@ -14,7 +14,7 @@ class Budget {
       {this.categoryType, this.budgetId});
 
   /// Map JSON Budget to List of object
-  Budget.map(dynamic budget) {
+  Budget.fromJSON(dynamic budget) {
     this.budgetId = budget['budgetId'];
     this.walletId = budget['walletId'];
     this.planned = budget['planned'];

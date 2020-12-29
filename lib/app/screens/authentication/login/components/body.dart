@@ -3,15 +3,15 @@ import 'package:flutter_svg/svg.dart';
 
 import 'background.dart';
 import '../../components/already_have_an_account_check.dart';
-import '../../../../app/widgets/rounded_button.dart';
+import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
 import '../../components/password_constraint_container.dart';
-import '../../../remote/dashboard/dashboard_screen.dart';
-import '../../../../data/remote/authentication_remote_data_source.dart';
-import '../../../../app/widgets/linear_loading_indicator.dart';
-import '../../../../utils/utils.dart';
-import '../../../../app/constants/constants.dart';
+import '../../../dashboard/dashboard_screen.dart';
+import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
+import '../../../../widgets/linear_loading_indicator.dart';
+import '../../../../../utils/utils.dart';
+import '../../../../constants/constants.dart';
 import '../../forgot-password/forgot_password_screen.dart';
 
 // Public exposed class

@@ -17,17 +17,6 @@ const String welcomeRoute = '/welcome';
 const String verifyRoute = '/verify';
 const String forgotPasswordRoute = '/forgot-password';
 
-// Secure Storage
-const String authToken = 'auth_token';
-const String refreshToken = 'refresh_token';
-const String accessToken = 'access_token';
-const String userAttributes = 'user_attributes';
-
-// Shared Preferences
-const defaultWallet = 'defaultWallet';
-const startsWithDate = 'startsWithDate';
-const endsWithDate = 'endsWithDate';
-
 // Profile Tab
 const String logoutDescription = "Are you sure?";
 const String logoutTitle = 'Log out';

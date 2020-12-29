@@ -22,7 +22,7 @@ class Goal {
       this.targetId});
 
   /// Map JSON Goal to List of object
-  Goal.map(dynamic goal) {
+  Goal.fromJSON(dynamic goal) {
     this.walletId = goal['userId'];
     this.goalId = goal['goalId'];
     this.goalType = goal['goal_type'];

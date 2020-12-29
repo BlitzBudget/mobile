@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import '../../../utils/utils.dart';
-import '../../../app/widgets/dashboard_widget.dart';
-import '../../../data/remote/dashboard/goal.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/dashboard_widget.dart';
 
 class GoalTab extends StatefulWidget {
   static const title = 'Goal';
@@ -20,7 +19,6 @@ class GoalTab extends StatefulWidget {
 }
 
 class _GoalTabState extends State<GoalTab> {
-  GoalRestData _goalRestData = GoalRestData();
   static const _itemsLength = 20;
 
   List<Color> colors;
@@ -120,7 +118,6 @@ class _GoalTabState extends State<GoalTab> {
   @override
   Widget build(context) {
     debugPrint("The Goal tab has been clicked");
-    _getGoalData();
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,
@@ -128,8 +125,4 @@ class _GoalTabState extends State<GoalTab> {
     );
   }
 
-  /// Get goal data
-  void _getGoalData() async {
-    await _goalRestData.get();
-  }
 }

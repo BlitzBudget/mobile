@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../app/constants/constants.dart';
+import '../constants/constants.dart';
 
 class LinearLoadingIndicator extends StatelessWidget {
   @override

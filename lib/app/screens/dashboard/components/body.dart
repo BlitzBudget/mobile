@@ -7,8 +7,8 @@ import '../tab/overview_tab.dart';
 import '../full-screen-dialog/settings_dialog.dart';
 import '../tab/transactions_tab.dart';
 import '../full-screen-dialog/profile_dialog.dart';
-import '../../../app/widgets/dashboard_widget.dart';
-import '../../../app/constants/constants.dart';
+import '../../../widgets/dashboard_widget.dart';
+import '../../../constants/constants.dart';
 
 class Body extends StatelessWidget {
   const Body({

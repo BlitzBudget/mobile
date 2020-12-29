@@ -6,12 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-import '../../data/utils/network_helper.dart';
+import '../../../utils/network_helper.dart';
 import '../../utils/utils.dart';
-import '../remote/authentication_remote_data_source.dart' as authentication;
+import '../datasource/remote/authentication_remote_data_source.dart'
+    as authentication;
 import '../../app/constants/constants.dart' as constants;
 import '../../utils/dashboard-utils.dart' as dashboardUtils;
-import '../../data/model/user.dart';
+import '../../../model/user.dart';
 import '../../data/model/budget/budget.dart';
 
 abstract class BudgetRemoteDataSource {
@@ -22,7 +23,7 @@ abstract class BudgetRemoteDataSource {
   Future<void> add(Budget addBudget);
 }
 
-class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
+class _BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
 
   /// Create storage

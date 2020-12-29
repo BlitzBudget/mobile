@@ -16,7 +16,7 @@ class Wallet {
       this.totalAssetBalance]);
 
   /// Map JSON Wallet to List of object
-  Wallet.map(dynamic wallet) {
+  Wallet.fromJSON(dynamic wallet) {
     this.walletId = wallet['walletId'];
     this.userId = wallet['userId'];
     this.walletName = wallet['name'];

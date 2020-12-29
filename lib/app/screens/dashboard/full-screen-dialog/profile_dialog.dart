@@ -4,11 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'settings_dialog.dart';
 import '../../authentication/welcome/welcome_screen.dart';
-import '../../../app/widgets/dashboard_widget.dart';
-import '../../../utils/utils.dart';
-import '../../../main.dart';
-import '../../../app/constants/constants.dart';
-import '../../../app/widgets/rounded_button.dart';
+import '../../../widgets/dashboard_widget.dart';
+import '../../../../utils/utils.dart';
+import '../../../../main.dart';
+import '../../../constants/constants.dart';
+import '../../../../app/widgets/rounded_button.dart';
 
 class ProfileDialog extends StatelessWidget {
   static const title = 'Profile';

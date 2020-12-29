@@ -23,7 +23,7 @@ class RecurringTransaction {
       this.tags});
 
   /// Map JSON recurring transactions to List of object
-  RecurringTransaction.map(dynamic recurringTransaction) {
+  RecurringTransaction.fromJSON(dynamic recurringTransaction) {
     this.recurringTransactionId =
         recurringTransaction['recurringTransactionsId'];
     this.walletId = recurringTransaction['walletId'];

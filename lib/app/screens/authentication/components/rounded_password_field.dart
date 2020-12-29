@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'text_field_container.dart';
-import '../../../app/constants/constants.dart';
+import '../../../constants/constants.dart';
 
 // Public exposed class
 class RoundedPassword extends StatefulWidget {

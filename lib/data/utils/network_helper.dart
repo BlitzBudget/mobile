@@ -5,10 +5,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
-import '../app/constants/constants.dart' as constants;
-import '../data/remote/authentication_remote_data_source.dart'
+import '../../app/constants/constants.dart' as constants;
+import '../datasource/remote/authentication_remote_data_source.dart'
     as authentication;
-import '../app/screens/remote/dashboard/full-screen-dialog/profile_dialog.dart'
+import '../../app/screens/datasource/remote/dashboard/full-screen-dialog/profile_dialog.dart'
     as profile;
 
 /// API calls allowed

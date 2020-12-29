@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'transaction_detail_tab.dart';
 import '../full-screen-dialog/wallet_dialog.dart';
-import '../../../utils/utils.dart';
-import '../../../app/widgets/dashboard_widget.dart';
-import '../../../data/remote/dashboard/transaction.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/dashboard_widget.dart';
 
 class TransactionsTab extends StatefulWidget {
   static const title = 'Transactions';
@@ -24,7 +23,6 @@ class TransactionsTab extends StatefulWidget {
 }
 
 class _TransactionsTabState extends State<TransactionsTab> {
-  TransactionRestData _transactionRestData = TransactionRestData();
   static const _itemsLength = 50;
 
   final _androidRefreshKey = GlobalKey<RefreshIndicatorState>();
@@ -184,7 +182,6 @@ class _TransactionsTabState extends State<TransactionsTab> {
   @override
   Widget build(context) {
     debugPrint("The Transaction tab has been clicked");
-    _getTransactionData();
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,
@@ -192,8 +189,4 @@ class _TransactionsTabState extends State<TransactionsTab> {
     );
   }
 
-  /// Get transaction data
-  void _getTransactionData() async {
-    await _transactionRestData.get();
-  }
 }

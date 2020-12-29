@@ -1,4 +1,4 @@
-import '../utils/utils.dart';
+import '../../utils/utils.dart';
 import 'dart:developer' as developer;
 
 class User {
@@ -10,7 +10,7 @@ class User {
   String _familyname;
   User(this._userid, this._email);
 
-  User.map(dynamic userAttributes) {
+  User.fromJSON(dynamic userAttributes) {
     Map currentUserLocal = {};
 
     /// SUCCESS Scenarios

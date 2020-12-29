@@ -6,30 +6,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-import '../../data/utils/network_helper.dart';
+import '../../../utils/network_helper.dart';
 import '../../utils/utils.dart';
-import '../remote/authentication_remote_data_source.dart' as authentication;
+import '../datasource/remote/authentication_remote_data_source.dart'
+    as authentication;
 import '../../app/constants/constants.dart' as constants;
 import '../../utils/dashboard-utils.dart' as dashboardUtils;
-import '../../data/model/user.dart';
-import '../../data/model/goal/goal.dart';
+import '../../../model/user.dart';
+import '../../data/model/transaction/transaction.dart';
 
-abstract class GoalRemoteDataSource {
+abstract class TransactionRemoteDataSource {
   Future<void> get();
 
-  Future<void> update(Goal updateGoal);
+  Future<void> update(Transaction updateTransaction);
 
-  Future<void> add(Goal addGoal);
+  Future<void> add(Transaction addTransaction);
 }
 
-class GoalRemoteDataSource implements GoalRemoteDataSource {
+class _TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
 
   /// Create storage
   final _storage = new FlutterSecureStorage();
-  static final _goalURL = authentication.baseURL + "/goals";
+  static final _transactionURL = authentication.baseURL + "/transactions";
 
-  /// Get Goals
+  /// Get Transaction
   @override
   Future<void> get() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -47,8 +48,8 @@ class GoalRemoteDataSource implements GoalRemoteDataSource {
     Map<String, dynamic> _user = jsonDecode(_userAttributes);
     developer.log('User Attributes retrieved for: ${_user["userid"]}');
 
-    // JSON for Get goal [_jsonForGetGoal]
-    Map<String, dynamic> _jsonForGetGoal = {
+    // JSON for Get transaction [_jsonForGetTransaction]
+    Map<String, dynamic> _jsonForGetTransaction = {
       "startsWithDate": _startsWithDate,
       "endsWithDate": _endsWithDate
     };
@@ -56,47 +57,49 @@ class GoalRemoteDataSource implements GoalRemoteDataSource {
     /// Ensure that the wallet is chosen if not empty
     /// If not then use userid
     if (isNotEmpty(_defaultWallet)) {
-      _jsonForGetGoal["walletId"] = _defaultWallet;
+      _jsonForGetTransaction["walletId"] = _defaultWallet;
     } else {
-      _jsonForGetGoal["userId"] = _user["userid"];
+      _jsonForGetTransaction["userId"] = _user["userid"];
     }
 
-    developer
-        .log("The Map for getting the goal is  ${_jsonForGetGoal.toString()}");
+    developer.log(
+        "The Map for getting the transaction is  ${_jsonForGetTransaction.toString()}");
 
     return _netUtil
-        .post(_goalURL,
-            body: jsonEncode(_jsonForGetGoal), headers: authentication.headers)
-        .then((dynamic res) {
-      debugPrint('The response from the goal is $res');
-      //TODO
-    });
-  }
-
-  /// Update Budget
-  @override
-  Future<void> update(Goal updateGoal) {
-    developer
-        .log("The Map for patching the budget is  ${updateGoal.toString()}");
-
-    return _netUtil
-        .patch(_goalURL,
-            body: jsonEncode(updateGoal.toJSON()),
+        .post(_transactionURL,
+            body: jsonEncode(_jsonForGetTransaction),
             headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+      debugPrint('The response from the transaction is $res');
       //TODO
     });
   }
 
-  /// Add Goal
+  /// Update Transaction
   @override
-  Future<void> add(Goal addGoal) {
+  Future<void> update(Transaction updateTransaction) {
+    developer.log(
+        "The Map for patching the transaction is  ${updateTransaction.toString()}");
+
     return _netUtil
-        .put(_goalURL,
-            body: jsonEncode(addGoal.toJSON()), headers: authentication.headers)
+        .patch(_transactionURL,
+            body: jsonEncode(updateTransaction.toJSON()),
+            headers: authentication.headers)
         .then((dynamic res) {
-      debugPrint('The response from the goal is $res');
+      debugPrint('The response from the transaction is $res');
+      //TODO
+    });
+  }
+
+  /// Add Transaction
+  @override
+  Future<void> add(Transaction addTransaction) {
+    return _netUtil
+        .put(_transactionURL,
+            body: jsonEncode(addTransaction.toJSON()),
+            headers: authentication.headers)
+        .then((dynamic res) {
+      debugPrint('The response from the transaction is $res');
       //TODO
     });
   }

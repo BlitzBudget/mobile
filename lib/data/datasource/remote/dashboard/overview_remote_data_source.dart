@@ -6,18 +6,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-import '../../data/utils/network_helper.dart';
+import '../../../utils/network_helper.dart';
 import '../../utils/utils.dart';
-import '../remote/authentication_remote_data_source.dart' as authentication;
+import '../datasource/remote/authentication_remote_data_source.dart'
+    as authentication;
 import '../../app/constants/constants.dart' as constants;
 import '../../utils/dashboard-utils.dart' as dashboardUtils;
-import '../../data/model/user.dart';
+import '../../../model/user.dart';
 
 abstract class OverviewRemoteDataSource {
   Future<void> get();
 }
 
-class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
+class _OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
 
   /// Create storage

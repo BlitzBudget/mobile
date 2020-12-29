@@ -3,13 +3,13 @@ import 'dart:developer' as developer;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../data/utils/network_helper.dart';
+import '../../../utils/network_helper.dart';
 
 abstract class CategoryRemoteDataSource {
   Future<void> delete(String walletId, String category);
 }
 
-class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
+class _CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   NetworkUtil _netUtil = new NetworkUtil();
 
   /// Create storage

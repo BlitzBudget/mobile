@@ -7,14 +7,14 @@ import 'social_icon.dart';
 import '../../Login/login_screen.dart';
 import '../../components/already_have_an_account_check.dart';
 import '../../components/password_constraint_container.dart';
-import '../../../../app/widgets/rounded_button.dart';
+import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
-import '../../../remote/dashboard/dashboard_screen.dart';
+import '../../../dashboard/dashboard_screen.dart';
 import '../../verify/verify_screen.dart';
-import '../../../../data/remote/authentication_remote_data_source.dart';
-import '../../../../app/constants/constants.dart';
-import '../../../../app/widgets/linear_loading_indicator.dart';
+import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
+import '../../../../constants/constants.dart';
+import '../../../../widgets/linear_loading_indicator.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
