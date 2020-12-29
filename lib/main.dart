@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'constants/constants.dart';
-import 'services/authentication.dart';
+import 'services/remote/authentication_remote_data_source.dart';
 import 'routes.dart';
 
 /// Global Navigation Key
