@@ -4,9 +4,6 @@ abstract class ApiException implements Exception {}
 class TokenExpiredException implements ApiException {}
 
 /// Exception is thrown when the refresh token fails
-class UnableToRefreshTokenException implements ApiException {}
-
-/// Exception is thrown when the refresh token fails
 class EmptyAuthorizationTokenException implements ApiException {}
 
 class EmptyResultException extends ApiException {}

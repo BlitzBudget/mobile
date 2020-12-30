@@ -19,7 +19,6 @@ var headers = {
   'Content-type': 'application/json;charset=UTF-8',
   'Accept': 'application/json'
 };
-const String baseURL = "https://api.blitzbudget.com";
 
 /// Name Object for firstname and lastName
 class _Name {
