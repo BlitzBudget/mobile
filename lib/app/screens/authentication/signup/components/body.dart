@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'background.dart';
-import 'or_divider.dart';
-import 'social_icon.dart';
-import '../../Login/login_screen.dart';
-import '../../components/already_have_an_account_check.dart';
-import '../../components/password_constraint_container.dart';
-import '../../../../widgets/rounded_button.dart';
-import '../../components/rounded_input_field.dart';
-import '../../components/rounded_password_field.dart';
-import '../../../dashboard/dashboard_screen.dart';
-import '../../verify/verify_screen.dart';
 import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
 import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
+import '../../../../widgets/rounded_button.dart';
+import '../../components/already_have_an_account_check.dart';
+import '../../components/password_constraint_container.dart';
+import '../../components/rounded_password_field.dart';
+import 'background.dart';
+import 'or_divider.dart';
+import 'social_icon.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
@@ -35,16 +31,16 @@ class _BodyState extends State<Body> {
   final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   final String email, password;
   String confirmPassword;
-  final signupText = "SIGNUP";
-  final yourEmail = "Your Email";
-  String signupButton = "SIGNUP";
+  final signupText = 'SIGNUP';
+  final yourEmail = 'Your Email';
+  String signupButton = 'SIGNUP';
 
   /// Constructor for the private class
   _BodyState(this.email, this.password);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -61,7 +57,7 @@ class _BodyState extends State<Body> {
                 replacement: LinearLoadingIndicator()),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
-              "assets/icons/signup.svg",
+              'assets/icons/signup.svg',
               height: size.height * 0.35,
             ),
             Text(
@@ -78,13 +74,13 @@ class _BodyState extends State<Body> {
               text: signupButton,
               press: () async {
                 setState(() {
-                  signupButton = "Loading";
+                  signupButton = 'Loading';
                   _btnEnabled = false;
                 });
                 await _AuthenticationRemoteDataSource.signupUser(
                     context, email, password, confirmPassword);
                 setState(() {
-                  signupButton = "SIGNUP";
+                  signupButton = 'SIGNUP';
                   _btnEnabled = true;
                 });
               },
@@ -103,15 +99,15 @@ class _BodyState extends State<Body> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SocalIcon(
-                  iconSrc: "assets/icons/facebook.svg",
+                  iconSrc: 'assets/icons/facebook.svg',
                   press: () {},
                 ),
                 SocalIcon(
-                  iconSrc: "assets/icons/twitter.svg",
+                  iconSrc: 'assets/icons/twitter.svg',
                   press: () {},
                 ),
                 SocalIcon(
-                  iconSrc: "assets/icons/google-plus.svg",
+                  iconSrc: 'assets/icons/google-plus.svg',
                   press: () {},
                 ),
               ],

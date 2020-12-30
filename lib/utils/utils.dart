@@ -123,3 +123,24 @@ void displayDialog(BuildContext context, String title, String text) =>
       builder: (context) =>
           AlertDialog(title: Text(title), content: Text(text)),
     );
+
+String parseDynamicToString(dynamic obj) {
+  if (obj is String) {
+    return obj;
+  }
+  return null;
+}
+
+bool parseDynamicToBool(dynamic obj) {
+  if (obj is bool) {
+    return obj;
+  }
+  return null;
+}
+
+double parseDynamicToDouble(dynamic obj) {
+  if (obj is double) {
+    return obj;
+  }
+  return null;
+}

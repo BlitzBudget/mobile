@@ -1,5 +1,5 @@
-abstract class AuthenticationRepository {
-  Future<String> readAuthentication();
+import 'package:mobile_blitzbudget/data/model/user.dart';
 
-  Future<void> writeAuthentication(String value);
+abstract class AuthenticationRepository {
+  Future<dynamic> attemptLogin(String email, String password);
 }

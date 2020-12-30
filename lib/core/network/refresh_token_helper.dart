@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_blitzbudget/app/constants/constants.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_all_storage_repository.dart';
 
 import '../../data/constants/constants.dart';
-import '../../main.dart';
 import '../error/exceptions.dart';
 import 'network_helper.dart';
 
@@ -18,19 +15,18 @@ class RefreshTokenHelper {
   final AuthTokenRepository authTokenRepository;
   final AccessTokenRepository accessTokenRepository;
   final NetworkHelper networkHelper = NetworkHelper();
-  final ClearAllStorageRepository clearAllStorageRepository;
 
-  RefreshTokenHelper(
-      {@required this.refreshTokenRepository,
-      @required this.authTokenRepository,
-      @required this.accessTokenRepository,
-      @required this.clearAllStorageRepository});
+  RefreshTokenHelper({
+    @required this.refreshTokenRepository,
+    @required this.authTokenRepository,
+    @required this.accessTokenRepository,
+  });
 
   /// Refresh authorization token
   ///
   /// If successful call the API again
   /// If unsuccessful then logout
-  Future<Map<String, String>> refreshAuthToken(
+  Future<void> refreshAuthToken(
       Map<String, String> headers, Encoding encoding) async {
     debugPrint(
         ' The authorization token has expired, Trying to refresh the token.');
@@ -50,9 +46,7 @@ class RefreshTokenHelper {
 
       // Set the new Authorization header
       headers['Authorization'] =
-          res['AuthenticationResult']['IdToken'].toString();
-
-      return headers;
+          res['AuthenticationResult']['IdToken'] as String;
     });
   }
 
@@ -70,20 +64,16 @@ class RefreshTokenHelper {
 
         /// Store Auth Token
         await authTokenRepository
-            .writeAuthToken(res['AuthenticationResult']['IdToken'].toString());
+            .writeAuthToken(res['AuthenticationResult']['IdToken'] as String);
 
         /// Store Access Token
         await accessTokenRepository.writeAccessToken(
-            res['AuthenticationResult']['AccessToken'].toString());
+            res['AuthenticationResult']['AccessToken'] as String);
 
         return res;
       }
     } else if (statusCode >= 400 && statusCode <= 600) {
-      /// Logout And Redirect User
-      await clearAllStorageRepository.clearAllStorage();
-
-      /// Navigate using the global navigation key
-      await navigatorKey.currentState.pushNamed(welcomeRoute);
+      throw UnableToRefreshTokenException();
     }
   }
 }

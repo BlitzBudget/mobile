@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'settings_dialog.dart';
-import '../../authentication/welcome/welcome_screen.dart';
-import '../../../widgets/dashboard_widget.dart';
-import '../../../../utils/utils.dart';
-import '../../../../main.dart';
-import '../../../constants/constants.dart';
 import '../../../../app/widgets/rounded_button.dart';
+import '../../../../main.dart';
+import '../../../../utils/utils.dart';
+import '../../../constants/constants.dart';
+import '../../../widgets/dashboard_widget.dart';
 
 class ProfileDialog extends StatelessWidget {
   static const title = 'Profile';
@@ -178,7 +176,7 @@ class LogOutButton extends StatelessWidget {
                 FlatButton(
                   child: const Text(logoutButton),
                   onPressed: () => () async {
-                    logoutAndRedirect(context: context);
+                    logoutAndRedirect(context);
                   },
                 ),
                 FlatButton(
@@ -210,7 +208,7 @@ class LogOutButton extends StatelessWidget {
                 CupertinoActionSheetAction(
                     child: const Text(logoutButton),
                     onPressed: () async {
-                      logoutAndRedirect(context: context);
+                      logoutAndRedirect(context);
                     }),
               ],
               cancelButton: CupertinoActionSheetAction(
@@ -234,17 +232,12 @@ class LogOutButton extends StatelessWidget {
   }
 
   /// Remove Storage and Redirect to Welcome screeen
-  void logoutAndRedirect(BuildContext context) async {
+  Future<void> logoutAndRedirect(BuildContext context) async {
     /// Create storage
     /// Delete all
-    await new FlutterSecureStorage().deleteAll();
+    await FlutterSecureStorage().deleteAll();
 
-    if (isEmpty(context)) {
-      /// Navigate using the global navigation key
-      navigatorKey.currentState.pushNamed(welcomeRoute);
-    } else {
-      /// Navigate to the second screen using a named route.
-      Navigator.pushNamed(context, welcomeRoute);
-    }
+    /// Navigate to the second screen using a named route.
+    await Navigator.pushNamed(context, welcomeRoute);
   }
 }

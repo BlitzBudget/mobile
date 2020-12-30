@@ -6,12 +6,13 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobile_blitzbudget/core/error/exceptions.dart';
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
 
-import '../../../app/constants/constants.dart' as constants;
 import '../../../app/screens/authentication/signup/signup_screen.dart';
 import '../../../app/screens/authentication/verify/verify_screen.dart';
-import '../../../core/network/network_helper.dart';
 import '../../../utils/utils.dart';
+import '../../constants/constants.dart' as constants;
 import '../../model/user.dart';
 
 // Header for API calls
@@ -29,135 +30,67 @@ class _Name {
 }
 
 abstract class AuthenticationRemoteDataSource {
-  Future<void> attemptLogin(
-      BuildContext context, String email, String password);
+  Future<User> attemptLogin(String email, String password);
 
-  Future<void> signupUser(BuildContext context, String email, String password,
-      String confirmPassword);
+  Future<void> signupUser(
+      String email, String password, String confirmPassword);
 
-  Future<void> verifyEmail(BuildContext context, String email, String password,
+  Future<void> verifyEmail(String email, String password,
       String verificationCode, bool useVerifyURL);
 
-  Future<bool> resendVerificationCode(BuildContext context, String email);
+  Future<bool> resendVerificationCode(String email);
 
-  Future<void> forgotPassword(
-      BuildContext context, String email, String password);
+  Future<void> forgotPassword(String email, String password);
 }
 
-class _AuthenticationRemoteDataSourceImpl
+class AuthenticationRemoteDataSourceImpl
     implements AuthenticationRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
-  static final _loginURL = baseURL + "/profile/sign-in";
-  static final _signupURL = baseURL + "/profile/sign-up";
-  static final _forgotPasswordURL = baseURL + '/profile/forgot-password';
-  static final _confirmSignupURL = baseURL + '/profile/confirm-sign-up';
-  static final _confirmForgotPasswordURL =
-      baseURL + '/profile/confirm-forgot-password';
-  static final _resendVerificationCodeURL =
-      baseURL + '/profile/resend-confirmation-code';
+  final HttpClient _httpClient;
   static final _checkPassword = false;
 
-  /// Create storage
-  final _storage = new FlutterSecureStorage();
-  static final RegExp passwordExp = new RegExp(
+  static final RegExp passwordExp = RegExp(
       r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])(?=\S+$).{8,}$');
-  static final RegExp emailExp = new RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
+  static final RegExp emailExp = RegExp(r"^(?=.*[!#$%&'*+-\/=?^_`{|}~])");
   static final _userNotFoundException = 'UserNotFoundException';
   static final _userNotConfirmedException = 'UserNotConfirmedException';
+
+  AuthenticationRemoteDataSourceImpl(this._httpClient);
 
   /// Login Screen
   ///
   /// Logging in with Username and Password
   /// If user is not found then signup the user
   @override
-  Future<void> attemptLogin(
-      BuildContext context, String email, String password) async {
-    if (isEmpty(email)) {
-      displayDialog(context, "Empty Email", "The email cannot be empty");
-      return null;
-    } else if (!EmailValidator.validate(email.trim())) {
-      displayDialog(context, "Invalid Email", "The email is not valid");
-      return null;
-    } else if (isEmpty(password)) {
-      displayDialog(context, "Empty Password", "The password cannot be empty");
-      return null;
-    } else if (!passwordExp.hasMatch(password)) {
-      displayDialog(context, "Invalid Password", "The password is not valid");
-      return null;
-    }
-
+  Future<dynamic> attemptLogin(String email, String password) async {
     /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
-    return _netUtil
-        .post(_loginURL,
+    return _httpClient
+        .post(constants.loginURL,
             body: jsonEncode({
-              "username": email,
-              "password": password,
-              "checkPassword": _checkPassword
+              'username': email,
+              'password': password,
+              'checkPassword': _checkPassword
             }),
             headers: headers)
-        .then((dynamic res) {
-      developer.log("User Attributes" + res['UserAttributes'].toString());
-      if (res["errorType"] != null) {
+        .then<dynamic>((dynamic res) {
+      developer.log('User Attributes' + res['UserAttributes'].toString());
+      if (res['errorType'] != null) {
         /// Conditionally process error messages
-        if (includesStr(res["errorMessage"], _userNotFoundException)) {
-          /// Signup user and parse the response
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  SignUpScreen(email: email, password: password),
-            ),
-          );
+        if (includesStr(
+            res['errorMessage'] as String, _userNotFoundException)) {
+          /// Navigate user to signup screen
+          throw UserNotFoundException();
         } else if (includesStr(
-            res["errorMessage"], _userNotConfirmedException)) {
-          /// Navigate to the second screen using a named route.
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  VerifyScreen(email: email, password: password),
-            ),
-          );
+            res['errorMessage'] as String, _userNotConfirmedException)) {
+          /// Navigate to the verification screen
+          throw UserNotConfirmedException();
         } else {
-          displayDialog(context, "Not Authorized",
-              "The email or password entered is incorrect");
+          /// Exception to handle invalid credentials
+          throw InvalidUserCredentialsException();
         }
-        return null;
       }
-
-      /// User
-      User user = new User.fromJSON(res["UserAttributes"]);
-
-      /// Store User Attributes
-      _storeUserAttributes(user);
-
-      /// Store Refresh Token
-      _storeRefreshToken(res);
-
-      /// Store Access Token
-      storeAccessToken(res, _storage);
-
-      /// Store Auth Token
-      storeAuthToken(res, _storage);
-
-      /// Navigate to the second screen using a named route.
-      Navigator.pushNamed(context, constants.dashboardRoute);
-      return;
+      return res;
     });
-  }
-
-  void _storeUserAttributes(User user) async {
-    /// Write User Attributes
-    await _storage.write(
-        key: constants.userAttributes, value: jsonEncode(user.toJSON()));
-  }
-
-  void _storeRefreshToken(dynamic res) async {
-    /// Write Refresh Token
-    await _storage.write(
-        key: constants.refreshToken,
-        value: res["AuthenticationResult"]["RefreshToken"]);
   }
 
   /// SIGNUP module
@@ -169,50 +102,51 @@ class _AuthenticationRemoteDataSourceImpl
       String confirmPassword) async {
     if (isEmpty(confirmPassword)) {
       displayDialog(
-          context, "Empty Password", "The confirm password cannot be empty");
+          context, 'Empty Password', 'The confirm password cannot be empty');
       return;
     } else if (!passwordExp.hasMatch(confirmPassword)) {
       displayDialog(
-          context, "Invalid Password", "The confirm password is not valid");
+          context, 'Invalid Password', 'The confirm password is not valid');
       return;
     } else if (confirmPassword != password) {
-      displayDialog(context, "Password Mismatch",
-          "The confirm password and the password do not match");
+      displayDialog(context, 'Password Mismatch',
+          'The confirm password and the password do not match');
       return;
     }
 
     /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     var fullname = email.split('@')[0];
-    _Name names = fetchNames(fullname);
+    var names = fetchNames(fullname);
 
     /// Add accept language headers
     headers['Accept-Language'] = await Devicelocale.currentLocale;
 
     /// Start signup process
-    return _netUtil
-        .post(_signupURL,
+    return _httpClient
+        .post(constants.signupURL,
             body: jsonEncode({
-              "username": email,
-              "password": password,
-              "firstname": names.firstName,
-              "lastname": names.surName,
-              "checkPassword": _checkPassword
+              'username': email,
+              'password': password,
+              'firstname': names.firstName,
+              'lastname': names.surName,
+              'checkPassword': _checkPassword
             }),
             headers: headers)
         .then((dynamic res) {
       /// Error Type for signup
       /// UsernameExistsException is excluded from showing error message
-      if (res["errorType"] != null &&
-          !res["errorMessage"].contains('UsernameExistsException')) {
-        displayDialog(context, "Error signing up", res["errorMessage"]);
+      var errorMessage = res['errorMessage'] as String;
+      if (res['errorType'] != null &&
+          !errorMessage.contains('UsernameExistsException')) {
+        displayDialog(context, 'Error signing up', errorMessage);
         return;
       }
 
       /// Navigate to the second screen using a named route.
-      Navigator.push(
+      Navigator.push<dynamic>(
         context,
-        MaterialPageRoute(
+        MaterialPageRoute<dynamic>(
           builder: (context) => VerifyScreen(email: email, password: password),
         ),
       );
@@ -227,7 +161,7 @@ class _AuthenticationRemoteDataSourceImpl
     _Name name;
 
     if (match == null) {
-      developer.log('No match found for ${fullname}');
+      developer.log('No match found for $fullname');
 
       /// Sur name cannot be empty
       name = _Name(fullname, ' ');
@@ -235,7 +169,7 @@ class _AuthenticationRemoteDataSourceImpl
       /// TODO SPLIT the name and then assign it to first and surname
       name = _Name(fullname, ' ');
       developer.log(
-          'Fullname ${fullname}, First match: ${match.start}, end Match: ${match.input}');
+          'Fullname $fullname, First match: ${match.start}, end Match: ${match.input}');
     }
 
     return name;
@@ -248,23 +182,25 @@ class _AuthenticationRemoteDataSourceImpl
   Future<void> verifyEmail(BuildContext context, String email, String password,
       String verificationCode, bool useVerifyURL) {
     /// Call verify / Confirm forgot password url
-    final String urlForAPICall =
-        useVerifyURL ? _confirmSignupURL : _confirmForgotPasswordURL;
+    final urlForAPICall = useVerifyURL
+        ? constants.confirmSignupURL
+        : constants.confirmForgotPasswordURL;
 
     /// Start signup process
-    return _netUtil
+    return _httpClient
         .post(urlForAPICall,
             body: jsonEncode({
-              "username": email,
-              "password": password,
-              "confirmationCode": verificationCode,
-              "doNotCreateWallet": false
+              'username': email,
+              'password': password,
+              'confirmationCode': verificationCode,
+              'doNotCreateWallet': false
             }),
             headers: headers)
         .then((dynamic res) async {
       /// Error Type for signup
-      if (res["errorType"] != null) {
-        displayDialog(context, "Error Verifying", res["errorMessage"]);
+      if (res['errorType'] != null) {
+        displayDialog(
+            context, 'Error Verifying', res['errorMessage'] as String);
         return;
       }
 
@@ -278,13 +214,13 @@ class _AuthenticationRemoteDataSourceImpl
   @override
   Future<bool> resendVerificationCode(BuildContext context, String email) {
     /// Start resending the verification code
-    return _netUtil
-        .post(_resendVerificationCodeURL,
-            body: jsonEncode({"username": email}), headers: headers)
+    return _httpClient
+        .post(constants.resendVerificationCodeURL,
+            body: jsonEncode({'username': email}), headers: headers)
         .then((dynamic res) {
       /// Error Type for signup
-      if (res["errorType"] != null) {
-        displayDialog(context, "Error", res["errorMessage"]);
+      if (res['errorType'] != null) {
+        displayDialog(context, 'Error', res['errorMessage'] as String);
         return false;
       }
       return true;
@@ -297,16 +233,16 @@ class _AuthenticationRemoteDataSourceImpl
   Future<void> forgotPassword(
       BuildContext context, String email, String password) {
     if (isEmpty(email)) {
-      displayDialog(context, "Empty Email", "The email cannot be empty");
+      displayDialog(context, 'Empty Email', 'The email cannot be empty');
       return null;
     } else if (!EmailValidator.validate(email.trim())) {
-      displayDialog(context, "Invalid Email", "The email is not valid");
+      displayDialog(context, 'Invalid Email', 'The email is not valid');
       return null;
     } else if (isEmpty(password)) {
-      displayDialog(context, "Empty Password", "The password cannot be empty");
+      displayDialog(context, 'Empty Password', 'The password cannot be empty');
       return null;
     } else if (!passwordExp.hasMatch(password)) {
-      displayDialog(context, "Invalid Password", "The password is not valid");
+      displayDialog(context, 'Invalid Password', 'The password is not valid');
       return null;
     }
 
@@ -314,22 +250,22 @@ class _AuthenticationRemoteDataSourceImpl
     email = email.toLowerCase().trim();
 
     /// Start resending the verification code
-    return _netUtil
-        .post(_forgotPasswordURL,
-            body: jsonEncode({"username": email}), headers: headers)
+    return _httpClient
+        .post(constants.forgotPasswordURL,
+            body: jsonEncode({'username': email}), headers: headers)
         .then((dynamic res) {
       /// Error Type for signup
-      if (res["errorType"] != null) {
-        displayDialog(context, "Error", res["errorMessage"]);
+      if (res['errorType'] != null) {
+        displayDialog(context, 'Error', res['errorMessage'] as String);
         return;
       }
 
       /// Navigate to the second screen using a named route.
       /// Show resend verification code is false
       /// User verification URL as false
-      Navigator.push(
+      Navigator.push<dynamic>(
         context,
-        MaterialPageRoute(
+        MaterialPageRoute<dynamic>(
           builder: (context) => VerifyScreen(
               email: email,
               password: password,
@@ -341,17 +277,4 @@ class _AuthenticationRemoteDataSourceImpl
       return;
     });
   }
-}
-
-void storeAccessToken(dynamic res, FlutterSecureStorage storage) async {
-  /// Write Access Token
-  await storage.write(
-      key: constants.accessToken,
-      value: res["AuthenticationResult"]["AccessToken"]);
-}
-
-void storeAuthToken(dynamic res, FlutterSecureStorage storage) async {
-  /// Write Id Token
-  await storage.write(
-      key: constants.authToken, value: res["AuthenticationResult"]["IdToken"]);
 }

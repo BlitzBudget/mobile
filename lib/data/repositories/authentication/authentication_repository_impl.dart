@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/data/model/user.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 
 import '../../datasource/remote/authentication_remote_data_source.dart';
@@ -9,12 +10,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({@required this.authenticationRemoteDataSource});
 
   @override
-  Future<String> readAuthentication() async {
-    return await authenticationRemoteDataSource.readAuthentication();
-  }
-
-  @override
-  Future<void> writeAuthentication(String value) async {
-    return await authenticationRemoteDataSource.writeAuthentication(value);
+  Future<dynamic> attemptLogin(String email, String password) async {
+    return await authenticationRemoteDataSource.attemptLogin(email, password);
   }
 }

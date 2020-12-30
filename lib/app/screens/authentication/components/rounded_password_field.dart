@@ -13,7 +13,7 @@ class RoundedPassword extends StatefulWidget {
       {Key key,
       @required this.onChanged,
       this.autofocus = false,
-      this.hintText = "Password",
+      this.hintText = 'Password',
       this.initialValue = ""})
       : super(key: key);
 
