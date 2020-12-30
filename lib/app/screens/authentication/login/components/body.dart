@@ -24,8 +24,7 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource =
-      AuthenticationRemoteDataSource();
+  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   TextEditingController controller;
   String username, password;
   final login = "LOGIN";

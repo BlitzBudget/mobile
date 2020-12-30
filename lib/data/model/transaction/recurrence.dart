@@ -1,8 +1,8 @@
 class Recurrence<String> {
   const Recurrence(String val);
 
-  static const Recurrence WEEKLY = const Recurrence('WEEKLY');
-  static const Recurrence BIMONTHLY = const Recurrence('BI-MONTHLY');
-  static const Recurrence MONTHLY = const Recurrence('MONTHLY');
-  static const Recurrence NEVER = const Recurrence('NEVER');
+  static const Recurrence weekly = Recurrence('WEEKLY');
+  static const Recurrence biMonthly = Recurrence('BI-MONTHLY');
+  static const Recurrence monthly = Recurrence('MONTHLY');
+  static const Recurrence never = Recurrence('NEVER');
 }

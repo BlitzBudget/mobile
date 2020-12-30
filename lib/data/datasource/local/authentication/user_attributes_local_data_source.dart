@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class UserAttributesLocalDataSource {
@@ -8,21 +9,21 @@ abstract class UserAttributesLocalDataSource {
 
 class _UserAttributesLocalDataSourceImpl
     implements UserAttributesLocalDataSource {
-  final FlutterSecureStorage _storage;
+  final FlutterSecureStorage storage;
 
-  _UserAttributesLocalDataSourceImpl({@required this._storage});
+  _UserAttributesLocalDataSourceImpl({@required this.storage});
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _userAttributes = "user_attributes";
+  static final String _userAttributes = 'user_attributes';
 
   /// ------------------------------------------------------------
   /// Method that returns the user user attributes
   /// ------------------------------------------------------------
   @override
   Future<String> readUserAttributes() async {
-    return await _storage.read(key: _userAttributes);
+    return await storage.read(key: _userAttributes);
   }
 
   /// ----------------------------------------------------------
@@ -30,6 +31,6 @@ class _UserAttributesLocalDataSourceImpl
   /// ----------------------------------------------------------
   @override
   Future<void> writeUserAttributes(String value) async {
-    await _storage.write(key: _userAttributes, value: value);
+    await storage.write(key: _userAttributes, value: value);
   }
 }

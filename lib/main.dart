@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'app/constants/constants.dart';
 import 'app/routes.dart';
+import 'domain/repositories/authentication/auth_token_repository.dart';
 
 /// Global Navigation Key
 ///
@@ -12,13 +12,11 @@ final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  /// Create storage
-  final storage = new FlutterSecureStorage();
+  AuthTokenRepository authTokenRepository;
 
   /// Read value
-  String token = await storage.read(key: authToken);
-  String homeRoute = token == null ? initialRoute : dashboardRoute;
+  var token = await authTokenRepository.readAuthToken();
+  var homeRoute = token == null ? initialRoute : dashboardRoute;
   runApp(BlitzBudgetApp(
     homeRoute: homeRoute,
   ));

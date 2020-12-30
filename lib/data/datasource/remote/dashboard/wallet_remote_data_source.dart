@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../model/user.dart';
 import '../../../utils/network_helper.dart';
+import '../../app/constants/constants.dart' as constants;
+import '../../data/model/wallet/wallet.dart';
 import '../../utils/utils.dart';
 import '../datasource/remote/authentication_remote_data_source.dart'
     as authentication;
-import '../../app/constants/constants.dart' as constants;
-import '../../../model/user.dart';
-import '../../data/model/wallet/wallet.dart';
 
 abstract class WalletRemoteDataSource {
   Future<void> get();

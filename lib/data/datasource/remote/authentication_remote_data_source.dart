@@ -2,25 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:flutter/material.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../app/screens/authentication/verify/verify_screen.dart';
-import '../../../app/screens/authentication/signup/signup_screen.dart';
-import '../../utils/network_helper.dart';
-import '../../model/user.dart';
-import '../../../utils/utils.dart';
 import '../../../app/constants/constants.dart' as constants;
-import '../../../app/routes.dart';
+import '../../../app/screens/authentication/signup/signup_screen.dart';
+import '../../../app/screens/authentication/verify/verify_screen.dart';
+import '../../../core/network/network_helper.dart';
+import '../../../utils/utils.dart';
+import '../../model/user.dart';
 
 // Header for API calls
 var headers = {
   'Content-type': 'application/json;charset=UTF-8',
   'Accept': 'application/json'
 };
-const String baseURL = "https://api.blitzbudget.com";
 
 /// Name Object for firstname and lastName
 class _Name {

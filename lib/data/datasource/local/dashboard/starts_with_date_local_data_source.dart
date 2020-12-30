@@ -1,4 +1,6 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 abstract class StartsWithDateLocalDataSource {
   Future<String> readStartsWithDate();
@@ -6,23 +8,23 @@ abstract class StartsWithDateLocalDataSource {
   Future<void> writeStartsWithDate(String value);
 }
 
-class _StartsWithDateLocalDataSourceImpl
+class StartsWithDateLocalDataSourceImpl
     implements StartsWithDateLocalDataSource {
   final SharedPreferences sharedPreferences;
 
-  _StartsWithDateLocalDataSourceImpl({@required this.sharedPreferences});
+  StartsWithDateLocalDataSourceImpl({@required this.sharedPreferences});
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _startsWithDate = "starts_with_date";
+  static final String _startsWithDate = 'starts_with_date';
 
   /// ------------------------------------------------------------
   /// Method that returns the user starts with date
   /// ------------------------------------------------------------
   @override
   Future<String> readStartsWithDate() async {
-    return await sharedPreferences.getString(_startsWithDate);
+    return sharedPreferences.getString(_startsWithDate);
   }
 
   /// ----------------------------------------------------------

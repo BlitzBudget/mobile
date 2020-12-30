@@ -1,4 +1,6 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 abstract class DefaultWalletLocalDataSource {
   Future<String> readDefaultWallet();
@@ -6,23 +8,22 @@ abstract class DefaultWalletLocalDataSource {
   Future<void> writeDefaultWallet(String value);
 }
 
-class _DefaultWalletLocalDataSourceImpl
-    implements DefaultWalletLocalDataSource {
+class DefaultWalletLocalDataSourceImpl implements DefaultWalletLocalDataSource {
   final SharedPreferences sharedPreferences;
 
-  _DefaultWalletLocalDataSourceImpl({@required this.sharedPreferences});
+  DefaultWalletLocalDataSourceImpl({@required this.sharedPreferences});
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _defaultWallet = "default_wallet";
+  static final String _defaultWallet = 'default_wallet';
 
   /// ------------------------------------------------------------
   /// Method that returns the user default wallet
   /// ------------------------------------------------------------
   @override
   Future<String> readDefaultWallet() async {
-    return await _storage.read(key: _defaultWallet);
+    return await sharedPreferences.getString(_defaultWallet);
   }
 
   /// ----------------------------------------------------------
@@ -30,6 +31,6 @@ class _DefaultWalletLocalDataSourceImpl
   /// ----------------------------------------------------------
   @override
   Future<void> writeDefaultWallet(String value) async {
-    await _storage.write(key: _defaultWallet, value: value);
+    await sharedPreferences.setString(_defaultWallet, value);
   }
 }

@@ -1,4 +1,6 @@
-import '../../datasource/local/authentication/default_wallet_local_data_source.dart';
+import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/data/datasource/local/dashboard/default_wallet_local_data_source.dart';
+import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 
 class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
   final DefaultWalletLocalDataSource defaultWalletLocalDataSource;

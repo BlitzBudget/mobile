@@ -12,8 +12,8 @@ class Goal {
   String targetId;
 
   // Mandatory wallet ID
-  Goal(this.walletId,
-      {this.goalId,
+  Goal({this.walletId,
+      this.goalId,
       this.goalType,
       this.targetType,
       this.monthlyContribution,
@@ -22,19 +22,21 @@ class Goal {
       this.targetId});
 
   /// Map JSON Goal to List of object
-  Goal.fromJSON(dynamic goal) {
-    this.walletId = goal['userId'];
-    this.goalId = goal['goalId'];
-    this.goalType = goal['goal_type'];
-    this.targetType = goal['target_type'];
-    this.monthlyContribution = goal['monthly_contribution'];
-    this.targetAmount = goal['final_amount'];
-    this.targetDate = goal['preferable_target_date'];
-    this.targetId = goal['target_id'];
+  factory Goal.fromJSON(Map<String, dynamic> goal) {
+    return Goal(
+      walletId : goal['userId'],
+    goalId = goal['goalId'],
+    goalType = goal['goal_type'],
+    targetType = goal['target_type'],
+    monthlyContribution = goal['monthly_contribution'],
+    targetAmount = goal['final_amount'],
+    targetDate = goal['preferable_target_date'],
+    targetId = goal['target_id']
+    );
   }
 
   // JSON for Goal
-  Map<String, dynamic> toJSON() => {
+  Map<String, dynamic> toJSON() => <String, dynamic>{
         'walletId': walletId,
         'goalId': goalId,
         'goalType': goalType,

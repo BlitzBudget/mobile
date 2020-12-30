@@ -77,39 +77,48 @@ String capitalizePair(WordPair pair) {
   return '${capitalize(pair.first)} ${capitalize(pair.second)}';
 }
 
-dynamic lastElement(arr) {
-  if (isEmpty(arr)) {
+dynamic lastElement(List arr) {
+  if (arr.isEmpty) {
     return arr;
-  } else if (arr.length > 0) {
+  } else if (arr.isNotEmpty) {
     return arr[arr.length - 1];
   }
   return arr;
 }
 
-List<String> splitElement(str, splitString) {
+List<String> splitElement(String str, String splitString) {
   if (includesStr(str, splitString)) {
-    return isEmpty(str) ? str : str.split(splitString);
+    if (isEmpty(str)) {
+      return null;
+    } else {
+      return str.split(splitString);
+    }
   }
 
-  return str;
+  return null;
 }
 
-bool includesStr(arr, val) {
-  return arr?.isEmpty ? null : arr.contains(val);
+bool includesStr(String arr, String val) {
+  if (arr.isEmpty) {
+    return null;
+  } else {
+    return arr.contains(val);
+  }
 }
 
-bool isEmpty(obj) {
+bool isEmpty(String obj) {
   /// Check if objext is a number or a boolean
-  if (["", null, false, 0].contains(obj)) return true;
+  if (['', null, false, 0].contains(obj)) return true;
 
   return false;
 }
 
-bool isNotEmpty(obj) {
+bool isNotEmpty(String obj) {
   return !isEmpty(obj);
 }
 
-void displayDialog(context, title, text) => showDialog(
+void displayDialog(BuildContext context, String title, String text) =>
+    showDialog<String>(
       context: context,
       builder: (context) =>
           AlertDialog(title: Text(title), content: Text(text)),

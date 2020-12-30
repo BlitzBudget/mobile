@@ -19,13 +19,13 @@ class Transaction {
       this.categoryId,
       {this.transactionId,
       this.description = '',
-      this.recurrence = Recurrence.NEVER,
+      this.recurrence = Recurrence.never,
       this.categoryType,
       this.categoryName,
       this.tags});
 
   /// Map JSON transactions to List of object
-  Transaction.fromJSON(dynamic transaction) {
+  factory Transaction.fromJSON(Map<String, dynamic> transaction) {
     this.transactionId = transaction['transactionId'];
     this.walletId = transaction['walletId'];
     this.amount = transaction['amount'];
@@ -38,7 +38,7 @@ class Transaction {
   }
 
   /// Transaction to JSON
-  Map<String, dynamic> toJSON() => {
+  Map<String, dynamic> toJSON() => <String, dynamic>{
         'walletId': walletId,
         'transactionId': transactionId,
         'amount': amount,

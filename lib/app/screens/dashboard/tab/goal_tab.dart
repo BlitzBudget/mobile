@@ -124,5 +124,4 @@ class _GoalTabState extends State<GoalTab> {
       iosBuilder: _buildIos,
     );
   }
-
 }

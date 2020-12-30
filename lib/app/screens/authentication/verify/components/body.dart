@@ -35,8 +35,7 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource =
-      AuthenticationRemoteDataSource();
+  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   String verificationCode;
   final String verifyEmail = "Verify Email";
   final String verificationCodeText = "Your verification code";
