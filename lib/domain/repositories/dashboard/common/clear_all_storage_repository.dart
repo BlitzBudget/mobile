@@ -1,4 +1,3 @@
-class ClearAllStorageRepositoryImpl implements ClearAllStorageRepository {
-
-    Future<void> clearAllStorage();
+abstract class ClearAllStorageRepository {
+  Future<void> clearAllStorage();
 }

@@ -1,4 +1,8 @@
-import '../../datasource/local/authentication/auth_token_local_data_source.dart';
+import 'package:flutter/foundation.dart' show required;
+import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
+
+import '../../datasource/local/authentication/auth_token_local_data_source.dart'
+    show AuthTokenLocalDataSource;
 
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
   final AuthTokenLocalDataSource authTokenLocalDataSource;
@@ -10,6 +14,7 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
     return await authTokenLocalDataSource.readAuthToken();
   }
 
+  @override
   Future<void> writeAuthToken(String value) async {
     return await authTokenLocalDataSource.writeAuthToken(value);
   }

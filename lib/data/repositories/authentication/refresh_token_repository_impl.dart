@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
+
 import '../../datasource/local/authentication/refresh_token_local_data_source.dart';
 
 class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
@@ -10,6 +13,7 @@ class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     return await refreshTokenLocalDataSource.readRefreshToken();
   }
 
+  @override
   Future<void> writeRefreshToken(String value) async {
     return await refreshTokenLocalDataSource.writeRefreshToken(value);
   }

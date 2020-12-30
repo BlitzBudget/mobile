@@ -19,7 +19,7 @@ class Transaction {
       this.categoryId,
       {this.transactionId,
       this.description = '',
-      this.recurrence = Recurrence.NEVER,
+      this.recurrence = Recurrence.never,
       this.categoryType,
       this.categoryName,
       this.tags});
@@ -38,7 +38,7 @@ class Transaction {
   }
 
   /// Transaction to JSON
-  Map<String, dynamic> toJSON() => {
+  Map<String, dynamic> toJSON() => <String, dynamic>{
         'walletId': walletId,
         'transactionId': transactionId,
         'amount': amount,

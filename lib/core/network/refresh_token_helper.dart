@@ -3,12 +3,13 @@ import '../../main.dart';
 import '../../app/routes.dart';
 
 class RefreshTokenHelper {
- final RefreshTokenRepository refreshTokenRepository;
- final AuthTokenRepository authTokenRepository;
-    final AccessTokenRepository accessTokenRepository;
-    final NetworkHelper networkHelper = NetworkHelper();
+  final RefreshTokenRepository refreshTokenRepository;
+  final AuthTokenRepository authTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final NetworkHelper networkHelper = NetworkHelper();
 
-    RefreshTokenHelper(this.refreshTokenRepository, this.authTokenRepository, this.accessTokenRepository);
+  RefreshTokenHelper(this.refreshTokenRepository, this.authTokenRepository,
+      this.accessTokenRepository);
 // Refresh Token
   static final refreshTokenURI =
       authentication.baseURL + '/profile/refresh-token';
@@ -17,7 +18,8 @@ class RefreshTokenHelper {
   ///
   /// If successful call the API again
   /// If unsuccessful then logout
-  Future<dynamic> refreshAuthToken(String url, {Map headers, body, encoding}) async {
+  Future<dynamic> refreshAuthToken(String url,
+      {Map headers, body, encoding}) async {
     debugPrint(
         " The authorization token has expired, Trying to refresh the token.");
 
@@ -42,6 +44,7 @@ class RefreshTokenHelper {
 
         /// Logout And Redirect User
         clearAllStorageRepositoryImpl.clearAllStorage();
+
         /// Navigate using the global navigation key
         navigatorKey.currentState.pushNamed(welcomeRoute);
         return;
@@ -50,10 +53,12 @@ class RefreshTokenHelper {
       debugPrint(" The authorization token has been refreshed successfully.");
 
       /// Store Auth Token
-      authTokenRepository.writeAuthToken(res["AuthenticationResult"]["IdToken"]);
+      authTokenRepository
+          .writeAuthToken(res["AuthenticationResult"]["IdToken"]);
 
       /// Store Access Token
-      accessTokenRepository.writeAccessToken(res["AuthenticationResult"]["AccessToken"]);
+      accessTokenRepository
+          .writeAccessToken(res["AuthenticationResult"]["AccessToken"]);
 
       // Set the new Authorization header
       headers['Authorization'] = res["AuthenticationResult"]["IdToken"];
@@ -61,14 +66,17 @@ class RefreshTokenHelper {
       switch (apiCallToMake) {
         case "Patch":
           // Call the PATCH again
-          return networkHelper.patch(url, body: body, headers: headers, encoding: encoding);
+          return networkHelper.patch(url,
+              body: body, headers: headers, encoding: encoding);
         case "Put":
           // Call the POST again
-          return networkHelper.put(url, body: body, headers: headers, encoding: encoding);
+          return networkHelper.put(url,
+              body: body, headers: headers, encoding: encoding);
         case "Post":
         default:
           // Call the POST again
-          return networkHelper.post(url, body: body, headers: headers, encoding: encoding);
+          return networkHelper.post(url,
+              body: body, headers: headers, encoding: encoding);
       }
     });
   }

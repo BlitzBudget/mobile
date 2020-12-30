@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class AccessTokenLocalDataSource {
@@ -7,21 +8,21 @@ abstract class AccessTokenLocalDataSource {
 }
 
 class _AccessTokenLocalDataSourceImpl implements AccessTokenLocalDataSource {
-  final FlutterSecureStorage _storage;
+  final FlutterSecureStorage flutterSecureStorage;
 
-  _AccessTokenLocalDataSourceImpl({@required this._storage});
+  _AccessTokenLocalDataSourceImpl({@required this.flutterSecureStorage});
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _accessToken = "access_token";
+  static final String _accessToken = 'access_token';
 
   /// ------------------------------------------------------------
   /// Method that returns the user access token
   /// ------------------------------------------------------------
   @override
   Future<String> readAccessToken() async {
-    return await _storage.read(key: _accessToken);
+    return await flutterSecureStorage.read(key: _accessToken);
   }
 
   /// ----------------------------------------------------------
@@ -29,6 +30,6 @@ class _AccessTokenLocalDataSourceImpl implements AccessTokenLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeAccessToken(String value) async {
-    await _storage.write(key: _accessToken, value: value);
+    await flutterSecureStorage.write(key: _accessToken, value: value);
   }
 }

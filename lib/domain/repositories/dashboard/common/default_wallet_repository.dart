@@ -1,4 +1,4 @@
-abstract class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
+abstract class DefaultWalletRepository {
   Future<String> readDefaultWallet();
 
   Future<void> writeDefaultWallet(String value);

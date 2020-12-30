@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class RefreshTokenLocalDataSource {
@@ -6,22 +7,22 @@ abstract class RefreshTokenLocalDataSource {
   Future<void> writeRefreshToken(String value);
 }
 
-class _RefreshTokenLocalDataSourceImpl implements RefreshTokenLocalDataSource {
-  final FlutterSecureStorage _storage;
+class RefreshTokenLocalDataSourceImpl implements RefreshTokenLocalDataSource {
+  final FlutterSecureStorage flutterSecureStorage;
 
-  _RefreshTokenLocalDataSourceImpl({@required this._storage});
+  RefreshTokenLocalDataSourceImpl({@required this.flutterSecureStorage});
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _refreshToken = "refresh_token";
+  static final String _refreshToken = 'refresh_token';
 
   /// ------------------------------------------------------------
   /// Method that returns the user refresh token
   /// ------------------------------------------------------------
   @override
   Future<String> readRefreshToken() async {
-    return await _storage.read(key: _refreshToken);
+    return await flutterSecureStorage.read(key: _refreshToken);
   }
 
   /// ----------------------------------------------------------
@@ -29,6 +30,6 @@ class _RefreshTokenLocalDataSourceImpl implements RefreshTokenLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeRefreshToken(String value) async {
-    await _storage.write(key: _refreshToken, value: value);
+    await flutterSecureStorage.write(key: _refreshToken, value: value);
   }
 }

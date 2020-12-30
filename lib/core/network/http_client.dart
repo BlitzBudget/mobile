@@ -17,15 +17,11 @@ class HttpClient {
     // Set Authorization header
     headers['Authorization'] = authToken;
     try {
-      dynamic response = networkHelper.post(url,
-            body: body,
-            headers: headers);
+      dynamic response = networkHelper.post(url, body: body, headers: headers);
       return _response(response);
     } on SocketException {
       throw ConnectionException();
-    } on TokenExpiredException {
-
-    }
+    } on TokenExpiredException {}
   }
 
   Future<dynamic> put(String url, {Map headers, body, encoding}) async {
@@ -38,15 +34,11 @@ class HttpClient {
     // Set Authorization header
     headers['Authorization'] = authToken;
     try {
-      dynamic response = networkHelper.put(url,
-            body: body,
-            headers: headers);
+      dynamic response = networkHelper.put(url, body: body, headers: headers);
       return _response(response);
     } on SocketException {
       throw ConnectionException();
-    } on TokenExpiredException {
-
-    }
+    } on TokenExpiredException {}
   }
 
   Future<dynamic> patch(String url, {Map headers, body, encoding}) async {
@@ -59,15 +51,11 @@ class HttpClient {
     // Set Authorization header
     headers['Authorization'] = authToken;
     try {
-      dynamic response = networkHelper.patch(url,
-            body: body,
-            headers: headers);
+      dynamic response = networkHelper.patch(url, body: body, headers: headers);
       return _response(response);
     } on SocketException {
       throw ConnectionException();
-    } on TokenExpiredException {
-
-    }
+    } on TokenExpiredException {}
   }
 
   dynamic _response(http.Response response) {
@@ -78,7 +66,7 @@ class HttpClient {
       } else {
         return jsonDecode(response.body);
       }
-    } else if(statusCode == 401) {
+    } else if (statusCode == 401) {
       throw TokenExpiredException();
     } else if (statusCode >= 400 && statusCode < 500) {
       throw ClientErrorException();

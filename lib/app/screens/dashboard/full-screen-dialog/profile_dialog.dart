@@ -234,17 +234,17 @@ class LogOutButton extends StatelessWidget {
   }
 
   /// Remove Storage and Redirect to Welcome screeen
-    void logoutAndRedirect(BuildContext context) async {
-      /// Create storage
-      /// Delete all
-      await new FlutterSecureStorage().deleteAll();
+  void logoutAndRedirect(BuildContext context) async {
+    /// Create storage
+    /// Delete all
+    await new FlutterSecureStorage().deleteAll();
 
-      if (isEmpty(context)) {
-        /// Navigate using the global navigation key
-        navigatorKey.currentState.pushNamed(welcomeRoute);
-      } else {
-        /// Navigate to the second screen using a named route.
-        Navigator.pushNamed(context, welcomeRoute);
-      }
+    if (isEmpty(context)) {
+      /// Navigate using the global navigation key
+      navigatorKey.currentState.pushNamed(welcomeRoute);
+    } else {
+      /// Navigate to the second screen using a named route.
+      Navigator.pushNamed(context, welcomeRoute);
     }
+  }
 }

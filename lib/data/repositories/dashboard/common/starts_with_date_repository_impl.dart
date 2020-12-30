@@ -1,4 +1,9 @@
-import '../../datasource/local/authentication/starts_with_date_local_data_source.dart';
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+import 'package:mobile_blitzbudget/data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
+import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
+
+import '../../../../utils/utils.dart';
 import '../../../constants/constants.dart' as constants;
 
 class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
@@ -8,7 +13,7 @@ class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
 
   @override
   Future<String> readStartsWithDate() async {
-    String startsWithDate =
+    var startsWithDate =
         await startsWithDateLocalDataSource.readStartsWithDate();
 
     // Update shared preferences with Start Date if Empty
@@ -16,7 +21,7 @@ class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
       // Calculate the start date from now
       // Format the calculated date to string
       startsWithDate = DateFormat(constants.dateFormatStartAndEndDate)
-          .format(new DateTime.now());
+          .format(DateTime.now());
 
       /// Write starts with date
       await writeStartsWithDate(startsWithDate);
@@ -25,6 +30,7 @@ class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
     return startsWithDate;
   }
 
+  @override
   Future<void> writeStartsWithDate(String value) async {
     return await startsWithDateLocalDataSource.writeStartsWithDate(value);
   }
