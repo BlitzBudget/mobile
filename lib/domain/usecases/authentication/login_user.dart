@@ -1,18 +1,20 @@
-import 'package:mobile_blitzbudget/data/model/user.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
+import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
-class LoginUser {
+class LoginUser extends UseCase {
   AuthenticationRepository authenticationRepository;
   UserAttributesRepository userAttributesRepository;
   RefreshTokenRepository refreshTokenRepository;
   AccessTokenRepository accessTokenRepository;
   AuthTokenRepository authTokenRepository;
 
-  Future<dynamic> attemptLogin(String email, String password) async {
+  Future<dynamic> attemptLogin(
+      {@required String email, @required String password}) async {
     /*if (isEmpty(email)) {
       displayDialog(context, 'Empty Email', 'The email cannot be empty');
       return null;
@@ -29,11 +31,8 @@ class LoginUser {
 
     dynamic res = await authenticationRepository.attemptLogin(email, password);
 
-    /// User
-    var user = User.fromJSON(res['UserAttributes'] as Map<String, dynamic>);
-
     /// Store User Attributes
-    await userAttributesRepository.writeUserAttributes(user);
+    await userAttributesRepository.writeUserAttributes(res);
 
     /// Store Refresh Token
     await refreshTokenRepository.writeRefreshToken(res);

@@ -1,21 +1,24 @@
+import 'package:equatable/equatable.dart';
+
 import '../category/category_type.dart';
 import '../transaction/recurrence.dart' show Recurrence;
 
-class RecurringTransaction {
-  String recurringTransactionId;
-  String walletId;
-  double amount;
-  String description;
-  String accountId;
-  Recurrence recurrence;
-  CategoryType categoryType;
-  String categoryName;
-  String category;
-  List<String> tags;
+class RecurringTransaction extends Equatable {
+  final String recurringTransactionId;
+  final String walletId;
+  final double amount;
+  final String description;
+  final String accountId;
+  final Recurrence recurrence;
+  final CategoryType categoryType;
+  final String categoryName;
+  final String category;
+  final List<String> tags;
 
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
   RecurringTransaction(
-      {this.walletId,
+      {this.category,
+      this.walletId,
       this.amount,
       this.accountId,
       this.recurringTransactionId,
@@ -24,4 +27,18 @@ class RecurringTransaction {
       this.categoryType,
       this.categoryName,
       this.tags});
+
+  @override
+  List<Object> get props => [
+        recurringTransactionId,
+        walletId,
+        amount,
+        description,
+        accountId,
+        recurrence,
+        categoryType,
+        categoryName,
+        category,
+        tags
+      ];
 }

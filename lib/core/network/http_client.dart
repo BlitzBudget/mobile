@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:mobile_blitzbudget/app/constants/constants.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_all_storage_repository.dart';
 import 'package:mobile_blitzbudget/utils/utils.dart';
 
-import '../../main.dart';
 import '../error/exceptions.dart';
 import 'network_helper.dart';
 import 'refresh_token_helper.dart';
@@ -18,10 +16,9 @@ class HttpClient {
   final AccessTokenRepository accessTokenRepository;
   final NetworkHelper networkHelper = NetworkHelper();
   final RefreshTokenHelper refreshTokenHelper;
-  final ClearAllStorageRepository clearAllStorageRepository;
 
   HttpClient(this.authTokenRepository, this.accessTokenRepository,
-      this.refreshTokenHelper, this.clearAllStorageRepository);
+      this.refreshTokenHelper);
 
   Future<dynamic> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
@@ -33,17 +30,12 @@ class HttpClient {
     } on SocketException {
       throw ConnectionException();
     } on TokenExpiredException {
-      try {
-        await refreshTokenHelper.refreshAuthToken(headers, encoding);
+      await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
-        /// Try to fetch the content after refreshing the token
-        var response =
-            await networkHelper.post(url, body: body, headers: headers);
-        return _response(response);
-      } on UnableToRefreshTokenException {
-        /// Logout And Redirect User
-        await clearStorageAndSignoutUser();
-      }
+      /// Try to fetch the content after refreshing the token
+      var response =
+          await networkHelper.post(url, body: body, headers: headers);
+      return _response(response);
     }
   }
 
@@ -56,17 +48,11 @@ class HttpClient {
     } on SocketException {
       throw ConnectionException();
     } on TokenExpiredException {
-      try {
-        await refreshTokenHelper.refreshAuthToken(headers, encoding);
+      await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
-        /// Try to fetch the content after refreshing the token
-        var response =
-            await networkHelper.put(url, body: body, headers: headers);
-        return _response(response);
-      } on UnableToRefreshTokenException {
-        /// Logout And Redirect User
-        await clearStorageAndSignoutUser();
-      }
+      /// Try to fetch the content after refreshing the token
+      var response = await networkHelper.put(url, body: body, headers: headers);
+      return _response(response);
     }
   }
 
@@ -80,17 +66,12 @@ class HttpClient {
     } on SocketException {
       throw ConnectionException();
     } on TokenExpiredException {
-      try {
-        await refreshTokenHelper.refreshAuthToken(headers, encoding);
+      await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
-        /// Try to fetch the content after refreshing the token
-        var response =
-            await networkHelper.patch(url, body: body, headers: headers);
-        return _response(response);
-      } on UnableToRefreshTokenException {
-        /// Logout And Redirect User
-        await clearStorageAndSignoutUser();
-      }
+      /// Try to fetch the content after refreshing the token
+      var response =
+          await networkHelper.patch(url, body: body, headers: headers);
+      return _response(response);
     }
   }
 
@@ -125,16 +106,5 @@ class HttpClient {
     }
     // Set Authorization header
     headers['Authorization'] = authToken;
-  }
-
-  /// Clear all Storage
-  ///
-  /// Signout user and push to navigation to welcome screen
-  Future clearStorageAndSignoutUser() async {
-    /// Logout And Redirect User
-    await clearAllStorageRepository.clearAllStorage();
-
-    /// Navigate using the global navigation key
-    await navigatorKey.currentState.pushNamed(welcomeRoute);
   }
 }

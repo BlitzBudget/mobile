@@ -1,28 +1,31 @@
-import '../../../utils/network_helper.dart';
-import '../datasource/remote/authentication_remote_data_source.dart'
-    as authentication;
-import '../../app/constants/constants.dart' as constants;
+import 'dart:convert';
+import 'dart:developer' as developer;
+
+import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 
 abstract class RecurringTransactionRemoteDataSource {
-  Future<void> update(RecurringTransaction updateRecurringTransaction);
+  Future<void> update(RecurringTransactionModel updateRecurringTransaction);
 }
 
-class _RecurringTransactionRemoteDataSourceImpl
+class RecurringTransactionRemoteDataSourceImpl
     implements RecurringTransactionRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
-  static final _recurringTransactionURL =
-      authentication.baseURL + '/recurring-transaction';
+  final HttpClient httpClient;
+
+  RecurringTransactionRemoteDataSourceImpl(this.httpClient);
 
   /// Update Transaction
   @override
-  Future<void> update(RecurringTransaction updateRecurringTransaction) {
+  Future<void> update(RecurringTransactionModel updateRecurringTransaction) {
     developer.log(
-        "The Map for patching the recurring transactions is  ${updateRecurringTransaction.toString()}");
+        'The Map for patching the recurring transactions is  ${updateRecurringTransaction.toString()}');
 
-    return _netUtil
-        .patch(_recurringTransactionURL,
+    return httpClient
+        .patch(constants.recurringTransactionURL,
             body: jsonEncode(updateRecurringTransaction.toJSON()),
-            headers: authentication.headers)
+            headers: constants.headers)
         .then((dynamic res) {
       debugPrint('The response from the recurring transactions is $res');
       //TODO

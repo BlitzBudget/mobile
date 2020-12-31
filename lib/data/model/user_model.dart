@@ -1,26 +1,28 @@
 import 'dart:developer' as developer;
 
+import 'package:mobile_blitzbudget/domain/entities/user.dart';
+
 import '../../utils/utils.dart';
 
-class User {
-  String userId;
-  String email;
-  String name;
-  String fileFormat;
-  String locale;
-  String familyName;
+class UserModel extends User {
+  UserModel(
+      {String userId,
+      String email,
+      String name,
+      String fileFormat,
+      String locale,
+      String familyName})
+      : super(
+            userId: userId,
+            email: userId,
+            name: name,
+            locale: locale,
+            familyName: familyName,
+            fileFormat: fileFormat);
 
-  User(
-      {this.userId,
-      this.email,
-      this.name,
-      this.locale,
-      this.familyName,
-      this.fileFormat});
-
-  factory User.fromJSON(Map<String, dynamic> userAttributes) {
+  factory UserModel.fromJSON(Map<String, dynamic> userAttributes) {
     var currentUserLocal = extractUserAttributes(userAttributes);
-    return User(
+    return UserModel(
         userId: currentUserLocal['financialPortfolioId'] as String,
         email: currentUserLocal['email'] as String,
         name: currentUserLocal['name'] as String,
@@ -28,6 +30,15 @@ class User {
         fileFormat: currentUserLocal['exportFileFormat'] as String,
         familyName: currentUserLocal['family_name'] as String);
   }
+
+  Map<String, dynamic> toJSON() => <String, dynamic>{
+        'userid': userId,
+        'email': email,
+        'name': name,
+        'locale': locale,
+        'fileformat': fileFormat,
+        'familyname': familyName,
+      };
 
   static Map extractUserAttributes(Map<String, dynamic> userAttributes) {
     Map currentUserLocal;
@@ -48,13 +59,4 @@ class User {
     }
     return currentUserLocal;
   }
-
-  Map<String, dynamic> toJSON() => <String, dynamic>{
-        'userid': userId,
-        'email': email,
-        'name': name,
-        'locale': locale,
-        'fileformat': fileFormat,
-        'familyname': familyName,
-      };
 }

@@ -1,5 +1,5 @@
 abstract class AccessTokenRepository {
   Future<String> readAccessToken();
 
-  Future<void> writeAccessToken(String value);
+  Future<void> writeAccessToken(dynamic res);
 }

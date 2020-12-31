@@ -1,5 +1,5 @@
 abstract class AuthTokenRepository {
   Future<String> readAuthToken();
 
-  Future<void> writeAuthToken(String value);
+  Future<void> writeAuthToken(dynamic res);
 }

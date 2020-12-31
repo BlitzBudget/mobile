@@ -1,4 +1,4 @@
-class Recurrence<String> {
+class Recurrence {
   const Recurrence(String val);
 
   static const Recurrence weekly = Recurrence('WEEKLY');

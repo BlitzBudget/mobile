@@ -18,7 +18,8 @@ class BudgetModel extends Budget {
             dateMeantFor: dateMeantFor,
             category: category,
             categoryType: categoryType,
-            budgetId: budgetId);
+            budgetId: budgetId,
+            used: used);
 
   /// Map JSON Budget to List of object
   factory BudgetModel.fromJSON(Map<String, dynamic> budget) {

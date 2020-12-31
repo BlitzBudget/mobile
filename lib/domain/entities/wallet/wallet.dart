@@ -1,11 +1,13 @@
-class Wallet {
-  String walletId;
-  String userId;
-  String walletName;
-  String currency;
-  double totalDebtBalance;
-  double walletBalance;
-  double totalAssetBalance;
+import 'package:equatable/equatable.dart';
+
+class Wallet extends Equatable {
+  final String walletId;
+  final String userId;
+  final String walletName;
+  final String currency;
+  final double totalDebtBalance;
+  final double walletBalance;
+  final double totalAssetBalance;
 
   /// Optional field: wallet id, wallet name, total debt balance, wallet balance, total asset balance
   Wallet(
@@ -16,4 +18,15 @@ class Wallet {
       this.totalDebtBalance,
       this.walletBalance,
       this.totalAssetBalance});
+
+  @override
+  List<Object> get props => [
+        walletId,
+        userId,
+        walletName,
+        currency,
+        totalDebtBalance,
+        walletBalance,
+        totalAssetBalance
+      ];
 }

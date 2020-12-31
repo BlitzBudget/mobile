@@ -63,12 +63,10 @@ class RefreshTokenHelper {
         dynamic res = jsonDecode(response.body);
 
         /// Store Auth Token
-        await authTokenRepository
-            .writeAuthToken(res['AuthenticationResult']['IdToken'] as String);
+        await authTokenRepository.writeAuthToken(res);
 
         /// Store Access Token
-        await accessTokenRepository.writeAccessToken(
-            res['AuthenticationResult']['AccessToken'] as String);
+        await accessTokenRepository.writeAccessToken(res);
 
         return res;
       }

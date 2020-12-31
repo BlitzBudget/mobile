@@ -14,7 +14,9 @@ class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
   }
 
   @override
-  Future<void> writeRefreshToken(String value) async {
-    return await refreshTokenLocalDataSource.writeRefreshToken(value);
+  Future<void> writeRefreshToken(dynamic res) async {
+    // Convert Response from the server to Refresh Token String
+    var refreshToken = res['AuthenticationResult']['RefreshToken'] as String;
+    return await refreshTokenLocalDataSource.writeRefreshToken(refreshToken);
   }
 }

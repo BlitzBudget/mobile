@@ -15,7 +15,8 @@ class AccessTokenRepositoryImpl implements AccessTokenRepository {
   }
 
   @override
-  Future<void> writeAccessToken(String value) async {
-    return await accessTokenLocalDataSource.writeAccessToken(value);
+  Future<void> writeAccessToken(dynamic res) async {
+    var accessToken = res['AuthenticationResult']['AccessToken'] as String;
+    return await accessTokenLocalDataSource.writeAccessToken(accessToken);
   }
 }

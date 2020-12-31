@@ -1,5 +1,7 @@
-abstract class UserAttributesRepository {
-  Future<String> readUserAttributes();
+import 'package:mobile_blitzbudget/domain/entities/user.dart';
 
-  Future<void> writeUserAttributes(String value);
+abstract class UserAttributesRepository {
+  Future<User> readUserAttributes();
+
+  Future<void> writeUserAttributes(dynamic res);
 }

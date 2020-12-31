@@ -1,28 +1,30 @@
-import '../../../utils/network_helper.dart';
-import '../datasource/remote/authentication_remote_data_source.dart'
-    as authentication;
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
 abstract class DeleteItemRemoteDataSource {
   Future<void> delete(String walletId, String itemId);
 }
 
-class _DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
-  static final _deleteItemURL = authentication.baseURL + "/delete-item";
+class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
+  final HttpClient httpClient;
+
+  DeleteItemRemoteDataSourceImpl(this.httpClient);
 
   /// Delete Item
   @override
   Future<void> delete(String walletId, String itemId) async {
     // JSON for Get budget [_jsonForGetBudget]
-    Map<String, dynamic> _jsonForDeleteItem = {
+    var _jsonForDeleteItem = <String, dynamic>{
       'walletId': walletId,
       'itemId': itemId,
     };
 
-    return _netUtil
-        .post(_deleteItemURL,
-            body: jsonEncode(_jsonForDeleteItem),
-            headers: authentication.headers)
+    return httpClient
+        .post(constants.deleteItemURL,
+            body: jsonEncode(_jsonForDeleteItem), headers: constants.headers)
         .then((dynamic res) {
       debugPrint('The response from the budget is $res');
     });
