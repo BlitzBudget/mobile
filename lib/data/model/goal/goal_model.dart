@@ -1,7 +1,7 @@
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
 
 class GoalModel extends Goal {
   // Mandatory wallet ID

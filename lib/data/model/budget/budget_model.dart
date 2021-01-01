@@ -1,6 +1,6 @@
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
 
 class BudgetModel extends Budget {
   // Optional category type and Budget id fields

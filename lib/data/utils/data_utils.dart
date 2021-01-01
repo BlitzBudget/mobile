@@ -14,3 +14,24 @@ CategoryType parseDynamicToCategoryType(dynamic obj) {
   }
   return null;
 }
+
+String parseDynamicToString(dynamic obj) {
+  if (obj is String) {
+    return obj;
+  }
+  return null;
+}
+
+bool parseDynamicToBool(dynamic obj) {
+  if (obj is bool) {
+    return obj;
+  }
+  return null;
+}
+
+double parseDynamicToDouble(dynamic obj) {
+  if (obj is double) {
+    return obj;
+  }
+  return null;
+}

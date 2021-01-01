@@ -1,7 +1,7 @@
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_sub_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
 
 class BankAccountModel extends BankAccount {
   BankAccountModel(

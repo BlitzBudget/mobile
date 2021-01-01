@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobile_blitzbudget/core/persistence/secure_key_value_store.dart';
 
 abstract class AuthTokenLocalDataSource {
   Future<String> readAuthToken();
@@ -7,10 +7,10 @@ abstract class AuthTokenLocalDataSource {
   Future<void> writeAuthToken(String value);
 }
 
-class _AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
-  final FlutterSecureStorage flutterSecureStorage;
+class AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
+  final SecureKeyValueStore secureKeyValueStore;
 
-  _AuthTokenLocalDataSourceImpl({@required this.flutterSecureStorage});
+  AuthTokenLocalDataSourceImpl({@required this.secureKeyValueStore});
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -22,7 +22,7 @@ class _AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
   /// ------------------------------------------------------------
   @override
   Future<String> readAuthToken() async {
-    return await flutterSecureStorage.read(key: _authToken);
+    return await secureKeyValueStore.getString(key: _authToken);
   }
 
   /// ----------------------------------------------------------
@@ -30,6 +30,6 @@ class _AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeAuthToken(String value) async {
-    await flutterSecureStorage.write(key: _authToken, value: value);
+    await secureKeyValueStore.setString(key: _authToken, value: value);
   }
 }

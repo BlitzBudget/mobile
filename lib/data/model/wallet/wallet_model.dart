@@ -1,5 +1,5 @@
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
 
 class WalletModel extends Wallet {
   /// Optional field: wallet id, wallet name, total debt balance, wallet balance, total asset balance
