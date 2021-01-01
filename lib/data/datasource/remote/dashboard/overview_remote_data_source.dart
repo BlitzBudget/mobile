@@ -10,7 +10,7 @@ abstract class OverviewRemoteDataSource {
 }
 
 class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   OverviewRemoteDataSourceImpl({@required this.httpClient});
 

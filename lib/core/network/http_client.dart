@@ -1,24 +1,27 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:mobile_blitzbudget/core/error/api-exception.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_all_storage_repository.dart';
 import 'package:mobile_blitzbudget/utils/utils.dart';
 
-import '../error/exceptions.dart';
 import 'network_helper.dart';
 import 'refresh_token_helper.dart';
 
-class HttpClient {
+class HTTPClient {
   final AuthTokenRepository authTokenRepository;
   final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper = NetworkHelper();
+  final NetworkHelper networkHelper;
   final RefreshTokenHelper refreshTokenHelper;
 
-  HttpClient(this.authTokenRepository, this.accessTokenRepository,
-      this.refreshTokenHelper);
+  HTTPClient(
+      {@required this.authTokenRepository,
+      @required this.accessTokenRepository,
+      @required this.refreshTokenHelper,
+      @required this.networkHelper});
 
   Future<dynamic> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {

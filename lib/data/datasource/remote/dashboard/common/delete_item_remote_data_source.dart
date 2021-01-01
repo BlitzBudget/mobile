@@ -9,7 +9,7 @@ abstract class DeleteItemRemoteDataSource {
 }
 
 class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   DeleteItemRemoteDataSourceImpl(this.httpClient);
 

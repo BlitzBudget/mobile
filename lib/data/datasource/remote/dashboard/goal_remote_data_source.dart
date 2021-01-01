@@ -15,7 +15,7 @@ abstract class GoalRemoteDataSource {
 }
 
 class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   GoalRemoteDataSourceImpl({@required this.httpClient});
 

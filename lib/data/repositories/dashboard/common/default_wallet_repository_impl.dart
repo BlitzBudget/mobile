@@ -12,6 +12,7 @@ class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
     return await defaultWalletLocalDataSource.readDefaultWallet();
   }
 
+  @override
   Future<void> writeDefaultWallet(String value) async {
     return await defaultWalletLocalDataSource.writeDefaultWallet(value);
   }

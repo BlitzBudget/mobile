@@ -17,7 +17,7 @@ abstract class WalletRemoteDataSource {
 }
 
 class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   WalletRemoteDataSourceImpl(this.httpClient);
 

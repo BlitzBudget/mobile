@@ -16,7 +16,7 @@ abstract class BudgetRemoteDataSource {
 }
 
 class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   BudgetRemoteDataSourceImpl({@required this.httpClient});
 

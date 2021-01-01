@@ -9,7 +9,7 @@ abstract class CategoryRemoteDataSource {
 }
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   CategoryRemoteDataSourceImpl({@required this.httpClient});
 

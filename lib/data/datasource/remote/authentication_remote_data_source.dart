@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/core/error/exceptions.dart';
+import 'package:mobile_blitzbudget/core/error/authorization-exception.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 
 import '../../../utils/utils.dart';
@@ -26,7 +24,7 @@ abstract class AuthenticationRemoteDataSource {
 
 class AuthenticationRemoteDataSourceImpl
     implements AuthenticationRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
   static final _checkPassword = false;
 
   static final _userNotFoundException = 'UserNotFoundException';

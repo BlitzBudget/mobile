@@ -16,7 +16,7 @@ abstract class BankAccountRemoteDataSource {
 }
 
 class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   BankAccountRemoteDataSourceImpl({@required this.httpClient});
 

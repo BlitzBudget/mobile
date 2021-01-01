@@ -12,7 +12,7 @@ abstract class RecurringTransactionRemoteDataSource {
 
 class RecurringTransactionRemoteDataSourceImpl
     implements RecurringTransactionRemoteDataSource {
-  final HttpClient httpClient;
+  final HTTPClient httpClient;
 
   RecurringTransactionRemoteDataSourceImpl(this.httpClient);
 
