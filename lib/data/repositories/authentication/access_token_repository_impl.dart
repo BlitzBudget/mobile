@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart'
     show AccessTokenRepository;
 
@@ -15,8 +16,8 @@ class AccessTokenRepositoryImpl implements AccessTokenRepository {
   }
 
   @override
-  Future<void> writeAccessToken(dynamic res) async {
-    var accessToken = res['AuthenticationResult']['AccessToken'] as String;
-    return await accessTokenLocalDataSource.writeAccessToken(accessToken);
+  Future<void> writeAccessToken(UserResponse userResponse) async {
+    return await accessTokenLocalDataSource
+        .writeAccessToken(userResponse.accessToken);
   }
 }

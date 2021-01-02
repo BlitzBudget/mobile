@@ -7,5 +7,6 @@ abstract class BudgetRepository {
 
   Future<Either<Failure, void>> add(BudgetModel addBudget);
 
-  Future<Either<Failure, void>> get(String walletId, String account);
+  Future<Either<Failure, void>> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 }

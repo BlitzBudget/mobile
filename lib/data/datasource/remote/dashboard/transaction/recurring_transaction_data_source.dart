@@ -14,7 +14,7 @@ class RecurringTransactionRemoteDataSourceImpl
     implements RecurringTransactionRemoteDataSource {
   final HTTPClient httpClient;
 
-  RecurringTransactionRemoteDataSourceImpl(this.httpClient);
+  RecurringTransactionRemoteDataSourceImpl({@required this.httpClient});
 
   /// Update Transaction
   @override

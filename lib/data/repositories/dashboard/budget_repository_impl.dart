@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/api-exception.dart';
@@ -19,8 +17,8 @@ class BudgetRepositoryImpl extends BudgetRepository {
   @override
   Future<Either<Failure, void>> update(Budget updateBudget) async {
     try {
-      await budgetRemoteDataSource.update(updateBudget as BudgetModel);
-      return Right(Void);
+      return Right(
+          await budgetRemoteDataSource.update(updateBudget as BudgetModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }
@@ -29,19 +27,19 @@ class BudgetRepositoryImpl extends BudgetRepository {
   @override
   Future<Either<Failure, void>> add(Budget addBudget) async {
     try {
-      await budgetRemoteDataSource.add(addBudget as BudgetModel);
-      return Right(Void);
+      return Right(await budgetRemoteDataSource.add(addBudget as BudgetModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> get(String walletId, String budgetId) async {
+  Future<Either<Failure, void>> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
     try {
       // TODO
-      /*await budgetRemoteDataSource.get();*/
-      return Right(Void);
+      return Right(await budgetRemoteDataSource.get(
+          startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/api-exception.dart';
@@ -19,9 +17,8 @@ class BankAccountRepositoryImpl extends BankAccountRepository {
   @override
   Future<Either<Failure, void>> update(BankAccount updateBankAccount) async {
     try {
-      await bankAccountRemoteDataSource
-          .update(updateBankAccount as BankAccountModel);
-      return Right(Void);
+      return Right(await bankAccountRemoteDataSource
+          .update(updateBankAccount as BankAccountModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }
@@ -30,8 +27,8 @@ class BankAccountRepositoryImpl extends BankAccountRepository {
   @override
   Future<Either<Failure, void>> add(BankAccount addBankAccount) async {
     try {
-      await bankAccountRemoteDataSource.add(addBankAccount as BankAccountModel);
-      return Right(Void);
+      return Right(await bankAccountRemoteDataSource
+          .add(addBankAccount as BankAccountModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }
@@ -40,8 +37,7 @@ class BankAccountRepositoryImpl extends BankAccountRepository {
   @override
   Future<Either<Failure, void>> delete(String walletId, String account) async {
     try {
-      await bankAccountRemoteDataSource.delete(walletId, account);
-      return Right(Void);
+      return Right(await bankAccountRemoteDataSource.delete(walletId, account));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

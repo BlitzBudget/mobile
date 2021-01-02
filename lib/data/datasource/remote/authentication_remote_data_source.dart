@@ -2,14 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:mobile_blitzbudget/core/error/authorization-exception.dart';
+import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 
 import '../../../utils/utils.dart';
 import '../../constants/constants.dart' as constants;
 
 abstract class AuthenticationRemoteDataSource {
-  Future<dynamic> attemptLogin(String email, String password);
+  Future<UserResponseModel> attemptLogin(String email, String password);
 
   Future<void> signupUser(String email, String password, String firstName,
       String surName, Map<String, String> headers);
@@ -30,14 +32,14 @@ class AuthenticationRemoteDataSourceImpl
   static final _userNotFoundException = 'UserNotFoundException';
   static final _userNotConfirmedException = 'UserNotConfirmedException';
 
-  AuthenticationRemoteDataSourceImpl(this.httpClient);
+  AuthenticationRemoteDataSourceImpl({@required this.httpClient});
 
   /// Login Screen
   ///
   /// Logging in with Username and Password
   /// If user is not found then signup the user
   @override
-  Future<dynamic> attemptLogin(String email, String password) async {
+  Future<UserResponseModel> attemptLogin(String email, String password) async {
     /// Convert email to lowercase and trim
     email = email.toLowerCase().trim();
     return httpClient
@@ -48,7 +50,7 @@ class AuthenticationRemoteDataSourceImpl
               'checkPassword': _checkPassword
             }),
             headers: constants.headers)
-        .then<dynamic>((dynamic res) {
+        .then<UserResponseModel>((dynamic res) {
       developer.log('User Attributes  ${res['UserAttributes'] as String}');
       if (res['errorType'] != null) {
         /// Conditionally process error messages
@@ -65,7 +67,7 @@ class AuthenticationRemoteDataSourceImpl
           throw InvalidUserCredentialsException();
         }
       }
-      return res;
+      return UserResponseModel.fromJSON(res as Map<String, dynamic>);
     });
   }
 

@@ -19,7 +19,7 @@ abstract class TransactionRemoteDataSource {
 class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
   final HTTPClient httpClient;
 
-  TransactionRemoteDataSourceImpl(this.httpClient);
+  TransactionRemoteDataSourceImpl({@required this.httpClient});
 
   /// Get Transaction
   @override

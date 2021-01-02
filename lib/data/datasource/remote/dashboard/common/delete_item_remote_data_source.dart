@@ -11,7 +11,7 @@ abstract class DeleteItemRemoteDataSource {
 class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
   final HTTPClient httpClient;
 
-  DeleteItemRemoteDataSourceImpl(this.httpClient);
+  DeleteItemRemoteDataSourceImpl({@required this.httpClient});
 
   /// Delete Item
   @override

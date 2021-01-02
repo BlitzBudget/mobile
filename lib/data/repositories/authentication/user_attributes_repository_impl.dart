@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/user.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 
@@ -25,13 +26,9 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   }
 
   @override
-  Future<void> writeUserAttributes(dynamic res) async {
-    /// Convert from JSON to User Entity
-    var user =
-        UserModel.fromJSON(res['UserAttributes'] as Map<String, dynamic>);
-
+  Future<void> writeUserAttributes(UserResponse userResponse) async {
     /// Encode the User Model as String
-    var userJSONEncoded = jsonEncode(user.toJSON());
+    var userJSONEncoded = jsonEncode(userResponse.user);
 
     return await userAttributesLocalDataSource
         .writeUserAttributes(userJSONEncoded);

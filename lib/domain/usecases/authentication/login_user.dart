@@ -1,10 +1,15 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
 
 class LoginUser extends UseCase {
   AuthenticationRepository authenticationRepository;
@@ -13,7 +18,7 @@ class LoginUser extends UseCase {
   AccessTokenRepository accessTokenRepository;
   AuthTokenRepository authTokenRepository;
 
-  Future<dynamic> attemptLogin(
+  Future<Either<Failure, UserResponse>> attemptLogin(
       {@required String email, @required String password}) async {
     /*if (isEmpty(email)) {
       displayDialog(context, 'Empty Email', 'The email cannot be empty');
@@ -29,19 +34,29 @@ class LoginUser extends UseCase {
       return null;
     }*/
 
-    dynamic res = await authenticationRepository.attemptLogin(email, password);
+    var res = await authenticationRepository.attemptLogin(
+        email, password); // Either<Failure, UserResponse>
 
-    /// Store User Attributes
-    await userAttributesRepository.writeUserAttributes(res);
+    if (res.isRight()) {
+      var user = res.getOrElse(null);
 
-    /// Store Refresh Token
-    await refreshTokenRepository.writeRefreshToken(res);
+      /// If the user information is empty then
+      if (user == null) {
+        return Left(EmptyResponseFailure());
+      }
 
-    /// Store Access Token
-    await accessTokenRepository.writeAccessToken(res);
+      /// Store User Attributes
+      await userAttributesRepository.writeUserAttributes(user);
 
-    /// Store Auth Token
-    await authTokenRepository.writeAuthToken(res);
+      /// Store Refresh Token
+      await refreshTokenRepository.writeRefreshToken(user);
+
+      /// Store Access Token
+      await accessTokenRepository.writeAccessToken(user);
+
+      /// Store Auth Token
+      await authTokenRepository.writeAuthToken(user);
+    }
 
     /// Navigate to the second screen using a named route.
     /*Navigator.pushNamed(context, constants.dashboardRoute);*/

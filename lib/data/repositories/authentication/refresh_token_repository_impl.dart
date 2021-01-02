@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 
 import '../../datasource/local/authentication/refresh_token_local_data_source.dart';
@@ -14,9 +15,8 @@ class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
   }
 
   @override
-  Future<void> writeRefreshToken(dynamic res) async {
-    // Convert Response from the server to Refresh Token String
-    var refreshToken = res['AuthenticationResult']['RefreshToken'] as String;
-    return await refreshTokenLocalDataSource.writeRefreshToken(refreshToken);
+  Future<void> writeRefreshToken(UserResponse userResponse) async {
+    return await refreshTokenLocalDataSource
+        .writeRefreshToken(userResponse.refreshToken);
   }
 }

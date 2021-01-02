@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_blitzbudget/core/error/api-exception.dart';
+import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
@@ -71,11 +72,14 @@ class RefreshTokenHelper {
             ' The response code is ${statusCode.toString()} with the response $response');
         dynamic res = jsonDecode(response.body);
 
+        /// Map From JSON to user response model
+        var user = UserResponseModel.fromJSON(res as Map<String, dynamic>);
+
         /// Store Auth Token
-        await authTokenRepository.writeAuthToken(res);
+        await authTokenRepository.writeAuthToken(user);
 
         /// Store Access Token
-        await accessTokenRepository.writeAccessToken(res);
+        await accessTokenRepository.writeAccessToken(user);
 
         return res;
       }

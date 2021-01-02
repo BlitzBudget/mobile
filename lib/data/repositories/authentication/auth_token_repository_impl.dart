@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart' show required;
+import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 
 import '../../datasource/local/authentication/auth_token_local_data_source.dart'
@@ -15,8 +16,8 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
   }
 
   @override
-  Future<void> writeAuthToken(dynamic res) async {
-    var authToken = res['AuthenticationResult']['IdToken'] as String;
-    return await authTokenLocalDataSource.writeAuthToken(authToken);
+  Future<void> writeAuthToken(UserResponse userResponse) async {
+    return await authTokenLocalDataSource
+        .writeAuthToken(userResponse.authenticationToken);
   }
 }
