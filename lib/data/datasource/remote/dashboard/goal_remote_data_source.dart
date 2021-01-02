@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
 
 abstract class GoalRemoteDataSource {
-  Future<void> get(Map<String, dynamic> contentBody);
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 
   Future<void> update(GoalModel updateGoal);
 
@@ -21,9 +23,18 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
 
   /// Get Goals
   @override
-  Future<void> get(Map<String, dynamic> contentBody) async {
-    developer.log('The Map for getting the goal is  ${contentBody.toString()}');
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
+    var contentBody = <String, dynamic>{
+      'startsWithDate': startsWithDate,
+      'endsWithDate': endsWithDate
+    };
 
+    if (isNotEmpty(defaultWallet)) {
+      contentBody['walletId'] = defaultWallet;
+    } else {
+      contentBody['userId'] = userId;
+    }
     return httpClient
         .post(constants.goalURL,
             body: jsonEncode(contentBody), headers: constants.headers)
@@ -36,15 +47,13 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
   /// Update Budget
   @override
   Future<void> update(GoalModel updateGoal) {
-    developer
-        .log('The Map for patching the budget is  ${updateGoal.toString()}');
+    developer.log('The Map for patching the goal is  ${updateGoal.toString()}');
 
     return httpClient
         .patch(constants.goalURL,
             body: jsonEncode(updateGoal.toJSON()), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from patching the goal is $res');
     });
   }
 
@@ -55,8 +64,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
         .put(constants.goalURL,
             body: jsonEncode(addGoal.toJSON()), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the goal is $res');
-      //TODO
+      debugPrint('The response from adding the goal is $res');
     });
   }
 }

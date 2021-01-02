@@ -5,9 +5,11 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
 
 abstract class TransactionRemoteDataSource {
-  Future<void> get(Map<String, dynamic> contentBody);
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 
   Future<void> update(TransactionModel updateTransaction);
 
@@ -21,10 +23,18 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
 
   /// Get Transaction
   @override
-  Future<void> get(Map<String, dynamic> contentBody) async {
-    developer.log(
-        'The Map for getting the transaction is  ${contentBody.toString()}');
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
+    var contentBody = <String, dynamic>{
+      'startsWithDate': startsWithDate,
+      'endsWithDate': endsWithDate
+    };
 
+    if (isNotEmpty(defaultWallet)) {
+      contentBody['walletId'] = defaultWallet;
+    } else {
+      contentBody['userId'] = userId;
+    }
     return httpClient
         .post(constants.transactionURL,
             body: jsonEncode(contentBody), headers: constants.headers)
@@ -45,8 +55,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
             body: jsonEncode(updateTransaction.toJSON()),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the transaction is $res');
-      //TODO
+      debugPrint('The response from the update transaction is $res');
     });
   }
 
@@ -58,8 +67,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
             body: jsonEncode(addTransaction.toJSON()),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the transaction is $res');
-      //TODO
+      debugPrint('The response from the add transaction is $res');
     });
   }
 }

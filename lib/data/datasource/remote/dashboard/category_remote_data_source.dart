@@ -27,8 +27,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
             body: jsonEncode(_jsonForDeleteCategory),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the delete category is $res');
     });
   }
 }

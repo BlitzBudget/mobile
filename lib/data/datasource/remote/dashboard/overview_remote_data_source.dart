@@ -4,9 +4,11 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/utils/utils.dart';
 
 abstract class OverviewRemoteDataSource {
-  Future<void> get(Map<String, dynamic> contentBody);
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 }
 
 class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
@@ -16,9 +18,18 @@ class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
 
   /// Get Wallet
   @override
-  Future<void> get(Map<String, dynamic> contentBody) async {
-    developer
-        .log('The Map for getting the overview is  ${contentBody.toString()}');
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
+    var contentBody = <String, dynamic>{
+      'startsWithDate': startsWithDate,
+      'endsWithDate': endsWithDate
+    };
+
+    if (isNotEmpty(defaultWallet)) {
+      contentBody['walletId'] = defaultWallet;
+    } else {
+      contentBody['userId'] = userId;
+    }
 
     return httpClient
         .post(constants.overviewURL,

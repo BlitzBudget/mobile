@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<void> get(Map<String, dynamic> contentBody);
+  Future<void> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 
   Future<void> update(WalletModel updateWallet);
 
@@ -23,16 +25,25 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Get Wallet
   @override
-  Future<void> get(Map<String, dynamic> contentBody) async {
-    developer
-        .log('The Map for getting the wallet is  ${contentBody.toString()}');
+  Future<List<WalletModel>> get(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
+    var contentBody = <String, dynamic>{
+      'startsWithDate': startsWithDate,
+      'endsWithDate': endsWithDate
+    };
 
+    if (isNotEmpty(defaultWallet)) {
+      contentBody['walletId'] = defaultWallet;
+    } else {
+      contentBody['userId'] = userId;
+    }
     return httpClient
         .post(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers)
         .then((dynamic res) {
       debugPrint('The response from the wallet is $res');
       //TODO
+      return;
     });
   }
 
@@ -46,8 +57,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
         .patch(constants.walletURL,
             body: jsonEncode(updateWallet.toJSON()), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the update wallet is $res');
     });
   }
 
@@ -65,8 +75,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
         .post(constants.walletURL,
             body: jsonEncode(_jsonForDeleteWallet), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the delete wallet is $res');
     });
   }
 
@@ -83,8 +92,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
         .put(constants.walletURL,
             body: jsonEncode(_jsonForAddWallet), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the add wallet is $res');
     });
   }
 }

@@ -27,8 +27,7 @@ class RecurringTransactionRemoteDataSourceImpl
             body: jsonEncode(updateRecurringTransaction.toJSON()),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the recurring transactions is $res');
-      //TODO
+      debugPrint('The response from the update recurring transactions is $res');
     });
   }
 }

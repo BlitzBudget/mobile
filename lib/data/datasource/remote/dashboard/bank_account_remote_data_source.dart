@@ -31,8 +31,7 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
             body: jsonEncode(updateBankAccount.toJSON()),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the bankAccount is $res');
-      //TODO
+      debugPrint('The response from the update bankAccount is $res');
     });
   }
 
@@ -44,8 +43,7 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
             body: jsonEncode(addBankAccount.toJSON()),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the bankAccount is $res');
-      //TODO
+      debugPrint('The response from the add bankAccount is $res');
     });
   }
 
@@ -63,8 +61,7 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
             body: jsonEncode(_jsonForDeleteCategory),
             headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the delete bankAccount is $res');
     });
   }
 }

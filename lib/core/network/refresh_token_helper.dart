@@ -7,6 +7,7 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/access_tok
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_all_storage_repository.dart';
+import 'package:mobile_blitzbudget/utils/utils.dart';
 
 import '../../data/constants/constants.dart';
 import 'network_helper.dart';
@@ -35,7 +36,12 @@ class RefreshTokenHelper {
         ' The authorization token has expired, Trying to refresh the token.');
 
     /// Store Access token and Authentication Token
-    final refreshToken = refreshTokenRepository.readRefreshToken();
+    final refreshToken = await refreshTokenRepository.readRefreshToken();
+
+    /// If the refresh token is empty then throw exception
+    if (isEmpty(refreshToken)) {
+      await clearStoreAndThrowException();
+    }
 
     return http
         .post(refreshTokenURL,
@@ -75,8 +81,13 @@ class RefreshTokenHelper {
       }
     } else if (statusCode >= 400 && statusCode <= 600) {
       /// Clear all Storage (keyValue and SecureKeyValue)
-      await clearAllStorageRepository.clearAllStorage();
-      throw UnableToRefreshTokenException();
+      await clearStoreAndThrowException();
     }
+  }
+
+  /// Clear all Storage (keyValue and SecureKeyValue)
+  Future clearStoreAndThrowException() async {
+    await clearAllStorageRepository.clearAllStorage();
+    throw UnableToRefreshTokenException();
   }
 }

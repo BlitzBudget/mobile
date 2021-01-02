@@ -25,8 +25,8 @@ class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
     return httpClient
         .post(constants.deleteItemURL,
             body: jsonEncode(_jsonForDeleteItem), headers: constants.headers)
-        .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
+        .then((dynamic responseBody) {
+      debugPrint('The response from the budget update is $responseBody');
     });
   }
 }
