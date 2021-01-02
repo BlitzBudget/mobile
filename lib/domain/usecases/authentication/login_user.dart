@@ -9,7 +9,6 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/authentica
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
 
 class LoginUser extends UseCase {
   AuthenticationRepository authenticationRepository;
@@ -18,27 +17,16 @@ class LoginUser extends UseCase {
   AccessTokenRepository accessTokenRepository;
   AuthTokenRepository authTokenRepository;
 
-  Future<Either<Failure, UserResponse>> attemptLogin(
+  Future<Either<Failure, UserResponse>> loginUser(
       {@required String email, @required String password}) async {
-    /*if (isEmpty(email)) {
-      displayDialog(context, 'Empty Email', 'The email cannot be empty');
-      return null;
-    } else if (!EmailValidator.validate(email.trim())) {
-      displayDialog(context, 'Invalid Email', 'The email is not valid');
-      return null;
-    } else if (isEmpty(password)) {
-      displayDialog(context, 'Empty Password', 'The password cannot be empty');
-      return null;
-    } else if (!passwordExp.hasMatch(password)) {
-      displayDialog(context, 'Invalid Password', 'The password is not valid');
-      return null;
-    }*/
+    /// Change all the email to lower case and trim the string
+    email = email.toLowerCase().trim();
 
-    var res = await authenticationRepository.attemptLogin(
+    var response = await authenticationRepository.loginUser(
         email, password); // Either<Failure, UserResponse>
 
-    if (res.isRight()) {
-      var user = res.getOrElse(null);
+    if (response.isRight()) {
+      var user = response.getOrElse(null);
 
       /// If the user information is empty then
       if (user == null) {
@@ -58,7 +46,23 @@ class LoginUser extends UseCase {
       await authTokenRepository.writeAuthToken(user);
     }
 
-    /// Navigate to the second screen using a named route.
-    /*Navigator.pushNamed(context, constants.dashboardRoute);*/
+    return response;
   }
 }
+
+/*if (isEmpty(email)) {
+      displayDialog(context, 'Empty Email', 'The email cannot be empty');
+      return null;
+    } else if (!EmailValidator.validate(email.trim())) {
+      displayDialog(context, 'Invalid Email', 'The email is not valid');
+      return null;
+    } else if (isEmpty(password)) {
+      displayDialog(context, 'Empty Password', 'The password cannot be empty');
+      return null;
+    } else if (!passwordExp.hasMatch(password)) {
+      displayDialog(context, 'Invalid Password', 'The password is not valid');
+      return null;
+    }*/
+
+/// Navigate to the second screen using a named route.
+/*Navigator.pushNamed(context, constants.dashboardRoute);*/

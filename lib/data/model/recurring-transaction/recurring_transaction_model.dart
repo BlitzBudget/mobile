@@ -2,7 +2,7 @@ import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 class RecurringTransactionModel extends RecurringTransaction {
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags

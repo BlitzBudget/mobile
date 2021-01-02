@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_with_date_repository.dart';
-import '../../../../utils/utils.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import '../../../constants/constants.dart' as constants;
 
 class EndsWithDateRepositoryImpl implements EndsWithDateRepository {

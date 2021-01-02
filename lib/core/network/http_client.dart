@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:mobile_blitzbudget/core/error/api-exception.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
 
 import 'network_helper.dart';
 import 'refresh_token_helper.dart';

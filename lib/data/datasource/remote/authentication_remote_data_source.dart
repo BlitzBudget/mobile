@@ -5,16 +5,16 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 
-import '../../../utils/utils.dart';
 import '../../constants/constants.dart' as constants;
 
 abstract class AuthenticationRemoteDataSource {
   Future<UserResponseModel> attemptLogin(String email, String password);
 
   Future<void> signupUser(String email, String password, String firstName,
-      String surName, Map<String, String> headers);
+      String surName, String acceptLanguage);
 
   Future<void> verifyEmail(String email, String password,
       String verificationCode, bool useVerifyURL);
@@ -77,7 +77,11 @@ class AuthenticationRemoteDataSourceImpl
   /// Also invokes the Verification module
   @override
   Future<void> signupUser(String email, String password, String firstName,
-      String surName, Map<String, String> headers) async {
+      String surName, String acceptLanguage) async {
+    /// Set accept language headers
+    var headers = constants.headers;
+    headers['Accept-Language'] = acceptLanguage;
+
     /// Start signup process
     return httpClient
         .post(constants.signupURL,

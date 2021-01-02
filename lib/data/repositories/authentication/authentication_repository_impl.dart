@@ -13,7 +13,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({@required this.authenticationRemoteDataSource});
 
   @override
-  Future<Either<Failure, UserResponse>> attemptLogin(
+  Future<Either<Failure, UserResponse>> loginUser(
       String email, String password) async {
     try {
       return Right(
@@ -23,16 +23,18 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     }
   }
 
+  @override
   Future<Either<Failure, void>> signupUser(String email, String password,
-      String firstName, String surName, Map<String, String> headers) async {
+      String firstName, String surName, String acceptLanguage) async {
     try {
       return Right(await authenticationRemoteDataSource.signupUser(
-          email, password, firstName, surName, headers));
+          email, password, firstName, surName, acceptLanguage));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
   }
 
+  @override
   Future<Either<Failure, void>> verifyEmail(String email, String password,
       String verificationCode, bool useVerifyURL) async {
     try {
@@ -43,6 +45,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     }
   }
 
+  @override
   Future<Either<Failure, void>> resendVerificationCode(String email) async {
     try {
       return Right(
@@ -52,6 +55,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     }
   }
 
+  @override
   Future<Either<Failure, void>> forgotPassword(
       String email, String password) async {
     try {

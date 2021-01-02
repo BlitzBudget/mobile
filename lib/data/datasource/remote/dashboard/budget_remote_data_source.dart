@@ -6,7 +6,7 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/utils/utils.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 abstract class BudgetRemoteDataSource {
   Future<void> get(String startsWithDate, String endsWithDate,
