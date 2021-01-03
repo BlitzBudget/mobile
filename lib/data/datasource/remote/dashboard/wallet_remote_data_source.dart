@@ -6,9 +6,10 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<void> get(String startsWithDate, String endsWithDate,
+  Future<List<WalletModel>> get(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId);
 
   Future<void> update(WalletModel updateWallet);
@@ -40,10 +41,12 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
     return httpClient
         .post(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers)
-        .then((dynamic res) {
+        .then<List<WalletModel>>((dynamic res) {
       debugPrint('The response from the wallet is $res');
-      //TODO
-      return;
+      return List<WalletModel>.from((res as List).map<dynamic>(
+          (dynamic model) =>
+              WalletModel.fromJSON(model as Map<String, dynamic>)));
+      ;
     });
   }
 

@@ -4,6 +4,7 @@ import 'package:mobile_blitzbudget/core/error/api-exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/recurring_transaction_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
+import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/recurring_transaction_repository.dart';
 
 class RecurringTransactionRepositoryImpl
@@ -16,10 +17,10 @@ class RecurringTransactionRepositoryImpl
 
   @override
   Future<Either<Failure, void>> update(
-      RecurringTransactionModel updateRecurringTransaction) async {
+      RecurringTransaction updateRecurringTransaction) async {
     try {
       return Right(await recurringTransactionRemoteDataSource
-          .update(updateRecurringTransaction));
+          .update(updateRecurringTransaction as RecurringTransactionModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

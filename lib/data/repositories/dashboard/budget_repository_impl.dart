@@ -5,6 +5,7 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/budget_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/budget_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/budget_repository.dart';
 
 class BudgetRepositoryImpl extends BudgetRepository {
@@ -34,10 +35,9 @@ class BudgetRepositoryImpl extends BudgetRepository {
   }
 
   @override
-  Future<Either<Failure, void>> get(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
+  Future<Either<Failure, BudgetResponse>> get(String startsWithDate,
+      String endsWithDate, String defaultWallet, String userId) async {
     try {
-      // TODO
       return Right(await budgetRemoteDataSource.get(
           startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {

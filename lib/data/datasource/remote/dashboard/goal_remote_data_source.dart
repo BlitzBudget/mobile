@@ -6,9 +6,10 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_model.dart';
 
 abstract class GoalRemoteDataSource {
-  Future<void> get(String startsWithDate, String endsWithDate,
+  Future<GoalResponseModel> get(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId);
 
   Future<void> update(GoalModel updateGoal);
@@ -23,7 +24,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
 
   /// Get Goals
   @override
-  Future<void> get(String startsWithDate, String endsWithDate,
+  Future<GoalResponseModel> get(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
@@ -38,9 +39,9 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
     return httpClient
         .post(constants.goalURL,
             body: jsonEncode(contentBody), headers: constants.headers)
-        .then((dynamic res) {
+        .then<GoalResponseModel>((dynamic res) {
       debugPrint('The response from the goal is $res');
-      //TODO
+      return GoalResponseModel.fromJSON(res as Map<String, dynamic>);
     });
   }
 

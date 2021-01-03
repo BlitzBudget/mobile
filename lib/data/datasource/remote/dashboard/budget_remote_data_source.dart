@@ -7,9 +7,10 @@ import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/data/model/response/dashboard/budget_response_model.dart';
 
 abstract class BudgetRemoteDataSource {
-  Future<void> get(String startsWithDate, String endsWithDate,
+  Future<BudgetResponseModel> get(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId);
 
   Future<void> update(BudgetModel updateBudget);
@@ -24,7 +25,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
 
   /// Get Budgets
   @override
-  Future<void> get(String startsWithDate, String endsWithDate,
+  Future<BudgetResponseModel> get(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
@@ -40,9 +41,9 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
     return httpClient
         .post(constants.budgetURL,
             body: jsonEncode(contentBody), headers: constants.headers)
-        .then((dynamic res) {
+        .then<BudgetResponseModel>((dynamic res) {
       debugPrint('The response from the budget is $res');
-      //TODO
+      return BudgetResponseModel.fromJSON(res as Map<String, dynamic>);
     });
   }
 

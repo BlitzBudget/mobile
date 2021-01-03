@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
+import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 
 abstract class RecurringTransactionRepository {
   Future<Either<Failure, void>> update(
-      RecurringTransactionModel updateRecurringTransaction);
+      RecurringTransaction updateRecurringTransaction);
 }

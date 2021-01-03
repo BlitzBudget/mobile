@@ -8,20 +8,18 @@ import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dar
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
 import 'package:mobile_blitzbudget/domain/entities/date.dart';
-import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
-import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/overview_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 import '../../date_model.dart';
 
-class TransactionResponseModel extends TransactionResponse {
-  TransactionResponseModel(
+class OverviewResponseModel extends OverviewResponse {
+  OverviewResponseModel(
       {List<Transaction> transactions,
       List<Budget> budgets,
       List<Category> categories,
       List<BankAccount> bankAccounts,
-      List<RecurringTransaction> recurringTransactions,
       List<Date> dates,
       Wallet wallet})
       : super(
@@ -29,24 +27,16 @@ class TransactionResponseModel extends TransactionResponse {
             budgets: budgets,
             categories: categories,
             bankAccounts: bankAccounts,
-            recurringTransactions: recurringTransactions,
             dates: dates,
             wallet: wallet);
 
-  factory TransactionResponseModel.fromJSON(
+  factory OverviewResponseModel.fromJSON(
       Map<String, dynamic> transactionResponseModel) {
     /// Convert transactions from the response JSON to List<Transaction>
     var responseTransactions = transactionResponseModel['Transaction'] as List;
     var convertedTransactions = List<Transaction>.from(
         responseTransactions.map<dynamic>((dynamic model) =>
             TransactionModel.fromJSON(model as Map<String, dynamic>)));
-
-    /// Convert recurring transactions from the response JSON to List<RecurringTransaction>
-    var responseRecurringTransactions =
-        transactionResponseModel['RecurringTransactions'] as List;
-    var convertedRecurringTransactions = List<RecurringTransaction>.from(
-        responseRecurringTransactions.map<dynamic>((dynamic model) =>
-            RecurringTransactionModel.fromJSON(model as Map<String, dynamic>)));
 
     /// Convert budgets from the response JSON to List<Budget>
     var responseBudgets = transactionResponseModel['Budget'] as List;
@@ -88,9 +78,8 @@ class TransactionResponseModel extends TransactionResponse {
 
       convertedWallet = convertedWallets[0];
     }
-    return TransactionResponseModel(
+    return OverviewResponseModel(
         transactions: convertedTransactions,
-        recurringTransactions: convertedRecurringTransactions,
         budgets: convertedBudgets,
         categories: convertedCategories,
         bankAccounts: convertedBankAccounts,

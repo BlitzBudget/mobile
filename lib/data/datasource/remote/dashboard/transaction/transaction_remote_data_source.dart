@@ -3,13 +3,15 @@ import 'dart:developer' as developer;
 
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/data/model/response/dashboard/transaction_response_model.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
 
 abstract class TransactionRemoteDataSource {
-  Future<void> get(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<TransactionResponseModel> get(String startsWithDate,
+      String endsWithDate, String defaultWallet, String userId);
 
   Future<void> update(TransactionModel updateTransaction);
 
@@ -23,8 +25,8 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
 
   /// Get Transaction
   @override
-  Future<void> get(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
+  Future<TransactionResponseModel> get(String startsWithDate,
+      String endsWithDate, String defaultWallet, String userId) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -38,9 +40,9 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
     return httpClient
         .post(constants.transactionURL,
             body: jsonEncode(contentBody), headers: constants.headers)
-        .then((dynamic res) {
+        .then<TransactionResponseModel>((dynamic res) {
       debugPrint('The response from the transaction is $res');
-      //TODO
+      return TransactionResponseModel.fromJSON(res as Map<String, dynamic>);
     });
   }
 
