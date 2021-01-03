@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
@@ -15,7 +16,7 @@ class UpdateRecurringTransactionUseCase {
   UserAttributesRepository userAttributesRepository;
 
   Future<Either<Failure, void>> update(
-      RecurringTransaction updateRecurringTransaction) async {
+      {@required RecurringTransaction updateRecurringTransaction}) async {
     return await recurringTransactionRepository
         .update(updateRecurringTransaction);
   }

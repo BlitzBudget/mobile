@@ -8,6 +8,6 @@ abstract class BudgetRepository {
 
   Future<Either<Failure, void>> add(Budget addBudget);
 
-  Future<Either<Failure, BudgetResponse>> get(String startsWithDate,
+  Future<Either<Failure, BudgetResponse>> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId);
 }

@@ -9,7 +9,7 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<List<WalletModel>> get(String startsWithDate, String endsWithDate,
+  Future<List<WalletModel>> fetch(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId);
 
   Future<void> update(WalletModel updateWallet);
@@ -26,7 +26,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Get Wallet
   @override
-  Future<List<WalletModel>> get(String startsWithDate, String endsWithDate,
+  Future<List<WalletModel>> fetch(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,

@@ -15,7 +15,7 @@ class FetchTransactionUseCase {
   DefaultWalletRepository defaultWalletRepository;
   UserAttributesRepository userAttributesRepository;
 
-  Future<Either<Failure, TransactionResponse>> getTransaction() async {
+  Future<Either<Failure, TransactionResponse>> fetch() async {
     var startsWithDate = await startsWithDateRepository.readStartsWithDate();
     var endsWithDate = await endsWithDateRepository.readEndsWithDate();
     var defaultWallet = await defaultWalletRepository.readDefaultWallet();
@@ -27,7 +27,7 @@ class FetchTransactionUseCase {
       userId = user.userId;
     }
 
-    return await transactionRepository.get(
+    return await transactionRepository.fetch(
         startsWithDate, endsWithDate, defaultWallet, userId);
 
     // TODO if default wallet is empty then store them

@@ -15,7 +15,7 @@ class FetchGoalUseCase {
   DefaultWalletRepository defaultWalletRepository;
   UserAttributesRepository userAttributesRepository;
 
-  Future<Either<Failure, GoalResponse>> get() async {
+  Future<Either<Failure, GoalResponse>> fetch() async {
     var startsWithDate = await startsWithDateRepository.readStartsWithDate();
     var endsWithDate = await endsWithDateRepository.readEndsWithDate();
     var defaultWallet = await defaultWalletRepository.readDefaultWallet();
@@ -27,7 +27,7 @@ class FetchGoalUseCase {
       userId = user.userId;
     }
 
-    return await goalRepository.get(
+    return await goalRepository.fetch(
         startsWithDate, endsWithDate, defaultWallet, userId);
     // TODO if default wallet is empty then store them
   }

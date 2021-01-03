@@ -14,10 +14,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
   TransactionRepositoryImpl({@required this.transactionRemoteDataSource});
 
   @override
-  Future<Either<Failure, TransactionResponse>> get(String startsWithDate,
+  Future<Either<Failure, TransactionResponse>> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId) async {
     try {
-      return Right(await transactionRemoteDataSource.get(
+      return Right(await transactionRemoteDataSource.fetch(
           startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));

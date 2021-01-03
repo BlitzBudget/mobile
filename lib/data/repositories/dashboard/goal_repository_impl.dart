@@ -32,10 +32,10 @@ class GoalRepositoryImpl implements GoalRepository {
   }
 
   @override
-  Future<Either<Failure, GoalResponse>> get(String startsWithDate,
+  Future<Either<Failure, GoalResponse>> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId) async {
     try {
-      return Right(await goalRemoteDataSource.get(
+      return Right(await goalRemoteDataSource.fetch(
           startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));

@@ -35,10 +35,10 @@ class BudgetRepositoryImpl extends BudgetRepository {
   }
 
   @override
-  Future<Either<Failure, BudgetResponse>> get(String startsWithDate,
+  Future<Either<Failure, BudgetResponse>> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId) async {
     try {
-      return Right(await budgetRemoteDataSource.get(
+      return Right(await budgetRemoteDataSource.fetch(
           startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));

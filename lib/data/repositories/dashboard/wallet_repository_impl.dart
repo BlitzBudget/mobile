@@ -13,10 +13,10 @@ class WalletRepositoryImpl implements WalletRepository {
   WalletRepositoryImpl({@required this.walletRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<Wallet>>> get(String startsWithDate,
+  Future<Either<Failure, List<Wallet>>> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId) async {
     try {
-      return Right(await walletRemoteDataSource.get(
+      return Right(await walletRemoteDataSource.fetch(
           startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));

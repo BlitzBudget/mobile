@@ -10,7 +10,7 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
 
 abstract class TransactionRemoteDataSource {
-  Future<TransactionResponseModel> get(String startsWithDate,
+  Future<TransactionResponseModel> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId);
 
   Future<void> update(TransactionModel updateTransaction);
@@ -25,7 +25,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
 
   /// Get Transaction
   @override
-  Future<TransactionResponseModel> get(String startsWithDate,
+  Future<TransactionResponseModel> fetch(String startsWithDate,
       String endsWithDate, String defaultWallet, String userId) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
