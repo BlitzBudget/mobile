@@ -8,7 +8,7 @@ class Budget extends Equatable {
   final double planned;
   final double used;
   final String dateMeantFor;
-  final String category;
+  final String categoryId;
   final CategoryType categoryType;
 
   // Optional category type and Budget id fields
@@ -16,12 +16,19 @@ class Budget extends Equatable {
       {this.walletId,
       this.planned,
       this.dateMeantFor,
-      this.category,
+      this.categoryId,
       this.categoryType,
       this.budgetId,
       this.used});
 
   @override
-  List<Object> get props =>
-      [budgetId, walletId, planned, used, dateMeantFor, category, categoryType];
+  List<Object> get props => [
+        budgetId,
+        walletId,
+        planned,
+        used,
+        dateMeantFor,
+        categoryId,
+        categoryType
+      ];
 }

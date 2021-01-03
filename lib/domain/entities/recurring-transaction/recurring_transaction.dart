@@ -8,7 +8,7 @@ class RecurringTransaction extends Equatable {
   final String walletId;
   final double amount;
   final String description;
-  final String accountId;
+  final String account;
   final Recurrence recurrence;
   final CategoryType categoryType;
   final String categoryName;
@@ -20,7 +20,7 @@ class RecurringTransaction extends Equatable {
       {this.category,
       this.walletId,
       this.amount,
-      this.accountId,
+      this.account,
       this.recurringTransactionId,
       this.description,
       this.recurrence,
@@ -34,7 +34,7 @@ class RecurringTransaction extends Equatable {
         walletId,
         amount,
         description,
-        accountId,
+        account,
         recurrence,
         categoryType,
         categoryName,

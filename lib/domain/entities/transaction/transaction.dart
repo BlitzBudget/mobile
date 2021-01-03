@@ -24,8 +24,8 @@ class Transaction extends Equatable {
       this.dateMeantFor,
       this.categoryId,
       this.transactionId,
-      this.description = '',
-      this.recurrence = Recurrence.never,
+      this.description,
+      this.recurrence,
       this.categoryType,
       this.categoryName,
       this.tags});

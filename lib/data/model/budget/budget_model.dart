@@ -16,7 +16,7 @@ class BudgetModel extends Budget {
             walletId: walletId,
             planned: planned,
             dateMeantFor: dateMeantFor,
-            category: category,
+            categoryId: category,
             categoryType: categoryType,
             budgetId: budgetId,
             used: used);
@@ -37,7 +37,7 @@ class BudgetModel extends Budget {
         'budgetId': budgetId,
         'dateMeantFor': dateMeantFor,
         'planned': planned,
-        'category': category,
+        'category': categoryId,
         'categoryType': categoryType
       };
 }

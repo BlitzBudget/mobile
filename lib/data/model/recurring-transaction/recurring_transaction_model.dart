@@ -20,7 +20,7 @@ class RecurringTransactionModel extends RecurringTransaction {
   }) : super(
             walletId: walletId,
             amount: amount,
-            accountId: accountId,
+            account: accountId,
             recurringTransactionId: recurringTransactionId,
             description: description,
             recurrence: recurrence,
@@ -54,7 +54,7 @@ class RecurringTransactionModel extends RecurringTransaction {
         'recurringTransactionId': recurringTransactionId,
         'amount': amount,
         'recurrence': recurrence,
-        'account': accountId,
+        'account': account,
         'description': description,
         'tags': tags,
         'categoryType': categoryType,
