@@ -1,4 +1,5 @@
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/user.dart';
 
@@ -16,12 +17,12 @@ class UserResponseModel extends UserResponse {
 
   factory UserResponseModel.fromJSON(Map<String, dynamic> userResponseModel) {
     return UserResponseModel(
-        refreshToken:
-            userResponseModel['AuthenticationResult']['RefreshToken'] as String,
-        authenticationToken:
-            userResponseModel['AuthenticationResult']['IdToken'] as String,
-        accessToken:
-            userResponseModel['AuthenticationResult']['AccessToken'] as String,
+        refreshToken: parseDynamicToString(
+            userResponseModel['AuthenticationResult']['RefreshToken']),
+        authenticationToken: parseDynamicToString(
+            userResponseModel['AuthenticationResult']['IdToken']),
+        accessToken: parseDynamicToString(
+            userResponseModel['AuthenticationResult']['AccessToken']),
         user: UserModel.fromJSON(
             userResponseModel['UserAttributes'] as Map<String, dynamic>));
   }
