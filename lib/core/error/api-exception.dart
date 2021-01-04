@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../failure/api-failure.dart';
 import '../failure/failure.dart';
 
@@ -5,6 +7,11 @@ import '../failure/failure.dart';
 /// API Flow Exceptions
 ///
 class APIException implements Exception {
+  dynamic res;
+
+  // Constructor to set response
+  APIException({@required this.res});
+
   ///
   /// Convert Exception to Failure
   ///
@@ -27,7 +34,9 @@ class APIException implements Exception {
 }
 
 /// Exception is thrown when the token is expired
-class TokenExpiredException extends APIException {}
+class TokenExpiredException extends APIException {
+  TokenExpiredException(dynamic res) : super(res: res);
+}
 
 /// Exception is thrown when the authorization token is empty
 class EmptyAuthorizationTokenException extends APIException {}
@@ -36,13 +45,21 @@ class EmptyAuthorizationTokenException extends APIException {}
 class UnableToRefreshTokenException extends APIException {}
 
 ///
-class ConnectionException extends APIException {}
+class ConnectionException extends APIException {
+  ConnectionException(dynamic res) : super(res: res);
+}
 
-class ServerErrorException extends APIException {}
+class ServerErrorException extends APIException {
+  ServerErrorException(dynamic res) : super(res: res);
+}
 
-class ClientErrorException extends APIException {}
+class ClientErrorException extends APIException {
+  ClientErrorException(dynamic res) : super(res: res);
+}
 
-class UnknownException extends APIException {}
+class UnknownException extends APIException {
+  UnknownException(dynamic res) : super(res: res);
+}
 
 /// Network Failures
-class NoNetworkConnectionException implements APIException {}
+class NoNetworkConnectionException extends APIException {}

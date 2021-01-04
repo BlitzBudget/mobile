@@ -1,0 +1,45 @@
+{
+    "ChallengeParameters": {},
+    "AuthenticationResult": {
+      "AccessToken": "eyJraWQiOiJ5UG14MUFmdzFZa0U4ZHZ3YlgxcjUwMitmOTM1NGM1ZURZUmlcL3RxQ296VT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNWY5YWY5OC1lYmNiLTRjOWMtOGJlNC05YzFiYzZiZmJjYWQiLCJldmVudF9pZCI6IjM4Y2I0ZjVmLTZhNmItNDY1MS1iMzQyLTFjMGJjMGViYzYxMCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2MDk3OTQ2ODgsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0xX2NqZkM4cU5pQiIsImV4cCI6MTYwOTc5ODI4OCwiaWF0IjoxNjA5Nzk0Njg4LCJqdGkiOiJmMDRjN2M4Yi0xYmVhLTQ2YWEtYjZjOS05NjlkZmQzY2ZjY2YiLCJjbGllbnRfaWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsInVzZXJuYW1lIjoibWlubnVhc2hva2t1bWFyQGdtYWlsLmNvbSJ9.DaD7I27KmTDf_DLciWf9tJTgFwM7MV8p076vN4UzfaCdxMieKAULuJb935_xOG26BQVuAO4b973uC4HqZH2zEhITVwOxlNuF6L1zRum5eS8OSMq4zcUx8zleckiWVvGkxjPq73xJSMZJHD3x8dm6NwGZCgas_vMbOEA698LoIkf5ISKQNs-ZEJ0FrNuObvQh-Am3nhNuetv6bsqEZxcXPPIDZDzN2nQNwqjNTOUiEw6pOzLsfOPnPPQBcA8ordcRormmEbnn3tMkIyz1GQPMOT4NVe8b7PrfU_nEku9uMqPvyP8Fa8Bd8Y3nBen-CovsIuBOBzP6IJjoUnWMH2v2ZA",
+      "ExpiresIn": 3600,
+      "TokenType": "Bearer",
+      "RefreshToken": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.LVuHk_24siuyRZOabu7GuD9GqUZfdgUw5uPpsacvF2vQtB109AVY7neOCUZKQVnolIE6yZHGB0YaMg-A9e-f_RVt115NpCMGvfQ2Cz2O3ay8k3-TkvRLgDDGIi7AEUhlkbQ8_-XW-ADqWDKkGtijuWnBjgiLWFhdill_0FkkaC3DV_faKBKQAhJAXzz-DAjI73Q6J-SbbNwuR1XNybzbLehMaqQJkBKqpGaia-n8SQvybmxh16m5Go9o0QLOo_E5k1DE1keSqf7_ytn_kNKAFiJWXux8cTBSw73C1rgE2OvyBJO0z8odsKv_6J2yNxjmyvETpzKFdWDgn-eMjWlhLg.l5gSWaq7NKY8otSo.yGL9n-4yXvnvvFfBisaMsUVc88u4RgcoVwu6rXQTQlJbcORc1stgxQQSa6YPQ8ZYjg4coxKsFtkzQ5UZe-HfAuhzHceWqzaRXz0KqExsOmEualzF2uDMngR4GByyFZbYK7tfFa4NwYBnQ4HyMYwZwSac3OxH5QWpk8vX4KYHQvY2ZXIHQYG6u-L3PQtWQSZc-eYpxk3timRWNIkJoI2BhbT3rCgL8frsApx2xRSv4-eoP6NTZyDmhwF7eUJGY2xY5jLMSvuMQeAWLCouxlDKu5WBsRDVyFHn1YFphuiuRyUuKdmr8R9Q8fy2YpyBL0yFBUdPllVz8ytZOQJJH5Y8ur_DRNvbjFlRNjj9b7voXfwA3Zkr2FplpAzVTBzITW9C97RlL5prF-e1IQ_DEl0LyjwUHX8tSKVZjOuMc6OzGdYv5WKjaPex2GHQ5miAaIVEu9eoEKyviRk72mYBQ17BBw5Q98cLzmAqmV9D9QwWqlVTm5Xd8tvfVixFMsErXXbif_tDFYAUp0QRGnvU8ZqPaGAQgQZau9YTNoMFyqu-zfUx1CDdyY8Dv7Y0ahxYyck4V7aaUsumzCDjZA6f69pHqdl_PaNv-EFCMlSQhHg54M3AGZH99SEfsYTsseXXA1aH-Pbu_MEh9t_0Q51SzNiT99v0Dn8DvK7p4XihRl97aYiizsJh5wU4AmM_IGlUV-9yMhIINxnJ1GvHLw1rK25JjFnRXJGgOYtSvNaEuERrIXXylKyJ6_9WOUa1SPeCN3U6ruj7zMxcRJKXlo3ZnYDTV3zuC2R0dzIpJPduLb412nI7ZoJY3sTQfyLDTvT0L5K97-SrIEcCBhhBk6lvxFiUMhpy6taLGyQ-WtJEjFmI-XcQHN-50cNP8UG7IFySR9cG4COcyRbl0xLc_21upzLxDtxyHTc9lpBRBWU1mFF_WhtyTylg1us6bzji-wKR2D5kf39QcX5eN7WC5Tiy_Ww99Iv8no0dx8Cg0RMU_p3A6fwmLlh9L-wleK-APTi_PqM_BGTFgj0zjZHt2iWX1w6x40U-YpAZKEZ8JzDRwBp0RyNvIsUMldYm7QBTyp2VlWiBjgLOXxcBZsVFMUCxo7jv2j9MDSgHqV58U6UqsaXcnXyJ0u5WydHIwAHGsVOBjlcsQ04LwtGA5r2oYfUEysL2kZmihudhcL_mCa4--BTZvb-JSaoOvlAoetruoxcxMqqTVNVx3Uqj-cQGl94ij9NB6c2ton1rafOwMivrwIzYNmftvnXDBM0kAge7fCaPYteJ4z57YYvvjJX44fcLZ6dAydGwZu6lMGwKWlitTaqm._04SCHzj9rIxkStd12A5zQ",
+      "IdToken": "eyJraWQiOiJtNkhwVHRYQVNweE96MU5rS2JHT2xYSzA2b3RNNlVkak5RUkRidXJ5SXJrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjNWY5YWY5OC1lYmNiLTRjOWMtOGJlNC05YzFiYzZiZmJjYWQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiY3VzdG9tOmZpbmFuY2lhbFBvcnRmb2xpb0lkIjoiVXNlciMyMDIxLTAxLTA0VDIxOjEwOjUzLjM0NVoiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9jamZDOHFOaUIiLCJjb2duaXRvOnVzZXJuYW1lIjoibWlubnVhc2hva2t1bWFyQGdtYWlsLmNvbSIsImxvY2FsZSI6ImVuXCIiLCJhdWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsImV2ZW50X2lkIjoiMzhjYjRmNWYtNmE2Yi00NjUxLWIzNDItMWMwYmMwZWJjNjEwIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDk3OTQ2ODgsIm5hbWUiOiJNaW5udWFzaG9ra3VtYXIiLCJjdXN0b206ZXhwb3J0RmlsZUZvcm1hdCI6IlhMUyIsImV4cCI6MTYwOTc5ODI4OCwiaWF0IjoxNjA5Nzk0Njg4LCJmYW1pbHlfbmFtZSI6IiAiLCJlbWFpbCI6Im1pbm51YXNob2trdW1hckBnbWFpbC5jb20ifQ.KCn5Zm4rPvQQ55BFniLfVi0hv32K6HPlIzCyf7PqU6KYARPtTMZ9DFw3WItunxwX4Oiq13bi5xruA2ULxNPa4e158QWeU9VoBYA2cZeHnEGOmr-_tGSfVXoFkXJC6jh1xAJeiHNsLxzNyj25akjwIzaqbqxYRO3GbhPKVuz1H0fqLwF29HfcieubtHYnCCCuzg1x7nP8SP79i-55t7ZAMtNqwKxUbCITdON7WLKHP9hUpuZ1-ppGDalA3mjwNOtQ7bVCiV8hj3Zqp8T81u981HKg9tU8BgrE-VFwudE56uXWxeCn47DlGt7WlxDwdglFnK47joj_zmU4WzILyKSonQ"
+    },
+    "Username": "minnuashokkumar@gmail.com",
+    "UserAttributes": [
+      {
+        "Name": "sub",
+        "Value": "c5f9af98-ebcb-4c9c-8be4-9c1bc6bfbcad"
+      },
+      {
+        "Name": "email_verified",
+        "Value": "true"
+      },
+      {
+        "Name": "custom:financialPortfolioId",
+        "Value": "User#2021-01-04T21:10:53.345Z"
+      },
+      {
+        "Name": "name",
+        "Value": "Minnuashokkumar"
+      },
+      {
+        "Name": "locale",
+        "Value": "en\""
+      },
+      {
+        "Name": "custom:exportFileFormat",
+        "Value": "XLS"
+      },
+      {
+        "Name": "family_name",
+        "Value": " "
+      },
+      {
+        "Name": "email",
+        "Value": "minnuashokkumar@gmail.com"
+      }
+    ]
+  }

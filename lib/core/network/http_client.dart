@@ -30,8 +30,8 @@ class HTTPClient {
       var response =
           await networkHelper.post(url, body: body, headers: headers);
       return _response(response);
-    } on SocketException {
-      throw ConnectionException();
+    } on SocketException catch (e) {
+      throw ConnectionException(e);
     } on TokenExpiredException {
       await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
@@ -48,8 +48,8 @@ class HTTPClient {
     try {
       var response = await networkHelper.put(url, body: body, headers: headers);
       return _response(response);
-    } on SocketException {
-      throw ConnectionException();
+    } on SocketException catch (e) {
+      throw ConnectionException(e);
     } on TokenExpiredException {
       await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
@@ -66,8 +66,8 @@ class HTTPClient {
       var response =
           await networkHelper.patch(url, body: body, headers: headers);
       return _response(response);
-    } on SocketException {
-      throw ConnectionException();
+    } on SocketException catch (e) {
+      throw ConnectionException(e);
     } on TokenExpiredException {
       await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
@@ -89,13 +89,13 @@ class HTTPClient {
         return jsonDecode(response.body);
       }
     } else if (statusCode == 401) {
-      throw TokenExpiredException();
+      throw TokenExpiredException(response);
     } else if (statusCode >= 400 && statusCode < 500) {
-      throw ClientErrorException();
+      throw ClientErrorException(response);
     } else if (statusCode >= 500 && statusCode < 600) {
-      throw ServerErrorException();
+      throw ServerErrorException(response);
     } else {
-      throw UnknownException();
+      throw UnknownException(response);
     }
   }
 
