@@ -22,6 +22,8 @@ dependencies:
   equatable: ^1.2.5
   # Swap the connectivity package for this
   data_connection_checker: ^0.3.4
+  # Mocktio
+  mockito: ^4.1.3
 
 dev_dependencies:
   flutter_test:

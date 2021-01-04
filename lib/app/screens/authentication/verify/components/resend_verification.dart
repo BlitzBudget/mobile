@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
 import '../../../../constants/constants.dart';
 
 // Public exposed class
@@ -23,7 +22,6 @@ class _ResendVerificationState extends State<ResendVerification> {
   Timer _timer;
   final String email;
   final timeout = const Duration(seconds: 60);
-  final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
 
   _ResendVerificationState(this.email);
 
@@ -48,8 +46,9 @@ class _ResendVerificationState extends State<ResendVerification> {
         GestureDetector(
           onTap: () async {
             _toggleTextState(false);
-            await _AuthenticationRemoteDataSource.resendVerificationCode(
-                context, email);
+            // TODO
+            /*await _AuthenticationRemoteDataSource.resendVerificationCode(
+                context, email);*/
             // Show the text again after a period in time
             startTimeoutThenShowText();
           },

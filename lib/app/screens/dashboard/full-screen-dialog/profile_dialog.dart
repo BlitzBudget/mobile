@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../../app/widgets/rounded_button.dart';
-import '../../../../main.dart';
-import '../../../../utils/utils.dart';
 import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
 
@@ -176,7 +174,7 @@ class LogOutButton extends StatelessWidget {
                 FlatButton(
                   child: const Text(logoutButton),
                   onPressed: () => () async {
-                    logoutAndRedirect(context);
+                    await _logoutAndRedirect(context);
                   },
                 ),
                 FlatButton(
@@ -208,7 +206,7 @@ class LogOutButton extends StatelessWidget {
                 CupertinoActionSheetAction(
                     child: const Text(logoutButton),
                     onPressed: () async {
-                      logoutAndRedirect(context);
+                      await _logoutAndRedirect(context);
                     }),
               ],
               cancelButton: CupertinoActionSheetAction(
@@ -232,7 +230,7 @@ class LogOutButton extends StatelessWidget {
   }
 
   /// Remove Storage and Redirect to Welcome screeen
-  Future<void> logoutAndRedirect(BuildContext context) async {
+  Future<void> _logoutAndRedirect(BuildContext context) async {
     /// Create storage
     /// Delete all
     await FlutterSecureStorage().deleteAll();

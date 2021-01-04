@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'text_field_container.dart';
+
 import '../../../constants/constants.dart';
+import 'text_field_container.dart';
 
 // Public exposed class
 class RoundedPassword extends StatefulWidget {
-  final onChanged;
+  final ValueChanged<String> onChanged;
   final bool autofocus;
   final String hintText, initialValue;
 
@@ -14,12 +15,12 @@ class RoundedPassword extends StatefulWidget {
       @required this.onChanged,
       this.autofocus = false,
       this.hintText = 'Password',
-      this.initialValue = ""})
+      this.initialValue = ''})
       : super(key: key);
 
   @override
-  _RoundedPasswordField createState() => _RoundedPasswordField(
-      this.onChanged, this.autofocus, this.hintText, this.initialValue);
+  _RoundedPasswordField createState() =>
+      _RoundedPasswordField(onChanged, autofocus, hintText, initialValue);
 }
 
 // Private Class

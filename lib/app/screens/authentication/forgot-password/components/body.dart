@@ -24,8 +24,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
-
-  final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   final String forgotPasswordText = 'Forgot Password';
   String forgotPasswordButton = 'FORGOT PASSWORD';
   final yourEmail = 'Your Email';
@@ -37,7 +35,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -77,8 +75,9 @@ class _BodyState extends State<Body> {
                   forgotPasswordButton = 'Loading';
                   _btnEnabled = false;
                 });
-                await _AuthenticationRemoteDataSource.forgotPassword(
-                    context, email, password);
+                // TODO
+                /*await _AuthenticationRemoteDataSource.forgotPassword(
+                    context, email, password);*/
                 setState(() {
                   forgotPasswordButton = 'FORGOT PASSWORD';
                   _btnEnabled = true;

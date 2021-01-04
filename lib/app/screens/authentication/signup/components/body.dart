@@ -21,14 +21,13 @@ class Body extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(this.email, this.password);
+  _BodyState createState() => _BodyState(email, password);
 }
 
 class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   final String email, password;
   String confirmPassword;
   final signupText = 'SIGNUP';
@@ -77,8 +76,9 @@ class _BodyState extends State<Body> {
                   signupButton = 'Loading';
                   _btnEnabled = false;
                 });
-                await _AuthenticationRemoteDataSource.signupUser(
-                    context, email, password, confirmPassword);
+                // TODO
+                /*await _AuthenticationRemoteDataSource.signupUser(
+                    context, email, password, confirmPassword);*/
                 setState(() {
                   signupButton = 'SIGNUP';
                   _btnEnabled = true;

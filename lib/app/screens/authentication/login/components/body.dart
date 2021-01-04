@@ -22,7 +22,6 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   TextEditingController controller;
   String username, password;
   final login = 'LOGIN';
@@ -74,9 +73,9 @@ class _BodyState extends State<Body> {
                   _btnEnabled = false;
                 });
 
-                /// Attempt login
+                /*/// Attempt login
                 await _AuthenticationRemoteDataSource.attemptLogin(
-                    context, username, password);
+                    context, username, password);*/
                 setState(() {
                   continueButton = 'CONTINUE';
                   _btnEnabled = true;
@@ -91,7 +90,7 @@ class _BodyState extends State<Body> {
                 /// Navigate to the second screen using a named route.
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  MaterialPageRoute<ForgotPasswordScreen>(
                     builder: (context) => ForgotPasswordScreen(
                         email: username, password: password),
                   ),
