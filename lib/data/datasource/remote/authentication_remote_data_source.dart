@@ -22,7 +22,7 @@ abstract class AuthenticationRemoteDataSource {
 
   Future<void> resendVerificationCode(String email);
 
-  Future<void> forgotPassword(String email, String password);
+  Future<void> forgotPassword(String email);
 }
 
 class AuthenticationRemoteDataSourceImpl
@@ -150,7 +150,7 @@ class AuthenticationRemoteDataSourceImpl
   /// Forgot Password Scenario to create a new one
   /// Redirects to Verify Email
   @override
-  Future<void> forgotPassword(String email, String password) {
+  Future<void> forgotPassword(String email) {
     /// Start resending the verification code
     return httpClient.post(constants.forgotPasswordURL,
         body: jsonEncode({'username': email}), headers: constants.headers);

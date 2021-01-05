@@ -265,4 +265,53 @@ void main() {
       },
     );
   });
+
+  group('Attempt to resendverification code email', () {
+    final resendVerificationCodeResponseAsString =
+        fixture('responses/authentication/resend_verification_code.json');
+    final resendVerificationCodeResponseAsJSON =
+        jsonDecode(resendVerificationCodeResponseAsString)
+            as Map<String, dynamic>;
+    test(
+      'Should return resend verification response once an appropriate email is provided',
+      () async {
+        // arrange
+        when(mockHTTPClientImpl.post(constants.resendVerificationCodeURL,
+                body: jsonEncode({'username': mockEmail}),
+                headers: constants.headers))
+            .thenAnswer((_) async =>
+                resendVerificationCodeResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
+        // act
+        await dataSource.resendVerificationCode(mockEmail);
+        // assert
+        verify(mockHTTPClientImpl.post(constants.resendVerificationCodeURL,
+            body: jsonEncode({'username': mockEmail}),
+            headers: constants.headers));
+      },
+    );
+  });
+
+  group('Attempt to invoke forgot password flow', () {
+    final forgotPasswordResponseAsString =
+        fixture('responses/authentication/forgot_password_info.json');
+    final forgotPasswordResponseAsJSON =
+        jsonDecode(forgotPasswordResponseAsString) as Map<String, dynamic>;
+    test(
+      'Should return forgot password response once an appropriate email is provided',
+      () async {
+        // arrange
+        when(mockHTTPClientImpl.post(constants.forgotPasswordURL,
+                body: jsonEncode({'username': mockEmail}),
+                headers: constants.headers))
+            .thenAnswer((_) async =>
+                forgotPasswordResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
+        // act
+        await dataSource.forgotPassword(mockEmail);
+        // assert
+        verify(mockHTTPClientImpl.post(constants.forgotPasswordURL,
+            body: jsonEncode({'username': mockEmail}),
+            headers: constants.headers));
+      },
+    );
+  });
 }

@@ -59,8 +59,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<Failure, void>> forgotPassword(
       String email, String password) async {
     try {
-      return Right(
-          await authenticationRemoteDataSource.forgotPassword(email, password));
+      return Right(await authenticationRemoteDataSource.forgotPassword(email));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
