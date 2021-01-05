@@ -40,7 +40,7 @@ class RefreshTokenHelper {
     final refreshToken = await refreshTokenRepository.readRefreshToken();
 
     /// If the refresh token is empty then throw exception
-    if (isEmpty(refreshToken)) {
+    if (refreshToken.isLeft()) {
       await clearStoreAndThrowException();
     }
 

@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/user.dart';
@@ -14,15 +17,18 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   UserAttributesRepositoryImpl({@required this.userAttributesLocalDataSource});
 
   @override
-  Future<User> readUserAttributes() async {
-    var userJSONEncoded =
-        await userAttributesLocalDataSource.readUserAttributes();
+  Future<Either<Failure, User>> readUserAttributes() async {
+    try {
+      var userJSONEncoded =
+          await userAttributesLocalDataSource.readUserAttributes();
 
-    /// Convert String to JSON and then Convert them back to User entity
-    User user =
-        UserModel.fromJSON(jsonDecode(userJSONEncoded) as Map<String, dynamic>);
-
-    return user;
+      /// Convert String to JSON and then Convert them back to User entity
+      var user =
+          User.fromJSON(jsonDecode(userJSONEncoded) as Map<String, dynamic>);
+      return Right(user);
+    } on Exception catch (e) {
+      return Left(GenericException.convertExceptionToFailure(e));
+    }
   }
 
   @override

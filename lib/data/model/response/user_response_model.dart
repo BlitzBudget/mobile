@@ -24,6 +24,6 @@ class UserResponseModel extends UserResponse {
         accessToken: parseDynamicToString(
             userResponseModel['AuthenticationResult']['AccessToken']),
         user: UserModel.fromJSON(
-            userResponseModel['UserAttributes'] as Map<String, dynamic>));
+            userResponseModel['UserAttributes'] as List<dynamic>));
   }
 }

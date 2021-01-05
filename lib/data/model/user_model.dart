@@ -20,7 +20,7 @@ class UserModel extends User {
             familyName: familyName,
             fileFormat: fileFormat);
 
-  factory UserModel.fromJSON(Map<String, dynamic> userAttributes) {
+  factory UserModel.fromJSON(List<dynamic> userAttributes) {
     var currentUserLocal = extractUserAttributes(userAttributes);
     return UserModel(
         userId: currentUserLocal['financialPortfolioId'] as String,
@@ -40,7 +40,7 @@ class UserModel extends User {
         'familyname': familyName,
       };
 
-  static Map extractUserAttributes(Map<String, dynamic> userAttributes) {
+  static Map extractUserAttributes(List<dynamic> userAttributes) {
     Map currentUserLocal;
 
     /// SUCCESS Scenarios

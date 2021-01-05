@@ -104,10 +104,10 @@ class HTTPClient {
     var authToken = await authTokenRepository.readAuthToken();
 
     /// Check if authorization is empty
-    if (isEmpty(authToken)) {
+    if (authToken.isLeft()) {
       throw EmptyAuthorizationTokenException();
     }
     // Set Authorization header
-    headers['Authorization'] = authToken;
+    headers['Authorization'] = authToken.getOrElse(null);
   }
 }

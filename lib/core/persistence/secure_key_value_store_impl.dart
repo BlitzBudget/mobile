@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 import 'secure_key_value_store.dart';
 
@@ -10,7 +12,13 @@ class SecureKeyValueStoreImpl implements SecureKeyValueStore {
 
   @override
   Future<String> getString({String key}) async {
-    return flutterSecureStorage.read(key: key);
+    var value = await flutterSecureStorage.read(key: key);
+    // Throw an exception when the data is empty
+    if (isEmpty(value)) {
+      throw NoValueInCacheException();
+    }
+
+    return Future.value(value);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
@@ -18,7 +19,12 @@ class UpdateTransactionUseCase {
   /// Updates to New Amount
   Future<Either<Failure, void>> updateAmount(
       double newAmount, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
         walletId: walletId, transactionId: transactionId, amount: newAmount);
     return await update(updateTransaction: transaction);
@@ -27,7 +33,12 @@ class UpdateTransactionUseCase {
   /// Updates the Description
   Future<Either<Failure, void>> updateDescription(
       String description, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
         walletId: walletId,
         transactionId: transactionId,
@@ -38,7 +49,12 @@ class UpdateTransactionUseCase {
   /// Updates the account id
   Future<Either<Failure, void>> updateAccountId(
       String accountId, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
         walletId: walletId, transactionId: transactionId, accountId: accountId);
     return await update(updateTransaction: transaction);
@@ -47,7 +63,12 @@ class UpdateTransactionUseCase {
   /// Updates the date meant for
   Future<Either<Failure, void>> updateDateMeantFor(
       String dateMeantFor, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
         walletId: walletId,
         transactionId: transactionId,
@@ -58,16 +79,28 @@ class UpdateTransactionUseCase {
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
       String categoryId, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
-        walletId: walletId, transactionId: transactionId, categoryId: categoryId);
+        walletId: walletId,
+        transactionId: transactionId,
+        categoryId: categoryId);
     return await update(updateTransaction: transaction);
   }
 
   /// Updates the recurrence
   Future<Either<Failure, void>> updateRecurrence(
       Recurrence recurrence, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
         walletId: walletId,
         transactionId: transactionId,
@@ -78,14 +111,14 @@ class UpdateTransactionUseCase {
   /// Updates the tags
   Future<Either<Failure, void>> updateTags(
       List<String> tags, String transactionId) async {
-    var walletId = await fetchWalletId();
+    var defaultWalletResponse =
+        await defaultWalletRepository.readDefaultWallet();
+    if (defaultWalletResponse.isLeft()) {
+      return Left(EmptyResponseFailure());
+    }
+    var walletId = defaultWalletResponse.getOrElse(null);
     final transaction = Transaction(
         walletId: walletId, transactionId: transactionId, tags: tags);
     return await update(updateTransaction: transaction);
-  }
-
-  // Fetch the user object from the secure storage
-  Future<String> fetchWalletId() async {
-    return await defaultWalletRepository.readDefaultWallet();
   }
 }

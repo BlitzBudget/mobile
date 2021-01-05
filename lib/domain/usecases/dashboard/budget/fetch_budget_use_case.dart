@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/budget_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/budget_repository.dart';
@@ -22,13 +22,17 @@ class FetchBudgetUseCase {
     String userId;
 
     /// Get User id only when the default wallet is empty
-    if (isEmpty(defaultWallet)) {
-      var user = await userAttributesRepository.readUserAttributes();
-      userId = user.userId;
+    if (defaultWallet.isLeft()) {
+      var userResponse = await userAttributesRepository.readUserAttributes();
+      if (userResponse.isRight()) {
+        userId = userResponse.getOrElse(null).userId;
+      } else {
+        return Left(EmptyResponseFailure());
+      }
     }
 
     return await budgetRepository.fetch(
-        startsWithDate, endsWithDate, defaultWallet, userId);
+        startsWithDate, endsWithDate, defaultWallet.getOrElse(null), userId);
     // TODO if default wallet is empty then store them
   }
 }

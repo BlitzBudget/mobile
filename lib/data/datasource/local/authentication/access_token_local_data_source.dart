@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobile_blitzbudget/core/persistence/secure_key_value_store.dart';
 
 abstract class AccessTokenLocalDataSource {
