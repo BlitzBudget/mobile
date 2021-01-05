@@ -13,17 +13,10 @@ abstract class AuthenticationException implements Exception {
       return RedirectToSignupDueToFailure();
     } else if (authorizationException is UserNotConfirmedException) {
       return RedirectToVerificationDueToFailure();
-    } else if (authorizationException is InvalidUserCredentialsException) {
+    } else if (authorizationException is NotAuthorizedException) {
       return InvalidCredentialsFailure();
     } else if (authorizationException is UserAlreadyExistsException) {
       return RedirectToLoginDueToFailure();
-    } else if (authorizationException is UnableToVerifyCodeException) {
-      return InvalidVerificationCodeFailure();
-    } else if (authorizationException is UnableToResendVerificationCode) {
-      return UnableToResendVerficationCodeFailure();
-    } else if (authorizationException
-        is UnableToInvokeForgotPasswordException) {
-      return UnableToInvokeForgotPasswordFailure();
     }
     return GenericFailure();
   }
@@ -36,16 +29,7 @@ class UserNotFoundException extends AuthenticationException {}
 class UserNotConfirmedException extends AuthenticationException {}
 
 /// Executed when the user credentials are invalid when trying to login
-class InvalidUserCredentialsException extends AuthenticationException {}
+class NotAuthorizedException extends AuthenticationException {}
 
 /// Executed when the user credentials are invalid when trying to login
 class UserAlreadyExistsException extends AuthenticationException {}
-
-/// Executed when the API is unable to verify the code provided
-class UnableToVerifyCodeException extends AuthenticationException {}
-
-/// Executed when the API is not able to resend the verification code
-class UnableToResendVerificationCode extends AuthenticationException {}
-
-/// Executed when the API is not able to resend the verification code
-class UnableToInvokeForgotPasswordException extends AuthenticationException {}

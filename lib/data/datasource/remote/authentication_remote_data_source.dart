@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/error/api-exception.dart';
 import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
@@ -31,6 +32,7 @@ class AuthenticationRemoteDataSourceImpl
 
   static final _userNotFoundException = 'UserNotFoundException';
   static final _userNotConfirmedException = 'UserNotConfirmedException';
+  static final _notAuthorizedException = 'NotAuthorizedException';
 
   AuthenticationRemoteDataSourceImpl({@required this.httpClient});
 
@@ -40,18 +42,25 @@ class AuthenticationRemoteDataSourceImpl
   /// If user is not found then signup the user
   @override
   Future<UserResponseModel> attemptLogin(String email, String password) async {
-    /// Convert email to lowercase and trim
-    email = email.toLowerCase().trim();
-    return httpClient
-        .post(constants.loginURL,
-            body: jsonEncode({
-              'username': email,
-              'password': password,
-              'checkPassword': _checkPassword
-            }),
-            headers: constants.headers)
-        .then<UserResponseModel>((dynamic res) {
-      developer.log('User Attributes  ${res['UserAttributes'] as String}');
+    try {
+      /// Convert email to lowercase and trim
+      email = email.toLowerCase().trim();
+      return httpClient
+          .post(constants.loginURL,
+              body: jsonEncode({
+                'username': email,
+                'password': password,
+                'checkPassword': _checkPassword
+              }),
+              headers: constants.headers)
+          .then<UserResponseModel>((dynamic res) {
+        developer
+            .log('User Attributes  ${res['UserAttributes'] as List<dynamic>}');
+
+        return UserResponseModel.fromJSON(res as Map<String, dynamic>);
+      });
+    } on APIException catch (e) {
+      dynamic res = e.res;
       if (res['errorType'] != null) {
         /// Conditionally process error messages
         if (includesStr(
@@ -62,13 +71,14 @@ class AuthenticationRemoteDataSourceImpl
             res['errorMessage'] as String, _userNotConfirmedException)) {
           /// Navigate to the verification screen
           throw UserNotConfirmedException();
-        } else {
+        } else if (includesStr(
+            res['errorMessage'] as String, _notAuthorizedException)) {
           /// Exception to handle invalid credentials
-          throw InvalidUserCredentialsException();
+          throw NotAuthorizedException();
         }
       }
-      return UserResponseModel.fromJSON(res as Map<String, dynamic>);
-    });
+    }
+    return null;
   }
 
   /// SIGNUP module
@@ -78,30 +88,33 @@ class AuthenticationRemoteDataSourceImpl
   @override
   Future<void> signupUser(String email, String password, String firstName,
       String surName, String acceptLanguage) async {
-    /// Set accept language headers
-    var headers = constants.headers;
-    headers['Accept-Language'] = acceptLanguage;
+    try {
+      /// Set accept language headers
+      var headers = constants.headers;
+      headers['Accept-Language'] = acceptLanguage;
 
-    /// Start signup process
-    return httpClient
-        .post(constants.signupURL,
-            body: jsonEncode({
-              'username': email,
-              'password': password,
-              'firstname': firstName,
-              'lastname': surName,
-              'checkPassword': _checkPassword
-            }),
-            headers: headers)
-        .then((dynamic res) {
+      /// Start signup process
+      return httpClient.post(constants.signupURL,
+          body: jsonEncode({
+            'username': email,
+            'password': password,
+            'firstname': firstName,
+            'lastname': surName,
+            'checkPassword': _checkPassword
+          }),
+          headers: headers);
+    } on APIException catch (e) {
+      /// Fetch response from the exception
+      dynamic res = e.res;
+
       /// Error Type for signup
       /// UsernameExistsException is excluded from showing error message
       var errorMessage = res['errorMessage'] as String;
-      if (res['errorType'] != null &&
-          !errorMessage.contains('UsernameExistsException')) {
+      if (isNotEmpty(res['errorType'] as String) &&
+          includesStr(errorMessage, 'UsernameExistsException')) {
         throw UserAlreadyExistsException();
       }
-    });
+    }
   }
 
   /// Verification Code
@@ -116,36 +129,22 @@ class AuthenticationRemoteDataSourceImpl
         : constants.confirmForgotPasswordURL;
 
     /// Start signup process
-    return httpClient
-        .post(urlForAPICall,
-            body: jsonEncode({
-              'username': email,
-              'password': password,
-              'confirmationCode': verificationCode,
-              'doNotCreateWallet': false
-            }),
-            headers: constants.headers)
-        .then((dynamic res) async {
-      /// Error Type for signup
-      if (res['errorType'] != null) {
-        throw UnableToVerifyCodeException();
-      }
-    });
+    return httpClient.post(urlForAPICall,
+        body: jsonEncode({
+          'username': email,
+          'password': password,
+          'confirmationCode': verificationCode,
+          'doNotCreateWallet': false
+        }),
+        headers: constants.headers);
   }
 
   /// Resend Verification Code
   @override
   Future<void> resendVerificationCode(String email) {
     /// Start resending the verification code
-    return httpClient
-        .post(constants.resendVerificationCodeURL,
-            body: jsonEncode({'username': email}), headers: constants.headers)
-        .then((dynamic res) {
-      /// Error Type for signup
-      if (res['errorType'] != null) {
-        throw UnableToResendVerificationCode();
-      }
-    });
+    return httpClient.post(constants.resendVerificationCodeURL,
+        body: jsonEncode({'username': email}), headers: constants.headers);
   }
 
   /// Forgot Password Scenario to create a new one
@@ -153,14 +152,7 @@ class AuthenticationRemoteDataSourceImpl
   @override
   Future<void> forgotPassword(String email, String password) {
     /// Start resending the verification code
-    return httpClient
-        .post(constants.forgotPasswordURL,
-            body: jsonEncode({'username': email}), headers: constants.headers)
-        .then((dynamic res) {
-      /// Error Type for signup
-      if (res['errorType'] != null) {
-        throw UnableToInvokeForgotPasswordException();
-      }
-    });
+    return httpClient.post(constants.forgotPasswordURL,
+        body: jsonEncode({'username': email}), headers: constants.headers);
   }
 }

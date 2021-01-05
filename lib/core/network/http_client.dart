@@ -4,25 +4,34 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:mobile_blitzbudget/core/error/api-exception.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 
 import 'network_helper.dart';
 import 'refresh_token_helper.dart';
 
-class HTTPClient {
+abstract class HTTPClient {
+  Future<dynamic> post(String url,
+      {Map<String, String> headers, dynamic body, Encoding encoding});
+  Future<dynamic> put(String url,
+      {Map<String, String> headers, dynamic body, Encoding encoding});
+  Future<dynamic> patch(String url,
+      {Map<String, String> headers, dynamic body, Encoding encoding});
+}
+
+class HTTPClientImpl implements HTTPClient {
   final AuthTokenRepository authTokenRepository;
   final AccessTokenRepository accessTokenRepository;
   final NetworkHelper networkHelper;
   final RefreshTokenHelper refreshTokenHelper;
 
-  HTTPClient(
+  HTTPClientImpl(
       {@required this.authTokenRepository,
       @required this.accessTokenRepository,
       @required this.refreshTokenHelper,
       @required this.networkHelper});
 
+  @override
   Future<dynamic> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     await populateAuthHeader(headers);
@@ -42,6 +51,7 @@ class HTTPClient {
     }
   }
 
+  @override
   Future<dynamic> put(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     await populateAuthHeader(headers);
@@ -59,6 +69,7 @@ class HTTPClient {
     }
   }
 
+  @override
   Future<dynamic> patch(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     await populateAuthHeader(headers);

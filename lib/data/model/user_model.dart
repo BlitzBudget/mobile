@@ -41,7 +41,7 @@ class UserModel extends User {
       };
 
   static Map extractUserAttributes(List<dynamic> userAttributes) {
-    Map currentUserLocal;
+    Map currentUserLocal = <String, dynamic>{};
 
     /// SUCCESS Scenarios
     for (var i = 0; i < userAttributes.length; i++) {
