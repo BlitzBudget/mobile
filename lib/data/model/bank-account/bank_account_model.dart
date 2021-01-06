@@ -26,16 +26,16 @@ class BankAccountModel extends BankAccount {
   /// Map JSON BankAccount to List of object
   factory BankAccountModel.fromJSON(Map<String, dynamic> bankAccount) {
     return BankAccountModel(
-        accountId: parseDynamicToString(bankAccount['accountId']),
-        walletId: parseDynamicToString(bankAccount['walletId']),
-        accountBalance: parseDynamicToDouble(bankAccount['account_balance']),
+        accountId: parseDynamicAsString(bankAccount['accountId']),
+        walletId: parseDynamicAsString(bankAccount['walletId']),
+        accountBalance: parseDynamicAsDouble(bankAccount['account_balance']),
         linked: parseDynamicToBool(bankAccount['linked']),
         selectedAccount: parseDynamicToBool(bankAccount['selected_account']),
         accountType: parseDynamicToAccountType(bankAccount['account_type']),
         accountSubType:
             parseDynamicToAccountSubType(bankAccount['account_sub_type']),
         bankAccountName:
-            parseDynamicToString(bankAccount['bank_account_name']));
+            parseDynamicAsString(bankAccount['bank_account_name']));
   }
 
   /// Bank Account to JSON

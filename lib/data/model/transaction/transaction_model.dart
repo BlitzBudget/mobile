@@ -32,18 +32,21 @@ class TransactionModel extends Transaction {
 
   /// Map JSON transactions to List of object
   factory TransactionModel.fromJSON(Map<String, dynamic> transaction) {
+    final tags = (transaction['tags'] as List)
+        ?.map((dynamic item) => item as String)
+        ?.toList();
     return TransactionModel(
-        transactionId: parseDynamicToString(transaction['transactionId']),
-        walletId: parseDynamicToString(transaction['walletId']),
-        amount: parseDynamicToDouble(transaction['amount']),
-        description: parseDynamicToString(transaction['description']),
-        accountId: parseDynamicToString(transaction['account']),
-        dateMeantFor: parseDynamicToString(transaction['date_meant_for']),
-        categoryId: parseDynamicToString(transaction['category']),
+        transactionId: parseDynamicAsString(transaction['transactionId']),
+        walletId: parseDynamicAsString(transaction['walletId']),
+        amount: parseDynamicAsDouble(transaction['amount']),
+        description: parseDynamicAsString(transaction['description']),
+        accountId: parseDynamicAsString(transaction['account']),
+        dateMeantFor: parseDynamicAsString(transaction['date_meant_for']),
+        categoryId: parseDynamicAsString(transaction['category']),
         recurrence: parseDynamicToRecurrence(transaction['recurrence']),
         categoryType: parseDynamicToCategoryType(transaction['category_type']),
-        categoryName: parseDynamicToString(transaction['category_name']),
-        tags: transaction['tags'] as List<String>);
+        categoryName: parseDynamicAsString(transaction['category_name']),
+        tags: tags);
   }
 
   /// Transaction to JSON

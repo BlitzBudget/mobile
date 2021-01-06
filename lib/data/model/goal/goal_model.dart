@@ -14,19 +14,27 @@ class GoalModel extends Goal {
     double targetAmount,
     String targetDate,
     String targetId,
-  }) : super();
+  }) : super(
+            walletId: walletId,
+            goalId: goalId,
+            goalType: goalType,
+            targetType: targetType,
+            monthlyContribution: monthlyContribution,
+            targetAmount: targetAmount,
+            targetDate: targetDate,
+            targetId: targetId);
 
   /// Map JSON Goal to List of object
   factory GoalModel.fromJSON(Map<String, dynamic> goal) {
     return GoalModel(
-        walletId: parseDynamicToString(goal['userId']),
-        goalId: parseDynamicToString(goal['goalId']),
-        goalType: parseDynamicToGoalType(goal['goal_type']),
-        targetType: parseDynamicToTargetType(goal['target_type']),
-        monthlyContribution: parseDynamicToDouble(goal['monthly_contribution']),
-        targetAmount: parseDynamicToDouble(goal['final_amount']),
-        targetDate: parseDynamicToString(goal['preferable_target_date']),
-        targetId: parseDynamicToString(goal['target_id']));
+        walletId: parseDynamicAsString(goal['walletId']),
+        goalId: parseDynamicAsString(goal['goalId']),
+        goalType: parseDynamicAsGoalType(goal['goal_type']),
+        targetType: parseDynamicAsTargetType(goal['target_type']),
+        monthlyContribution: parseDynamicAsDouble(goal['monthly_contribution']),
+        targetAmount: parseDynamicAsDouble(goal['final_amount']),
+        targetDate: parseDynamicAsString(goal['preferable_target_date']),
+        targetId: parseDynamicAsString(goal['target_id']));
   }
 
   // JSON for Goal
@@ -42,7 +50,7 @@ class GoalModel extends Goal {
       };
 
   /// Parse dynamic to Goal Type
-  static GoalType parseDynamicToGoalType(dynamic obj) {
+  static GoalType parseDynamicAsGoalType(dynamic obj) {
     if (obj is GoalType) {
       return obj;
     }
@@ -50,7 +58,7 @@ class GoalModel extends Goal {
   }
 
   /// Parse dynamic to Target Type
-  static TargetType parseDynamicToTargetType(dynamic obj) {
+  static TargetType parseDynamicAsTargetType(dynamic obj) {
     if (obj is TargetType) {
       return obj;
     }

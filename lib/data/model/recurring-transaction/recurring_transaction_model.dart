@@ -31,21 +31,24 @@ class RecurringTransactionModel extends RecurringTransaction {
   /// Map JSON recurring transactions to List of object
   factory RecurringTransactionModel.fromJSON(
       Map<String, dynamic> recurringTransaction) {
+    final tags = (recurringTransaction['tags'] as List)
+        ?.map((dynamic item) => item as String)
+        ?.toList();
     return RecurringTransactionModel(
-        recurringTransactionId: parseDynamicToString(
+        recurringTransactionId: parseDynamicAsString(
             recurringTransaction['recurringTransactionsId']),
-        walletId: parseDynamicToString(recurringTransaction['walletId']),
-        amount: parseDynamicToDouble(recurringTransaction['amount']),
-        description: parseDynamicToString(recurringTransaction['description']),
-        accountId: parseDynamicToString(recurringTransaction['account']),
+        walletId: parseDynamicAsString(recurringTransaction['walletId']),
+        amount: parseDynamicAsDouble(recurringTransaction['amount']),
+        description: parseDynamicAsString(recurringTransaction['description']),
+        accountId: parseDynamicAsString(recurringTransaction['account']),
         recurrence:
             parseDynamicToRecurrence(recurringTransaction['recurrence']),
         categoryType:
             parseDynamicToCategoryType(recurringTransaction['category_type']),
         categoryName:
-            parseDynamicToString(recurringTransaction['category_name']),
-        tags: recurringTransaction['tags'] as List<String>,
-        category: parseDynamicToString(recurringTransaction['category']));
+            parseDynamicAsString(recurringTransaction['category_name']),
+        tags: tags,
+        category: parseDynamicAsString(recurringTransaction['category']));
   }
 
   /// Recurring Transaction to JSON

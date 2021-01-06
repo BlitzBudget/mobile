@@ -28,27 +28,36 @@ class BudgetResponseModel extends BudgetResponse {
   factory BudgetResponseModel.fromJSON(
       Map<String, dynamic> budgetResponseModel) {
     /// Convert budgets from the response JSON to List<Budget>
+    /// If Empty then return an empty object list
     var responseBudgets = budgetResponseModel['Budget'] as List;
-    var convertedBudgets = List<Budget>.from(responseBudgets.map<dynamic>(
-        (dynamic model) =>
-            BudgetModel.fromJSON(model as Map<String, dynamic>)));
+    var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
+            (dynamic model) =>
+                BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+        <Budget>[]);
 
     /// Convert categories from the response JSON to List<Category>
+    /// If Empty then return an empty object list
     var responseCategories = budgetResponseModel['Category'] as List;
     var convertedCategories = List<Category>.from(
-        responseCategories.map<dynamic>((dynamic model) =>
-            CategoryModel.fromJSON(model as Map<String, dynamic>)));
+        responseCategories?.map<dynamic>((dynamic model) =>
+                CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
+            <Category>[]);
 
     /// Convert BankAccount from the response JSON to List<BankAccount>
+    /// If Empty then return an empty object list
     var responseBankAccounts = budgetResponseModel['BankAccount'] as List;
     var convertedBankAccounts = List<BankAccount>.from(
-        responseBankAccounts.map<dynamic>((dynamic model) =>
-            BankAccountModel.fromJSON(model as Map<String, dynamic>)));
+        responseBankAccounts?.map<dynamic>((dynamic model) =>
+                BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+            <BankAccount>[]);
 
     /// Convert Dates from the response JSON to List<Date>
+    /// If Empty then return an empty object list
     var responseDate = budgetResponseModel['Date'] as List;
-    var convertedDates = List<Date>.from(responseDate.map<dynamic>(
-        (dynamic model) => DateModel.fromJSON(model as Map<String, dynamic>)));
+    var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+            (dynamic model) =>
+                DateModel.fromJSON(model as Map<String, dynamic>)) ??
+        <Date>[]);
 
     dynamic responseWallet = budgetResponseModel['Wallet'];
     Wallet convertedWallet;
@@ -57,7 +66,7 @@ class BudgetResponseModel extends BudgetResponse {
     ///
     /// If string then convert them into a wallet
     /// If List then convert them into list of wallets and take the first wallet.
-    if (responseWallet is String) {
+    if (responseWallet is Map) {
       convertedWallet =
           WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
     } else if (responseWallet is List) {

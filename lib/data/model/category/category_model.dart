@@ -19,10 +19,10 @@ class CategoryModel extends Category {
   /// Map JSON transactions to List of object
   factory CategoryModel.fromJSON(Map<String, dynamic> category) {
     return CategoryModel(
-        categoryId: parseDynamicToString(category['categoryId']),
-        walletId: parseDynamicToString(category['walletId']),
-        categoryName: parseDynamicToString(category['category_name']),
-        categoryTotal: parseDynamicToDouble(category['category_total']),
+        categoryId: parseDynamicAsString(category['categoryId']),
+        walletId: parseDynamicAsString(category['walletId']),
+        categoryName: parseDynamicAsString(category['category_name']),
+        categoryTotal: parseDynamicAsDouble(category['category_total']),
         categoryType: parseDynamicToCategoryType(category['category_type']));
   }
 }

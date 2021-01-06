@@ -24,11 +24,11 @@ class BudgetModel extends Budget {
   /// Map JSON Budget to List of object
   factory BudgetModel.fromJSON(Map<String, dynamic> budget) {
     return BudgetModel(
-        budgetId: parseDynamicToString(budget['budgetId']),
-        walletId: parseDynamicToString(budget['walletId']),
-        planned: parseDynamicToDouble(budget['planned']),
-        used: parseDynamicToDouble(budget['used']),
-        category: parseDynamicToString(budget['category']));
+        budgetId: parseDynamicAsString(budget['budgetId']),
+        walletId: parseDynamicAsString(budget['walletId']),
+        planned: parseDynamicAsDouble(budget['planned']),
+        used: parseDynamicAsDouble(budget['used']),
+        category: parseDynamicAsString(budget['category']));
   }
 
   /// Budget to JSON

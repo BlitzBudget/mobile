@@ -24,7 +24,7 @@
         "goal_type": "EmergencyFund",
         "final_amount": 6,
         "goalId": "Goal#2020-12-28T21:05:59.153Z",
-        "userId": "Wallet#2020-12-21T20:35:49.295Z"
+        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
       }
     ],
     "Wallet": {

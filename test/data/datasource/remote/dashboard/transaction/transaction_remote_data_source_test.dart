@@ -1,0 +1,240 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/transaction_remote_data_source.dart';
+import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
+import 'package:mockito/mockito.dart';
+
+import '../../../../../fixtures/fixture_reader.dart';
+
+class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
+
+void main() {
+  TransactionRemoteDataSourceImpl dataSource;
+  HTTPClientImpl mockHTTPClientImpl;
+
+  setUp(() {
+    mockHTTPClientImpl = MockHTTPClientImpl();
+    dataSource =
+        TransactionRemoteDataSourceImpl(httpClient: mockHTTPClientImpl);
+  });
+
+  group('Attempt to fetch all transactions', () {
+    test('Should fetch all transactions with wallet id', () async {
+      final fetchTransactionAsString = fixture(
+          'responses/dashboard/transaction/fetch_transaction_info.json');
+      final fetchTransactionAsJSON =
+          jsonDecode(fetchTransactionAsString) as Map<String, dynamic>;
+      final startsWithDate = DateTime.now().toIso8601String();
+      final endsWithDate = startsWithDate;
+      final defaultWallet =
+          fetchTransactionAsJSON['Transaction'][0]['transactionId'] as String;
+      String userId;
+      final contentBody = <String, dynamic>{
+        'startsWithDate': startsWithDate,
+        'endsWithDate': endsWithDate,
+        'walletId': defaultWallet
+      };
+      // arrange
+      when(mockHTTPClientImpl.post(constants.transactionURL,
+              body: jsonEncode(contentBody), headers: constants.headers))
+          .thenAnswer((_) async => fetchTransactionAsJSON);
+      // act
+      var transactions = await dataSource.fetch(
+          startsWithDate, endsWithDate, defaultWallet, userId);
+      // assert
+      verify(mockHTTPClientImpl.post(constants.transactionURL,
+          body: jsonEncode(contentBody), headers: constants.headers));
+
+      expect(
+          transactions.categories.last.categoryId,
+          equals(
+              fetchTransactionAsJSON['Category'][0]['categoryId'] as String));
+    });
+  });
+  group('Attempt to add a transaction', () {
+    test(
+      'Should add a transaction',
+      () async {
+        final addTransactionAsString = fixture(
+            'responses/dashboard/transaction/add_transaction_info.json');
+        final addTransactionAsJSON =
+            jsonDecode(addTransactionAsString) as Map<String, dynamic>;
+        final tags = (addTransactionAsJSON['body-json']['tags'] as List)
+            ?.map((dynamic item) => item as String)
+            ?.toList();
+        final transaction = TransactionModel(
+            walletId: addTransactionAsJSON['body-json']['walletId'] as String,
+            transactionId:
+                addTransactionAsJSON['body-json']['transactionId'] as String,
+            amount: parseDynamicAsDouble(
+                addTransactionAsJSON['body-json']['amount']),
+            categoryType: parseDynamicToCategoryType(
+                addTransactionAsJSON['body-json']['categoryType']),
+            categoryName:
+                addTransactionAsJSON['body-json']['categoryName'] as String,
+            description:
+                addTransactionAsJSON['body-json']['description'] as String,
+            dateMeantFor:
+                addTransactionAsJSON['body-json']['dateMeantFor'] as String,
+            recurrence: parseDynamicToRecurrence(
+                addTransactionAsJSON['body-json']['recurrence']),
+            accountId: addTransactionAsJSON['body-json']['account'] as String,
+            tags: tags);
+        // arrange
+        when(mockHTTPClientImpl.put(constants.transactionURL,
+                body: jsonEncode(transaction.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => addTransactionAsJSON);
+        // act
+        await dataSource.add(transaction);
+        // assert
+        verify(mockHTTPClientImpl.put(constants.transactionURL,
+            body: jsonEncode(transaction.toJSON()),
+            headers: constants.headers));
+      },
+    );
+  });
+
+  group('Attempt to update a transaction', () {
+    test(
+      'Should update a transactions amount',
+      () async {
+        final updateAmountAsString = fixture(
+            'responses/dashboard/transaction/update/update_transaction_amount_info.json');
+        final updateAmountAsJSON =
+            jsonDecode(updateAmountAsString) as Map<String, dynamic>;
+        final transaction = TransactionModel(
+            walletId: updateAmountAsJSON['body-json']['walletId'] as String,
+            transactionId:
+                updateAmountAsJSON['body-json']['transactionId'] as String,
+            amount: parseDynamicAsDouble(
+                updateAmountAsJSON['body-json']['amount']));
+        // arrange
+        when(mockHTTPClientImpl.patch(constants.transactionURL,
+                body: jsonEncode(transaction.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateAmountAsJSON);
+        // act
+        await dataSource.update(transaction);
+        // assert
+        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+            body: jsonEncode(transaction.toJSON()),
+            headers: constants.headers));
+      },
+    );
+
+    test(
+      'Should update a transactions description',
+      () async {
+        final updateDescriptionAsString = fixture(
+            'responses/dashboard/transaction/update/update_transaction_description_info.json');
+        final updateDescriptionAsJSON =
+            jsonDecode(updateDescriptionAsString) as Map<String, dynamic>;
+        final transaction = TransactionModel(
+            walletId:
+                updateDescriptionAsJSON['body-json']['walletId'] as String,
+            transactionId:
+                updateDescriptionAsJSON['body-json']['transactionId'] as String,
+            description:
+                updateDescriptionAsJSON['body-json']['description'] as String);
+        // arrange
+        when(mockHTTPClientImpl.patch(constants.transactionURL,
+                body: jsonEncode(transaction.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateDescriptionAsJSON);
+        // act
+        await dataSource.update(transaction);
+        // assert
+        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+            body: jsonEncode(transaction.toJSON()),
+            headers: constants.headers));
+      },
+    );
+
+    test(
+      'Should update a transactions tags',
+      () async {
+        final updateTagsAsString = fixture(
+            'responses/dashboard/transaction/update/update_transaction_tags_info.json');
+        final updateTagsAsJSON =
+            jsonDecode(updateTagsAsString) as Map<String, dynamic>;
+        final tags = (updateTagsAsJSON['body-json']['tags'] as List)
+            ?.map((dynamic item) => item as String)
+            ?.toList();
+        final transaction = TransactionModel(
+            walletId: updateTagsAsJSON['body-json']['walletId'] as String,
+            transactionId:
+                updateTagsAsJSON['body-json']['transactionId'] as String,
+            tags: tags);
+        // arrange
+        when(mockHTTPClientImpl.patch(constants.transactionURL,
+                body: jsonEncode(transaction.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateTagsAsJSON);
+        // act
+        await dataSource.update(transaction);
+        // assert
+        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+            body: jsonEncode(transaction.toJSON()),
+            headers: constants.headers));
+      },
+    );
+
+    test(
+      'Should update a transactions category',
+      () async {
+        final updateCategoryAsString = fixture(
+            'responses/dashboard/transaction/update/update_transaction_category_info.json');
+        final updateCategoryAsJSON =
+            jsonDecode(updateCategoryAsString) as Map<String, dynamic>;
+        final transaction = TransactionModel(
+            walletId: updateCategoryAsJSON['body-json']['walletId'] as String,
+            transactionId:
+                updateCategoryAsJSON['body-json']['transactionId'] as String,
+            categoryId:
+                updateCategoryAsJSON['body-json']['category'] as String);
+        // arrange
+        when(mockHTTPClientImpl.patch(constants.transactionURL,
+                body: jsonEncode(transaction.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateCategoryAsJSON);
+        // act
+        await dataSource.update(transaction);
+        // assert
+        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+            body: jsonEncode(transaction.toJSON()),
+            headers: constants.headers));
+      },
+    );
+
+    test(
+      'Should update a transactions account',
+      () async {
+        final updateAccountAsString = fixture(
+            'responses/dashboard/transaction/update/update_transaction_account_info.json');
+        final updateAccountAsJSON =
+            jsonDecode(updateAccountAsString) as Map<String, dynamic>;
+        final transaction = TransactionModel(
+            walletId: updateAccountAsJSON['body-json']['walletId'] as String,
+            transactionId:
+                updateAccountAsJSON['body-json']['transactionId'] as String,
+            categoryId: updateAccountAsJSON['body-json']['category'] as String);
+        // arrange
+        when(mockHTTPClientImpl.patch(constants.transactionURL,
+                body: jsonEncode(transaction.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateAccountAsJSON);
+        // act
+        await dataSource.update(transaction);
+        // assert
+        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+            body: jsonEncode(transaction.toJSON()),
+            headers: constants.headers));
+      },
+    );
+  });
+}

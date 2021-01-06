@@ -15,7 +15,7 @@ class OverviewRepositoryImpl implements OverviewRepository {
   Future<Either<Failure, OverviewResponse>> get(String startsWithDate, String endsWithDate,
       String defaultWallet, String userId) async {
     try {
-      return Right(await overviewRemoteDataSource.get(
+      return Right(await overviewRemoteDataSource.fetch(
           startsWithDate, endsWithDate, defaultWallet, userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));

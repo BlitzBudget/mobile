@@ -1,0 +1,59 @@
+{
+    "body-json": {
+      "accountId": "BankAccount#2021-01-06T12:51:31.215Z",
+      "selectedAccount": true,
+      "walletId": "Wallet#2020-12-21T20:35:49.295Z"
+    },
+    "params": {
+      "path": {},
+      "querystring": {},
+      "header": {
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en",
+        "Authorization": "eyJraWQiOiJtNkhwVHRYQVNweE96MU5rS2JHT2xYSzA2b3RNNlVkak5RUkRidXJ5SXJrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1OTMxMmUyYS00OGQ1LTQyOTctYWJiOC1lOGI1M2E0M2EyZGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiY3VzdG9tOmZpbmFuY2lhbFBvcnRmb2xpb0lkIjoiVXNlciMyMDIwLTEyLTIxVDIwOjMyOjA2LjAwM1oiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9jamZDOHFOaUIiLCJjb2duaXRvOnVzZXJuYW1lIjoibmFnYXJqdW5fbmFnZXNoQG91dGxvb2suY29tIiwibG9jYWxlIjoiZW4tVVMiLCJhdWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsImV2ZW50X2lkIjoiNjcxNDAzMDQtNTVkMy00ZTFkLTg0ZmItNzg3ZmEzMTM1NThhIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDk5Mzc0NjgsIm5hbWUiOiJuYWdhcmp1bl9uYWdlc2giLCJjdXN0b206ZXhwb3J0RmlsZUZvcm1hdCI6IlhMUyIsImV4cCI6MTYwOTk0MTA2OCwiaWF0IjoxNjA5OTM3NDY4LCJmYW1pbHlfbmFtZSI6IiAiLCJlbWFpbCI6Im5hZ2FyanVuX25hZ2VzaEBvdXRsb29rLmNvbSJ9.LVeoJ4tObnVkAnoyPW5LPgK8ocUPQbuy6vWnHmPcMP3UwRxCb26mLXoIp8FJYm24wUfpDCih68cxy842yudMMB5x5b97I4Ftzn39iu_EqrXBKM1yFgqEUoJSbhrRTw9phBdi-vBNEUUK8nGGiH5s_kBbZMXweTq2AVEMD22BjZg-ClokhLeliEYGzW-s0Zd_lT9uBuqAQ6OiEBp0fHl1gCRGbmMoAS4r8KKmX-pALJ0j-vOcXBvhLb-zRdM5G6xVGIDI4CQDbynQ-blKXKO7freIe8FDPdCbci1-Onwy_yBWCQ-zUs1thX89Mp5wuzGLdpIZ5BMkvBhsbPQulqC_2g",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "ES",
+        "content-type": "application/json;charset=UTF-8",
+        "Host": "api.blitzbudget.com",
+        "origin": "https://app.blitzbudget.com",
+        "sec-ch-ua": "\"Google Chrome\";v=\"87\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"87\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+        "Via": "2.0 7bde7c53fac1f8448230e9c0feef2033.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "uf7J0zOpc_RW-zRFwQ4Ue_DkGdcTy5CJPfm8YD7JxKvJ3YArRxoL7g==",
+        "X-Amzn-Trace-Id": "Root=1-5ff5b285-2bc0220c3afc48b06b29f0b2",
+        "X-Forwarded-For": "88.26.96.134, 52.46.44.70",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+      }
+    },
+    "stage-variables": {},
+    "context": {
+      "account-id": "",
+      "api-id": "xx0rmrzjr0",
+      "api-key": "",
+      "authorizer-principal-id": "",
+      "caller": "",
+      "cognito-authentication-provider": "",
+      "cognito-authentication-type": "",
+      "cognito-identity-id": "",
+      "cognito-identity-pool-id": "",
+      "http-method": "PATCH",
+      "stage": "prod",
+      "source-ip": "88.26.96.134",
+      "user": "",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+      "user-arn": "",
+      "request-id": "c82dc519-eb46-4835-b4a5-48cdd82c800b",
+      "resource-id": "ogzvho",
+      "resource-path": "/bank-accounts"
+    }
+  }

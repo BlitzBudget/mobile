@@ -17,11 +17,11 @@ class UserResponseModel extends UserResponse {
 
   factory UserResponseModel.fromJSON(Map<String, dynamic> userResponseModel) {
     return UserResponseModel(
-        refreshToken: parseDynamicToString(
+        refreshToken: parseDynamicAsString(
             userResponseModel['AuthenticationResult']['RefreshToken']),
-        authenticationToken: parseDynamicToString(
+        authenticationToken: parseDynamicAsString(
             userResponseModel['AuthenticationResult']['IdToken']),
-        accessToken: parseDynamicToString(
+        accessToken: parseDynamicAsString(
             userResponseModel['AuthenticationResult']['AccessToken']),
         user: UserModel.fromJSON(
             userResponseModel['UserAttributes'] as List<dynamic>));

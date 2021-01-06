@@ -18,11 +18,11 @@ class DateModel extends Date {
   /// Map JSON transactions to List of object
   factory DateModel.fromJSON(Map<String, dynamic> transaction) {
     return DateModel(
-      walletId: parseDynamicToString(transaction['transactionId']),
-      dateId: parseDynamicToString(transaction['walletId']),
-      incomeTotal: parseDynamicToDouble(transaction['amount']),
-      expenseTotal: parseDynamicToDouble(transaction['description']),
-      balance: parseDynamicToDouble(transaction['account']),
+      walletId: parseDynamicAsString(transaction['walletId']),
+      dateId: parseDynamicAsString(transaction['dateId']),
+      incomeTotal: parseDynamicAsDouble(transaction['income_total']),
+      expenseTotal: parseDynamicAsDouble(transaction['expense_total']),
+      balance: parseDynamicAsDouble(transaction['balance']),
     );
   }
 }

@@ -15,7 +15,7 @@ CategoryType parseDynamicToCategoryType(dynamic obj) {
   return null;
 }
 
-String parseDynamicToString(dynamic obj) {
+String parseDynamicAsString(dynamic obj) {
   if (obj is String) {
     return obj;
   }
@@ -29,9 +29,11 @@ bool parseDynamicToBool(dynamic obj) {
   return null;
 }
 
-double parseDynamicToDouble(dynamic obj) {
+double parseDynamicAsDouble(dynamic obj) {
   if (obj is double) {
     return obj;
+  } else if (obj is int) {
+    return obj.toDouble();
   }
   return null;
 }

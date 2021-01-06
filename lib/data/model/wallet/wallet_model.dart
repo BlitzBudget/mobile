@@ -23,13 +23,13 @@ class WalletModel extends Wallet {
   /// Map JSON Wallet to List of object
   factory WalletModel.fromJSON(Map<String, dynamic> wallet) {
     return WalletModel(
-        walletId: parseDynamicToString(wallet['walletId']),
-        userId: parseDynamicToString(wallet['userId']),
-        walletName: parseDynamicToString(wallet['name']),
-        currency: parseDynamicToString(wallet['currency']),
-        totalDebtBalance: parseDynamicToDouble(wallet['total_debt_balance']),
-        walletBalance: parseDynamicToDouble(wallet['wallet_balance']),
-        totalAssetBalance: parseDynamicToDouble(wallet['total_asset_balance']));
+        walletId: parseDynamicAsString(wallet['walletId']),
+        userId: parseDynamicAsString(wallet['userId']),
+        walletName: parseDynamicAsString(wallet['name']),
+        currency: parseDynamicAsString(wallet['currency']),
+        totalDebtBalance: parseDynamicAsDouble(wallet['total_debt_balance']),
+        walletBalance: parseDynamicAsDouble(wallet['wallet_balance']),
+        totalAssetBalance: parseDynamicAsDouble(wallet['total_asset_balance']));
   }
 
   /// Wallet to JSON
