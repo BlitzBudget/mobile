@@ -2,41 +2,47 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_blitzbudget/app/constants/constants.dart';
+import 'package:mobile_blitzbudget/core/error/api-exception.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_all_storage_repository.dart';
 
 import '../../data/constants/constants.dart';
-import '../../main.dart';
-import '../error/exceptions.dart';
 import 'network_helper.dart';
 
 class RefreshTokenHelper {
   final RefreshTokenRepository refreshTokenRepository;
   final AuthTokenRepository authTokenRepository;
   final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper = NetworkHelper();
+  final NetworkHelper networkHelper;
   final ClearAllStorageRepository clearAllStorageRepository;
 
   RefreshTokenHelper(
       {@required this.refreshTokenRepository,
       @required this.authTokenRepository,
       @required this.accessTokenRepository,
+      @required this.networkHelper,
       @required this.clearAllStorageRepository});
 
   /// Refresh authorization token
   ///
   /// If successful call the API again
   /// If unsuccessful then logout
-  Future<Map<String, String>> refreshAuthToken(
+  Future<void> refreshAuthToken(
       Map<String, String> headers, Encoding encoding) async {
     debugPrint(
         ' The authorization token has expired, Trying to refresh the token.');
 
     /// Store Access token and Authentication Token
-    final refreshToken = refreshTokenRepository.readRefreshToken();
+    final refreshToken = await refreshTokenRepository.readRefreshToken();
+
+    /// If the refresh token is empty then throw exception
+    if (refreshToken.isLeft()) {
+      await clearStoreAndThrowException();
+    }
 
     return http
         .post(refreshTokenURL,
@@ -50,9 +56,7 @@ class RefreshTokenHelper {
 
       // Set the new Authorization header
       headers['Authorization'] =
-          res['AuthenticationResult']['IdToken'].toString();
-
-      return headers;
+          res['AuthenticationResult']['IdToken'] as String;
     });
   }
 
@@ -68,22 +72,26 @@ class RefreshTokenHelper {
             ' The response code is ${statusCode.toString()} with the response $response');
         dynamic res = jsonDecode(response.body);
 
+        /// Map From JSON to user response model
+        var user = UserResponseModel.fromJSON(res as Map<String, dynamic>);
+
         /// Store Auth Token
-        await authTokenRepository
-            .writeAuthToken(res['AuthenticationResult']['IdToken'].toString());
+        await authTokenRepository.writeAuthToken(user);
 
         /// Store Access Token
-        await accessTokenRepository.writeAccessToken(
-            res['AuthenticationResult']['AccessToken'].toString());
+        await accessTokenRepository.writeAccessToken(user);
 
         return res;
       }
     } else if (statusCode >= 400 && statusCode <= 600) {
-      /// Logout And Redirect User
-      await clearAllStorageRepository.clearAllStorage();
-
-      /// Navigate using the global navigation key
-      await navigatorKey.currentState.pushNamed(welcomeRoute);
+      /// Clear all Storage (keyValue and SecureKeyValue)
+      await clearStoreAndThrowException();
     }
+  }
+
+  /// Clear all Storage (keyValue and SecureKeyValue)
+  Future clearStoreAndThrowException() async {
+    await clearAllStorageRepository.clearAllStorage();
+    throw UnableToRefreshTokenException();
   }
 }

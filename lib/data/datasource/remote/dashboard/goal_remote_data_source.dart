@@ -2,103 +2,70 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../model/user.dart';
-import '../../../utils/network_helper.dart';
-import '../../app/constants/constants.dart' as constants;
-import '../../data/model/goal/goal.dart';
-import '../../utils/dashboard-utils.dart' as dashboardUtils;
-import '../../utils/utils.dart';
-import '../datasource/remote/authentication_remote_data_source.dart'
-    as authentication;
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_model.dart';
 
 abstract class GoalRemoteDataSource {
-  Future<void> get();
+  Future<GoalResponseModel> fetch(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 
-  Future<void> update(Goal updateGoal);
+  Future<void> update(GoalModel updateGoal);
 
-  Future<void> add(Goal addGoal);
+  Future<void> add(GoalModel addGoal);
 }
 
-class _GoalRemoteDataSource implements GoalRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
+class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
+  final HTTPClient httpClient;
 
-  /// Create storage
-  final _storage = new FlutterSecureStorage();
-  static final _goalURL = authentication.baseURL + "/goals";
+  GoalRemoteDataSourceImpl({@required this.httpClient});
 
   /// Get Goals
   @override
-  Future<void> get() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    /// Get from shared preferences
-    final String _defaultWallet = _prefs.getString(constants.defaultWallet);
-    final String _startsWithDate =
-        await dashboardUtils.fetchStartsWithDate(_prefs);
-    final String _endsWithDate = await dashboardUtils.fetchEndsWithDate(_prefs);
-
-    // Read [_userAttributes] from User Attributes
-    final String _userAttributes =
-        await _storage.read(key: constants.userAttributes);
-    // Decode the json user
-    Map<String, dynamic> _user = jsonDecode(_userAttributes);
-    developer.log('User Attributes retrieved for: ${_user["userid"]}');
-
-    // JSON for Get goal [_jsonForGetGoal]
-    Map<String, dynamic> _jsonForGetGoal = {
-      "startsWithDate": _startsWithDate,
-      "endsWithDate": _endsWithDate
+  Future<GoalResponseModel> fetch(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
+    var contentBody = <String, dynamic>{
+      'startsWithDate': startsWithDate,
+      'endsWithDate': endsWithDate
     };
 
-    /// Ensure that the wallet is chosen if not empty
-    /// If not then use userid
-    if (isNotEmpty(_defaultWallet)) {
-      _jsonForGetGoal["walletId"] = _defaultWallet;
+    if (isNotEmpty(defaultWallet)) {
+      contentBody['walletId'] = defaultWallet;
     } else {
-      _jsonForGetGoal["userId"] = _user["userid"];
+      contentBody['userId'] = userId;
     }
-
-    developer
-        .log("The Map for getting the goal is  ${_jsonForGetGoal.toString()}");
-
-    return _netUtil
-        .post(_goalURL,
-            body: jsonEncode(_jsonForGetGoal), headers: authentication.headers)
-        .then((dynamic res) {
+    return httpClient
+        .post(constants.goalURL,
+            body: jsonEncode(contentBody), headers: constants.headers)
+        .then<GoalResponseModel>((dynamic res) {
       debugPrint('The response from the goal is $res');
-      //TODO
+      return GoalResponseModel.fromJSON(res as Map<String, dynamic>);
     });
   }
 
   /// Update Budget
   @override
-  Future<void> update(Goal updateGoal) {
-    developer
-        .log("The Map for patching the budget is  ${updateGoal.toString()}");
+  Future<void> update(GoalModel updateGoal) {
+    developer.log('The Map for patching the goal is  ${updateGoal.toString()}');
 
-    return _netUtil
-        .patch(_goalURL,
-            body: jsonEncode(updateGoal.toJSON()),
-            headers: authentication.headers)
+    return httpClient
+        .patch(constants.goalURL,
+            body: jsonEncode(updateGoal.toJSON()), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from patching the goal is $res');
     });
   }
 
   /// Add Goal
   @override
-  Future<void> add(Goal addGoal) {
-    return _netUtil
-        .put(_goalURL,
-            body: jsonEncode(addGoal.toJSON()), headers: authentication.headers)
+  Future<void> add(GoalModel addGoal) {
+    return httpClient
+        .put(constants.goalURL,
+            body: jsonEncode(addGoal.toJSON()), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the goal is $res');
-      //TODO
+      debugPrint('The response from adding the goal is $res');
     });
   }
 }

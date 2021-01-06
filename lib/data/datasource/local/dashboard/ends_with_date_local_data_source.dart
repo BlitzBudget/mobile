@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart'
-    show SharedPreferences;
+import 'package:mobile_blitzbudget/core/persistence/key_value_store.dart';
 
 abstract class EndsWithDateLocalDataSource {
   Future<String> readEndsWithDate();
@@ -9,9 +8,9 @@ abstract class EndsWithDateLocalDataSource {
 }
 
 class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
-  final SharedPreferences sharedPreferences;
+  final KeyValueStore keyValueStore;
 
-  EndsWithDateLocalDataSourceImpl({@required this.sharedPreferences});
+  EndsWithDateLocalDataSourceImpl({@required this.keyValueStore});
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -23,7 +22,7 @@ class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
   /// ------------------------------------------------------------
   @override
   Future<String> readEndsWithDate() async {
-    return sharedPreferences.getString(_endsWithDate);
+    return keyValueStore.getString(key: _endsWithDate);
   }
 
   /// ----------------------------------------------------------
@@ -31,6 +30,6 @@ class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeEndsWithDate(String value) async {
-    await sharedPreferences.setString(_endsWithDate, value);
+    await keyValueStore.setString(key: _endsWithDate, value: value);
   }
 }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
-import 'background.dart';
-import 'resend_verification.dart';
-import '../../../../constants/constants.dart';
-import '../../../../../utils/utils.dart';
 import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
+import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
-import '../../../../widgets/linear_loading_indicator.dart';
+import 'background.dart';
+import 'resend_verification.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
@@ -27,8 +26,8 @@ class Body extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(this.email, this.password,
-      this.useVerifyURL, this.showResendVerificationCode);
+  _BodyState createState() =>
+      _BodyState(email, password, useVerifyURL, showResendVerificationCode);
 }
 
 class _BodyState extends State<Body> {
@@ -37,9 +36,9 @@ class _BodyState extends State<Body> {
 
   AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   String verificationCode;
-  final String verifyEmail = "Verify Email";
-  final String verificationCodeText = "Your verification code";
-  String verifyButton = "VERIFY";
+  final String verifyEmail = 'Verify Email';
+  final String verificationCodeText = 'Your verification code';
+  String verifyButton = 'VERIFY';
   // Required parameters
   final String email, password;
   final bool useVerifyURL;
@@ -51,7 +50,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -68,27 +67,28 @@ class _BodyState extends State<Body> {
                 replacement: LinearLoadingIndicator()),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
-              "assets/icons/signup.svg",
+              'assets/icons/signup.svg',
               height: size.height * 0.35,
             ),
             RoundedInputField(
                 hintText: verificationCodeText,
                 onChanged: (value) async {
                   verificationCode = value;
-
-                  /// If the length of the string is == 6 then submit the code for verification
+                  // TODO
+                  /* /// If the length of the string is == 6 then submit the code for verification
                   if (isNotEmpty(verificationCode) &&
                       verificationCode.length >= 6) {
                     await _verifyEmailAndSetState(context, email, password,
                         verificationCode, useVerifyURL);
-                  }
+                  }*/
                 },
                 autofocus: true),
             RoundedButton(
               text: verifyButton,
               press: () async {
-                await _verifyEmailAndSetState(
-                    context, email, password, verificationCode, useVerifyURL);
+                //TODO
+                /* _verifyEmailAndSetState(
+                    context, email, password, verificationCode, useVerifyURL);*/
               },
               enabled: _btnEnabled,
             ),
@@ -105,7 +105,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  /// Verify Email And set state of the widget
+  /* /// Verify Email And set state of the widget
   void _verifyEmailAndSetState(
       BuildContext context,
       final String email,
@@ -132,5 +132,5 @@ class _BodyState extends State<Body> {
       verifyButton = "VERIFY";
       _btnEnabled = true;
     });
-  }
+  }*/
 }

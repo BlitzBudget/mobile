@@ -2,57 +2,48 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 
-import '../../../utils/network_helper.dart';
-import '../../app/constants/constants.dart' as constants;
-import '../../utils/dashboard-utils.dart' as dashboardUtils;
-import '../../utils/utils.dart';
-import '../datasource/remote/authentication_remote_data_source.dart'
-    as authentication;
+import '../../../constants/constants.dart' as constants;
 
 abstract class BankAccountRemoteDataSource {
-  Future<void> update(BankAccount updateBankAccount);
+  Future<void> update(BankAccountModel updateBankAccount);
 
-  Future<void> add(BankAccount addBankAccount);
+  Future<void> add(BankAccountModel addBankAccount);
 
   Future<void> delete(String walletId, String account);
 }
 
-class _BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
+class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
+  final HTTPClient httpClient;
 
-  /// Create storage
-  final _storage = new FlutterSecureStorage();
-  static final _bankAccountURL = authentication.baseURL + "/bank-a‚ccounts";
-  static final _deleteBankAccountURL = _bankAccountURL + '/delete';
+  BankAccountRemoteDataSourceImpl({@required this.httpClient});
 
   /// Update BankAccount
   @override
-  Future<void> update(BankAccount updateBankAccount) {
+  Future<void> update(BankAccountModel updateBankAccount) {
     developer.log(
-        "The Map for patching the bankAccount is  ${updateBankAccount.toString()}");
+        'The Map for patching the bankAccount is  ${updateBankAccount.toString()}');
 
-    return _netUtil
-        .patch(_bankAccountURL,
+    return httpClient
+        .patch(constants.bankAccountURL,
             body: jsonEncode(updateBankAccount.toJSON()),
-            headers: authentication.headers)
+            headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the bankAccount is $res');
-      //TODO
+      debugPrint('The response from the update bankAccount is $res');
     });
   }
 
   /// Add BankAccount
   @override
-  Future<void> add(BankAccount addBankAccount) {
-    return _netUtil
-        .put(_bankAccountURL,
+  Future<void> add(BankAccountModel addBankAccount) {
+    return httpClient
+        .put(constants.bankAccountURL,
             body: jsonEncode(addBankAccount.toJSON()),
-            headers: authentication.headers)
+            headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the bankAccount is $res');
-      //TODO
+      debugPrint('The response from the add bankAccount is $res');
     });
   }
 
@@ -60,18 +51,17 @@ class _BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
   @override
   Future<void> delete(String walletId, String account) {
     // JSON for Get wallet [_jsonForGetWallet]
-    Map<String, dynamic> _jsonForDeleteCategory = {
-      "walletId": walletId,
-      "account": account
+    var _jsonForDeleteCategory = <String, dynamic>{
+      'walletId': walletId,
+      'account': account
     };
 
-    return _netUtil
-        .post(_deleteBankAccountURL,
+    return httpClient
+        .post(constants.deleteBankAccountURL,
             body: jsonEncode(_jsonForDeleteCategory),
-            headers: authentication.headers)
+            headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the delete bankAccount is $res');
     });
   }
 }

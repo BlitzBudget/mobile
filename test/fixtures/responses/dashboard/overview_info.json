@@ -1,0 +1,30 @@
+{
+    "Category": [],
+    "Wallet": {
+      "currency": "Euro",
+      "total_debt_balance": 0,
+      "wallet_balance": -2,
+      "total_asset_balance": -2
+    },
+    "Transaction": [],
+    "BankAccount": [
+      {
+        "account_balance": -2,
+        "linked": false,
+        "selected_account": true,
+        "account_type": "ASSET",
+        "bank_account_name": "Cash",
+        "accountId": "BankAccount#2020-12-21T20:35:50.775Z",
+        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
+      }
+    ],
+    "Date": [
+      {
+        "expense_total": -2,
+        "balance": -2,
+        "income_total": 0,
+        "dateId": "Date#2020-12-27T20:22:18.263Z",
+        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
+      }
+    ]
+  }

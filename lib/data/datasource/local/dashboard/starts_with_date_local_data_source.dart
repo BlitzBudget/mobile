@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart'
-    show SharedPreferences;
+import 'package:mobile_blitzbudget/core/persistence/key_value_store.dart';
 
 abstract class StartsWithDateLocalDataSource {
   Future<String> readStartsWithDate();
@@ -10,9 +9,9 @@ abstract class StartsWithDateLocalDataSource {
 
 class StartsWithDateLocalDataSourceImpl
     implements StartsWithDateLocalDataSource {
-  final SharedPreferences sharedPreferences;
+  final KeyValueStore keyValueStore;
 
-  StartsWithDateLocalDataSourceImpl({@required this.sharedPreferences});
+  StartsWithDateLocalDataSourceImpl({@required this.keyValueStore});
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -24,7 +23,7 @@ class StartsWithDateLocalDataSourceImpl
   /// ------------------------------------------------------------
   @override
   Future<String> readStartsWithDate() async {
-    return sharedPreferences.getString(_startsWithDate);
+    return keyValueStore.getString(key: _startsWithDate);
   }
 
   /// ----------------------------------------------------------
@@ -32,6 +31,6 @@ class StartsWithDateLocalDataSourceImpl
   /// ----------------------------------------------------------
   @override
   Future<void> writeStartsWithDate(String value) async {
-    await sharedPreferences.setString(_startsWithDate, value);
+    await keyValueStore.setString(key: _startsWithDate, value: value);
   }
 }

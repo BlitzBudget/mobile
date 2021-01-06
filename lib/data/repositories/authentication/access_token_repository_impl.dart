@@ -1,4 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart'
     show AccessTokenRepository;
 
@@ -10,12 +14,17 @@ class AccessTokenRepositoryImpl implements AccessTokenRepository {
   AccessTokenRepositoryImpl({@required this.accessTokenLocalDataSource});
 
   @override
-  Future<String> readAccessToken() async {
-    return await accessTokenLocalDataSource.readAccessToken();
+  Future<Either<Failure, String>> readAccessToken() async {
+    try {
+      return Right(await accessTokenLocalDataSource.readAccessToken());
+    } on Exception catch (e) {
+      return Left(GenericException.convertExceptionToFailure(e));
+    }
   }
 
   @override
-  Future<void> writeAccessToken(String value) async {
-    return await accessTokenLocalDataSource.writeAccessToken(value);
+  Future<void> writeAccessToken(UserResponse userResponse) async {
+    return await accessTokenLocalDataSource
+        .writeAccessToken(userResponse.accessToken);
   }
 }

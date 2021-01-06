@@ -1,0 +1,67 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/persistence/key_value_store_impl.dart';
+import 'package:mobile_blitzbudget/data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
+import 'package:mockito/mockito.dart';
+import 'package:matcher/matcher.dart';
+
+class MockKeyValueStoreImpl extends Mock implements KeyValueStoreImpl {}
+
+void main() {
+  StartsWithDateLocalDataSourceImpl dataSource;
+  KeyValueStoreImpl mockKeyValueStoreImpl;
+  final startsWithDateCacheName = 'starts_with_date';
+
+  setUp(() {
+    mockKeyValueStoreImpl = MockKeyValueStoreImpl();
+    dataSource =
+        StartsWithDateLocalDataSourceImpl(keyValueStore: mockKeyValueStoreImpl);
+  });
+
+  group('Fetch Starts With Date from Key Value Store', () {
+    var now = DateTime.now();
+    var startsWithDateModel = now.toIso8601String();
+
+    test(
+      'Should return Starts With Date from KeyValueStore when there is one in the SharedPreferences',
+      () async {
+        // arrange
+        when(mockKeyValueStoreImpl.getString(key: startsWithDateCacheName))
+            .thenAnswer((_) => Future.value(startsWithDateModel));
+        // act
+        final startsWithDateResult = await dataSource.readStartsWithDate();
+        // assert
+        verify(mockKeyValueStoreImpl.getString(key: startsWithDateCacheName));
+        expect(startsWithDateResult, equals(startsWithDateModel));
+      },
+    );
+
+    test(
+      'Should throw a NoValueInCacheException when there is no value',
+      () async {
+        // arrange
+        when(mockKeyValueStoreImpl.getString(key: startsWithDateCacheName))
+            .thenThrow(NoValueInCacheException());
+        // assert
+        expect(() => dataSource.readStartsWithDate(),
+            throwsA(TypeMatcher<NoValueInCacheException>()));
+      },
+    );
+  });
+
+  group('Set Starts with date to KeyValueStore', () {
+    var now = DateTime.now();
+    var startsWithDateModel = now.toIso8601String();
+
+    test(
+      'Should call KeyValueStore to store the data',
+      () async {
+        // act
+        await dataSource.writeStartsWithDate(startsWithDateModel);
+        // assert
+        verify(mockKeyValueStoreImpl.setString(
+            key: startsWithDateCacheName, value: startsWithDateModel));
+      },
+    );
+  });
+}

@@ -1,0 +1,10 @@
+{
+    "errorType": "Error",
+    "errorMessage": "Unable to signin from cognito  UserNotConfirmedException: User has not been verified.",
+    "trace": [
+      "Error: Unable to signin from cognito  UserNotConfirmedException: User has not been verified.",
+      "    at /var/task/index.js:23:14",
+      "    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+      "    at async Runtime.exports.handler (/var/task/index.js:20:5)"
+    ]
+  }

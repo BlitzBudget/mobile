@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'background.dart';
-import '../../components/already_have_an_account_check.dart';
+import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
+import '../../../../constants/constants.dart';
+import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
+import '../../components/already_have_an_account_check.dart';
+import '../../components/password_constraint_container.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
-import '../../components/password_constraint_container.dart';
-import '../../../dashboard/dashboard_screen.dart';
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
-import '../../../../widgets/linear_loading_indicator.dart';
-import '../../../../../utils/utils.dart';
-import '../../../../constants/constants.dart';
 import '../../forgot-password/forgot_password_screen.dart';
+import 'background.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
@@ -24,16 +22,15 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   TextEditingController controller;
   String username, password;
-  final login = "LOGIN";
-  final yourEmail = "Your Email";
-  String continueButton = "CONTINUE";
+  final login = 'LOGIN';
+  final yourEmail = 'Your Email';
+  String continueButton = 'CONTINUE';
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -50,7 +47,7 @@ class _BodyState extends State<Body> {
                 replacement: LinearLoadingIndicator()),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
-              "assets/icons/login.svg",
+              'assets/icons/login.svg',
               height: size.height * 0.35,
             ),
             SizedBox(height: size.height * 0.03),
@@ -72,15 +69,15 @@ class _BodyState extends State<Body> {
               /// Disable press if button is disabled
               press: () async {
                 setState(() {
-                  continueButton = "Loading";
+                  continueButton = 'Loading';
                   _btnEnabled = false;
                 });
 
-                /// Attempt login
+                /*/// Attempt login
                 await _AuthenticationRemoteDataSource.attemptLogin(
-                    context, username, password);
+                    context, username, password);*/
                 setState(() {
-                  continueButton = "CONTINUE";
+                  continueButton = 'CONTINUE';
                   _btnEnabled = true;
                 });
               },
@@ -93,7 +90,7 @@ class _BodyState extends State<Body> {
                 /// Navigate to the second screen using a named route.
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  MaterialPageRoute<ForgotPasswordScreen>(
                     builder: (context) => ForgotPasswordScreen(
                         email: username, password: password),
                   ),

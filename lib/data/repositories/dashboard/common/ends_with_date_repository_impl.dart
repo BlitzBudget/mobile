@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_with_date_repository.dart';
-import '../../../../utils/utils.dart';
 import '../../../constants/constants.dart' as constants;
 
 class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
@@ -12,10 +11,10 @@ class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
 
   @override
   Future<String> readEndsWithDate() async {
-    var endsWithDate = await endsWithDateLocalDataSource.readEndsWithDate();
-
-    // Update shared preferences with Start Date if Empty
-    if (isEmpty(endsWithDate)) {
+    String endsWithDate;
+    try {
+      endsWithDate = await endsWithDateLocalDataSource.readEndsWithDate();
+    } on Exception {
       // Caculate the end date from now
       final _nowDate = DateTime.now();
       // Format the calculated date to string

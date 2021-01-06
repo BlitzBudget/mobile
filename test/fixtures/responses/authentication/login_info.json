@@ -1,0 +1,55 @@
+{
+    "ChallengeParameters": {},
+    "AuthenticationResult": {
+      "AccessToken": "eyJraWQiOiJ5UG14MUFmdzFZa0U4ZHZ3YlgxcjUwMitmOTM1NGM1ZURZUmlcL3RxQ296VT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1OTMxMmUyYS00OGQ1LTQyOTctYWJiOC1lOGI1M2E0M2EyZGUiLCJldmVudF9pZCI6IjdlMTRmZGViLWMyODEtNDZlMC1hM2EwLTU4ZTM1ZDY0NzQyZCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2MDk3NzM0MjAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0xX2NqZkM4cU5pQiIsImV4cCI6MTYwOTc3NzAyMCwiaWF0IjoxNjA5NzczNDIwLCJqdGkiOiIxN2EzMjM0Yy0xMWZkLTRhNDItYWIzYi05MGVhM2VhOWI3M2IiLCJjbGllbnRfaWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsInVzZXJuYW1lIjoibmFnYXJqdW5fbmFnZXNoQG91dGxvb2suY29tIn0.npmtjthQi53SSX9R2xRzuOEcsXXyD-YuQsdGwOoscbfg-f1HJ7-4SJH7KZFzUTTerQXli-82nlr9OeCoG7gWf0SSXim1O7pw2HiT5zLkmNETY-AH2uuTfJheqx85QHl55qiFfK9PfrP7JBoxb0YPYkGoquD1vR1rtEjXtXasYNknM8FyKxfr35fCW1CBFLdwPdp-5QKYh_ahIf3EVsDB7qD9-j3AvkYTAwSAhwuPAFRAcRTXRNc8XdX7sfIvFRcul4tVENdqNF5Im0bUPfWkuvaINbaRRL6gX_0Syjlfe4tzTNKXT3Xz4_CxqH5lSJOHwivcYecv7XQrDljewjNBCQ",
+      "ExpiresIn": 3600,
+      "TokenType": "Bearer",
+      "RefreshToken": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.IwRRagHyxWn-qkr3a1UaqAbaCNCSm_06Qtw2DhYyASgC3tXj7P8UpeJj83dsFWTTrGxqh12iPQ-yDrv4RaPieUYQpRzYcLIdp9wTyjLPUlUOVal02txn74N_wUKphIdjatPZtXvAY6B9O6GrIbtGHsOHf0d9rbx8K2KqfbgwRUyOXxKyfH-sIs9mST2jerikAJtV2r2E4klzPWOz2khH4ERF-BW2scur_vPbb_mTXZ7D7MbTIgcjkCOhGCPJe0R6UqmFHiK9hN2zHQV-sdk-JyGZmWiFOw2IlgjcFK6EVNFGBgqaVZK5YyNkAv4YCZaC5nZENU1O0sX6hEdz6-SStw.X5JkLHBF7YXiNDSz.ECFBpwlsEHAiu1wZP0HwBQZaqkn2PUYm2v4l8ZgU6oLYMeyMqaeGWGGyzDJv8amGDn_5Z9bS_Hq-qjH3ZXOsu5LBwg1NvbE1jqiPDiBz0WoBUGX1IRIAXnLtQP4T1BSV5I8r59mq_2kc0k3TPRIFwMHurMcXVl9xcicwRGrr4pjyq-K6rBZq1T5VzwUQkQdC2epAqaEjpoQY2NoURsqR8H2GMXF4-Q_PGC78uns-GQ-Qot06swyKPCW6IYswtlXnGCDidUDljIWkmQopiATTZyT3Fr1zgCudzXjoFcjwWUL2iUYcRdHlxaWSackmmB_QWaPRO_DYWUjUt9WxwSCjr_Gy9xYPB_f3VWhv08CzjZX9ElXlxb2r1at4KiBk3ZSpWgSCC2zVxHTabUD4cO_WNd5xGPqv8QEDWPSyUEhtFcQ7QlCprKmU_P-hySMhSzh-rtnViUeNLFw85ho_ffnlkTA1RLnaJQWiGBoVKy-9Zo077gOQaTlueJQycWNF6gij77AdQWpVxV4d1IcsMDhMOT8Q3MQ2PJvcm9ofrryKWnxcebjVzqw99HS_icIvr_bly6awdwTTPOpF5FxRbzllQhPDK6WRZyfJ6l9H6lBq6oU0VQ8Uhez0u2zsmjgxZ1ao1OKmcm3rieeQpj8tNl8u55iOnEoPphAc7if-jbxHvdDtSuxsaL1J9mZS50VuqIFshvJQLB9DVsPgbOlfTJ3-r8c3xRPM98MK4-p5b6e2ey1gS6rLx4kj_lD_L7df7z4_pPhp-94GUv9odK-W3_qqNyapKwvqfKoDRAzK1KYj3EPswH7BV0pq9tco9GhF-na_5mbfTwGRmg2F4VKr_ccGxlWfHG-2THzWmUSJOMTmxkCBZow7YRGXjwWg__JlM5I7KcFrMoNC4AvQgaZMHaf_XVTGRQY8JCWo0nZ4PNLiBkeM08FJxoS5MIItm8riSlmwDP3QuXomt-bYfinqtOnhcxrnes_MmRGHjB-pqSTzlGETdyfPohJ34HPQA1PSf77Qso4O8rVHSWQHff94AS0qrn2iaxE_mtkLjLdcgJ29TLFkv85b7hF-3ap7UUtxJaPamOYjR1mkaCHj6FVxI3R7_gD8DgANluoip9ndr4psaiv3WMTjcbc_nvv1Vz1Z25qPRzQpCVSWXmRzo64f3H30QUrEQ3-od-voj5jNbhjnk92_tVlOBY0UfNwUUpmCi6bCWSlIJDE_uj3_kqxzlHlPDBXhniKSYD5H2qC2cyZ6AmgyOyBcVPYAmXbecAfNTHN4v3lQsDF9RwYkCrIkwt5fXxyLrjzHZLzWVB1f_ekGcGc.PFyUixtXpDdmLScmEpD1dw",
+      "IdToken": "eyJraWQiOiJtNkhwVHRYQVNweE96MU5rS2JHT2xYSzA2b3RNNlVkak5RUkRidXJ5SXJrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1OTMxMmUyYS00OGQ1LTQyOTctYWJiOC1lOGI1M2E0M2EyZGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiY3VzdG9tOmZpbmFuY2lhbFBvcnRmb2xpb0lkIjoiVXNlciMyMDIwLTEyLTIxVDIwOjMyOjA2LjAwM1oiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9jamZDOHFOaUIiLCJjb2duaXRvOnVzZXJuYW1lIjoibmFnYXJqdW5fbmFnZXNoQG91dGxvb2suY29tIiwibG9jYWxlIjoiZW4tVVMiLCJhdWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsImV2ZW50X2lkIjoiN2UxNGZkZWItYzI4MS00NmUwLWEzYTAtNThlMzVkNjQ3NDJkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDk3NzM0MjAsIm5hbWUiOiJuYWdhcmp1bl9uYWdlc2giLCJjdXN0b206ZXhwb3J0RmlsZUZvcm1hdCI6IlhMUyIsImV4cCI6MTYwOTc3NzAyMCwiaWF0IjoxNjA5NzczNDIwLCJmYW1pbHlfbmFtZSI6IiAiLCJlbWFpbCI6Im5hZ2FyanVuX25hZ2VzaEBvdXRsb29rLmNvbSJ9.HNiErP6Ro9xrRAG8wDxwhf5ewrM-2UuZYOM7MHuCXiui2wEYh4zDSkaZRkEGzQeDmo_upyOCn6vE4NQeY2-Tb8xrwuGjporL65VDknTSmW_IYP9En3y76l-OZF6YXBkFHBYb1-dgEi_3TJKYDPWSe5RzBF0z_r0cBYKpUK5wMvu9nPtxiAkyTicSl3qOBUJuD1sv_xW67ZBiUDPBccJRer3hVhEJfgDjB6wFSeoInrlOmRWtueeMDeNntgxLRyiqYFO12uj-LRio86Rm7g1psLSYYeNztLo5BtSXPdMaEH1R-kH95z2vyaYDT36a3I7viiNSoJSABuOWGkQmeAJoUg"
+    },
+    "Username": "nagarjun_nagesh@outlook.com",
+    "UserAttributes": [
+      {
+        "Name": "sub",
+        "Value": "59312e2a-48d5-4297-abb8-e8b53a43a2de"
+      },
+      {
+        "Name": "email_verified",
+        "Value": "true"
+      },
+      {
+        "Name": "custom:financialPortfolioId",
+        "Value": "User#2020-12-21T20:32:06.003Z"
+      },
+      {
+        "Name": "name",
+        "Value": "nagarjun_nagesh"
+      },
+      {
+        "Name": "locale",
+        "Value": "en-US"
+      },
+      {
+        "Name": "custom:exportFileFormat",
+        "Value": "XLS"
+      },
+      {
+        "Name": "family_name",
+        "Value": " "
+      },
+      {
+        "Name": "email",
+        "Value": "nagarjun_nagesh@outlook.com"
+      }
+    ],
+    "Wallet": [
+      {
+        "currency": "Euro",
+        "total_debt_balance": 0,
+        "wallet_balance": -2,
+        "total_asset_balance": -2,
+        "walletId": "Wallet#2020-12-21T20:35:49.295Z",
+        "userId": "User#2020-12-21T20:32:06.003Z"
+      }
+    ]
+  }

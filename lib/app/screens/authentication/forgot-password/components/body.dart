@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'background.dart';
-import '../../../../constants/constants.dart';
-import '../../../../../utils/utils.dart';
 import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
-import '../../../../widgets/rounded_button.dart';
-import '../../components/rounded_input_field.dart';
+import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
+import '../../../../widgets/rounded_button.dart';
 import '../../components/already_have_an_account_check.dart';
+import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
+import 'background.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
@@ -25,13 +24,10 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
-
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource =
-      AuthenticationRemoteDataSource();
-  final String forgotPasswordText = "Forgot Password";
-  String forgotPasswordButton = "FORGOT PASSWORD";
-  final yourEmail = "Your Email";
-  final String hintPassword = "New Password";
+  final String forgotPasswordText = 'Forgot Password';
+  String forgotPasswordButton = 'FORGOT PASSWORD';
+  final yourEmail = 'Your Email';
+  final String hintPassword = 'New Password';
   String email, password;
 
   /// In the constructor, require a body state.
@@ -39,7 +35,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -56,7 +52,7 @@ class _BodyState extends State<Body> {
                 replacement: LinearLoadingIndicator()),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
-              "assets/icons/signup.svg",
+              'assets/icons/signup.svg',
               height: size.height * 0.35,
             ),
             RoundedInputField(
@@ -76,13 +72,14 @@ class _BodyState extends State<Body> {
               text: forgotPasswordButton,
               press: () async {
                 setState(() {
-                  forgotPasswordButton = "Loading";
+                  forgotPasswordButton = 'Loading';
                   _btnEnabled = false;
                 });
-                await _AuthenticationRemoteDataSource.forgotPassword(
-                    context, email, password);
+                // TODO
+                /*await _AuthenticationRemoteDataSource.forgotPassword(
+                    context, email, password);*/
                 setState(() {
-                  forgotPasswordButton = "FORGOT PASSWORD";
+                  forgotPasswordButton = 'FORGOT PASSWORD';
                   _btnEnabled = true;
                 });
               },

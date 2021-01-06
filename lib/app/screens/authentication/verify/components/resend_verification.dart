@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 import '../../../../constants/constants.dart';
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
 
 // Public exposed class
 class ResendVerification extends StatefulWidget {
@@ -22,8 +22,6 @@ class _ResendVerificationState extends State<ResendVerification> {
   Timer _timer;
   final String email;
   final timeout = const Duration(seconds: 60);
-  final AuthenticationRemoteDataSource _AuthenticationRemoteDataSource =
-      AuthenticationRemoteDataSource();
 
   _ResendVerificationState(this.email);
 
@@ -42,14 +40,15 @@ class _ResendVerificationState extends State<ResendVerification> {
         Visibility(
             visible: _btnEnabled,
             child: Text(
-              "Resend ",
+              'Resend ',
               style: TextStyle(color: primaryColor),
             )),
         GestureDetector(
           onTap: () async {
             _toggleTextState(false);
-            await _AuthenticationRemoteDataSource.resendVerificationCode(
-                context, email);
+            // TODO
+            /*await _AuthenticationRemoteDataSource.resendVerificationCode(
+                context, email);*/
             // Show the text again after a period in time
             startTimeoutThenShowText();
           },
@@ -58,7 +57,7 @@ class _ResendVerificationState extends State<ResendVerification> {
               /// Show text only when the button is enabled
               Visibility(
             visible: _btnEnabled,
-            child: Text("Verification Code",
+            child: Text('Verification Code',
                 style: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,
@@ -78,7 +77,7 @@ class _ResendVerificationState extends State<ResendVerification> {
   }
 
   /// Starts a count down timer that executes the function after hitting 0
-  startTimeoutThenShowText() {
-    return new Timer(timeout, _toggleTextState);
+  Timer startTimeoutThenShowText() {
+    return Timer(timeout, _toggleTextState);
   }
 }

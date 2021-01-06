@@ -1,37 +1,33 @@
 import 'dart:convert';
-import 'dart:developer' as developer;
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../../../utils/network_helper.dart';
+import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
 abstract class CategoryRemoteDataSource {
   Future<void> delete(String walletId, String category);
 }
 
-class _CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
+class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
+  final HTTPClient httpClient;
 
-  /// Create storage
-  final _storage = new FlutterSecureStorage();
-  static final _categoryURL = authentication.baseURL + "/categories/delete";
+  CategoryRemoteDataSourceImpl({@required this.httpClient});
 
   /// Delete Wallet
   @override
   Future<void> delete(String walletId, String category) {
     // JSON for Get wallet [_jsonForGetWallet]
-    Map<String, dynamic> _jsonForDeleteCategory = {
-      "walletId": walletId,
-      "category": category
+    var _jsonForDeleteCategory = <String, dynamic>{
+      'walletId': walletId,
+      'category': category
     };
 
-    return _netUtil
-        .post(_categoryURL,
+    return httpClient
+        .post(constants.deleteCategoryURL,
             body: jsonEncode(_jsonForDeleteCategory),
-            headers: authentication.headers)
+            headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the delete category is $res');
     });
   }
 }

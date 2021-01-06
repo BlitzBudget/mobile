@@ -2,76 +2,65 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../model/user.dart';
-import '../../../utils/network_helper.dart';
-import '../../app/constants/constants.dart' as constants;
-import '../../data/model/wallet/wallet.dart';
-import '../../utils/utils.dart';
-import '../datasource/remote/authentication_remote_data_source.dart'
-    as authentication;
+import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<void> get();
+  Future<List<WalletModel>> fetch(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId);
 
-  Future<void> update(Wallet updateWallet);
+  Future<void> update(WalletModel updateWallet);
 
   Future<void> delete(String walletId, String userId);
 
   Future<void> add(String userId, String currency);
 }
 
-class _WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
-  NetworkUtil _netUtil = new NetworkUtil();
+class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
+  final HTTPClient httpClient;
 
-  /// Create storage
-  final _storage = new FlutterSecureStorage();
-  static final _walletURL = authentication.baseURL + "/wallet";
+  WalletRemoteDataSourceImpl({@required this.httpClient});
 
   /// Get Wallet
   @override
-  Future<void> get() async {
-    // Read [_userAttributes] from User Attributes
-    final String _userAttributes =
-        await _storage.read(key: constants.userAttributes);
-    // Decode the json user
-    Map<String, dynamic> _user = jsonDecode(_userAttributes);
-    developer.log('User Attributes retrieved for: ${_user["userid"]}');
-
-    // JSON for Get wallet [_jsonForGetWallet]
-    Map<String, dynamic> _jsonForGetWallet = {
-      "userId": _user["userid"],
+  Future<List<WalletModel>> fetch(String startsWithDate, String endsWithDate,
+      String defaultWallet, String userId) async {
+    var contentBody = <String, dynamic>{
+      'startsWithDate': startsWithDate,
+      'endsWithDate': endsWithDate
     };
 
-    developer.log(
-        "The Map for getting the wallet is  ${_jsonForGetWallet.toString()}");
-
-    return _netUtil
-        .post(_walletURL,
-            body: jsonEncode(_jsonForGetWallet),
-            headers: authentication.headers)
-        .then((dynamic res) {
+    if (isNotEmpty(defaultWallet)) {
+      contentBody['walletId'] = defaultWallet;
+    } else {
+      contentBody['userId'] = userId;
+    }
+    return httpClient
+        .post(constants.walletURL,
+            body: jsonEncode(contentBody), headers: constants.headers)
+        .then<List<WalletModel>>((dynamic res) {
       debugPrint('The response from the wallet is $res');
-      //TODO
+      return List<WalletModel>.from((res as List).map<dynamic>(
+          (dynamic model) =>
+              WalletModel.fromJSON(model as Map<String, dynamic>)));
+      ;
     });
   }
 
   /// Update Wallet
   @override
-  Future<void> update(Wallet updateWallet) {
+  Future<void> update(WalletModel updateWallet) {
     developer
-        .log("The Map for patching the budget is  ${updateWallet.toString()}");
+        .log('The Map for patching the budget is  ${updateWallet.toString()}');
 
-    return _netUtil
-        .patch(_walletURL,
-            body: jsonEncode(updateWallet.toJSON()),
-            headers: authentication.headers)
+    return httpClient
+        .patch(constants.walletURL,
+            body: jsonEncode(updateWallet.toJSON()), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the update wallet is $res');
     });
   }
 
@@ -79,19 +68,17 @@ class _WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   @override
   Future<void> delete(String walletId, String userId) {
     // JSON for Get wallet [_jsonForGetWallet]
-    Map<String, dynamic> _jsonForDeleteWallet = {
-      "walletId": walletId,
-      "deleteAccount": false,
-      "referenceNumber": userId
+    var _jsonForDeleteWallet = <String, dynamic>{
+      'walletId': walletId,
+      'deleteAccount': false,
+      'referenceNumber': userId
     };
 
-    return _netUtil
-        .post(_walletURL,
-            body: jsonEncode(_jsonForDeleteWallet),
-            headers: authentication.headers)
+    return httpClient
+        .post(constants.walletURL,
+            body: jsonEncode(_jsonForDeleteWallet), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the delete wallet is $res');
     });
   }
 
@@ -99,18 +86,16 @@ class _WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   @override
   Future<void> add(String userId, String currency) {
     // JSON for Get budget [_jsonForAddWallet]
-    Map<String, dynamic> _jsonForAddWallet = {
+    var _jsonForAddWallet = <String, dynamic>{
       'userId': userId,
       'currency': currency,
     };
 
-    return _netUtil
-        .put(_walletURL,
-            body: jsonEncode(_jsonForAddWallet),
-            headers: authentication.headers)
+    return httpClient
+        .put(constants.walletURL,
+            body: jsonEncode(_jsonForAddWallet), headers: constants.headers)
         .then((dynamic res) {
-      debugPrint('The response from the budget is $res');
-      //TODO
+      debugPrint('The response from the add wallet is $res');
     });
   }
 }
