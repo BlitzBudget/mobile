@@ -123,3 +123,13 @@ void displayDialog(BuildContext context, String title, String text) =>
       builder: (context) =>
           AlertDialog(title: Text(title), content: Text(text)),
     );
+
+/// Convert a String to Enum
+dynamic enumFromString(List values, String comp) {
+  values.forEach((dynamic item) {
+    if (item.toString() == comp) {
+      return item;
+    }
+  });
+  return null;
+}

@@ -1,3 +1,4 @@
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_sub_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dart';
@@ -31,9 +32,9 @@ class BankAccountModel extends BankAccount {
         accountBalance: parseDynamicAsDouble(bankAccount['account_balance']),
         linked: parseDynamicToBool(bankAccount['linked']),
         selectedAccount: parseDynamicToBool(bankAccount['selected_account']),
-        accountType: parseDynamicToAccountType(bankAccount['account_type']),
+        accountType: parseDynamicAsAccountType(bankAccount['account_type']),
         accountSubType:
-            parseDynamicToAccountSubType(bankAccount['account_sub_type']),
+            parseDynamicAsAccountSubType(bankAccount['account_sub_type']),
         bankAccountName:
             parseDynamicAsString(bankAccount['bank_account_name']));
   }
@@ -51,15 +52,17 @@ class BankAccountModel extends BankAccount {
       };
 
   /// Parse dynamic to Account Type
-  static AccountType parseDynamicToAccountType(dynamic obj) {
-    if (obj is AccountType) {
-      return obj;
+  static AccountType parseDynamicAsAccountType(dynamic obj) {
+    final convertedEnum =
+        enumFromString(AccountType.values, obj as String) as AccountType;
+    if (convertedEnum is AccountType) {
+      return convertedEnum;
     }
     return null;
   }
 
   /// Parse dynamic to Account Sub Type
-  static AccountSubType parseDynamicToAccountSubType(dynamic obj) {
+  static AccountSubType parseDynamicAsAccountSubType(dynamic obj) {
     if (obj is AccountSubType) {
       return obj;
     }
