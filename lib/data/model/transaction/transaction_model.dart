@@ -43,8 +43,8 @@ class TransactionModel extends Transaction {
         accountId: parseDynamicAsString(transaction['account']),
         dateMeantFor: parseDynamicAsString(transaction['date_meant_for']),
         categoryId: parseDynamicAsString(transaction['category']),
-        recurrence: parseDynamicToRecurrence(transaction['recurrence']),
-        categoryType: parseDynamicToCategoryType(transaction['category_type']),
+        recurrence: parseDynamicAsRecurrence(transaction['recurrence']),
+        categoryType: parseDynamicAsCategoryType(transaction['category_type']),
         categoryName: parseDynamicAsString(transaction['category_name']),
         tags: tags);
   }
@@ -54,13 +54,13 @@ class TransactionModel extends Transaction {
         'walletId': walletId,
         'transactionId': transactionId,
         'amount': amount,
-        'recurrence': recurrence,
+        'recurrence': recurrence.name,
         'account': accountId,
         'dateMeantFor': dateMeantFor,
         'description': description,
         'tags': tags,
         'category': categoryId,
-        'categoryType': categoryType,
+        'categoryType': categoryType.name,
         'categoryName': categoryName
       };
 }

@@ -36,9 +36,9 @@ void main() {
             linked: addBankAccountAsJSON['body-json']['linked'] as bool,
             selectedAccount:
                 addBankAccountAsJSON['body-json']['selectedAccount'] as bool,
-            accountType: BankAccountModel.parseDynamicAsAccountType(
+            accountType: parseDynamicAsAccountType(
                 addBankAccountAsJSON['body-json']['accountType']),
-            accountSubType: BankAccountModel.parseDynamicAsAccountSubType(
+            accountSubType: parseDynamicAsAccountSubType(
                 addBankAccountAsJSON['body-json']['accountSubType']),
             bankAccountName:
                 addBankAccountAsJSON['body-json']['bankAccountName'] as String);

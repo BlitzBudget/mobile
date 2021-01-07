@@ -34,7 +34,7 @@ void main() {
         final budget = BudgetModel(
             walletId: addBudgetAsJSON['body-json']['walletId'] as String,
             budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
-            categoryType: parseDynamicToCategoryType(
+            categoryType: parseDynamicAsCategoryType(
                 addBudgetAsJSON['body-json']['categoryType']),
             planned:
                 parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),

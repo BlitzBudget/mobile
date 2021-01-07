@@ -23,6 +23,6 @@ class CategoryModel extends Category {
         walletId: parseDynamicAsString(category['walletId']),
         categoryName: parseDynamicAsString(category['category_name']),
         categoryTotal: parseDynamicAsDouble(category['category_total']),
-        categoryType: parseDynamicToCategoryType(category['category_type']));
+        categoryType: parseDynamicAsCategoryType(category['category_type']));
   }
 }

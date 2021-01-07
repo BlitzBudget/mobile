@@ -38,6 +38,6 @@ class BudgetModel extends Budget {
         'dateMeantFor': dateMeantFor,
         'planned': planned,
         'category': categoryId,
-        'categoryType': categoryType
+        'categoryType': categoryType.name
       };
 }

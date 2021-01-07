@@ -2,7 +2,6 @@ import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 class RecurringTransactionModel extends RecurringTransaction {
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
@@ -42,9 +41,9 @@ class RecurringTransactionModel extends RecurringTransaction {
         description: parseDynamicAsString(recurringTransaction['description']),
         accountId: parseDynamicAsString(recurringTransaction['account']),
         recurrence:
-            parseDynamicToRecurrence(recurringTransaction['recurrence']),
+            parseDynamicAsRecurrence(recurringTransaction['recurrence']),
         categoryType:
-            parseDynamicToCategoryType(recurringTransaction['category_type']),
+            parseDynamicAsCategoryType(recurringTransaction['category_type']),
         categoryName:
             parseDynamicAsString(recurringTransaction['category_name']),
         tags: tags,

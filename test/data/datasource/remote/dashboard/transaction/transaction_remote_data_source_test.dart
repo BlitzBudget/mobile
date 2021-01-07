@@ -72,7 +72,7 @@ void main() {
                 addTransactionAsJSON['body-json']['transactionId'] as String,
             amount: parseDynamicAsDouble(
                 addTransactionAsJSON['body-json']['amount']),
-            categoryType: parseDynamicToCategoryType(
+            categoryType: parseDynamicAsCategoryType(
                 addTransactionAsJSON['body-json']['categoryType']),
             categoryName:
                 addTransactionAsJSON['body-json']['categoryName'] as String,
@@ -80,7 +80,7 @@ void main() {
                 addTransactionAsJSON['body-json']['description'] as String,
             dateMeantFor:
                 addTransactionAsJSON['body-json']['dateMeantFor'] as String,
-            recurrence: parseDynamicToRecurrence(
+            recurrence: parseDynamicAsRecurrence(
                 addTransactionAsJSON['body-json']['recurrence']),
             accountId: addTransactionAsJSON['body-json']['account'] as String,
             tags: tags);

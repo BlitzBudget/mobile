@@ -30,8 +30,8 @@ class BankAccountModel extends BankAccount {
         accountId: parseDynamicAsString(bankAccount['accountId']),
         walletId: parseDynamicAsString(bankAccount['walletId']),
         accountBalance: parseDynamicAsDouble(bankAccount['account_balance']),
-        linked: parseDynamicToBool(bankAccount['linked']),
-        selectedAccount: parseDynamicToBool(bankAccount['selected_account']),
+        linked: parseDynamicAsBool(bankAccount['linked']),
+        selectedAccount: parseDynamicAsBool(bankAccount['selected_account']),
         accountType: parseDynamicAsAccountType(bankAccount['account_type']),
         accountSubType:
             parseDynamicAsAccountSubType(bankAccount['account_sub_type']),
@@ -44,28 +44,10 @@ class BankAccountModel extends BankAccount {
         'walletId': walletId,
         'accountId': accountId,
         'selectedAccount': selectedAccount,
-        'accountType': accountType,
-        'accountSubType': accountSubType,
+        'accountType': accountType.name,
+        'accountSubType': accountSubType.name,
         'accountBalance': accountBalance,
         'bankAccountName': bankAccountName,
         'linked': linked
       };
-
-  /// Parse dynamic to Account Type
-  static AccountType parseDynamicAsAccountType(dynamic obj) {
-    final convertedEnum =
-        enumFromString(AccountType.values, obj as String) as AccountType;
-    if (convertedEnum is AccountType) {
-      return convertedEnum;
-    }
-    return null;
-  }
-
-  /// Parse dynamic to Account Sub Type
-  static AccountSubType parseDynamicAsAccountSubType(dynamic obj) {
-    if (obj is AccountSubType) {
-      return obj;
-    }
-    return null;
-  }
 }

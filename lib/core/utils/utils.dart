@@ -4,6 +4,7 @@ import 'package:english_words/english_words.dart';
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
+final findWhiteSpace = RegExp(r'\s+');
 // This file has a number of platform-agnostic non-Widget utility functions.
 
 const _myListOfRandomColors = [
@@ -124,12 +125,16 @@ void displayDialog(BuildContext context, String title, String text) =>
           AlertDialog(title: Text(title), content: Text(text)),
     );
 
-/// Convert a String to Enum
-dynamic enumFromString(List values, String comp) {
-  values.forEach((dynamic item) {
-    if (item.toString() == comp) {
-      return item;
-    }
-  });
-  return null;
+/// String to Enum Conversion
+///
+/// Convert all Enum to String
+/// Convert both string and enum to lower case
+/// Replace all white space with empty string for the String
+T stringToEnum<T>(String str, Iterable<T> values) {
+  return values.firstWhere(
+    (value) =>
+        value.toString().split('.')[1].toLowerCase() ==
+        str?.replaceAll(findWhiteSpace, '')?.toLowerCase(),
+    orElse: () => null,
+  );
 }

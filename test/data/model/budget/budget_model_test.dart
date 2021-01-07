@@ -35,9 +35,9 @@ class BudgetModel extends Budget {
   Map<String, dynamic> toJSON() => <String, dynamic>{
         'walletId': walletId,
         'budgetId': budgetId,
-        'dateMeantFor': dateMeantFor,
+        'date_meant_for': dateMeantFor,
         'planned': planned,
         'category': categoryId,
-        'categoryType': categoryType
+        'category_type': categoryType
       };
 }

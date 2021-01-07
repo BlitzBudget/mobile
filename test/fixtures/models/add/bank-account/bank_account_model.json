@@ -1,0 +1,10 @@
+{
+  "linked": false,
+  "bankAccountName": "AXIS Bank",
+  "accountBalance": 10,
+  "accountType": "ASSET",
+  "accountSubType": "Savings Account",
+  "walletId": "Wallet#2020-12-21T20:35:49.295Z",
+  "selectedAccount": false,
+  "accountId": "BankAccount#2021-01-06T12:51:31.215Z"
+}

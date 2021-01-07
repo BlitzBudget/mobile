@@ -42,9 +42,9 @@ class RecurringTransactionModel extends RecurringTransaction {
         description: parseDynamicAsString(recurringTransaction['description']),
         accountId: parseDynamicAsString(recurringTransaction['account']),
         recurrence:
-            parseDynamicToRecurrence(recurringTransaction['recurrence']),
+            parseDynamicAsRecurrence(recurringTransaction['recurrence']),
         categoryType:
-            parseDynamicToCategoryType(recurringTransaction['category_type']),
+            parseDynamicAsCategoryType(recurringTransaction['category_type']),
         categoryName:
             parseDynamicAsString(recurringTransaction['category_name']),
         tags: tags,
@@ -56,11 +56,11 @@ class RecurringTransactionModel extends RecurringTransaction {
         'walletId': walletId,
         'recurringTransactionId': recurringTransactionId,
         'amount': amount,
-        'recurrence': recurrence,
+        'recurrence': recurrence.name,
         'account': account,
         'description': description,
         'tags': tags,
-        'categoryType': categoryType,
+        'categoryType': categoryType.name,
         'categoryName': categoryName
       };
 }

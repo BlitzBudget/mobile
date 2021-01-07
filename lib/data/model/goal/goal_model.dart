@@ -41,8 +41,8 @@ class GoalModel extends Goal {
   Map<String, dynamic> toJSON() => <String, dynamic>{
         'walletId': walletId,
         'goalId': goalId,
-        'goalType': goalType,
-        'targetType': targetType,
+        'goalType': goalType.name,
+        'targetType': targetType.name,
         'monthlyContribution': monthlyContribution,
         'targetAmount': targetAmount,
         'targetDate': targetDate,
