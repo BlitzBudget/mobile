@@ -28,7 +28,9 @@ class BudgetModel extends Budget {
         walletId: parseDynamicAsString(budget['walletId']),
         planned: parseDynamicAsDouble(budget['planned']),
         used: parseDynamicAsDouble(budget['used']),
-        category: parseDynamicAsString(budget['category']));
+        category: parseDynamicAsString(budget['category']),
+        dateMeantFor: parseDynamicAsString(budget['date_meant_for']),
+        categoryType: parseDynamicAsCategoryType(budget['category_type']));
   }
 
   /// Budget to JSON

@@ -1,28 +1,49 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/data/model/category/category_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
-import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
-class CategoryModel extends Category {
-  CategoryModel(
-      {final String categoryId,
-      final String walletId,
-      final String categoryName,
-      final double categoryTotal,
-      final CategoryType categoryType})
-      : super(
-            categoryId: categoryId,
-            walletId: walletId,
-            categoryName: categoryName,
-            categoryTotal: categoryTotal,
-            categoryType: categoryType);
+import '../../../fixtures/fixture_reader.dart';
 
-  /// Map JSON transactions to List of object
-  factory CategoryModel.fromJSON(Map<String, dynamic> category) {
-    return CategoryModel(
-        categoryId: parseDynamicAsString(category['categoryId']),
-        walletId: parseDynamicAsString(category['walletId']),
-        categoryName: parseDynamicAsString(category['category_name']),
-        categoryTotal: parseDynamicAsDouble(category['category_total']),
-        categoryType: parseDynamicAsCategoryType(category['category_type']));
-  }
+void main() {
+  final categoryModelAsString =
+      fixture('models/get/category/category_model.json');
+  final categoryModelAsJSON =
+      jsonDecode(categoryModelAsString) as Map<String, dynamic>;
+  final categoryModel = CategoryModel(
+      walletId: categoryModelAsJSON['walletId'] as String,
+      categoryId: categoryModelAsJSON['categoryId'] as String,
+      categoryTotal:
+          parseDynamicAsDouble(categoryModelAsJSON['category_total']),
+      categoryType:
+          parseDynamicAsCategoryType(categoryModelAsJSON['category_type']),
+      categoryName: categoryModelAsJSON['category_name'] as String);
+  test(
+    'Should be a subclass of Category entity',
+    () async {
+      // assert
+      expect(categoryModel, isA<Category>());
+    },
+  );
+
+  group('fromJson', () {
+    test('Should return a valid model when the JSON is parsed with all data',
+        () async {
+      final categoryModelConverted =
+          CategoryModel.fromJSON(categoryModelAsJSON);
+      expect(categoryModelConverted, equals(categoryModel));
+    });
+  });
+
+  group('toJson', () {
+    test('Should return a JSON map containing the proper data', () async {
+      final addCategoryModelAsString =
+          fixture('models/add/category/category_model.json');
+      final addCategoryModelAsJSON =
+          jsonDecode(addCategoryModelAsString) as Map<String, dynamic>;
+      expect(categoryModel.toJSON(), equals(addCategoryModelAsJSON));
+    });
+  });
 }

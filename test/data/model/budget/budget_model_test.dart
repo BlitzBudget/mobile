@@ -1,43 +1,47 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
-import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
-class BudgetModel extends Budget {
-  // Optional category type and Budget id fields
-  BudgetModel({
-    String budgetId,
-    String walletId,
-    double planned,
-    double used,
-    String dateMeantFor,
-    String category,
-    CategoryType categoryType,
-  }) : super(
-            walletId: walletId,
-            planned: planned,
-            dateMeantFor: dateMeantFor,
-            categoryId: category,
-            categoryType: categoryType,
-            budgetId: budgetId,
-            used: used);
+import '../../../fixtures/fixture_reader.dart';
 
-  /// Map JSON Budget to List of object
-  factory BudgetModel.fromJSON(Map<String, dynamic> budget) {
-    return BudgetModel(
-        budgetId: parseDynamicAsString(budget['budgetId']),
-        walletId: parseDynamicAsString(budget['walletId']),
-        planned: parseDynamicAsDouble(budget['planned']),
-        used: parseDynamicAsDouble(budget['used']),
-        category: parseDynamicAsString(budget['category']));
-  }
+void main() {
+  final budgetModelAsString = fixture('models/get/budget/budget_model.json');
+  final budgetModelAsJSON =
+      jsonDecode(budgetModelAsString) as Map<String, dynamic>;
+  final budgetModel = BudgetModel(
+      walletId: budgetModelAsJSON['walletId'] as String,
+      budgetId: budgetModelAsJSON['budgetId'] as String,
+      planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
+      category: budgetModelAsJSON['category'] as String,
+      categoryType:
+          parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
+      dateMeantFor: budgetModelAsJSON['date_meant_for'] as String);
+  test(
+    'Should be a subclass of Budget entity',
+    () async {
+      // assert
+      expect(budgetModel, isA<Budget>());
+    },
+  );
 
-  /// Budget to JSON
-  Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'budgetId': budgetId,
-        'date_meant_for': dateMeantFor,
-        'planned': planned,
-        'category': categoryId,
-        'category_type': categoryType
-      };
+  group('fromJson', () {
+    test('Should return a valid model when the JSON is parsed with all data',
+        () async {
+      final budgetModelConverted = BudgetModel.fromJSON(budgetModelAsJSON);
+      expect(budgetModelConverted, equals(budgetModel));
+    });
+  });
+
+  group('toJson', () {
+    test('Should return a JSON map containing the proper data', () async {
+      final addBudgetModelAsString =
+          fixture('models/add/budget/budget_model.json');
+      final addBudgetModelAsJSON =
+          jsonDecode(addBudgetModelAsString) as Map<String, dynamic>;
+      expect(budgetModel.toJSON(), equals(addBudgetModelAsJSON));
+    });
+  });
 }

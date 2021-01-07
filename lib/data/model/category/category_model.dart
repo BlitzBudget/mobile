@@ -25,4 +25,13 @@ class CategoryModel extends Category {
         categoryTotal: parseDynamicAsDouble(category['category_total']),
         categoryType: parseDynamicAsCategoryType(category['category_type']));
   }
+
+  /// Budget to JSON
+  Map<String, dynamic> toJSON() => <String, dynamic>{
+        'walletId': walletId,
+        'categoryId': categoryId,
+        'categoryName': categoryName,
+        'categoryTotal': categoryTotal,
+        'categoryType': categoryType.name
+      };
 }

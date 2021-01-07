@@ -48,20 +48,4 @@ class GoalModel extends Goal {
         'targetDate': targetDate,
         'targetId': targetId
       };
-
-  /// Parse dynamic to Goal Type
-  static GoalType parseDynamicAsGoalType(dynamic obj) {
-    if (obj is GoalType) {
-      return obj;
-    }
-    return null;
-  }
-
-  /// Parse dynamic to Target Type
-  static TargetType parseDynamicAsTargetType(dynamic obj) {
-    if (obj is TargetType) {
-      return obj;
-    }
-    return null;
-  }
 }

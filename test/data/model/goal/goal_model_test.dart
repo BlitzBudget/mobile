@@ -1,67 +1,49 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 
-class GoalModel extends Goal {
-  // Mandatory wallet ID
-  GoalModel({
-    String walletId,
-    String goalId,
-    GoalType goalType,
-    TargetType targetType,
-    double monthlyContribution,
-    double targetAmount,
-    String targetDate,
-    String targetId,
-  }) : super(
-            walletId: walletId,
-            goalId: goalId,
-            goalType: goalType,
-            targetType: targetType,
-            monthlyContribution: monthlyContribution,
-            targetAmount: targetAmount,
-            targetDate: targetDate,
-            targetId: targetId);
+import '../../../fixtures/fixture_reader.dart';
 
-  /// Map JSON Goal to List of object
-  factory GoalModel.fromJSON(Map<String, dynamic> goal) {
-    return GoalModel(
-        walletId: parseDynamicAsString(goal['walletId']),
-        goalId: parseDynamicAsString(goal['goalId']),
-        goalType: parseDynamicAsGoalType(goal['goal_type']),
-        targetType: parseDynamicAsTargetType(goal['target_type']),
-        monthlyContribution: parseDynamicAsDouble(goal['monthly_contribution']),
-        targetAmount: parseDynamicAsDouble(goal['final_amount']),
-        targetDate: parseDynamicAsString(goal['preferable_target_date']),
-        targetId: parseDynamicAsString(goal['target_id']));
-  }
+void main() {
+  final goalModelAsString =
+      fixture('models/get/goal/emergency_fund_model.json');
+  final goalModelAsJSON = jsonDecode(goalModelAsString) as Map<String, dynamic>;
+  final goalModel = GoalModel(
+      walletId: goalModelAsJSON['walletId'] as String,
+      goalId: goalModelAsJSON['goalId'] as String,
+      goalType: parseDynamicAsGoalType(goalModelAsJSON['goal_type']),
+      targetType: parseDynamicAsTargetType(goalModelAsJSON['target_type']),
+      monthlyContribution:
+          parseDynamicAsDouble(goalModelAsJSON['monthly_contribution']),
+      targetAmount: parseDynamicAsDouble(goalModelAsJSON['final_amount']),
+      targetDate: goalModelAsJSON['preferable_target_date'] as String,
+      targetId: goalModelAsJSON['target_id'] as String);
+  test(
+    'Should be a subclass of Goal entity',
+    () async {
+      // assert
+      expect(goalModel, isA<Goal>());
+    },
+  );
 
-  // JSON for Goal
-  Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'goalId': goalId,
-        'goalType': goalType,
-        'targetType': targetType,
-        'monthlyContribution': monthlyContribution,
-        'targetAmount': targetAmount,
-        'targetDate': targetDate,
-        'targetId': targetId
-      };
+  group('fromJson', () {
+    test('Should return a valid model when the JSON is parsed with all data',
+        () async {
+      final goalModelConverted = GoalModel.fromJSON(goalModelAsJSON);
+      expect(goalModelConverted, equals(goalModel));
+    });
+  });
 
-  /// Parse dynamic to Goal Type
-  static GoalType parseDynamicAsGoalType(dynamic obj) {
-    if (obj is GoalType) {
-      return obj;
-    }
-    return null;
-  }
-
-  /// Parse dynamic to Target Type
-  static TargetType parseDynamicAsTargetType(dynamic obj) {
-    if (obj is TargetType) {
-      return obj;
-    }
-    return null;
-  }
+  group('toJson', () {
+    test('Should return a JSON map containing the proper data', () async {
+      final addGoalModelAsString =
+          fixture('models/add/goal/emergency_fund_model.json');
+      final addGoalModelAsJSON =
+          jsonDecode(addGoalModelAsString) as Map<String, dynamic>;
+      expect(goalModel.toJSON(), equals(addGoalModelAsJSON));
+    });
+  });
 }

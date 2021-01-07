@@ -65,8 +65,8 @@ void main() {
         final goal = GoalModel(
             walletId: addGoalAsJSON['body-json']['walletId'] as String,
             goalId: addGoalAsJSON['body-json']['id'] as String,
-            goalType: GoalModel.parseDynamicAsGoalType(
-                addGoalAsJSON['body-json']['goalType']),
+            goalType:
+                parseDynamicAsGoalType(addGoalAsJSON['body-json']['goalType']),
             monthlyContribution: parseDynamicAsDouble(
                 addGoalAsJSON['body-json']['monthlyContribution']),
             targetAmount: parseDynamicAsDouble(
@@ -74,7 +74,7 @@ void main() {
             targetDate:
                 parseDynamicAsString(addGoalAsJSON['body-json']['targetDate']),
             targetId: addGoalAsJSON['body-json']['targetId'] as String,
-            targetType: GoalModel.parseDynamicAsTargetType(
+            targetType: parseDynamicAsTargetType(
                 addGoalAsJSON['body-json']['targetType']));
 
         // arrange
@@ -172,7 +172,7 @@ void main() {
         final goal = GoalModel(
             walletId: updateTargetIdAsJSON['body-json']['walletId'] as String,
             goalId: updateTargetIdAsJSON['body-json']['goalId'] as String,
-            targetType: GoalModel.parseDynamicAsTargetType(
+            targetType: parseDynamicAsTargetType(
                 updateTargetIdAsJSON['body-json']['targetType']));
         // arrange
         when(mockHTTPClientImpl.patch(constants.goalURL,

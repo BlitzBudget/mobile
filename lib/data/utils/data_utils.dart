@@ -2,6 +2,8 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_sub_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
+import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
+import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 
 Recurrence parseDynamicAsRecurrence(dynamic obj) {
@@ -43,4 +45,14 @@ AccountType parseDynamicAsAccountType(dynamic obj) {
 /// Parse dynamic to Account Sub Type
 AccountSubType parseDynamicAsAccountSubType(dynamic obj) {
   return (obj is String) ? stringToEnum(obj, AccountSubType.values) : null;
+}
+
+/// Parse dynamic to Goal Type
+GoalType parseDynamicAsGoalType(dynamic obj) {
+  return (obj is String) ? stringToEnum(obj, GoalType.values) : null;
+}
+
+/// Parse dynamic to Target Type
+TargetType parseDynamicAsTargetType(dynamic obj) {
+  return (obj is String) ? stringToEnum(obj, TargetType.values) : null;
 }

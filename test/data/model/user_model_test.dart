@@ -1,62 +1,53 @@
-import 'dart:developer' as developer;
+import 'dart:convert';
 
-import 'package:mobile_blitzbudget/domain/entities/user.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
+import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import '../../fixtures/fixture_reader.dart';
 
-class UserModel extends User {
-  UserModel(
-      {String userId,
-      String email,
-      String name,
-      String fileFormat,
-      String locale,
-      String familyName})
-      : super(
-            userId: userId,
-            email: userId,
-            name: name,
-            locale: locale,
-            familyName: familyName,
-            fileFormat: fileFormat);
+void main() {
+  final bankAccountModelAsString =
+      fixture('models/get/bank-account/bank_account_model.json');
+  final bankAccountModelAsJSON =
+      jsonDecode(bankAccountModelAsString) as Map<String, dynamic>;
+  final bankAccountModel = BankAccountModel(
+      walletId: bankAccountModelAsJSON['walletId'] as String,
+      accountId: bankAccountModelAsJSON['accountId'] as String,
+      accountBalance:
+          parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']),
+      bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String,
+      accountType:
+          parseDynamicAsAccountType(bankAccountModelAsJSON['account_type']),
+      accountSubType: parseDynamicAsAccountSubType(
+          bankAccountModelAsJSON['account_sub_type']),
+      selectedAccount: bankAccountModelAsJSON['selected_account'] as bool,
+      linked: bankAccountModelAsJSON['linked'] as bool);
+  test(
+    'Should be a subclass of BankAccount entity',
+    () async {
+      // assert
+      expect(bankAccountModel, isA<BankAccount>());
+    },
+  );
 
-  factory UserModel.fromJSON(List<dynamic> userAttributes) {
-    var currentUserLocal = extractUserAttributes(userAttributes);
-    return UserModel(
-        userId: currentUserLocal['financialPortfolioId'] as String,
-        email: currentUserLocal['email'] as String,
-        name: currentUserLocal['name'] as String,
-        locale: currentUserLocal['locale'] as String,
-        fileFormat: currentUserLocal['exportFileFormat'] as String,
-        familyName: currentUserLocal['family_name'] as String);
-  }
+  group('fromJson', () {
+    test('Should return a valid model when the JSON is parsed with all data',
+        () async {
+      final bankAccountModelConverted =
+          BankAccountModel.fromJSON(bankAccountModelAsJSON);
+      expect(bankAccountModelConverted, equals(bankAccountModel));
+    });
+  });
 
-  Map<String, dynamic> toJSON() => <String, dynamic>{
-        'userid': userId,
-        'email': email,
-        'name': name,
-        'locale': locale,
-        'fileformat': fileFormat,
-        'familyname': familyName,
-      };
-
-  static Map extractUserAttributes(List<dynamic> userAttributes) {
-    Map currentUserLocal = <String, dynamic>{};
-
-    /// SUCCESS Scenarios
-    for (var i = 0; i < userAttributes.length; i++) {
-      var name = userAttributes[i]['Name'] as String;
-      developer.log('Printing User Attributes $name');
-
-      if (name.contains('custom:')) {
-        /// if custom values then remove custom:
-        var elemName = lastElement(splitElement(name, ':')) as String;
-        developer.log('User:: The elemName is $elemName');
-        currentUserLocal[elemName] = userAttributes[i]['Value'];
-      } else {
-        currentUserLocal[name] = userAttributes[i]['Value'];
-      }
-    }
-    return currentUserLocal;
-  }
+  group('toJson', () {
+    test('Should return a JSON map containing the proper data', () async {
+      final addBankAccountModelAsString =
+          fixture('models/add/bank-account/bank_account_model.json');
+      final addBankAccountModelAsJSON =
+          jsonDecode(addBankAccountModelAsString) as Map<String, dynamic>;
+      expect(bankAccountModel.toJSON(), equals(addBankAccountModelAsJSON));
+    });
+  });
 }

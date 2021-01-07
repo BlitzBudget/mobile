@@ -1,66 +1,53 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
-import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
+import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 
-class TransactionModel extends Transaction {
-  /// Optional Transactions id, description, recurrence, category type, category name and tags
-  TransactionModel(
-      {String transactionId,
-      String walletId,
-      double amount,
-      String description,
-      String accountId,
-      String dateMeantFor,
-      String categoryId,
-      Recurrence recurrence,
-      CategoryType categoryType,
-      String categoryName,
-      List<String> tags})
-      : super(
-            walletId: walletId,
-            amount: amount,
-            accountId: accountId,
-            dateMeantFor: dateMeantFor,
-            categoryId: categoryId,
-            transactionId: transactionId,
-            description: description,
-            recurrence: recurrence,
-            categoryType: categoryType,
-            categoryName: categoryName,
-            tags: tags);
+import '../../../fixtures/fixture_reader.dart';
 
-  /// Map JSON transactions to List of object
-  factory TransactionModel.fromJSON(Map<String, dynamic> transaction) {
-    final tags = (transaction['tags'] as List)
-        ?.map((dynamic item) => item as String)
-        ?.toList();
-    return TransactionModel(
-        transactionId: parseDynamicAsString(transaction['transactionId']),
-        walletId: parseDynamicAsString(transaction['walletId']),
-        amount: parseDynamicAsDouble(transaction['amount']),
-        description: parseDynamicAsString(transaction['description']),
-        accountId: parseDynamicAsString(transaction['account']),
-        dateMeantFor: parseDynamicAsString(transaction['date_meant_for']),
-        categoryId: parseDynamicAsString(transaction['category']),
-        recurrence: parseDynamicAsRecurrence(transaction['recurrence']),
-        categoryType: parseDynamicAsCategoryType(transaction['category_type']),
-        categoryName: parseDynamicAsString(transaction['category_name']),
-        tags: tags);
-  }
+void main() {
+  final bankAccountModelAsString =
+      fixture('models/get/bank-account/bank_account_model.json');
+  final bankAccountModelAsJSON =
+      jsonDecode(bankAccountModelAsString) as Map<String, dynamic>;
+  final bankAccountModel = BankAccountModel(
+      walletId: bankAccountModelAsJSON['walletId'] as String,
+      accountId: bankAccountModelAsJSON['accountId'] as String,
+      accountBalance:
+          parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']),
+      bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String,
+      accountType:
+          parseDynamicAsAccountType(bankAccountModelAsJSON['account_type']),
+      accountSubType: parseDynamicAsAccountSubType(
+          bankAccountModelAsJSON['account_sub_type']),
+      selectedAccount: bankAccountModelAsJSON['selected_account'] as bool,
+      linked: bankAccountModelAsJSON['linked'] as bool);
+  test(
+    'Should be a subclass of BankAccount entity',
+    () async {
+      // assert
+      expect(bankAccountModel, isA<BankAccount>());
+    },
+  );
 
-  /// Transaction to JSON
-  Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'transactionId': transactionId,
-        'amount': amount,
-        'recurrence': recurrence,
-        'account': accountId,
-        'dateMeantFor': dateMeantFor,
-        'description': description,
-        'tags': tags,
-        'category': categoryId,
-        'categoryType': categoryType,
-        'categoryName': categoryName
-      };
+  group('fromJson', () {
+    test('Should return a valid model when the JSON is parsed with all data',
+        () async {
+      final bankAccountModelConverted =
+          BankAccountModel.fromJSON(bankAccountModelAsJSON);
+      expect(bankAccountModelConverted, equals(bankAccountModel));
+    });
+  });
+
+  group('toJson', () {
+    test('Should return a JSON map containing the proper data', () async {
+      final addBankAccountModelAsString =
+          fixture('models/add/bank-account/bank_account_model.json');
+      final addBankAccountModelAsJSON =
+          jsonDecode(addBankAccountModelAsString) as Map<String, dynamic>;
+      expect(bankAccountModel.toJSON(), equals(addBankAccountModelAsJSON));
+    });
+  });
 }
