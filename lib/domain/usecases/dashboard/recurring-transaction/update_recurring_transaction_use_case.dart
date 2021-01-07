@@ -67,7 +67,7 @@ class UpdateRecurringTransactionUseCase {
     final transaction = RecurringTransaction(
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
-        account: accountId);
+        accountId: accountId);
     return await update(updateRecurringTransaction: transaction);
   }
 

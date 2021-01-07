@@ -8,25 +8,29 @@ class RecurringTransaction extends Equatable {
   final String walletId;
   final double amount;
   final String description;
-  final String account;
+  final String accountId;
   final Recurrence recurrence;
   final CategoryType categoryType;
   final String categoryName;
   final String category;
   final List<String> tags;
+  final String nextScheduled;
+  final String creationDate;
 
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
   RecurringTransaction(
       {this.category,
       this.walletId,
       this.amount,
-      this.account,
+      this.accountId,
       this.recurringTransactionId,
       this.description,
       this.recurrence,
       this.categoryType,
       this.categoryName,
-      this.tags});
+      this.tags,
+      this.nextScheduled,
+      this.creationDate});
 
   @override
   List<Object> get props => [
@@ -34,11 +38,12 @@ class RecurringTransaction extends Equatable {
         walletId,
         amount,
         description,
-        account,
+        accountId,
         recurrence,
         categoryType,
         categoryName,
         category,
-        tags
+        tags,
+        nextScheduled
       ];
 }

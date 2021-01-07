@@ -1,0 +1,16 @@
+{
+    "recurrence": "WEEKLY",
+    "category_name": "Bills & Fees",
+    "account": "BankAccount#2020-12-21T20:35:50.775Z",
+    "category": "Category#2020-12-27T20:22:53.798Z",
+    "amount": -5,
+    "category_type": "Expense",
+    "description": "Recurring Transactions",
+    "creation_date": "2020-12-27T20:22:53.828Z",
+    "next_scheduled": "2021-01-10T20:22:53.828Z",
+    "tags": [
+      "MADRID"
+    ],
+    "recurringTransactionsId": "RecurringTransactions#2020-12-27T20:22:53.828Z",
+    "walletId": "Wallet#2020-12-21T20:35:49.295Z"
+  }

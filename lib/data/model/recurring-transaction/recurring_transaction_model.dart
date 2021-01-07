@@ -2,31 +2,34 @@ import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 class RecurringTransactionModel extends RecurringTransaction {
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
-  RecurringTransactionModel({
-    String recurringTransactionId,
-    String walletId,
-    double amount,
-    String description,
-    String accountId,
-    Recurrence recurrence,
-    CategoryType categoryType,
-    String categoryName,
-    String category,
-    List<String> tags,
-  }) : super(
+  RecurringTransactionModel(
+      {String recurringTransactionId,
+      String walletId,
+      double amount,
+      String description,
+      String accountId,
+      Recurrence recurrence,
+      CategoryType categoryType,
+      String categoryName,
+      String category,
+      List<String> tags,
+      String nextScheduled,
+      String creationDate})
+      : super(
             walletId: walletId,
             amount: amount,
-            account: accountId,
+            accountId: accountId,
             recurringTransactionId: recurringTransactionId,
             description: description,
             recurrence: recurrence,
             categoryType: categoryType,
             categoryName: categoryName,
-            tags: tags);
+            tags: tags,
+            nextScheduled: nextScheduled,
+            creationDate: creationDate);
 
   /// Map JSON recurring transactions to List of object
   factory RecurringTransactionModel.fromJSON(
@@ -48,7 +51,11 @@ class RecurringTransactionModel extends RecurringTransaction {
         categoryName:
             parseDynamicAsString(recurringTransaction['category_name']),
         tags: tags,
-        category: parseDynamicAsString(recurringTransaction['category']));
+        category: parseDynamicAsString(recurringTransaction['category']),
+        nextScheduled:
+            parseDynamicAsString(recurringTransaction['next_scheduled']),
+        creationDate:
+            parseDynamicAsString(recurringTransaction['creation_date']));
   }
 
   /// Recurring Transaction to JSON
@@ -57,10 +64,12 @@ class RecurringTransactionModel extends RecurringTransaction {
         'recurringTransactionId': recurringTransactionId,
         'amount': amount,
         'recurrence': recurrence.name,
-        'account': account,
+        'account': accountId,
         'description': description,
         'tags': tags,
         'categoryType': categoryType.name,
-        'categoryName': categoryName
+        'categoryName': categoryName,
+        'nextScheduled': nextScheduled,
+        'creationDate': creationDate
       };
 }
