@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
+import '../../../../../data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';

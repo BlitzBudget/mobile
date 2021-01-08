@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 
-import '../../datasource/remote/authentication_remote_data_source.dart';
+import '../../datasource/remote/authentication/authentication_remote_data_source.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final AuthenticationRemoteDataSource authenticationRemoteDataSource;

@@ -6,7 +6,7 @@ import 'package:mobile_blitzbudget/core/error/api-exception.dart';
 import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
-import 'package:mobile_blitzbudget/data/datasource/remote/authentication_remote_data_source.dart';
+import 'package:mobile_blitzbudget/data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../fixtures/fixture_reader.dart';

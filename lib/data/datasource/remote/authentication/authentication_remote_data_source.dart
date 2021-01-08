@@ -9,7 +9,7 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 
-import '../../constants/constants.dart' as constants;
+import '../../../constants/constants.dart' as constants;
 
 abstract class AuthenticationRemoteDataSource {
   Future<UserResponseModel> attemptLogin(String email, String password);

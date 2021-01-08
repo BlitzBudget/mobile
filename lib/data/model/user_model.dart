@@ -14,7 +14,7 @@ class UserModel extends User {
       String familyName})
       : super(
             userId: userId,
-            email: userId,
+            email: email,
             name: name,
             locale: locale,
             familyName: familyName,
@@ -32,12 +32,11 @@ class UserModel extends User {
   }
 
   Map<String, dynamic> toJSON() => <String, dynamic>{
-        'userid': userId,
         'email': email,
         'name': name,
         'locale': locale,
-        'fileformat': fileFormat,
-        'familyname': familyName,
+        'family_name': familyName,
+        'exportFileFormat': fileFormat
       };
 
   static Map extractUserAttributes(List<dynamic> userAttributes) {
