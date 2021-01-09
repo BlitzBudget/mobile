@@ -1,21 +1,29 @@
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
+import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/user.dart';
+import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 class UserResponseModel extends UserResponse {
   UserResponseModel(
       {String refreshToken,
       String authenticationToken,
       String accessToken,
-      User user})
+      User user,
+      Wallet wallet})
       : super(
             refreshToken: refreshToken,
             authenticationToken: authenticationToken,
             accessToken: accessToken,
-            user: user);
+            user: user,
+            wallet: wallet);
 
   factory UserResponseModel.fromJSON(Map<String, dynamic> userResponseModel) {
+    var wallets = userResponseModel['Wallet'] as List<dynamic> ?? <dynamic>[];
+    var wallet = wallets.isNotEmpty
+        ? wallets[0] as Map<String, dynamic>
+        : <String, dynamic>{};
     return UserResponseModel(
         refreshToken: parseDynamicAsString(
             userResponseModel['AuthenticationResult']['RefreshToken']),
@@ -24,6 +32,7 @@ class UserResponseModel extends UserResponse {
         accessToken: parseDynamicAsString(
             userResponseModel['AuthenticationResult']['AccessToken']),
         user: UserModel.fromJSON(
-            userResponseModel['UserAttributes'] as List<dynamic>));
+            userResponseModel['UserAttributes'] as List<dynamic>),
+        wallet: WalletModel.fromJSON(wallet));
   }
 }

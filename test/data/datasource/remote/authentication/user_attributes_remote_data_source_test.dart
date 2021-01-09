@@ -5,7 +5,6 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/authentication/user_attributes_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
-import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -35,6 +34,55 @@ void main() {
             name: updateUserNameAsJSON['body-json']['name'] as String,
             familyName:
                 updateUserNameAsJSON['body-json']['family_name'] as String);
+        // arrange
+        when(mockHTTPClientImpl.post(constants.userAttributesURL,
+                body: jsonEncode(userAttributes.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateUserNameAsJSON);
+        // act
+        await dataSource.updateUserAttributes(userAttributes);
+        // assert
+        verify(mockHTTPClientImpl.post(constants.userAttributesURL,
+            body: jsonEncode(userAttributes.toJSON()),
+            headers: constants.headers));
+      },
+    );
+
+    test(
+      'Should update a user attributes locale',
+      () async {
+        final updateUserNameAsString = fixture(
+            'responses/user-attributes/update/user_attribute_locale_info.json');
+        final updateUserNameAsJSON =
+            jsonDecode(updateUserNameAsString) as Map<String, dynamic>;
+        final userAttributes = UserModel(
+            email: updateUserNameAsJSON['body-json']['username'] as String,
+            locale: updateUserNameAsJSON['body-json']['locale'] as String);
+        // arrange
+        when(mockHTTPClientImpl.post(constants.userAttributesURL,
+                body: jsonEncode(userAttributes.toJSON()),
+                headers: constants.headers))
+            .thenAnswer((_) async => updateUserNameAsJSON);
+        // act
+        await dataSource.updateUserAttributes(userAttributes);
+        // assert
+        verify(mockHTTPClientImpl.post(constants.userAttributesURL,
+            body: jsonEncode(userAttributes.toJSON()),
+            headers: constants.headers));
+      },
+    );
+
+    test(
+      'Should update a user attributes file format',
+      () async {
+        final updateUserNameAsString = fixture(
+            'responses/user-attributes/update/user_attribute_file_format_info.json');
+        final updateUserNameAsJSON =
+            jsonDecode(updateUserNameAsString) as Map<String, dynamic>;
+        final userAttributes = UserModel(
+            email: updateUserNameAsJSON['body-json']['username'] as String,
+            locale: updateUserNameAsJSON['body-json']['exportFileFormat']
+                as String);
         // arrange
         when(mockHTTPClientImpl.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),
