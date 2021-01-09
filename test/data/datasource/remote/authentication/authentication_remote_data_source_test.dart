@@ -9,7 +9,7 @@ import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../fixtures/fixture_reader.dart';
+import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 

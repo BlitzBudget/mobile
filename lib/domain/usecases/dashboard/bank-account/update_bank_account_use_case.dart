@@ -6,9 +6,15 @@ import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dar
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/bank_account_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 
-class UpdateBankAccountUseCase {
-  BankAccountRepository bankAccountRepository;
-  DefaultWalletRepository defaultWalletRepository;
+import '../../use_case.dart';
+
+class UpdateBankAccountUseCase extends UseCase {
+  final BankAccountRepository bankAccountRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+
+  UpdateBankAccountUseCase(
+      {@required this.bankAccountRepository,
+      @required this.defaultWalletRepository});
 
   Future<Either<Failure, void>> update(
       {@required BankAccount updateBankAccount}) async {

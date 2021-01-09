@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/budget_response.dart';
@@ -8,12 +9,21 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_with_date_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
 
-class FetchBudgetUseCase {
-  BudgetRepository budgetRepository;
-  StartsWithDateRepository startsWithDateRepository;
-  EndsWithDateRepository endsWithDateRepository;
-  DefaultWalletRepository defaultWalletRepository;
-  UserAttributesRepository userAttributesRepository;
+import '../../use_case.dart';
+
+class FetchBudgetUseCase extends UseCase {
+  final BudgetRepository budgetRepository;
+  final StartsWithDateRepository startsWithDateRepository;
+  final EndsWithDateRepository endsWithDateRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+  final UserAttributesRepository userAttributesRepository;
+
+  FetchBudgetUseCase(
+      {@required this.budgetRepository,
+      @required this.startsWithDateRepository,
+      @required this.endsWithDateRepository,
+      @required this.defaultWalletRepository,
+      @required this.userAttributesRepository});
 
   Future<Either<Failure, BudgetResponse>> fetch() async {
     var startsWithDate = await startsWithDateRepository.readStartsWithDate();

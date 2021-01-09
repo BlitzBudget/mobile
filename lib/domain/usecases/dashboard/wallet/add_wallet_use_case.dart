@@ -5,9 +5,15 @@ import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
 
-class AddWalletUseCase {
-  WalletRepository walletRepository;
-  UserAttributesRepository userAttributesRepository;
+import '../../use_case.dart';
+
+class AddWalletUseCase extends UseCase {
+  final WalletRepository walletRepository;
+  final UserAttributesRepository userAttributesRepository;
+
+  AddWalletUseCase(
+      {@required this.walletRepository,
+      @required this.userAttributesRepository});
 
   Future<Either<Failure, void>> add({@required String currency}) async {
     var userResponse = await userAttributesRepository.readUserAttributes();

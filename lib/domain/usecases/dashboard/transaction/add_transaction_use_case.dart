@@ -4,8 +4,12 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
 
-class AddTransactionUseCase {
-  TransactionRepository transactionRepository;
+import '../../use_case.dart';
+
+class AddTransactionUseCase extends UseCase {
+  final TransactionRepository transactionRepository;
+
+  AddTransactionUseCase({@required this.transactionRepository});
 
   Future<Either<Failure, void>> add(
       {@required Transaction addTransaction}) async {

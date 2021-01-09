@@ -4,8 +4,12 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
 
-class UpdateWalletUseCase {
-  WalletRepository walletRepository;
+import '../../use_case.dart';
+
+class UpdateWalletUseCase extends UseCase {
+  final WalletRepository walletRepository;
+
+  UpdateWalletUseCase({@required this.walletRepository});
 
   Future<Either<Failure, void>> update({@required Wallet updateWallet}) async {
     return await walletRepository.update(updateWallet);

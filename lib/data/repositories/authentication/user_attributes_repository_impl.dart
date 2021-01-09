@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/data/datasource/remote/authentication/user_attributes_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/user.dart';
@@ -13,8 +14,11 @@ import '../../datasource/local/authentication/user_attributes_local_data_source.
 
 class UserAttributesRepositoryImpl implements UserAttributesRepository {
   final UserAttributesLocalDataSource userAttributesLocalDataSource;
+  final UserAttributesRemoteDataSource userAttributesRemoteDataSource;
 
-  UserAttributesRepositoryImpl({@required this.userAttributesLocalDataSource});
+  UserAttributesRepositoryImpl(
+      {@required this.userAttributesLocalDataSource,
+      @required this.userAttributesRemoteDataSource});
 
   @override
   Future<Either<Failure, User>> readUserAttributes() async {
@@ -38,5 +42,15 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
 
     return await userAttributesLocalDataSource
         .writeUserAttributes(userJSONEncoded);
+  }
+
+  @override
+  Future<Either<Failure, void>> updateUserAttributes(User user) async {
+    try {
+      return Right(await userAttributesRemoteDataSource
+          .updateUserAttributes(user as UserModel));
+    } on Exception catch (e) {
+      return Left(GenericException.convertExceptionToFailure(e));
+    }
   }
 }

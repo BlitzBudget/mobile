@@ -7,9 +7,15 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart'
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
 
-class UpdateTransactionUseCase {
-  TransactionRepository transactionRepository;
-  DefaultWalletRepository defaultWalletRepository;
+import '../../use_case.dart';
+
+class UpdateTransactionUseCase extends UseCase {
+  final TransactionRepository transactionRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+
+  UpdateTransactionUseCase(
+      {@required this.transactionRepository,
+      @required this.defaultWalletRepository});
 
   Future<Either<Failure, void>> update(
       {@required Transaction updateTransaction}) async {

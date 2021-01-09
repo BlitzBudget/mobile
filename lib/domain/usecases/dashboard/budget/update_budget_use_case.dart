@@ -5,10 +5,15 @@ import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/budget_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
+import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
-class UpdateBudgetUseCase {
-  BudgetRepository budgetRepository;
-  DefaultWalletRepository defaultWalletRepository;
+class UpdateBudgetUseCase extends UseCase {
+  final BudgetRepository budgetRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+
+  UpdateBudgetUseCase(
+      {@required this.budgetRepository,
+      @required this.defaultWalletRepository});
 
   Future<Either<Failure, void>> update({@required Budget updateBudget}) async {
     return await budgetRepository.update(updateBudget);

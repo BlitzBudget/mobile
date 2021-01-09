@@ -10,12 +10,21 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_wit
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/recurring_transaction_repository.dart';
 
-class UpdateRecurringTransactionUseCase {
-  RecurringTransactionRepository recurringTransactionRepository;
-  StartsWithDateRepository startsWithDateRepository;
-  EndsWithDateRepository endsWithDateRepository;
-  DefaultWalletRepository defaultWalletRepository;
-  UserAttributesRepository userAttributesRepository;
+import '../../use_case.dart';
+
+class UpdateRecurringTransactionUseCase extends UseCase {
+  final RecurringTransactionRepository recurringTransactionRepository;
+  final StartsWithDateRepository startsWithDateRepository;
+  final EndsWithDateRepository endsWithDateRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+  final UserAttributesRepository userAttributesRepository;
+
+  UpdateRecurringTransactionUseCase(
+      {@required this.recurringTransactionRepository,
+      @required this.startsWithDateRepository,
+      @required this.endsWithDateRepository,
+      @required this.defaultWalletRepository,
+      @required this.userAttributesRepository});
 
   Future<Either<Failure, void>> update(
       {@required RecurringTransaction updateRecurringTransaction}) async {
