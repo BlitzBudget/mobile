@@ -32,7 +32,7 @@ class UserModel extends User {
   }
 
   Map<String, dynamic> toJSON() => <String, dynamic>{
-        'email': email,
+        'username': email,
         'name': name,
         'locale': locale,
         'family_name': familyName,
