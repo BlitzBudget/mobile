@@ -1,7 +1,6 @@
 import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:mobile_blitzbudget/data/model/category/category_model.dart';
-import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
@@ -31,10 +30,10 @@ class OverviewResponseModel extends OverviewResponse {
             wallet: wallet);
 
   factory OverviewResponseModel.fromJSON(
-      Map<String, dynamic> transactionResponseModel) {
+      Map<String, dynamic> overviewResponseModel) {
     /// Convert transactions from the response JSON to List<Transaction>
     /// If Empty then return an empty object list
-    var responseTransactions = transactionResponseModel['Transaction'] as List;
+    var responseTransactions = overviewResponseModel['Transaction'] as List;
     var convertedTransactions = List<Transaction>.from(
         responseTransactions?.map<dynamic>((dynamic model) =>
                 TransactionModel.fromJSON(model as Map<String, dynamic>)) ??
@@ -42,7 +41,7 @@ class OverviewResponseModel extends OverviewResponse {
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
-    var responseBudgets = transactionResponseModel['Budget'] as List;
+    var responseBudgets = overviewResponseModel['Budget'] as List;
     var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
             (dynamic model) =>
                 BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
@@ -50,7 +49,7 @@ class OverviewResponseModel extends OverviewResponse {
 
     /// Convert categories from the response JSON to List<Category>
     /// If Empty then return an empty object list
-    var responseCategories = transactionResponseModel['Category'] as List;
+    var responseCategories = overviewResponseModel['Category'] as List;
     var convertedCategories = List<Category>.from(
         responseCategories?.map<dynamic>((dynamic model) =>
                 CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
@@ -58,7 +57,7 @@ class OverviewResponseModel extends OverviewResponse {
 
     /// Convert BankAccount from the response JSON to List<BankAccount>
     /// If Empty then return an empty object list
-    var responseBankAccounts = transactionResponseModel['BankAccount'] as List;
+    var responseBankAccounts = overviewResponseModel['BankAccount'] as List;
     var convertedBankAccounts = List<BankAccount>.from(
         responseBankAccounts?.map<dynamic>((dynamic model) =>
                 BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
@@ -66,13 +65,13 @@ class OverviewResponseModel extends OverviewResponse {
 
     /// Convert Dates from the response JSON to List<Date>
     /// If Empty then return an empty object list
-    var responseDate = transactionResponseModel['Date'] as List;
+    var responseDate = overviewResponseModel['Date'] as List;
     var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
             (dynamic model) =>
                 DateModel.fromJSON(model as Map<String, dynamic>)) ??
         <Date>[]);
 
-    dynamic responseWallet = transactionResponseModel['Wallet'];
+    dynamic responseWallet = overviewResponseModel['Wallet'];
     Wallet convertedWallet;
 
     /// Check if the response is a string or a list
