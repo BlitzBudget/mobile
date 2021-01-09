@@ -41,6 +41,85 @@ void main() {
           BudgetResponseModel.fromJSON(budgetResponseModelAsJSON);
       expect(budgetModelConverted, equals(budgetResponseModel));
     });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty budget data',
+        () async {
+      final budgetResponseModelWithEmptyBudgetAsString = fixture(
+          'responses/partially-emtpy/budget/empty_budget_budget_info.json');
+      final budgetResponseModelWithEmptyBudgetAsJSON =
+          jsonDecode(budgetResponseModelWithEmptyBudgetAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final budgetResponseModelWithEmptyBudgetConverted =
+          convertToResponseModel(budgetResponseModelWithEmptyBudgetAsJSON);
+      final budgetResponseModelWithEmptyBudgetFromJSON =
+          BudgetResponseModel.fromJSON(
+              budgetResponseModelWithEmptyBudgetAsJSON);
+      expect(budgetResponseModelWithEmptyBudgetFromJSON,
+          equals(budgetResponseModelWithEmptyBudgetConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty bank account data',
+        () async {
+      final budgetResponseModelWithEmptyBankAccountAsString = fixture(
+          'responses/partially-emtpy/budget/empty_bank_account_budget_info.json');
+      final budgetResponseModelWithEmptyBankAccountAsJSON =
+          jsonDecode(budgetResponseModelWithEmptyBankAccountAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final budgetResponseModelWithEmptyBankAccountConverted =
+          convertToResponseModel(budgetResponseModelWithEmptyBankAccountAsJSON);
+      final budgetResponseModelWithEmptyBankAccountFromJSON =
+          BudgetResponseModel.fromJSON(
+              budgetResponseModelWithEmptyBankAccountAsJSON);
+      expect(budgetResponseModelWithEmptyBankAccountFromJSON,
+          equals(budgetResponseModelWithEmptyBankAccountConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty category data',
+        () async {
+      final budgetResponseModelWithEmptyCategoryAsString = fixture(
+          'responses/partially-emtpy/budget/empty_category_budget_info.json');
+      final budgetResponseModelWithEmptyCategoryAsJSON =
+          jsonDecode(budgetResponseModelWithEmptyCategoryAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final budgetResponseModelWithEmptyCategoryConverted =
+          convertToResponseModel(budgetResponseModelWithEmptyCategoryAsJSON);
+      final budgetResponseModelWithEmptyCategoryFromJSON =
+          BudgetResponseModel.fromJSON(
+              budgetResponseModelWithEmptyCategoryAsJSON);
+      expect(budgetResponseModelWithEmptyCategoryFromJSON,
+          equals(budgetResponseModelWithEmptyCategoryConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty date data',
+        () async {
+      final budgetResponseModelWithEmptyDateAsString = fixture(
+          'responses/partially-emtpy/budget/empty_date_budget_info.json');
+      final budgetResponseModelWithEmptyDateAsJSON =
+          jsonDecode(budgetResponseModelWithEmptyDateAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final budgetResponseModelWithEmptyDateConverted =
+          convertToResponseModel(budgetResponseModelWithEmptyDateAsJSON);
+      final budgetResponseModelWithEmptyDateFromJSON =
+          BudgetResponseModel.fromJSON(budgetResponseModelWithEmptyDateAsJSON);
+      expect(budgetResponseModelWithEmptyDateFromJSON,
+          equals(budgetResponseModelWithEmptyDateConverted));
+    });
   });
 }
 

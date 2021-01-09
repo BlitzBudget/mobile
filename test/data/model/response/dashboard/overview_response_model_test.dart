@@ -20,7 +20,7 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final overviewResponseModelAsString =
-      fixture('responses/dashboard/overview/fetch_overview_info.json');
+      fixture('responses/dashboard/overview_info.json');
   final overviewResponseModelAsJSON =
       jsonDecode(overviewResponseModelAsString) as Map<String, dynamic>;
 
