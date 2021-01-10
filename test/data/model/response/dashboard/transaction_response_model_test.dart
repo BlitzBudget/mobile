@@ -9,6 +9,7 @@ import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_tr
 import 'package:mobile_blitzbudget/data/model/response/dashboard/transaction_response_model.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
@@ -253,5 +254,10 @@ TransactionResponseModel convertToResponseModel(
       categories: convertedCategories,
       bankAccounts: convertedBankAccounts,
       dates: convertedDates,
-      wallet: convertedWallet);
+      wallet: convertedWallet,
+      incomeTotal:
+          parseDynamicAsDouble(transactionResponseModelAsJSON['incomeTotal']),
+      expenseTotal:
+          parseDynamicAsDouble(transactionResponseModelAsJSON['expenseTotal']),
+      balance: parseDynamicAsDouble(transactionResponseModelAsJSON['balance']));
 }

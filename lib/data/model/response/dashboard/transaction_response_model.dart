@@ -4,6 +4,7 @@ import 'package:mobile_blitzbudget/data/model/category/category_model.dart';
 import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
@@ -23,7 +24,10 @@ class TransactionResponseModel extends TransactionResponse {
       List<BankAccount> bankAccounts,
       List<RecurringTransaction> recurringTransactions,
       List<Date> dates,
-      Wallet wallet})
+      Wallet wallet,
+      double incomeTotal,
+      double expenseTotal,
+      double balance})
       : super(
             transactions: transactions,
             budgets: budgets,
@@ -31,7 +35,10 @@ class TransactionResponseModel extends TransactionResponse {
             bankAccounts: bankAccounts,
             recurringTransactions: recurringTransactions,
             dates: dates,
-            wallet: wallet);
+            wallet: wallet,
+            incomeTotal: incomeTotal,
+            expenseTotal: expenseTotal,
+            balance: balance);
 
   factory TransactionResponseModel.fromJSON(
       Map<String, dynamic> transactionResponseModel) {
@@ -101,6 +108,7 @@ class TransactionResponseModel extends TransactionResponse {
 
       convertedWallet = convertedWallets[0];
     }
+
     return TransactionResponseModel(
         transactions: convertedTransactions,
         recurringTransactions: convertedRecurringTransactions,
@@ -108,6 +116,11 @@ class TransactionResponseModel extends TransactionResponse {
         categories: convertedCategories,
         bankAccounts: convertedBankAccounts,
         dates: convertedDates,
-        wallet: convertedWallet);
+        wallet: convertedWallet,
+        incomeTotal:
+            parseDynamicAsDouble(transactionResponseModel['incomeTotal']),
+        expenseTotal:
+            parseDynamicAsDouble(transactionResponseModel['expenseTotal']),
+        balance: parseDynamicAsDouble(transactionResponseModel['balance']));
   }
 }
