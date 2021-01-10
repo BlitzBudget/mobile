@@ -23,7 +23,11 @@ class SignupUser extends UseCase {
     var acceptLanguage = await Devicelocale.currentLocale;
 
     return authenticationRepository.signupUser(
-        email, password, names[0], names[1], acceptLanguage);
+        email: email,
+        password: password,
+        firstName: names[0],
+        surName: names[1],
+        acceptLanguage: acceptLanguage);
   }
 }
 

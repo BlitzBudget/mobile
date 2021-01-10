@@ -119,6 +119,6 @@ class HTTPClientImpl implements HTTPClient {
       throw EmptyAuthorizationTokenException();
     }
     // Set Authorization header
-    headers['Authorization'] = authToken.getOrElse(null);
+    headers['Authorization'] = authToken.getOrElse(() => '');
   }
 }

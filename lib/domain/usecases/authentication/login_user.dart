@@ -23,7 +23,7 @@ class LoginUser extends UseCase {
     email = email.toLowerCase().trim();
 
     var response = await authenticationRepository.loginUser(
-        email, password); // Either<Failure, UserResponse>
+        email: email, password: password); // Either<Failure, UserResponse>
 
     if (response.isRight()) {
       var user = response.getOrElse(null);

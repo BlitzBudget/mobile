@@ -1,6 +1,5 @@
 import 'package:mobile_blitzbudget/core/failure/authorization-failure.dart';
 
-import '../failure/api-failure.dart';
 import '../failure/failure.dart';
 
 ///
@@ -18,7 +17,7 @@ abstract class AuthenticationException implements Exception {
     } else if (authorizationException is UserAlreadyExistsException) {
       return RedirectToLoginDueToFailure();
     }
-    return GenericFailure();
+    return GenericAuthorizationFailure();
   }
 }
 

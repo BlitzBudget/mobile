@@ -14,32 +14,46 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<Either<Failure, UserResponse>> loginUser(
-      String email, String password) async {
+      {@required String email, @required String password}) async {
     try {
-      return Right(
-          await authenticationRemoteDataSource.attemptLogin(email, password));
+      return Right(await authenticationRemoteDataSource.attemptLogin(
+          email: email, password: password));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> signupUser(String email, String password,
-      String firstName, String surName, String acceptLanguage) async {
+  Future<Either<Failure, void>> signupUser(
+      {@required String email,
+      @required String password,
+      @required String firstName,
+      @required String surName,
+      @required String acceptLanguage}) async {
     try {
       return Right(await authenticationRemoteDataSource.signupUser(
-          email, password, firstName, surName, acceptLanguage));
+          email: email,
+          password: password,
+          firstName: firstName,
+          surName: surName,
+          acceptLanguage: acceptLanguage));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> verifyEmail(String email, String password,
-      String verificationCode, bool useVerifyURL) async {
+  Future<Either<Failure, void>> verifyEmail(
+      {@required String email,
+      @required String password,
+      @required String verificationCode,
+      @required bool useVerifyURL}) async {
     try {
       return Right(await authenticationRemoteDataSource.verifyEmail(
-          email, password, verificationCode, useVerifyURL));
+          email: email,
+          password: password,
+          verificationCode: verificationCode,
+          useVerifyURL: useVerifyURL));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }

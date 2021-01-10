@@ -16,7 +16,10 @@ class ForgotPassword extends UseCase {
     email = email.toLowerCase().trim();
 
     return await authenticationRepository.verifyEmail(
-        email, password, verificationCode, useVerifyURL);
+        email: email,
+        password: password,
+        verificationCode: verificationCode,
+        useVerifyURL: useVerifyURL);
   }
 
   Future<Either<Failure, void>> resendVerificationCode(

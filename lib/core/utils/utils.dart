@@ -54,7 +54,7 @@ String generateRandomHeadline() {
   }
 
   assert(false, 'Failed to generate news headline');
-  return null;
+  return '';
 }
 
 List<MaterialColor> getRandomColors(int amount) {

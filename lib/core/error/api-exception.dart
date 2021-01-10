@@ -29,7 +29,7 @@ class APIException implements Exception {
     } else if (apiException is NoNetworkConnectionException) {
       return NoNetworkFailure();
     }
-    return GenericFailure();
+    return GenericAPIFailure();
   }
 }
 

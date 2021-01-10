@@ -12,13 +12,21 @@ import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart'
 import '../../../constants/constants.dart' as constants;
 
 abstract class AuthenticationRemoteDataSource {
-  Future<UserResponseModel> attemptLogin(String email, String password);
+  Future<UserResponseModel> attemptLogin(
+      {@required String email, @required String password});
 
-  Future<void> signupUser(String email, String password, String firstName,
-      String surName, String acceptLanguage);
+  Future<void> signupUser(
+      {@required String email,
+      @required String password,
+      @required String firstName,
+      @required String surName,
+      @required String acceptLanguage});
 
-  Future<void> verifyEmail(String email, String password,
-      String verificationCode, bool useVerifyURL);
+  Future<void> verifyEmail(
+      {@required String email,
+      @required String password,
+      @required String verificationCode,
+      @required bool useVerifyURL});
 
   Future<void> resendVerificationCode(String email);
 
@@ -41,7 +49,8 @@ class AuthenticationRemoteDataSourceImpl
   /// Logging in with Username and Password
   /// If user is not found then signup the user
   @override
-  Future<UserResponseModel> attemptLogin(String email, String password) async {
+  Future<UserResponseModel> attemptLogin(
+      {@required String email, @required String password}) async {
     try {
       /// Convert email to lowercase and trim
       email = email.toLowerCase().trim();
@@ -86,8 +95,12 @@ class AuthenticationRemoteDataSourceImpl
   /// Used to signup the user with email & password
   /// Also invokes the Verification module
   @override
-  Future<void> signupUser(String email, String password, String firstName,
-      String surName, String acceptLanguage) async {
+  Future<void> signupUser(
+      {@required String email,
+      @required String password,
+      @required String firstName,
+      @required String surName,
+      @required String acceptLanguage}) async {
     try {
       /// Set accept language headers
       var headers = constants.headers;
@@ -121,8 +134,11 @@ class AuthenticationRemoteDataSourceImpl
   ///
   /// Verify Email with confirmation code
   @override
-  Future<void> verifyEmail(String email, String password,
-      String verificationCode, bool useVerifyURL) {
+  Future<void> verifyEmail(
+      {@required String email,
+      @required String password,
+      @required String verificationCode,
+      @required bool useVerifyURL}) {
     /// Call verify / Confirm forgot password url
     final urlForAPICall = useVerifyURL
         ? constants.confirmSignupURL

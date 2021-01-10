@@ -43,8 +43,8 @@ void main() {
                 headers: constants.headers))
             .thenAnswer((_) async => loginResponseAsJSON);
         // act
-        final loginResult =
-            await dataSource.attemptLogin(mockEmail, mockPassword);
+        final loginResult = await dataSource.attemptLogin(
+            email: mockEmail, password: mockPassword);
         // assert
         verify(mockHTTPClientImpl.post(constants.loginURL,
             body: jsonEncode({
@@ -80,7 +80,9 @@ void main() {
             .thenThrow(ServerErrorException(notAuthorizedResponseAsJSON));
 
         // assert
-        expect(() => dataSource.attemptLogin(mockEmail, mockPassword),
+        expect(
+            () => dataSource.attemptLogin(
+                email: mockEmail, password: mockPassword),
             throwsA(TypeMatcher<NotAuthorizedException>()));
       },
     );
@@ -103,7 +105,9 @@ void main() {
             .thenThrow(ServerErrorException(userNotFoundExceptionAsJSON));
 
         // assert
-        expect(() => dataSource.attemptLogin(mockEmail, mockPassword),
+        expect(
+            () => dataSource.attemptLogin(
+                email: mockEmail, password: mockPassword),
             throwsA(TypeMatcher<UserNotFoundException>()));
       },
     );
@@ -127,7 +131,9 @@ void main() {
             .thenThrow(ServerErrorException(userNotConfirmedExceptionAsJSON));
 
         // assert
-        expect(() => dataSource.attemptLogin(mockEmail, mockPassword),
+        expect(
+            () => dataSource.attemptLogin(
+                email: mockEmail, password: mockPassword),
             throwsA(TypeMatcher<UserNotConfirmedException>()));
       },
     );
@@ -158,8 +164,12 @@ void main() {
             .thenAnswer((_) async =>
                 signupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
-        await dataSource.signupUser(mockEmail, mockPassword, firstName, surname,
-            headers['Accept-Language']);
+        await dataSource.signupUser(
+            email: mockEmail,
+            password: mockPassword,
+            firstName: firstName,
+            surName: surname,
+            acceptLanguage: headers['Accept-Language']);
         // assert
         verify(mockHTTPClientImpl.post(constants.signupURL,
             body: jsonEncode({
@@ -194,8 +204,12 @@ void main() {
 
         // assert
         expect(
-            () => dataSource.signupUser(mockEmail, mockPassword, firstName,
-                surname, headers['Accept-Language']),
+            () => dataSource.signupUser(
+                email: mockEmail,
+                password: mockPassword,
+                firstName: firstName,
+                surName: surname,
+                acceptLanguage: headers['Accept-Language']),
             throwsA(TypeMatcher<UserAlreadyExistsException>()));
       },
     );
@@ -223,7 +237,10 @@ void main() {
                 confirmSignupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
         await dataSource.verifyEmail(
-            mockEmail, mockPassword, mockVerificationCode, true);
+            email: mockEmail,
+            password: mockPassword,
+            verificationCode: mockVerificationCode,
+            useVerifyURL: true);
         // assert
         verify(mockHTTPClientImpl.post(constants.confirmSignupURL,
             body: jsonEncode({
@@ -252,7 +269,10 @@ void main() {
                 confirmSignupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
         await dataSource.verifyEmail(
-            mockEmail, mockPassword, mockVerificationCode, false);
+            email: mockEmail,
+            password: mockPassword,
+            verificationCode: mockVerificationCode,
+            useVerifyURL: false);
         // assert
         verify(mockHTTPClientImpl.post(constants.confirmForgotPasswordURL,
             body: jsonEncode({

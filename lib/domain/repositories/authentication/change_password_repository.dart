@@ -3,5 +3,5 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
 abstract class ChangePasswordRepository {
   Future<Either<Failure, void>> changePassword(
-      String accessToken, String newPassword, String oldPassword);
+      {String accessToken, String newPassword, String oldPassword});
 }

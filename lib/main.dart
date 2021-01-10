@@ -16,7 +16,7 @@ Future<void> main() async {
 
   /// Read value
   var token = await authTokenRepository.readAuthToken();
-  var homeRoute = token == null ? initialRoute : dashboardRoute;
+  var homeRoute = token.isLeft() ? initialRoute : dashboardRoute;
   runApp(BlitzBudgetApp(
     homeRoute: homeRoute,
   ));

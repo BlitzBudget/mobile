@@ -19,6 +19,8 @@ class ChangePassword extends UseCase {
       return Left(EmptyResponseFailure());
     }
     return await changePasswordRepository.changePassword(
-        accessToken.getOrElse(null), oldPassword, newPassword);
+        accessToken: accessToken.getOrElse(null),
+        oldPassword: oldPassword,
+        newPassword: newPassword);
   }
 }
