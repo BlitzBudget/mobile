@@ -46,6 +46,133 @@ void main() {
           TransactionResponseModel.fromJSON(transactionResponseModelAsJSON);
       expect(transactionModelConverted, equals(transactionResponseModel));
     });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty bank account data',
+        () async {
+      final transactionResponseModelWithEmptyBankAccountAsString = fixture(
+          'responses/partially-emtpy/transaction/empty_bank_account_transaction_info.json');
+      final transactionResponseModelWithEmptyBankAccountAsJSON =
+          jsonDecode(transactionResponseModelWithEmptyBankAccountAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithEmptyBankAccountConverted =
+          convertToResponseModel(
+              transactionResponseModelWithEmptyBankAccountAsJSON);
+      final transactionResponseModelWithEmptyBankAccountFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithEmptyBankAccountAsJSON);
+      expect(transactionResponseModelWithEmptyBankAccountFromJSON,
+          equals(transactionResponseModelWithEmptyBankAccountConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty budget data',
+        () async {
+      final transactionResponseModelWithEmptyBudgetAsString = fixture(
+          'responses/partially-emtpy/transaction/empty_budget_transaction_info.json');
+      final transactionResponseModelWithEmptyBudgetAsJSON =
+          jsonDecode(transactionResponseModelWithEmptyBudgetAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithEmptyBudgetConverted =
+          convertToResponseModel(transactionResponseModelWithEmptyBudgetAsJSON);
+      final transactionResponseModelWithEmptyBudgetFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithEmptyBudgetAsJSON);
+      expect(transactionResponseModelWithEmptyBudgetFromJSON,
+          equals(transactionResponseModelWithEmptyBudgetConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty category data',
+        () async {
+      final transactionResponseModelWithEmptyCategoryAsString = fixture(
+          'responses/partially-emtpy/transaction/empty_category_transaction_info.json');
+      final transactionResponseModelWithEmptyCategoryAsJSON =
+          jsonDecode(transactionResponseModelWithEmptyCategoryAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithEmptyCategoryConverted =
+          convertToResponseModel(
+              transactionResponseModelWithEmptyCategoryAsJSON);
+      final transactionResponseModelWithEmptyCategoryFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithEmptyCategoryAsJSON);
+      expect(transactionResponseModelWithEmptyCategoryFromJSON,
+          equals(transactionResponseModelWithEmptyCategoryConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty date data',
+        () async {
+      final transactionResponseModelWithEmptyDateAsString = fixture(
+          'responses/partially-emtpy/transaction/empty_date_transaction_info.json');
+      final transactionResponseModelWithEmptyDateAsJSON =
+          jsonDecode(transactionResponseModelWithEmptyDateAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithEmptyDateConverted =
+          convertToResponseModel(transactionResponseModelWithEmptyDateAsJSON);
+      final transactionResponseModelWithEmptyDateFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithEmptyDateAsJSON);
+      expect(transactionResponseModelWithEmptyDateFromJSON,
+          equals(transactionResponseModelWithEmptyDateConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty recurring transaction data',
+        () async {
+      final transactionResponseModelWithEmptyRecurringTransactionAsString = fixture(
+          'responses/partially-emtpy/transaction/empty_recurring_transaction_transaction_info.json');
+      final transactionResponseModelWithEmptyRecurringTransactionAsJSON =
+          jsonDecode(
+                  transactionResponseModelWithEmptyRecurringTransactionAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithEmptyRecurringTransactionConverted =
+          convertToResponseModel(
+              transactionResponseModelWithEmptyRecurringTransactionAsJSON);
+      final transactionResponseModelWithEmptyRecurringTransactionFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithEmptyRecurringTransactionAsJSON);
+      expect(
+          transactionResponseModelWithEmptyRecurringTransactionFromJSON,
+          equals(
+              transactionResponseModelWithEmptyRecurringTransactionConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty transaction data',
+        () async {
+      final transactionResponseModelWithEmptyTransactionAsString = fixture(
+          'responses/partially-emtpy/transaction/empty_transaction_transaction_info.json');
+      final transactionResponseModelWithEmptyTransactionAsJSON =
+          jsonDecode(transactionResponseModelWithEmptyTransactionAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithEmptyTransactionConverted =
+          convertToResponseModel(
+              transactionResponseModelWithEmptyTransactionAsJSON);
+      final transactionResponseModelWithEmptyTransactionFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithEmptyTransactionAsJSON);
+      expect(transactionResponseModelWithEmptyTransactionFromJSON,
+          equals(transactionResponseModelWithEmptyTransactionConverted));
+    });
   });
 }
 

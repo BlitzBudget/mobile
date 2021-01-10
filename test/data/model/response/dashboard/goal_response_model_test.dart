@@ -39,6 +39,83 @@ void main() {
           GoalResponseModel.fromJSON(goalResponseModelAsJSON);
       expect(goalModelConverted, equals(goalResponseModel));
     });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty bank account data',
+        () async {
+      final goalResponseModelWithEmptyBankAccountAsString = fixture(
+          'responses/partially-emtpy/goal/empty_bank_account_goal_info.json');
+      final goalResponseModelWithEmptyBankAccountAsJSON =
+          jsonDecode(goalResponseModelWithEmptyBankAccountAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final goalResponseModelWithEmptyBankAccountConverted =
+          convertToResponseModel(goalResponseModelWithEmptyBankAccountAsJSON);
+      final goalResponseModelWithEmptyBankAccountFromJSON =
+          GoalResponseModel.fromJSON(
+              goalResponseModelWithEmptyBankAccountAsJSON);
+      expect(goalResponseModelWithEmptyBankAccountFromJSON,
+          equals(goalResponseModelWithEmptyBankAccountConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty date data',
+        () async {
+      final goalResponseModelWithEmptyDateAsString =
+          fixture('responses/partially-emtpy/goal/empty_date_goal_info.json');
+      final goalResponseModelWithEmptyDateAsJSON =
+          jsonDecode(goalResponseModelWithEmptyDateAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final goalResponseModelWithEmptyDateConverted =
+          convertToResponseModel(goalResponseModelWithEmptyDateAsJSON);
+      final goalResponseModelWithEmptyDateFromJSON =
+          GoalResponseModel.fromJSON(goalResponseModelWithEmptyDateAsJSON);
+      expect(goalResponseModelWithEmptyDateFromJSON,
+          equals(goalResponseModelWithEmptyDateConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty goal data',
+        () async {
+      final goalResponseModelWithEmptyGoalAsString =
+          fixture('responses/partially-emtpy/goal/empty_goal_goal_info.json');
+      final goalResponseModelWithEmptyGoalAsJSON =
+          jsonDecode(goalResponseModelWithEmptyGoalAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final goalResponseModelWithEmptyGoalConverted =
+          convertToResponseModel(goalResponseModelWithEmptyGoalAsJSON);
+      final goalResponseModelWithEmptyGoalFromJSON =
+          GoalResponseModel.fromJSON(goalResponseModelWithEmptyGoalAsJSON);
+      expect(goalResponseModelWithEmptyGoalFromJSON,
+          equals(goalResponseModelWithEmptyGoalConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with empty wallet data',
+        () async {
+      final goalResponseModelWithEmptyWalletAsString =
+          fixture('responses/partially-emtpy/goal/empty_wallet_goal_info.json');
+      final goalResponseModelWithEmptyWalletAsJSON =
+          jsonDecode(goalResponseModelWithEmptyWalletAsString)
+              as Map<String, dynamic>;
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final goalResponseModelWithEmptyWalletConverted =
+          convertToResponseModel(goalResponseModelWithEmptyWalletAsJSON);
+      final goalResponseModelWithEmptyWalletFromJSON =
+          GoalResponseModel.fromJSON(goalResponseModelWithEmptyWalletAsJSON);
+      expect(goalResponseModelWithEmptyWalletFromJSON,
+          equals(goalResponseModelWithEmptyWalletConverted));
+    });
   });
 }
 

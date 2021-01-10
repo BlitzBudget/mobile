@@ -45,6 +45,106 @@ void main() {
       expect(overviewModelConverted, equals(overviewResponseModel));
     });
   });
+
+  test(
+      'Should return a valid model when the JSON is parsed with empty bank account data',
+      () async {
+    final overviewResponseModelWithEmptyBankAccountAsString = fixture(
+        'responses/partially-emtpy/overview/empty_bank_account_overview_info.json');
+    final overviewResponseModelWithEmptyBankAccountAsJSON =
+        jsonDecode(overviewResponseModelWithEmptyBankAccountAsString)
+            as Map<String, dynamic>;
+
+    /// Convert budgets from the response JSON to List<Budget>
+    /// If Empty then return an empty object list
+    final overviewResponseModelWithEmptyBankAccountConverted =
+        convertToResponseModel(overviewResponseModelWithEmptyBankAccountAsJSON);
+    final overviewResponseModelWithEmptyBankAccountFromJSON =
+        OverviewResponseModel.fromJSON(
+            overviewResponseModelWithEmptyBankAccountAsJSON);
+    expect(overviewResponseModelWithEmptyBankAccountFromJSON,
+        equals(overviewResponseModelWithEmptyBankAccountConverted));
+  });
+
+  test(
+      'Should return a valid model when the JSON is parsed with empty category data',
+      () async {
+    final overviewResponseModelWithEmptyCategoryAsString = fixture(
+        'responses/partially-emtpy/overview/empty_category_overview_info.json');
+    final overviewResponseModelWithEmptyCategoryAsJSON =
+        jsonDecode(overviewResponseModelWithEmptyCategoryAsString)
+            as Map<String, dynamic>;
+
+    /// Convert budgets from the response JSON to List<Budget>
+    /// If Empty then return an empty object list
+    final overviewResponseModelWithEmptyCategoryConverted =
+        convertToResponseModel(overviewResponseModelWithEmptyCategoryAsJSON);
+    final overviewResponseModelWithEmptyCategoryFromJSON =
+        OverviewResponseModel.fromJSON(
+            overviewResponseModelWithEmptyCategoryAsJSON);
+    expect(overviewResponseModelWithEmptyCategoryFromJSON,
+        equals(overviewResponseModelWithEmptyCategoryConverted));
+  });
+
+  test(
+      'Should return a valid model when the JSON is parsed with empty date data',
+      () async {
+    final overviewResponseModelWithEmptyDateAsString = fixture(
+        'responses/partially-emtpy/overview/empty_date_overview_info.json');
+    final overviewResponseModelWithEmptyDateAsJSON =
+        jsonDecode(overviewResponseModelWithEmptyDateAsString)
+            as Map<String, dynamic>;
+
+    /// Convert budgets from the response JSON to List<Budget>
+    /// If Empty then return an empty object list
+    final overviewResponseModelWithEmptyDateConverted =
+        convertToResponseModel(overviewResponseModelWithEmptyDateAsJSON);
+    final overviewResponseModelWithEmptyDateFromJSON =
+        OverviewResponseModel.fromJSON(
+            overviewResponseModelWithEmptyDateAsJSON);
+    expect(overviewResponseModelWithEmptyDateFromJSON,
+        equals(overviewResponseModelWithEmptyDateConverted));
+  });
+
+  test(
+      'Should return a valid model when the JSON is parsed with empty transaction data',
+      () async {
+    final overviewResponseModelWithEmptyTransactionAsString = fixture(
+        'responses/partially-emtpy/overview/empty_transaction_overview_info.json');
+    final overviewResponseModelWithEmptyTransactionAsJSON =
+        jsonDecode(overviewResponseModelWithEmptyTransactionAsString)
+            as Map<String, dynamic>;
+
+    /// Convert budgets from the response JSON to List<Budget>
+    /// If Empty then return an empty object list
+    final overviewResponseModelWithEmptyTransactionConverted =
+        convertToResponseModel(overviewResponseModelWithEmptyTransactionAsJSON);
+    final overviewResponseModelWithEmptyTransactionFromJSON =
+        OverviewResponseModel.fromJSON(
+            overviewResponseModelWithEmptyTransactionAsJSON);
+    expect(overviewResponseModelWithEmptyTransactionFromJSON,
+        equals(overviewResponseModelWithEmptyTransactionConverted));
+  });
+
+  test(
+      'Should return a valid model when the JSON is parsed with empty wallet data',
+      () async {
+    final overviewResponseModelWithEmptyWalletAsString = fixture(
+        'responses/partially-emtpy/overview/empty_wallet_overview_info.json');
+    final overviewResponseModelWithEmptyWalletAsJSON =
+        jsonDecode(overviewResponseModelWithEmptyWalletAsString)
+            as Map<String, dynamic>;
+
+    /// Convert budgets from the response JSON to List<Budget>
+    /// If Empty then return an empty object list
+    final overviewResponseModelWithEmptyWalletConverted =
+        convertToResponseModel(overviewResponseModelWithEmptyWalletAsJSON);
+    final overviewResponseModelWithEmptyWalletFromJSON =
+        OverviewResponseModel.fromJSON(
+            overviewResponseModelWithEmptyWalletAsJSON);
+    expect(overviewResponseModelWithEmptyWalletFromJSON,
+        equals(overviewResponseModelWithEmptyWalletConverted));
+  });
 }
 
 OverviewResponseModel convertToResponseModel(
