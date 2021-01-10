@@ -15,6 +15,7 @@ const String confirmForgotPasswordURL =
 const String resendVerificationCodeURL =
     baseURL + '/profile/resend-confirmation-code';
 const String userAttributesURL = baseURL + '/profile/user-attribute';
+const String changePasswordURL = '/profile/change-password';
 
 /// Dashboard URLs
 const String bankAccountURL = baseURL + '/bank-accounts';
