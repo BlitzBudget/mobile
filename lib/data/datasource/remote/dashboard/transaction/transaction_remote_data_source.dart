@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/response/dashboard/transaction_response_model.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
-import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
-import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
 
 abstract class TransactionRemoteDataSource {
-  Future<TransactionResponseModel> fetch(String startsWithDate,
-      String endsWithDate, String defaultWallet, String userId);
+  Future<TransactionResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 
   Future<void> update(TransactionModel updateTransaction);
 
@@ -25,8 +27,11 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
 
   /// Get Transaction
   @override
-  Future<TransactionResponseModel> fetch(String startsWithDate,
-      String endsWithDate, String defaultWallet, String userId) async {
+  Future<TransactionResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate

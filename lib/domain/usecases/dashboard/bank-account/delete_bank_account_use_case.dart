@@ -23,6 +23,6 @@ class DeleteBankAccountUseCase extends UseCase {
     }
 
     return await bankAccountRepository.delete(
-        defaultWallet.getOrElse(null), itemId);
+        walletId: defaultWallet.getOrElse(null), account: itemId);
   }
 }

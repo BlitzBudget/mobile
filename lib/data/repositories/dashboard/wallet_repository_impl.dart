@@ -13,20 +13,28 @@ class WalletRepositoryImpl implements WalletRepository {
   WalletRepositoryImpl({@required this.walletRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<Wallet>>> fetch(String startsWithDate,
-      String endsWithDate, String defaultWallet, String userId) async {
+  Future<Either<Failure, List<Wallet>>> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     try {
       return Right(await walletRemoteDataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId));
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> add(String userId, String currency) async {
+  Future<Either<Failure, void>> add(
+      {@required String userId, @required String currency}) async {
     try {
-      return Right(await walletRemoteDataSource.add(userId, currency));
+      return Right(
+          await walletRemoteDataSource.add(userId: userId, currency: currency));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }
@@ -43,9 +51,11 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   @override
-  Future<Either<Failure, void>> delete(String walletId, String userId) async {
+  Future<Either<Failure, void>> delete(
+      {@required String walletId, @required String userId}) async {
     try {
-      return Right(await walletRemoteDataSource.delete(walletId, userId));
+      return Right(await walletRemoteDataSource.delete(
+          walletId: walletId, userId: userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

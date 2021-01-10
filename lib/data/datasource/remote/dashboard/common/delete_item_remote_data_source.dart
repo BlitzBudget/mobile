@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
 abstract class DeleteItemRemoteDataSource {
-  Future<void> delete(String walletId, String itemId);
+  Future<void> delete({@required String walletId,@required String itemId});
 }
 
 class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
@@ -15,7 +15,7 @@ class DeleteItemRemoteDataSourceImpl implements DeleteItemRemoteDataSource {
 
   /// Delete Item
   @override
-  Future<void> delete(String walletId, String itemId) async {
+  Future<void> delete({@required String walletId,@required  String itemId}) async {
     // JSON for Get budget [_jsonForGetBudget]
     var _jsonForDeleteItem = <String, dynamic>{
       'walletId': walletId,

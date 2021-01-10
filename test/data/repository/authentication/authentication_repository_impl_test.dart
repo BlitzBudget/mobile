@@ -22,7 +22,7 @@ void main() {
         authenticationRemoteDataSource: mockAuthenticationRemoteDataSource);
   });
   test(
-    'Should be a subclass of BankAccount entity',
+    'Should be a subclass of AuthenticationRepository entity',
     () async {
       // assert
       expect(authenticationRepositoryImpl, isA<AuthenticationRepository>());
@@ -60,6 +60,12 @@ void main() {
 
       /// Expect an exception to be thrown
       var f = loginInfo.fold<Failure>((f) => f, (_) => GenericFailure());
+      verify(mockAuthenticationRemoteDataSource.signupUser(
+          acceptLanguage: '',
+          email: '',
+          firstName: '',
+          password: '',
+          surName: ''));
       expect(loginInfo.isLeft(), equals(true));
       expect(f, equals(GenericAuthorizationFailure()));
     });

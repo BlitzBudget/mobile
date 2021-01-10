@@ -35,9 +35,11 @@ class BankAccountRepositoryImpl extends BankAccountRepository {
   }
 
   @override
-  Future<Either<Failure, void>> delete(String walletId, String account) async {
+  Future<Either<Failure, void>> delete(
+      {@required String walletId, @required String account}) async {
     try {
-      return Right(await bankAccountRemoteDataSource.delete(walletId, account));
+      return Right(await bankAccountRemoteDataSource.delete(
+          walletId: walletId, account: account));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

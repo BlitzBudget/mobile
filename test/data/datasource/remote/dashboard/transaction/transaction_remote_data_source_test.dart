@@ -44,7 +44,10 @@ void main() {
           .thenAnswer((_) async => fetchTransactionAsJSON);
       // act
       var transactions = await dataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId);
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
       // assert
       verify(mockHTTPClientImpl.post(constants.transactionURL,
           body: jsonEncode(contentBody), headers: constants.headers));

@@ -12,11 +12,17 @@ class OverviewRepositoryImpl implements OverviewRepository {
   OverviewRepositoryImpl({@required this.overviewRemoteDataSource});
 
   @override
-  Future<Either<Failure, OverviewResponse>> get(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
+  Future<Either<Failure, OverviewResponse>> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     try {
       return Right(await overviewRemoteDataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId));
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

@@ -10,8 +10,11 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/budget_response_model.dart';
 
 abstract class BudgetRemoteDataSource {
-  Future<BudgetResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<BudgetResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 
   Future<void> update(BudgetModel updateBudget);
 
@@ -25,8 +28,11 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
 
   /// Get Budgets
   @override
-  Future<BudgetResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
+  Future<BudgetResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate

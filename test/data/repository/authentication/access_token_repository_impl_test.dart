@@ -20,7 +20,7 @@ void main() {
         accessTokenLocalDataSource: mockAccessTokenLocalDataSource);
   });
   test(
-    'Should be a subclass of BankAccount entity',
+    'Should be a subclass of AccessTokenRepository entity',
     () async {
       // assert
       expect(accessTokenRepositoryImpl, isA<AccessTokenRepository>());
@@ -37,6 +37,7 @@ void main() {
       /// Expect an exception to be thrown
       var f =
           accessTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      verify(mockAccessTokenLocalDataSource.readAccessToken());
       expect(accessTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });

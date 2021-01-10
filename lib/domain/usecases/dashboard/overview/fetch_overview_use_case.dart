@@ -41,8 +41,11 @@ class FetchOverviewUseCase extends UseCase {
       }
     }
 
-    return await overviewRepository.get(
-        startsWithDate, endsWithDate, defaultWallet.getOrElse(null), userId);
+    return await overviewRepository.fetch(
+        startsWithDate: startsWithDate,
+        endsWithDate: endsWithDate,
+        defaultWallet: defaultWallet.getOrElse(null),
+        userId: userId);
     // TODO if default wallet is empty then store them
   }
 }

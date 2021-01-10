@@ -30,7 +30,7 @@ void main() {
         userAttributesRemoteDataSource: mockUserAttributesRemoteDataSource);
   });
   test(
-    'Should be a subclass of BankAccount entity',
+    'Should be a subclass of UserAttributesRepository entity',
     () async {
       // assert
       expect(userAttributesRepositoryImpl, isA<UserAttributesRepository>());
@@ -63,6 +63,8 @@ void main() {
       /// Expect an exception to be thrown
       var f = userAttributesReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
+      verify(
+          mockUserAttributesRemoteDataSource.updateUserAttributes(userModel));
       expect(userAttributesReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

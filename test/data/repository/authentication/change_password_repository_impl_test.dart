@@ -21,7 +21,7 @@ void main() {
         changePasswordRemoteDataSource: mockChangePasswordRemoteDataSource);
   });
   test(
-    'Should be a subclass of BankAccount entity',
+    'Should be a subclass of ChangePasswordRepository entity',
     () async {
       // assert
       expect(changePasswordRepositoryImpl, isA<ChangePasswordRepository>());
@@ -39,6 +39,8 @@ void main() {
       /// Expect an exception to be thrown
       var f = changePasswordReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
+      verify(mockChangePasswordRemoteDataSource.changePassword(
+          accessToken: '', oldPassword: '', newPassword: ''));
       expect(changePasswordReceived.isLeft(), equals(true));
       expect(f, equals(GenericAuthorizationFailure()));
     });

@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/category_remote_data_source.dart';
-import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/common/delete_item_remote_data_source.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
@@ -39,7 +38,7 @@ void main() {
                 headers: constants.headers))
             .thenAnswer((_) async => deleteItemResponseAsJSON);
         // act
-        await dataSource.delete(walletId, categoryId);
+        await dataSource.delete(walletId: walletId, category: categoryId);
         // assert
         verify(mockHTTPClientImpl.post(constants.deleteCategoryURL,
             body: jsonEncode({

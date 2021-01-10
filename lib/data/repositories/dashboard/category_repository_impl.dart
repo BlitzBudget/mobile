@@ -11,9 +11,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({@required this.categoryRemoteDataSource});
 
   @override
-  Future<Either<Failure, void>> delete(String walletId, String category) async {
+  Future<Either<Failure, void>> delete(
+      {@required String walletId, @required String category}) async {
     try {
-      return Right(await categoryRemoteDataSource.delete(walletId, category));
+      return Right(await categoryRemoteDataSource.delete(
+          walletId: walletId, category: category));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

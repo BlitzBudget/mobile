@@ -3,20 +3,22 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
-import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<List<WalletModel>> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<List<WalletModel>> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 
   Future<void> update(WalletModel updateWallet);
 
-  Future<void> delete(String walletId, String userId);
+  Future<void> delete({@required String walletId, @required String userId});
 
-  Future<void> add(String userId, String currency);
+  Future<void> add({@required String userId, @required String currency});
 }
 
 class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
@@ -26,8 +28,11 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Get Wallet
   @override
-  Future<List<WalletModel>> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
+  Future<List<WalletModel>> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -66,7 +71,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Delete Wallet
   @override
-  Future<void> delete(String walletId, String userId) {
+  Future<void> delete({@required String walletId, @required String userId}) {
     // JSON for Get wallet [_jsonForGetWallet]
     var _jsonForDeleteWallet = <String, dynamic>{
       'walletId': walletId,
@@ -84,7 +89,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Add Wallet
   @override
-  Future<void> add(String userId, String currency) {
+  Future<void> add({@required String userId, @required String currency}) {
     // JSON for Get budget [_jsonForAddWallet]
     var _jsonForAddWallet = <String, dynamic>{
       'userId': userId,

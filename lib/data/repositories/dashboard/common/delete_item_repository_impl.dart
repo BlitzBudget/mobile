@@ -11,9 +11,10 @@ class DeleteItemRepositoryImpl implements DeleteItemRepository {
   DeleteItemRepositoryImpl({@required this.deleteItemRemoteDataSource});
 
   @override
-  Future<Either<Failure, void>> delete(String walletId, String itemId) async {
+  Future<Either<Failure, void>> delete({@required String walletId,@required String itemId}) async {
     try {
-      return Right(await deleteItemRemoteDataSource.delete(walletId, itemId));
+      return Right(await deleteItemRemoteDataSource.delete(
+          walletId: walletId, itemId: itemId));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

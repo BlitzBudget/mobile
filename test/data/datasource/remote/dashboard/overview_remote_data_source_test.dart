@@ -41,7 +41,10 @@ void main() {
           .thenAnswer((_) async => fetchOverviewAsJSON);
       // act
       var overviewResponse = await dataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId);
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
       // assert
       verify(mockHTTPClientImpl.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));
@@ -73,7 +76,10 @@ void main() {
           .thenAnswer((_) async => fetchOverviewAsJSON);
       // act
       var overviewResponse = await dataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId);
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
       // assert
       verify(mockHTTPClientImpl.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));

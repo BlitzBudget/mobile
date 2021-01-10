@@ -24,6 +24,6 @@ class AddWalletUseCase extends UseCase {
       return Left(EmptyResponseFailure());
     }
 
-    return await walletRepository.add(userId, currency);
+    return await walletRepository.add(userId: userId, currency: currency);
   }
 }

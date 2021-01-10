@@ -20,7 +20,7 @@ void main() {
         authTokenLocalDataSource: mockAuthTokenLocalDataSource);
   });
   test(
-    'Should be a subclass of BankAccount entity',
+    'Should be a subclass of AuthTokenRepository entity',
     () async {
       // assert
       expect(authTokenRepositoryImpl, isA<AuthTokenRepository>());
@@ -36,6 +36,7 @@ void main() {
       /// Expect an exception to be thrown
       var f =
           authTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      verify(mockAuthTokenLocalDataSource.readAuthToken());
       expect(authTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });

@@ -38,7 +38,7 @@ void main() {
                 headers: constants.headers))
             .thenAnswer((_) async => deleteItemResponseAsJSON);
         // act
-        await dataSource.delete(walletId, itemId);
+        await dataSource.delete(walletId: walletId, itemId: itemId);
         // assert
         verify(mockHTTPClientImpl.post(constants.deleteItemURL,
             body: jsonEncode({

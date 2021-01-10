@@ -23,6 +23,6 @@ class DeleteBudgetUseCase extends UseCase {
     }
 
     return await deleteItemRepository.delete(
-        defaultWallet.getOrElse(null), itemId);
+        walletId: defaultWallet.getOrElse(null), itemId: itemId);
   }
 }

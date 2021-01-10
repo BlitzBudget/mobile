@@ -8,8 +8,11 @@ import 'package:mobile_blitzbudget/data/model/response/dashboard/overview_respon
 import 'package:mobile_blitzbudget/domain/entities/response/overview_response.dart';
 
 abstract class OverviewRemoteDataSource {
-  Future<OverviewResponse> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<OverviewResponse> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 }
 
 class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
@@ -19,8 +22,11 @@ class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
 
   /// Get Wallet
   @override
-  Future<OverviewResponseModel> fetch(String startsWithDate,
-      String endsWithDate, String defaultWallet, String userId) async {
+  Future<OverviewResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate

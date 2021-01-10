@@ -42,7 +42,10 @@ class FetchBudgetUseCase extends UseCase {
     }
 
     return await budgetRepository.fetch(
-        startsWithDate, endsWithDate, defaultWallet.getOrElse(null), userId);
+        startsWithDate: startsWithDate,
+        endsWithDate: endsWithDate,
+        defaultWallet: defaultWallet.getOrElse(null),
+        userId: userId);
     // TODO if default wallet is empty then store them
   }
 }

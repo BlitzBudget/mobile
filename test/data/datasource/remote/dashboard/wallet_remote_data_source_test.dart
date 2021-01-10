@@ -39,7 +39,7 @@ void main() {
                 body: jsonEncode(contentBody), headers: constants.headers))
             .thenAnswer((_) async => addWalletAsJSON);
         // act
-        await dataSource.add(userId, currency);
+        await dataSource.add(userId: userId, currency: currency);
         ;
         // assert
         verify(mockHTTPClientImpl.put(constants.walletURL,
@@ -119,7 +119,7 @@ void main() {
                 headers: constants.headers))
             .thenAnswer((_) async => deleteWalletResponseAsJSON);
         // act
-        await dataSource.delete(walletId, userId);
+        await dataSource.delete(walletId: walletId, userId: userId);
         // assert
         verify(mockHTTPClientImpl.post(constants.walletURL,
             body: jsonEncode({

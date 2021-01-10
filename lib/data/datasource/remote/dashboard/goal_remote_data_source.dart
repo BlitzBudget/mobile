@@ -9,8 +9,11 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_model.dart';
 
 abstract class GoalRemoteDataSource {
-  Future<GoalResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<GoalResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 
   Future<void> update(GoalModel updateGoal);
 
@@ -24,8 +27,11 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
 
   /// Get Goals
   @override
-  Future<GoalResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
+  Future<GoalResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
     var contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate

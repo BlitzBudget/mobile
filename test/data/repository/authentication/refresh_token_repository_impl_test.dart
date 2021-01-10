@@ -21,7 +21,7 @@ void main() {
         refreshTokenLocalDataSource: mockRefreshTokenLocalDataSource);
   });
   test(
-    'Should be a subclass of BankAccount entity',
+    'Should be a subclass of RefreshTokenRepository entity',
     () async {
       // assert
       expect(refreshTokenRepositoryImpl, isA<RefreshTokenRepository>());
@@ -38,6 +38,7 @@ void main() {
       /// Expect an exception to be thrown
       var f =
           refreshTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      verify(mockRefreshTokenLocalDataSource.readRefreshToken());
       expect(refreshTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });
