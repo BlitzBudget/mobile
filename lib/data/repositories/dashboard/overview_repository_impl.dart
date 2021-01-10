@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/error/api-exception.dart';
+import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/overview_remote_data_source.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/overview_response.dart';

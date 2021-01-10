@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_blitzbudget/core/error/api-exception.dart';
+import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';

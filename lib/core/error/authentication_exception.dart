@@ -1,4 +1,4 @@
-import 'package:mobile_blitzbudget/core/failure/authorization-failure.dart';
+import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 
 import '../failure/failure.dart';
 

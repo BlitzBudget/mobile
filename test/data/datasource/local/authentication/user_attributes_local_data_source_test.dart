@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matcher/matcher.dart';
-import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/persistence/secure_key_value_store_impl.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/authentication/user_attributes_local_data_source.dart';
 import 'package:mockito/mockito.dart';

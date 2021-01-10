@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/error/api-exception.dart';
-import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
+import 'package:mobile_blitzbudget/core/error/api_exception.dart';
+import 'package:mobile_blitzbudget/core/error/authentication_exception.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';

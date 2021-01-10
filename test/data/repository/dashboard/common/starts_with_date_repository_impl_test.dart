@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/common/starts_with_date_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';

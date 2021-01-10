@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_blitzbudget/core/error/api-exception.dart';
-import 'package:mobile_blitzbudget/core/failure/api-failure.dart';
+import 'package:mobile_blitzbudget/core/error/api_exception.dart';
+import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/category_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/category_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/category_repository.dart';

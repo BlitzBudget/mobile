@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_blitzbudget/core/error/api-exception.dart';
-import 'package:mobile_blitzbudget/core/failure/api-failure.dart';
+import 'package:mobile_blitzbudget/core/error/api_exception.dart';
+import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/wallet_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/wallet_repository_impl.dart';
@@ -72,8 +72,7 @@ void main() {
           await walletRepositoryImpl.delete(userId: '', walletId: '');
 
       /// Expect an exception to be thrown
-      var f =
-          walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      var f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockWalletRemoteDataSource.delete(userId: '', walletId: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));

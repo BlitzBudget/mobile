@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
+import 'package:mobile_blitzbudget/core/error/authentication_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/authentication/change_password_remote_data_source.dart';

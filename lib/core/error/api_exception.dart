@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../failure/api-failure.dart';
+import '../failure/api_failure.dart';
 import '../failure/failure.dart';
 
 ///

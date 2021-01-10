@@ -1,5 +1,5 @@
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 
 class GenericException implements Exception {
   /// Convert Exception to Failure
