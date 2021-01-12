@@ -13,7 +13,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({@required this.authenticationRemoteDataSource});
 
   @override
-  Future<Either<Failure, UserResponse>> loginUser(
+  Future<Either<Failure, Option<UserResponse>>> loginUser(
       {@required String email, @required String password}) async {
     try {
       return Right(await authenticationRemoteDataSource.attemptLogin(

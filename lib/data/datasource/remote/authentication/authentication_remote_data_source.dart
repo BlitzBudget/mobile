@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/error/authentication_exception.dart';
@@ -12,7 +13,7 @@ import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart'
 import '../../../constants/constants.dart' as constants;
 
 abstract class AuthenticationRemoteDataSource {
-  Future<UserResponseModel> attemptLogin(
+  Future<Option<UserResponseModel>> attemptLogin(
       {@required String email, @required String password});
 
   Future<void> signupUser(
@@ -49,7 +50,7 @@ class AuthenticationRemoteDataSourceImpl
   /// Logging in with Username and Password
   /// If user is not found then signup the user
   @override
-  Future<UserResponseModel> attemptLogin(
+  Future<Option<UserResponseModel>> attemptLogin(
       {@required String email, @required String password}) async {
     try {
       /// Convert email to lowercase and trim
@@ -62,11 +63,11 @@ class AuthenticationRemoteDataSourceImpl
                 'checkPassword': _checkPassword
               }),
               headers: constants.headers)
-          .then<UserResponseModel>((dynamic res) {
+          .then<Option<UserResponseModel>>((dynamic res) {
         developer
             .log('User Attributes  ${res['UserAttributes'] as List<dynamic>}');
 
-        return UserResponseModel.fromJSON(res as Map<String, dynamic>);
+        return Some(UserResponseModel.fromJSON(res as Map<String, dynamic>));
       });
     } on APIException catch (e) {
       dynamic res = e.res;
@@ -87,7 +88,7 @@ class AuthenticationRemoteDataSourceImpl
         }
       }
     }
-    return null;
+    return None();
   }
 
   /// SIGNUP module

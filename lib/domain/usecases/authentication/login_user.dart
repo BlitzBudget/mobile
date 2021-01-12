@@ -17,7 +17,7 @@ class LoginUser extends UseCase {
   AccessTokenRepository accessTokenRepository;
   AuthTokenRepository authTokenRepository;
 
-  Future<Either<Failure, UserResponse>> loginUser(
+  Future<Either<Failure, Option<UserResponse>>> loginUser(
       {@required String email, @required String password}) async {
     /// Change all the email to lower case and trim the string
     email = email.toLowerCase().trim();
@@ -26,12 +26,14 @@ class LoginUser extends UseCase {
         email: email, password: password); // Either<Failure, UserResponse>
 
     if (response.isRight()) {
-      var user = response.getOrElse(null);
+      var userResponse = response.getOrElse(null);
 
       /// If the user information is empty then
-      if (user == null) {
+      if (userResponse.isNone()) {
         return Left(EmptyResponseFailure());
       }
+
+      var user = userResponse.getOrElse(null);
 
       /// Store User Attributes
       await userAttributesRepository.writeUserAttributes(user);

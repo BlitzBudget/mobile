@@ -53,10 +53,13 @@ void main() {
               'checkPassword': false
             }),
             headers: constants.headers));
-        expect(loginResult.accessToken,
+
+        // Option to user response
+        var loginResp = loginResult.getOrElse(null);
+        expect(loginResp.accessToken,
             equals(loginResponseAsJSON['AuthenticationResult']['AccessToken']));
         expect(
-            loginResult.refreshToken,
+            loginResp.refreshToken,
             equals(
                 loginResponseAsJSON['AuthenticationResult']['RefreshToken']));
       },

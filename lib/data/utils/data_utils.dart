@@ -17,6 +17,8 @@ CategoryType parseDynamicAsCategoryType(dynamic obj) {
 String parseDynamicAsString(dynamic obj) {
   if (obj is String) {
     return obj;
+  } else if (obj is int) {
+    return obj.toString();
   }
   return null;
 }

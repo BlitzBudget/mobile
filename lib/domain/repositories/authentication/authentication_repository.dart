@@ -3,7 +3,7 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 
 abstract class AuthenticationRepository {
-  Future<Either<Failure, UserResponse>> loginUser(
+  Future<Either<Failure, Option<UserResponse>>> loginUser(
       {String email, String password});
 
   Future<Either<Failure, void>> signupUser(
