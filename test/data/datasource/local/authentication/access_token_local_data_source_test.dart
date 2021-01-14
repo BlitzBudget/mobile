@@ -45,7 +45,7 @@ void main() {
             .thenThrow(NoValueInCacheException());
         // assert
         expect(() => dataSource.readAccessToken(),
-            t hrowsA(TypeMatcher<NoValueInCacheException>()));
+            throwsA(TypeMatcher<NoValueInCacheException>()));
       },
     );
   });
