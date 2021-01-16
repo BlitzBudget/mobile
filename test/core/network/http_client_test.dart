@@ -178,6 +178,9 @@ void main() {
             () => httpClientImpl.post(constants.budgetURL,
                 headers: constants.headers, body: null),
             throwsA(TypeMatcher<TokenExpiredException>()));
+        // Verify
+        verify(
+            mockRefreshTokenHelper.refreshAuthToken(constants.headers, null));
       },
     );
 

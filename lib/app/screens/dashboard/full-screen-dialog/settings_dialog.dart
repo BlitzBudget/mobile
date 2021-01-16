@@ -22,13 +22,13 @@ class _SettingsDialogState extends State<SettingsDialog> {
   var switch7 = true;
 
   Widget _buildList() {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return ListView(
       children: [
         Padding(padding: EdgeInsets.only(top: 24)),
         ListTile(
           title: Text(
-            "General",
+            'General',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -73,7 +73,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
         SizedBox(height: size.height * 0.01),
         ListTile(
           title: Text(
-            "Extra Security",
+            'Extra Security',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -95,7 +95,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
         SizedBox(height: size.height * 0.01),
         ListTile(
           title: Text(
-            "Got a question?",
+            'Got a question?',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

@@ -214,7 +214,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
 ///
 /// This is an example of a custom widget that an app developer might create for
 /// use on both iOS and Android as part of their brand's unique design.
-class transactionPlaceholderTile extends StatelessWidget {
+class TransactionPlaceHolderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -5,7 +5,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   final String email, password;
 
   /// In the constructor, require a Todo.
-  ForgotPasswordScreen({Key key, this.email = "", this.password = ""})
+  ForgotPasswordScreen({Key key, this.email = '', this.password = ''})
       : super(key: key);
 
   @override

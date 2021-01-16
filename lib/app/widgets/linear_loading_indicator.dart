@@ -6,6 +6,6 @@ class LinearLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
         backgroundColor: primaryLightColor,
-        valueColor: new AlwaysStoppedAnimation<Color>(primaryDisabledColor));
+        valueColor: AlwaysStoppedAnimation<Color>(primaryDisabledColor));
   }
 }

@@ -115,7 +115,7 @@ class _GoalTabState extends State<GoalTab> {
 
   @override
   Widget build(context) {
-    debugPrint("The Goal tab has been clicked");
+    debugPrint('The Goal tab has been clicked');
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,

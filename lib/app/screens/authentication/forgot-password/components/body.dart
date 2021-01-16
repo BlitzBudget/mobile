@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
@@ -18,7 +17,7 @@ class Body extends StatefulWidget {
   Body({Key key, this.email, this.password}) : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(this.email, this.password);
+  _BodyState createState() => _BodyState(email, password);
 }
 
 class _BodyState extends State<Body> {

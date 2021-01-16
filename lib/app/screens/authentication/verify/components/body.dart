@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
-import '../../../../../data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
@@ -32,9 +30,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   /// States
-  bool _btnEnabled = true;
+  final bool _btnEnabled = true;
 
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
   String verificationCode;
   final String verifyEmail = 'Verify Email';
   final String verificationCodeText = 'Your verification code';

@@ -179,7 +179,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
 
   @override
   Widget build(context) {
-    debugPrint("The Transaction tab has been clicked");
+    debugPrint('The Transaction tab has been clicked');
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,

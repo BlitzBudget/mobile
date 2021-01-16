@@ -40,7 +40,6 @@ void main() {
             .thenAnswer((_) async => addWalletAsJSON);
         // act
         await dataSource.add(userId: userId, currency: currency);
-        ;
         // assert
         verify(mockHTTPClientImpl.put(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers));

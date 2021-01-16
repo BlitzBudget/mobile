@@ -8,7 +8,7 @@ import 'domain/repositories/authentication/auth_token_repository.dart';
 /// Global Navigation Key
 ///
 /// Use it to navigate through the app without context
-final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

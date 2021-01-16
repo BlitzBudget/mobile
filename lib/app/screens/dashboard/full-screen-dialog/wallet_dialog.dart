@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'settings_dialog.dart';
-import 'profile_dialog.dart';
-import '../../../constants/constants.dart';
-import 'wallet/add_new_wallet.dart';
-import '../../../widgets/dashboard_widget.dart';
 import '../../../../app/widgets/rounded_button.dart';
-import '../../authentication/welcome/welcome_screen.dart';
+import '../../../constants/constants.dart';
+import '../../../widgets/dashboard_widget.dart';
+import 'profile_dialog.dart';
+import 'settings_dialog.dart';
+import 'wallet/add_new_wallet.dart';
 
 class WalletDialog extends StatelessWidget {
   static const title = 'Wallets';
@@ -108,8 +106,7 @@ class WalletDialog extends StatelessWidget {
 }
 
 class AddNewWalletButton extends StatelessWidget {
-  static const _newWalletMessage = Text(logoutDescription);
-  static const addNewWallet = "Add new wallet";
+  static const addNewWallet = 'Add new wallet';
 
   /// ===========================================================================
   /// Non-shared code below because this tab shows different interfaces. On

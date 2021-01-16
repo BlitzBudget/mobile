@@ -4,7 +4,7 @@ import '../../../widgets/dashboard_widget.dart';
 import 'components/body.dart';
 
 class VerifyScreen extends StatelessWidget {
-  static final title = "Verify email";
+  static final title = 'Verify email';
   final String email, password;
   final bool useVerifyURL;
   final bool showResendVerificationCode;

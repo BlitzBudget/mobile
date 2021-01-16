@@ -66,7 +66,7 @@ class TransactionDetailTab extends StatelessWidget {
                 }
 
                 /// Just a bunch of boxes that simulates loading transaction choices.
-                return transactionPlaceholderTile();
+                return TransactionPlaceHolderTile();
               },
             ),
           ),

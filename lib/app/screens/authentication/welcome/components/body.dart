@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../widgets/rounded_button.dart';
-import '../../Login/login_screen.dart';
 import 'background.dart';
 
 class Body extends StatelessWidget {

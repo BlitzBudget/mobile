@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
-import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/transaction_remote_data_source.dart';

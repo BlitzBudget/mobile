@@ -20,8 +20,8 @@ class UserResponseModel extends UserResponse {
             wallet: wallet);
 
   factory UserResponseModel.fromJSON(Map<String, dynamic> userResponseModel) {
-    var wallets = userResponseModel['Wallet'] as List<dynamic> ?? <dynamic>[];
-    var wallet = wallets.isNotEmpty
+    final wallets = userResponseModel['Wallet'] as List<dynamic> ?? <dynamic>[];
+    final wallet = wallets.isNotEmpty
         ? wallets[0] as Map<String, dynamic>
         : <String, dynamic>{};
     return UserResponseModel(
@@ -32,7 +32,8 @@ class UserResponseModel extends UserResponse {
         accessToken: parseDynamicAsString(
             userResponseModel['AuthenticationResult']['AccessToken']),
         user: UserModel.fromJSON(
-            userResponseModel['UserAttributes'] as List<dynamic>),
+            userResponseModel['UserAttributes'] as List<dynamic> ??
+                <dynamic>[]),
         wallet: WalletModel.fromJSON(wallet));
   }
 }

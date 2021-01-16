@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
@@ -19,13 +18,15 @@ class RefreshTokenHelper {
   final AccessTokenRepository accessTokenRepository;
   final NetworkHelper networkHelper;
   final ClearAllStorageRepository clearAllStorageRepository;
+  final http.Client httpClient;
 
   RefreshTokenHelper(
       {@required this.refreshTokenRepository,
       @required this.authTokenRepository,
       @required this.accessTokenRepository,
       @required this.networkHelper,
-      @required this.clearAllStorageRepository});
+      @required this.clearAllStorageRepository,
+      @required this.httpClient});
 
   /// Refresh authorization token
   ///
@@ -44,15 +45,15 @@ class RefreshTokenHelper {
       await clearStoreAndThrowException();
     }
 
-    return http
+    return httpClient
         .post(refreshTokenURL,
-            body: jsonEncode({'refreshToken': refreshToken}),
+            body: jsonEncode({'refreshToken': refreshToken.getOrElse(null)}),
             headers: headers,
             encoding: encoding)
         .then((response) async {
       debugPrint(' The authorization token has been refreshed successfully.');
 
-      dynamic res = _response(response);
+      dynamic res = await _response(response);
 
       // Set the new Authorization header
       headers['Authorization'] =

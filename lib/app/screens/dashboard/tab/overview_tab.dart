@@ -115,7 +115,7 @@ class _OverviewTabState extends State<OverviewTab> {
 
   @override
   Widget build(context) {
-    debugPrint("The Overview tab has been clicked");
+    debugPrint('The Overview tab has been clicked');
 
     return PlatformWidget(
       androidBuilder: _buildAndroid,

@@ -13,7 +13,7 @@ class ResendVerification extends StatefulWidget {
 
   @override
   _ResendVerificationState createState() =>
-      _ResendVerificationState(this.email);
+      _ResendVerificationState(email);
 }
 
 class _ResendVerificationState extends State<ResendVerification> {
