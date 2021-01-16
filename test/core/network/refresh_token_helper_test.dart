@@ -169,9 +169,7 @@ void main() {
               (_) async => http.Response(refreshTokenResponseString, 200));
     }
 
-    test(
-        'Should return clearStoreAndThrowException if response of refresh token is 200 - 299',
-        () async {
+    test('Should return HTTP 200 response', () async {
       setUpMockHttpClientSuccess200();
       // UserModel from Refresh Token Response
       final userModelAsString =
@@ -189,6 +187,8 @@ void main() {
           encoding: null));
       verify(mockAuthTokenRepository.writeAuthToken(userModel));
       verify(mockAccessTokenRepository.writeAccessToken(userModel));
+      expect(constants.headers['Authorization'],
+          equals(userModel.authenticationToken));
     });
   });
 }

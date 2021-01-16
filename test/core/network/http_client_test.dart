@@ -56,22 +56,20 @@ void main() {
   });
 
   group('Attempt to make a valid API call', () {
+    final addBudgetAsString =
+        fixture('responses/dashboard/budget/add_budget_info.json');
+    final addBudgetAsJSON =
+        jsonDecode(addBudgetAsString) as Map<String, dynamic>;
+    final budget = BudgetModel(
+        walletId: addBudgetAsJSON['body-json']['walletId'] as String,
+        budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
+        categoryType: parseDynamicAsCategoryType(
+            addBudgetAsJSON['body-json']['categoryType']),
+        planned: parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
+        dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor'] as String);
     test(
       'Valid POST call',
       () async {
-        final addBudgetAsString =
-            fixture('responses/dashboard/budget/add_budget_info.json');
-        final addBudgetAsJSON =
-            jsonDecode(addBudgetAsString) as Map<String, dynamic>;
-        final budget = BudgetModel(
-            walletId: addBudgetAsJSON['body-json']['walletId'] as String,
-            budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
-            categoryType: parseDynamicAsCategoryType(
-                addBudgetAsJSON['body-json']['categoryType']),
-            planned:
-                parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-            dateMeantFor:
-                addBudgetAsJSON['body-json']['dateMeantFor'] as String);
         // arrange
         when(mockNetworkHelper.post(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
@@ -83,25 +81,14 @@ void main() {
         // assert
         verify(mockNetworkHelper.post(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
 
     test(
       'Valid PUT call',
       () async {
-        final addBudgetAsString =
-            fixture('responses/dashboard/budget/add_budget_info.json');
-        final addBudgetAsJSON =
-            jsonDecode(addBudgetAsString) as Map<String, dynamic>;
-        final budget = BudgetModel(
-            walletId: addBudgetAsJSON['body-json']['walletId'] as String,
-            budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
-            categoryType: parseDynamicAsCategoryType(
-                addBudgetAsJSON['body-json']['categoryType']),
-            planned:
-                parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-            dateMeantFor:
-                addBudgetAsJSON['body-json']['dateMeantFor'] as String);
         // arrange
         when(mockNetworkHelper.put(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
@@ -113,25 +100,14 @@ void main() {
         // assert
         verify(mockNetworkHelper.put(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
 
     test(
       'Valid PATCH call',
       () async {
-        final addBudgetAsString =
-            fixture('responses/dashboard/budget/add_budget_info.json');
-        final addBudgetAsJSON =
-            jsonDecode(addBudgetAsString) as Map<String, dynamic>;
-        final budget = BudgetModel(
-            walletId: addBudgetAsJSON['body-json']['walletId'] as String,
-            budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
-            categoryType: parseDynamicAsCategoryType(
-                addBudgetAsJSON['body-json']['categoryType']),
-            planned:
-                parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-            dateMeantFor:
-                addBudgetAsJSON['body-json']['dateMeantFor'] as String);
         // arrange
         when(mockNetworkHelper.patch(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
@@ -143,6 +119,8 @@ void main() {
         // assert
         verify(mockNetworkHelper.patch(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
   });
@@ -162,6 +140,8 @@ void main() {
             () => httpClientImpl.post(constants.budgetURL,
                 headers: constants.headers, body: null),
             throwsA(TypeMatcher<EmptyAuthorizationTokenException>()));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
 
@@ -178,9 +158,8 @@ void main() {
             () => httpClientImpl.post(constants.budgetURL,
                 headers: constants.headers, body: null),
             throwsA(TypeMatcher<TokenExpiredException>()));
-        // Verify
-        verify(
-            mockRefreshTokenHelper.refreshAuthToken(constants.headers, null));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
 
@@ -197,6 +176,8 @@ void main() {
             () => httpClientImpl.post(constants.budgetURL,
                 headers: constants.headers, body: null),
             throwsA(TypeMatcher<ClientErrorException>()));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
 
@@ -213,6 +194,8 @@ void main() {
             () => httpClientImpl.post(constants.budgetURL,
                 headers: constants.headers, body: null),
             throwsA(TypeMatcher<ServerErrorException>()));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
 
@@ -229,7 +212,86 @@ void main() {
             () => httpClientImpl.post(constants.budgetURL,
                 headers: constants.headers, body: null),
             throwsA(TypeMatcher<UnknownException>()));
+        // Verify Auth token called
+        verify(mockAuthTokenRepository.readAuthToken());
       },
     );
+  });
+
+  group('Attempt to invoke refresh token', () {
+    test('POST: Invoking Refresh Token Success Scenario', () async {
+      /// Throw 401 Error
+      var callCount = 0;
+      // First Response is 401, Second response is 200
+      when(mockNetworkHelper.post(constants.budgetURL,
+              body: null, headers: constants.headers, encoding: null))
+          .thenAnswer((_) async => [
+                Future.value(http.Response('', 401)),
+                Future.value(http.Response('', 200))
+              ][callCount++]);
+
+      // assert
+      await httpClientImpl.post(constants.budgetURL,
+          headers: constants.headers, body: null);
+      // Verify if a mathod is called twice
+      verify(mockNetworkHelper.post(constants.budgetURL,
+              body: null, headers: constants.headers, encoding: null))
+          .called(2);
+
+      // Verify Auth token called
+      verify(mockAuthTokenRepository.readAuthToken());
+      // Verify Refresh Token
+      verify(mockRefreshTokenHelper.refreshAuthToken(constants.headers, null));
+    });
+
+    test('PUT: Invoking Refresh Token Success Scenario', () async {
+      /// Throw 401 Error
+      var callCount = 0;
+      // First Response is 401, Second response is 200
+      when(mockNetworkHelper.put(constants.budgetURL,
+              body: null, headers: constants.headers, encoding: null))
+          .thenAnswer((_) async => [
+                Future.value(http.Response('', 401)),
+                Future.value(http.Response('', 200))
+              ][callCount++]);
+
+      // assert
+      await httpClientImpl.put(constants.budgetURL,
+          headers: constants.headers, body: null);
+      // Verify if a mathod is called twice
+      verify(mockNetworkHelper.put(constants.budgetURL,
+              body: null, headers: constants.headers, encoding: null))
+          .called(2);
+
+      // Verify Auth token called
+      verify(mockAuthTokenRepository.readAuthToken());
+      // Verify Refresh Token
+      verify(mockRefreshTokenHelper.refreshAuthToken(constants.headers, null));
+    });
+
+    test('PATCH: Invoking Refresh Token Success Scenario', () async {
+      /// Throw 401 Error
+      var callCount = 0;
+      // First Response is 401, Second response is 200
+      when(mockNetworkHelper.patch(constants.budgetURL,
+              body: null, headers: constants.headers, encoding: null))
+          .thenAnswer((_) async => [
+                Future.value(http.Response('', 401)),
+                Future.value(http.Response('', 200))
+              ][callCount++]);
+
+      // assert
+      await httpClientImpl.patch(constants.budgetURL,
+          headers: constants.headers, body: null);
+      // Verify if a mathod is called twice
+      verify(mockNetworkHelper.patch(constants.budgetURL,
+              body: null, headers: constants.headers, encoding: null))
+          .called(2);
+
+      // Verify Auth token called
+      verify(mockAuthTokenRepository.readAuthToken());
+      // Verify Refresh Token
+      verify(mockRefreshTokenHelper.refreshAuthToken(constants.headers, null));
+    });
   });
 }

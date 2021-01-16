@@ -10,6 +10,9 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token
 import 'network_helper.dart';
 import 'refresh_token_helper.dart';
 
+// Possible http calls
+enum HTTPAPICalls { post, put, patch }
+
 abstract class HTTPClient {
   Future<dynamic> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding});
@@ -34,59 +37,22 @@ class HTTPClientImpl implements HTTPClient {
   @override
   Future<dynamic> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    await populateAuthHeader(headers);
-    try {
-      var response =
-          await networkHelper.post(url, body: body, headers: headers);
-      return _response(response);
-    } on SocketException catch (e) {
-      throw ConnectionException(e);
-    } on TokenExpiredException {
-      await refreshTokenHelper.refreshAuthToken(headers, encoding);
-
-      /// Try to fetch the content after refreshing the token
-      var response =
-          await networkHelper.post(url, body: body, headers: headers);
-      return _response(response);
-    }
+    return await processAPICallAndRefreshTokenIfNeeded(
+        url, body, headers, encoding, HTTPAPICalls.post);
   }
 
   @override
   Future<dynamic> put(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    await populateAuthHeader(headers);
-    try {
-      var response = await networkHelper.put(url, body: body, headers: headers);
-      return _response(response);
-    } on SocketException catch (e) {
-      throw ConnectionException(e);
-    } on TokenExpiredException {
-      await refreshTokenHelper.refreshAuthToken(headers, encoding);
-
-      /// Try to fetch the content after refreshing the token
-      var response = await networkHelper.put(url, body: body, headers: headers);
-      return _response(response);
-    }
+    return await processAPICallAndRefreshTokenIfNeeded(
+        url, body, headers, encoding, HTTPAPICalls.put);
   }
 
   @override
   Future<dynamic> patch(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    await populateAuthHeader(headers);
-    try {
-      var response =
-          await networkHelper.patch(url, body: body, headers: headers);
-      return _response(response);
-    } on SocketException catch (e) {
-      throw ConnectionException(e);
-    } on TokenExpiredException {
-      await refreshTokenHelper.refreshAuthToken(headers, encoding);
-
-      /// Try to fetch the content after refreshing the token
-      var response =
-          await networkHelper.patch(url, body: body, headers: headers);
-      return _response(response);
-    }
+    return await processAPICallAndRefreshTokenIfNeeded(
+        url, body, headers, encoding, HTTPAPICalls.patch);
   }
 
   /// Convert Relevant JSON types
@@ -120,5 +86,48 @@ class HTTPClientImpl implements HTTPClient {
     }
     // Set Authorization header
     headers['Authorization'] = authToken.getOrElse(() => '');
+  }
+
+  /// Process API Calls and handle refresh token
+  Future processAPICallAndRefreshTokenIfNeeded(
+      String url,
+      dynamic body,
+      Map<String, String> headers,
+      Encoding encoding,
+      HTTPAPICalls httpapiCalls) async {
+    dynamic res;
+    // Process Authorization Header
+    await populateAuthHeader(headers);
+
+    try {
+      res = await makeAppropriateAPICall(url, body, headers, httpapiCalls);
+    } on SocketException catch (e) {
+      throw ConnectionException(e);
+    } on TokenExpiredException {
+      await refreshTokenHelper.refreshAuthToken(headers, encoding);
+
+      /// Try to fetch the content after refreshing the token
+      res = await makeAppropriateAPICall(url, body, headers, httpapiCalls);
+    }
+    return res;
+  }
+
+  // Make the relevant API Calls
+  Future makeAppropriateAPICall(String url, dynamic body,
+      Map<String, String> headers, HTTPAPICalls httpapiCalls) async {
+    Response response;
+    switch (httpapiCalls) {
+      case HTTPAPICalls.post:
+        response = await networkHelper.post(url, body: body, headers: headers);
+        break;
+      case HTTPAPICalls.put:
+        response = await networkHelper.put(url, body: body, headers: headers);
+        break;
+      case HTTPAPICalls.patch:
+        response = await networkHelper.patch(url, body: body, headers: headers);
+        break;
+      default:
+    }
+    return _response(response);
   }
 }
