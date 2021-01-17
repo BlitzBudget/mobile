@@ -7,8 +7,12 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/change_pas
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class ChangePassword extends UseCase {
-  ChangePasswordRepository changePasswordRepository;
-  AccessTokenRepository accessTokenRepository;
+  final ChangePasswordRepository changePasswordRepository;
+  final AccessTokenRepository accessTokenRepository;
+
+  ChangePassword(
+      {@required this.changePasswordRepository,
+      @required this.accessTokenRepository});
 
   Future<Either<Failure, void>> changePassword(
       {@required String oldPassword, @required String newPassword}) async {

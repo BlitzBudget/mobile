@@ -11,11 +11,18 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attri
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class LoginUser extends UseCase {
-  AuthenticationRepository authenticationRepository;
-  UserAttributesRepository userAttributesRepository;
-  RefreshTokenRepository refreshTokenRepository;
-  AccessTokenRepository accessTokenRepository;
-  AuthTokenRepository authTokenRepository;
+  final AuthenticationRepository authenticationRepository;
+  final UserAttributesRepository userAttributesRepository;
+  final RefreshTokenRepository refreshTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final AuthTokenRepository authTokenRepository;
+
+  LoginUser(
+      {@required this.authenticationRepository,
+      @required this.userAttributesRepository,
+      @required this.refreshTokenRepository,
+      @required this.accessTokenRepository,
+      @required this.authTokenRepository});
 
   Future<Either<Failure, Option<UserResponse>>> loginUser(
       {@required String email, @required String password}) async {

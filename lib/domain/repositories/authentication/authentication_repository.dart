@@ -1,25 +1,27 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 
 abstract class AuthenticationRepository {
   Future<Either<Failure, Option<UserResponse>>> loginUser(
-      {String email, String password});
+      {@required String email, @required String password});
 
   Future<Either<Failure, void>> signupUser(
-      {String email,
-      String password,
-      String firstName,
-      String surName,
-      String acceptLanguage});
+      {@required String email,
+      @required String password,
+      @required String firstName,
+      @required String surName,
+      @required String acceptLanguage});
 
   Future<Either<Failure, void>> verifyEmail(
-      {String email,
-      String password,
-      String verificationCode,
-      bool useVerifyURL});
+      {@required String email,
+      @required String password,
+      @required String verificationCode,
+      @required bool useVerifyURL});
 
   Future<Either<Failure, void>> resendVerificationCode(String email);
 
-  Future<Either<Failure, void>> forgotPassword(String email, String password);
+  Future<Either<Failure, void>> forgotPassword(
+      {@required String email, @required String password});
 }

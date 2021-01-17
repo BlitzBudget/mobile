@@ -74,15 +74,20 @@ class AuthenticationRemoteDataSourceImpl
       if (res['errorType'] != null) {
         /// Conditionally process error messages
         if (includesStr(
-            res['errorMessage'] as String, _userNotFoundException)) {
+                arr: res['errorMessage'] as String, val: _userNotFoundException)
+            .getOrElse(() => false)) {
           /// Navigate user to signup screen
           throw UserNotFoundException();
         } else if (includesStr(
-            res['errorMessage'] as String, _userNotConfirmedException)) {
+                arr: res['errorMessage'] as String,
+                val: _userNotConfirmedException)
+            .getOrElse(() => false)) {
           /// Navigate to the verification screen
           throw UserNotConfirmedException();
         } else if (includesStr(
-            res['errorMessage'] as String, _notAuthorizedException)) {
+                arr: res['errorMessage'] as String,
+                val: _notAuthorizedException)
+            .getOrElse(() => false)) {
           /// Exception to handle invalid credentials
           throw NotAuthorizedException();
         }
@@ -125,7 +130,8 @@ class AuthenticationRemoteDataSourceImpl
       /// UsernameExistsException is excluded from showing error message
       var errorMessage = res['errorMessage'] as String;
       if (isNotEmpty(res['errorType'] as String) &&
-          includesStr(errorMessage, 'UsernameExistsException')) {
+          includesStr(arr: errorMessage, val: 'UsernameExistsException')
+              .getOrElse(() => false)) {
         throw UserAlreadyExistsException();
       }
     }

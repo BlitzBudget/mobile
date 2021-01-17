@@ -71,7 +71,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<Either<Failure, void>> forgotPassword(
-      String email, String password) async {
+      {@required String email, @required String password}) async {
     try {
       return Right(await authenticationRemoteDataSource.forgotPassword(email));
     } on Exception catch (e) {

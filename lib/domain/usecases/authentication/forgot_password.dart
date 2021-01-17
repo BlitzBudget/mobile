@@ -5,14 +5,16 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/authentica
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class ForgotPassword extends UseCase {
-  AuthenticationRepository authenticationRepository;
+  final AuthenticationRepository authenticationRepository;
+
+  ForgotPassword({@required this.authenticationRepository});
 
   Future<Either<Failure, void>> forgotPassword(
       {@required String email, @required String password}) async {
     /// Change all the email to lower case and trim the string
     email = email.toLowerCase().trim();
 
-    return await authenticationRepository.forgotPassword(email, password);
+    return await authenticationRepository.forgotPassword(email: email, password: password);
   }
 }
 /*

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:english_words/english_words.dart';
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ final _random = Random();
 final wordPairIterator = generateWordPairs();
 
 String generateRandomHeadline() {
-  final artist = capitalizePair(wordPairIterator.first);
+  final artist = capitalizePair(wordPairIterator.first).getOrElse(null);
 
   switch (_random.nextInt(10)) {
     case 0:
@@ -36,7 +37,7 @@ String generateRandomHeadline() {
     case 1:
       return '$artist arrested due to ${wordPairIterator.first.join(' ')}';
     case 2:
-      return '$artist releases ${capitalizePair(wordPairIterator.first)}';
+      return '$artist releases ${capitalizePair(wordPairIterator.first).getOrElse(null)}';
     case 3:
       return '$artist talks about his ${nouns[_random.nextInt(nouns.length)]}';
     case 4:
@@ -66,44 +67,46 @@ List<MaterialColor> getRandomColors(int amount) {
 List<String> getRandomNames(int amount) {
   return wordPairIterator
       .take(amount)
-      .map((pair) => capitalizePair(pair))
+      .map((pair) => capitalizePair(pair).getOrElse(null))
       .toList();
 }
 
-String capitalize(String word) {
-  return '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}';
+Option<String> capitalize(String word) {
+  return isEmpty(word)
+      ? None()
+      : Some('${word[0].toUpperCase()}${word.substring(1).toLowerCase()}');
 }
 
-String capitalizePair(WordPair pair) {
-  return '${capitalize(pair.first)} ${capitalize(pair.second)}';
+Option<String> capitalizePair(WordPair pair) {
+  return (pair == null) ? None() : Some(pair.asPascalCase);
 }
 
-dynamic lastElement(List arr) {
-  if (arr.isEmpty) {
-    return arr;
+Option<dynamic> lastElement(List arr) {
+  if (arr == null || arr.isEmpty) {
+    return None<dynamic>();
   } else if (arr.isNotEmpty) {
-    return arr[arr.length - 1];
+    return Some<dynamic>(arr[arr.length - 1]);
   }
-  return arr;
+  return None<dynamic>();
 }
 
-List<String> splitElement(String str, String splitString) {
-  if (includesStr(str, splitString)) {
-    if (isEmpty(str)) {
-      return null;
+Option<List<String>> splitElement({String stringToSplit, String character}) {
+  if (includesStr(val: character, arr: stringToSplit).getOrElse(() => false)) {
+    if (isEmpty(stringToSplit)) {
+      return None();
     } else {
-      return str.split(splitString);
+      return Some(stringToSplit.split(character));
     }
   }
 
-  return null;
+  return None();
 }
 
-bool includesStr(String arr, String val) {
-  if (arr.isEmpty) {
-    return null;
+Option<bool> includesStr({String arr, String val}) {
+  if (val == null || arr == null || arr.isEmpty || val.isEmpty) {
+    return None();
   } else {
-    return arr.contains(val);
+    return Some(arr.contains(val));
   }
 }
 

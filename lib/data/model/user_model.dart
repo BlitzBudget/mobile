@@ -49,7 +49,8 @@ class UserModel extends User {
 
       if (name.contains('custom:')) {
         /// if custom values then remove custom:
-        var elemName = lastElement(splitElement(name, ':')) as String;
+        var elemName = lastElement(splitElement(stringToSplit: name, character: ':')
+            .getOrElse(() => <String>[])).getOrElse(() => '') as String;
         developer.log('User:: The elemName is $elemName');
         currentUserLocal[elemName] = userAttributes[i]['Value'];
       } else {
