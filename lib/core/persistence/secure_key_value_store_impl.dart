@@ -11,7 +11,7 @@ class SecureKeyValueStoreImpl implements SecureKeyValueStore {
   SecureKeyValueStoreImpl({@required this.flutterSecureStorage});
 
   @override
-  Future<String> getString({String key}) async {
+  Future<String> getString({@required String key}) async {
     var value = await flutterSecureStorage.read(key: key);
     // Throw an exception when the data is empty
     if (isEmpty(value)) {
@@ -22,7 +22,7 @@ class SecureKeyValueStoreImpl implements SecureKeyValueStore {
   }
 
   @override
-  Future<void> setString({String value, String key}) async {
+  Future<void> setString({@required String value,@required String key}) async {
     return flutterSecureStorage.write(key: key, value: value);
   }
 }
