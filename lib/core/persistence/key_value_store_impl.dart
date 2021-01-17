@@ -11,7 +11,7 @@ class KeyValueStoreImpl implements KeyValueStore {
   KeyValueStoreImpl({@required this.sharedPreferences});
 
   @override
-  Future<String> getString({String key}) async {
+  Future<String> getString({@required String key}) async {
     var value = sharedPreferences.getString(key);
     // Throw an exception when the data is empty
     if (isEmpty(value)) {
@@ -22,7 +22,7 @@ class KeyValueStoreImpl implements KeyValueStore {
   }
 
   @override
-  Future<void> setString({String value, String key}) async {
+  Future<void> setString({@required String value, @required String key}) async {
     return sharedPreferences.setString(key, value);
   }
 }
