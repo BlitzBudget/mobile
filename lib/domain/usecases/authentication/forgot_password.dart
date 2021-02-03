@@ -11,13 +11,13 @@ class ForgotPassword extends UseCase {
 
   Future<Either<Failure, void>> forgotPassword(
       {@required String email, @required String password}) async {
-    /// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-
-    return await authenticationRepository.forgotPassword(email: email, password: password);
+    return await authenticationRepository.forgotPassword(
+        email: email, password: password);
   }
 }
 /*
+/// Change all the email to lower case and trim the string
+    email = email.toLowerCase().trim();
  if (isEmpty(email)) {
       displayDialog(context, 'Empty Email', 'The email cannot be empty');
       return null;

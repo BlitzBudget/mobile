@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/forgot_password.dart';
 import 'package:mockito/mockito.dart';
@@ -29,8 +30,26 @@ void main() {
       when(mockAuthenticationRepository.forgotPassword(
               email: userEmail, password: userPassword))
           .thenAnswer((_) => Future.value(authenticationMonad));
-      await forgotPassword.forgotPassword(
+      final forgotPasswordResponse = await forgotPassword.forgotPassword(
           email: userEmail, password: userPassword);
+      expect(forgotPasswordResponse.isRight(), equals(true));
+      verify(mockAuthenticationRepository.forgotPassword(
+          email: userEmail, password: userPassword));
+    });
+  });
+
+  group('Error: ForgotPassword', () {
+    test('Should receive a failure response', () async {
+      final userEmail = 'nagarjun_nagesh@outlook.com';
+      final userPassword = 'password';
+      Either<Failure, String> authenticationMonad =
+          Left<Failure, String>(EmptyResponseFailure());
+      when(mockAuthenticationRepository.forgotPassword(
+              email: userEmail, password: userPassword))
+          .thenAnswer((_) => Future.value(authenticationMonad));
+      final forgotPasswordResponse = await forgotPassword.forgotPassword(
+          email: userEmail, password: userPassword);
+      expect(forgotPasswordResponse.isLeft(), equals(true));
       verify(mockAuthenticationRepository.forgotPassword(
           email: userEmail, password: userPassword));
     });

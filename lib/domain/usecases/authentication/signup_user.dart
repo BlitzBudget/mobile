@@ -9,13 +9,12 @@ import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 import 'package:devicelocale/devicelocale.dart';
 
 class SignupUser extends UseCase {
-  AuthenticationRepository authenticationRepository;
+  final AuthenticationRepository authenticationRepository;
 
-  Future<Either<Failure, void>> forgotPassword(
+  SignupUser({@required this.authenticationRepository});
+
+  Future<Either<Failure, void>> signupUser(
       {@required String email, @required String password}) async {
-    /// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-
     // Fetch Names
     var fullname = email.split('@')[0];
     var names = fetchNames(fullname);
@@ -53,7 +52,8 @@ List<String> fetchNames(String fullname) {
 
 // TODO
 /*
-
+/// Change all the email to lower case and trim the string
+    email = email.toLowerCase().trim();
 if (isEmpty(confirmPassword)) {
       displayDialog(
           context, 'Empty Password', 'The confirm password cannot be empty');

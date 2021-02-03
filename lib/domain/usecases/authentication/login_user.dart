@@ -26,9 +26,6 @@ class LoginUser extends UseCase {
 
   Future<Either<Failure, Option<UserResponse>>> loginUser(
       {@required String email, @required String password}) async {
-    /// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-
     var response = await authenticationRepository.loginUser(
         email: email, password: password); // Either<Failure, UserResponse>
 
@@ -59,7 +56,10 @@ class LoginUser extends UseCase {
   }
 }
 
-/*if (isEmpty(email)) {
+/*
+/// Change all the email to lower case and trim the string
+    email = email.toLowerCase().trim();
+if (isEmpty(email)) {
       displayDialog(context, 'Empty Email', 'The email cannot be empty');
       return null;
     } else if (!EmailValidator.validate(email.trim())) {
