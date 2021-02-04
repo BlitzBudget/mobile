@@ -45,27 +45,15 @@ void main() {
 
     test('Should return Generic Authorization Failure', () async {
       when(mockAuthenticationRemoteDataSource.signupUser(
-              acceptLanguage: '',
-              email: '',
-              firstName: '',
-              password: '',
-              surName: ''))
+              email: '', password: ''))
           .thenThrow(EmptyAuthorizationTokenException());
       var loginInfo = await authenticationRepositoryImpl.signupUser(
-          email: '',
-          password: '',
-          acceptLanguage: '',
-          firstName: '',
-          surName: '');
+          email: '', password: '');
 
       /// Expect an exception to be thrown
       var f = loginInfo.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockAuthenticationRemoteDataSource.signupUser(
-          acceptLanguage: '',
-          email: '',
-          firstName: '',
-          password: '',
-          surName: ''));
+          email: '', password: ''));
       expect(loginInfo.isLeft(), equals(true));
       expect(f, equals(GenericAuthorizationFailure()));
     });

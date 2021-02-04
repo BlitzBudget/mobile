@@ -13,6 +13,8 @@ class MockAuthenticationRepository extends Mock
 class MockDevicelocale extends Mock implements Devicelocale {}
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized(); // Initialize service bindings
+
   MockAuthenticationRepository mockAuthenticationRepository;
   SignupUser signupUser;
   const email = 'nagarjun_nagesh@outlook.com';
@@ -30,10 +32,7 @@ void main() {
 
       when(mockAuthenticationRepository.signupUser(
               email: email,
-              password: password,
-              firstName: 'nagarjun',
-              surName: 'nagesh',
-              acceptLanguage: null))
+              password: password))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
       final signupUserResponse =
           await signupUser.signupUser(email: email, password: password);
@@ -47,10 +46,7 @@ void main() {
       final eitherUserResponseMonad = Left<Failure, void>(FetchDataFailure());
       when(mockAuthenticationRepository.signupUser(
               email: email,
-              password: password,
-              firstName: 'nagarjun',
-              surName: 'nagesh',
-              acceptLanguage: null))
+              password: password))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
       final signupUserResponse =
           await signupUser.signupUser(email: email, password: password);

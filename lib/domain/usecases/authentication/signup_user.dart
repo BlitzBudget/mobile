@@ -1,12 +1,9 @@
-import 'dart:developer' as developer;
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/core/constants/constants.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
-import 'package:devicelocale/devicelocale.dart';
 
 class SignupUser extends UseCase {
   final AuthenticationRepository authenticationRepository;
@@ -15,39 +12,11 @@ class SignupUser extends UseCase {
 
   Future<Either<Failure, void>> signupUser(
       {@required String email, @required String password}) async {
-    // Fetch Names
-    var fullname = email.split('@')[0];
-    var names = fetchNames(fullname);
-
-    var acceptLanguage = await Devicelocale.currentLocale;
 
     return authenticationRepository.signupUser(
         email: email,
-        password: password,
-        firstName: names[0],
-        surName: names[1],
-        acceptLanguage: acceptLanguage);
+        password: password);
   }
-}
-
-/// Parse the user name with Email
-List<String> fetchNames(String fullname) {
-  Match match = emailExp.firstMatch(fullname);
-  var name = <String>[];
-
-  if (match == null) {
-    developer.log('No match found for $fullname');
-
-    /// Sur name cannot be empty
-    name.addAll([fullname, ' ']);
-  } else {
-    // TODO SPLIT the name and then assign it to first and surname
-    name.addAll([fullname, ' ']);
-    developer.log(
-        'Fullname $fullname, First match: ${match.start}, end Match: ${match.input}');
-  }
-
-  return name;
 }
 
 // TODO

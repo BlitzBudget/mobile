@@ -26,17 +26,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<Either<Failure, void>> signupUser(
       {@required String email,
-      @required String password,
-      @required String firstName,
-      @required String surName,
-      @required String acceptLanguage}) async {
+      @required String password}) async {
     try {
       return Right(await authenticationRemoteDataSource.signupUser(
           email: email,
-          password: password,
-          firstName: firstName,
-          surName: surName,
-          acceptLanguage: acceptLanguage));
+          password: password));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }

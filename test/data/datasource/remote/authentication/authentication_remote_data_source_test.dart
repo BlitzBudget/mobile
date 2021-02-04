@@ -167,12 +167,7 @@ void main() {
             .thenAnswer((_) async =>
                 signupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
-        await dataSource.signupUser(
-            email: mockEmail,
-            password: mockPassword,
-            firstName: firstName,
-            surName: surname,
-            acceptLanguage: headers['Accept-Language']);
+        await dataSource.signupUser(email: mockEmail, password: mockPassword);
         // assert
         verify(mockHTTPClientImpl.post(constants.signupURL,
             body: jsonEncode({
@@ -207,12 +202,8 @@ void main() {
 
         // assert
         expect(
-            () => dataSource.signupUser(
-                email: mockEmail,
-                password: mockPassword,
-                firstName: firstName,
-                surName: surname,
-                acceptLanguage: headers['Accept-Language']),
+            () =>
+                dataSource.signupUser(email: mockEmail, password: mockPassword),
             throwsA(TypeMatcher<UserAlreadyExistsException>()));
       },
     );

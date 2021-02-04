@@ -16,12 +16,7 @@ abstract class AuthenticationRemoteDataSource {
   Future<Option<UserResponseModel>> attemptLogin(
       {@required String email, @required String password});
 
-  Future<void> signupUser(
-      {@required String email,
-      @required String password,
-      @required String firstName,
-      @required String surName,
-      @required String acceptLanguage});
+  Future<void> signupUser({@required String email, @required String password});
 
   Future<void> verifyEmail(
       {@required String email,
@@ -102,23 +97,16 @@ class AuthenticationRemoteDataSourceImpl
   /// Also invokes the Verification module
   @override
   Future<void> signupUser(
-      {@required String email,
-      @required String password,
-      @required String firstName,
-      @required String surName,
-      @required String acceptLanguage}) async {
+      {@required String email, @required String password}) async {
     try {
       /// Set accept language headers
       var headers = constants.headers;
-      headers['Accept-Language'] = acceptLanguage;
 
       /// Start signup process
       return httpClient.post(constants.signupURL,
           body: jsonEncode({
             'username': email,
             'password': password,
-            'firstname': firstName,
-            'lastname': surName,
             'checkPassword': _checkPassword
           }),
           headers: headers);
