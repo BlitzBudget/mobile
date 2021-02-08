@@ -23,6 +23,40 @@ void main() {
     dataSource = BudgetRemoteDataSourceImpl(httpClient: mockHTTPClientImpl);
   });
 
+  group('Attempt to fetch all budgets', () {
+    test('Should fetch all budgets with wallet id', () async {
+      final fetchBudgetAsString =
+          fixture('responses/dashboard/budget/fetch_budget_info.json');
+      final fetchBudgetAsJSON =
+          jsonDecode(fetchBudgetAsString) as Map<String, dynamic>;
+      final startsWithDate = DateTime.now().toIso8601String();
+      final endsWithDate = startsWithDate;
+      final defaultWallet = fetchBudgetAsJSON['Budget'][0]['walletId'] as String;
+      String userId;
+      final contentBody = <String, dynamic>{
+        'startsWithDate': startsWithDate,
+        'endsWithDate': endsWithDate,
+        'walletId': defaultWallet
+      };
+      // arrange
+      when(mockHTTPClientImpl.post(constants.budgetURL,
+              body: jsonEncode(contentBody), headers: constants.headers))
+          .thenAnswer((_) async => fetchBudgetAsJSON);
+      // act
+      var budget = await dataSource.fetch(
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
+      // assert
+      verify(mockHTTPClientImpl.post(constants.budgetURL,
+          body: jsonEncode(contentBody), headers: constants.headers));
+
+      expect(budget.budgets.first.budgetId,
+          equals(fetchBudgetAsJSON['Budget'][0]['budgetId'] as String));
+    });
+  });
+
   group('Attempt to add a budget', () {
     test(
       'Should add a budget',
@@ -105,3 +139,5 @@ void main() {
     );
   });
 }
+
+// TODO FETCH

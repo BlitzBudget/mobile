@@ -8,7 +8,7 @@ import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/bank_account_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
-import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/add_bank_account_use_case.dart';
+import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/update_bank_account_use_case.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -19,7 +19,7 @@ class MockDefaultWalletRepository extends Mock
     implements DefaultWalletRepository {}
 
 void main() {
-  AddBankAccountUseCase addBankAccountUseCase;
+  UpdateBankAccountUseCase updateBankAccountUseCase;
   MockBankAccountRepository mockBankAccountRepository;
   MockDefaultWalletRepository mockDefaultWalletRepository;
 
@@ -43,7 +43,7 @@ void main() {
   setUp(() {
     mockBankAccountRepository = MockBankAccountRepository();
     mockDefaultWalletRepository = MockDefaultWalletRepository();
-    addBankAccountUseCase = AddBankAccountUseCase(
+    updateBankAccountUseCase = UpdateBankAccountUseCase(
         bankAccountRepository: mockBankAccountRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
   });
@@ -51,28 +51,30 @@ void main() {
   group('Add', () {
     test('Success', () async {
 
-      Either<Failure, void> addBankAccountMonad = Right<Failure, void>('');
+      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
 
-      when(mockBankAccountRepository.add(bankAccount))
-          .thenAnswer((_) => Future.value(addBankAccountMonad));
+      when(mockBankAccountRepository.update(bankAccount))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await addBankAccountUseCase.add(addBankAccount: bankAccount);
+      final bankAccountResponse = await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
 
       expect(bankAccountResponse.isRight(), true);
-      verify(mockBankAccountRepository.add(bankAccount));
+      verify(mockBankAccountRepository.update(bankAccount));
     });
 
     test('Failure', () async {
 
-      Either<Failure, void> addBankAccountMonad = Left<Failure, void>(FetchDataFailure());
+      Either<Failure, void> updateBankAccountMonad = Left<Failure, void>(FetchDataFailure());
 
-      when(mockBankAccountRepository.add(bankAccount))
-          .thenAnswer((_) => Future.value(addBankAccountMonad));
+      when(mockBankAccountRepository.update(bankAccount))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await addBankAccountUseCase.add(addBankAccount: bankAccount);
+      final bankAccountResponse = await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
 
       expect(bankAccountResponse.isLeft(), true);
-      verify(mockBankAccountRepository.add(bankAccount));
+      verify(mockBankAccountRepository.update(bankAccount));
     });
   });
 }
+
+// TODO

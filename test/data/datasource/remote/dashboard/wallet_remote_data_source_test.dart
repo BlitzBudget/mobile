@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
-import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/wallet_remote_data_source.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mockito/mockito.dart';
 
@@ -18,6 +18,40 @@ void main() {
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
     dataSource = WalletRemoteDataSourceImpl(httpClient: mockHTTPClientImpl);
+  });
+
+  group('Attempt to fetch all wallets', () {
+    test('Should fetch all wallets with wallet id', () async {
+      final fetchWalletAsString =
+          fixture('responses/dashboard/wallet/fetch_wallet_info.json');
+      final fetchWalletAsJSON =
+          jsonDecode(fetchWalletAsString) as Map<String, dynamic>;
+      final startsWithDate = DateTime.now().toIso8601String();
+      final endsWithDate = startsWithDate;
+      final defaultWallet = fetchWalletAsJSON['Wallet'][0]['walletId'] as String;
+      String userId;
+      final contentBody = <String, dynamic>{
+        'startsWithDate': startsWithDate,
+        'endsWithDate': endsWithDate,
+        'walletId': defaultWallet
+      };
+      // arrange
+      when(mockHTTPClientImpl.post(constants.walletURL,
+              body: jsonEncode(contentBody), headers: constants.headers))
+          .thenAnswer((_) async => fetchWalletAsJSON);
+      // act
+      var wallet = await dataSource.fetch(
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
+      // assert
+      verify(mockHTTPClientImpl.post(constants.walletURL,
+          body: jsonEncode(contentBody), headers: constants.headers));
+
+      expect(wallet.first.walletId,
+          equals(fetchWalletAsJSON['Wallet'][0]['walletId'] as String));
+    });
   });
 
   group('Attempt to add a wallet', () {
