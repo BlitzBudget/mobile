@@ -51,6 +51,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
       return List<WalletModel>.from((res as Map<String, dynamic>).map<dynamic>(
           (dynamic model) =>
               WalletModel.fromJSON(res as Map<String, dynamic>)));
+              // TODO
     });
   }
 
