@@ -5,10 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
+import 'package:mobile_blitzbudget/data/model/response/dashboard/wallet_response_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 
 abstract class WalletRemoteDataSource {
-  Future<List<WalletModel>> fetch(
+  Future<WalletResponseModel> fetch(
       {@required String startsWithDate,
       @required String endsWithDate,
       @required String defaultWallet,
@@ -28,7 +29,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Get Wallet
   @override
-  Future<List<WalletModel>> fetch(
+  Future<WalletResponseModel> fetch(
       {@required String startsWithDate,
       @required String endsWithDate,
       @required String defaultWallet,
@@ -46,12 +47,9 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
     return httpClient
         .post(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers)
-        .then<List<WalletModel>>((dynamic res) {
+        .then<WalletResponseModel>((dynamic res) {
       debugPrint('The response from the wallet is $res');
-      return List<WalletModel>.from((res as Map<String, dynamic>).map<dynamic>(
-          (dynamic model) =>
-              WalletModel.fromJSON(res as Map<String, dynamic>)));
-              // TODO
+      return WalletResponseModel.fromJSON(res as Map<String, dynamic>);
     });
   }
 

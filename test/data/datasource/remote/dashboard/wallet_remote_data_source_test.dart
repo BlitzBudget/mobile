@@ -49,7 +49,7 @@ void main() {
       verify(mockHTTPClientImpl.post(constants.walletURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(wallet.first.walletId,
+      expect(wallet.wallets.first.walletId,
           equals(fetchWalletAsJSON['Wallet'][0]['walletId'] as String));
     });
   });
