@@ -25,11 +25,11 @@ class FetchOverviewUseCase extends UseCase {
       @required this.defaultWalletRepository,
       @required this.userAttributesRepository});
 
-  Future<Either<Failure, OverviewResponse>> get() async {
+  Future<Either<Failure, OverviewResponse>> fetch() async {
     var startsWithDate = await startsWithDateRepository.readStartsWithDate();
     var endsWithDate = await endsWithDateRepository.readEndsWithDate();
     var defaultWallet = await defaultWalletRepository.readDefaultWallet();
-    String userId;
+    String userId, wallet;
 
     /// Get User id only when the default wallet is empty
     if (defaultWallet.isLeft()) {
@@ -39,12 +39,14 @@ class FetchOverviewUseCase extends UseCase {
       } else {
         return Left(EmptyResponseFailure());
       }
+    } else {
+      wallet = defaultWallet.getOrElse(null);
     }
 
     return await overviewRepository.fetch(
         startsWithDate: startsWithDate,
         endsWithDate: endsWithDate,
-        defaultWallet: defaultWallet.getOrElse(null),
+        defaultWallet: wallet,
         userId: userId);
     // TODO if default wallet is empty then store them
   }
