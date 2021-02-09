@@ -4,27 +4,18 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_with_date_repository.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/recurring_transaction_repository.dart';
 
 import '../../use_case.dart';
 
 class UpdateRecurringTransactionUseCase extends UseCase {
   final RecurringTransactionRepository recurringTransactionRepository;
-  final StartsWithDateRepository startsWithDateRepository;
-  final EndsWithDateRepository endsWithDateRepository;
   final DefaultWalletRepository defaultWalletRepository;
-  final UserAttributesRepository userAttributesRepository;
 
   UpdateRecurringTransactionUseCase(
       {@required this.recurringTransactionRepository,
-      @required this.startsWithDateRepository,
-      @required this.endsWithDateRepository,
-      @required this.defaultWalletRepository,
-      @required this.userAttributesRepository});
+      @required this.defaultWalletRepository});
 
   Future<Either<Failure, void>> update(
       {@required RecurringTransaction updateRecurringTransaction}) async {
@@ -34,7 +25,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   /// Updates to New Amount
   Future<Either<Failure, void>> updateAmount(
-      double newAmount, String recurringTransactionId) async {
+      {@required double newAmount, String recurringTransactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -50,7 +41,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   /// Updates the Description
   Future<Either<Failure, void>> updateDescription(
-      String description, String recurringTransactionId) async {
+      {@required String description, String recurringTransactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -66,7 +57,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   /// Updates the account id
   Future<Either<Failure, void>> updateAccountId(
-      String accountId, String recurringTransactionId) async {
+      {@required String accountId, String recurringTransactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -82,7 +73,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
-      String categoryId, String recurringTransactionId) async {
+      {@required String categoryId, String recurringTransactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -98,7 +89,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   /// Updates the recurrence
   Future<Either<Failure, void>> updateRecurrence(
-      Recurrence recurrence, String recurringTransactionId) async {
+      {@required Recurrence recurrence, String recurringTransactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -114,7 +105,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   /// Updates the tags
   Future<Either<Failure, void>> updateTags(
-      List<String> tags, String recurringTransactionId) async {
+      {@required List<String> tags, String recurringTransactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
