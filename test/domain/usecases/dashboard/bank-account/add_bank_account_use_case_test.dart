@@ -7,7 +7,6 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/bank_account_repository.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/add_bank_account_use_case.dart';
 import 'package:mockito/mockito.dart';
 
@@ -15,13 +14,9 @@ import '../../../../fixtures/fixture_reader.dart';
 
 class MockBankAccountRepository extends Mock implements BankAccountRepository {}
 
-class MockDefaultWalletRepository extends Mock
-    implements DefaultWalletRepository {}
-
 void main() {
   AddBankAccountUseCase addBankAccountUseCase;
   MockBankAccountRepository mockBankAccountRepository;
-  MockDefaultWalletRepository mockDefaultWalletRepository;
 
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
@@ -42,10 +37,8 @@ void main() {
 
   setUp(() {
     mockBankAccountRepository = MockBankAccountRepository();
-    mockDefaultWalletRepository = MockDefaultWalletRepository();
     addBankAccountUseCase = AddBankAccountUseCase(
-        bankAccountRepository: mockBankAccountRepository,
-        defaultWalletRepository: mockDefaultWalletRepository);
+        bankAccountRepository: mockBankAccountRepository);
   });
 
   group('Add', () {

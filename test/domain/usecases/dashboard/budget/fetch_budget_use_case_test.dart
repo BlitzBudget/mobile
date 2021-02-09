@@ -123,7 +123,7 @@ void main() {
           userId: null));
     });
 
-    test('Default Wallet Empty: Success', () async {
+    test('Default Wallet Empty: Failure', () async {
       Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
       final user = User(userId: userId);
       Either<Failure, User> userMonad = Right<Failure, User>(user);
@@ -160,7 +160,7 @@ void main() {
           userId: userId));
     });
 
-    test('Default Wallet Empty && User Attribute Failure: Success', () async {
+    test('Default Wallet Empty && User Attribute Failure: Failure', () async {
       Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
       Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());

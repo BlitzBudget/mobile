@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
@@ -21,7 +23,7 @@ class UpdateBudgetUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updatePlanned(
-      String categoryId, String budgetId) async {
+      {@required double planned,@required String budgetId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -29,13 +31,13 @@ class UpdateBudgetUseCase extends UseCase {
     }
     var walletId = defaultWalletResponse.getOrElse(null);
     final budget =
-        Budget(walletId: walletId, budgetId: budgetId, categoryId: categoryId);
+        Budget(walletId: walletId, budgetId: budgetId, planned: planned);
     return await update(updateBudget: budget);
   }
 
   /// Updates the date meant for
   Future<Either<Failure, void>> updateDateMeantFor(
-      String dateMeantFor, String budgetId) async {
+      {@required String dateMeantFor,@required String budgetId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -49,7 +51,7 @@ class UpdateBudgetUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
-      String categoryId, String budgetId) async {
+      {@required String categoryId,@required String budgetId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
