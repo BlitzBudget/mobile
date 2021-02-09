@@ -51,26 +51,27 @@ void main() {
 
   group('Update', () {
     test('Success', () async {
-
       Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
 
       when(mockBankAccountRepository.update(bankAccount))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
+      final bankAccountResponse =
+          await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
 
       expect(bankAccountResponse.isRight(), true);
       verify(mockBankAccountRepository.update(bankAccount));
     });
 
     test('Failure', () async {
-
-      Either<Failure, void> updateBankAccountMonad = Left<Failure, void>(FetchDataFailure());
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
 
       when(mockBankAccountRepository.update(bankAccount))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
+      final bankAccountResponse =
+          await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
 
       expect(bankAccountResponse.isLeft(), true);
       verify(mockBankAccountRepository.update(bankAccount));
@@ -79,12 +80,11 @@ void main() {
 
   group('UpdateBankAccountName', () {
     final bankAccountModel = BankAccount(
-      walletId: bankAccountModelAsJSON['walletId'] as String,
-      accountId: bankAccountModelAsJSON['accountId'] as String,
-      bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String);
+        walletId: bankAccountModelAsJSON['walletId'] as String,
+        accountId: bankAccountModelAsJSON['accountId'] as String,
+        bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String);
 
     test('Success', () async {
-
       Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
       Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
@@ -94,15 +94,18 @@ void main() {
       when(mockBankAccountRepository.update(bankAccountModel))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await updateBankAccountUseCase.updateBankAccountName(accountId: bankAccountModel.accountId, bankAccountName: bankAccountModel.bankAccountName);
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateBankAccountName(
+              accountId: bankAccountModel.accountId,
+              bankAccountName: bankAccountModel.bankAccountName);
 
       expect(bankAccountResponse.isRight(), true);
       verify(mockBankAccountRepository.update(bankAccountModel));
     });
 
     test('Failure Response: Failure', () async {
-
-      Either<Failure, void> updateBankAccountMonad = Left<Failure, void>(FetchDataFailure());
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
       Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
@@ -111,18 +114,21 @@ void main() {
       when(mockBankAccountRepository.update(bankAccountModel))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await updateBankAccountUseCase.updateBankAccountName(accountId: bankAccountModel.accountId, bankAccountName: bankAccountModel.bankAccountName);
-      final f =
-          bankAccountResponse.fold((failure) => failure, (_) => GenericFailure());
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateBankAccountName(
+              accountId: bankAccountModel.accountId,
+              bankAccountName: bankAccountModel.bankAccountName);
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(bankAccountResponse.isLeft(), true);
       verify(mockBankAccountRepository.update(bankAccountModel));
     });
 
-     test('Read Wallet Id Failure: Failure', () async {
-
-      Either<Failure, void> updateBankAccountMonad = Left<Failure, void>(FetchDataFailure());
+    test('Read Wallet Id Failure: Failure', () async {
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
       Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
@@ -131,15 +137,161 @@ void main() {
       when(mockBankAccountRepository.update(bankAccountModel))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
 
-      final bankAccountResponse = await updateBankAccountUseCase.updateBankAccountName(accountId: bankAccountModel.accountId, bankAccountName: bankAccountModel.bankAccountName);
-      final f =
-          bankAccountResponse.fold((failure) => failure, (_) => GenericFailure());
-          
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateBankAccountName(
+              accountId: bankAccountModel.accountId,
+              bankAccountName: bankAccountModel.bankAccountName);
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
       expect(f, equals(EmptyResponseFailure()));
       expect(bankAccountResponse.isLeft(), true);
       verifyNever(mockBankAccountRepository.update(bankAccountModel));
     });
-  });  
-}
+  });
 
-// TODO
+  group('UpdateSelectedAccount', () {
+    final bankAccountModel = BankAccount(
+        walletId: bankAccountModelAsJSON['walletId'] as String,
+        accountId: bankAccountModelAsJSON['accountId'] as String,
+        selectedAccount: bankAccountModelAsJSON['selected_account'] as bool);
+
+    test('Success', () async {
+      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(bankAccountModel.walletId);
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockBankAccountRepository.update(bankAccountModel))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
+
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateSelectedAccount(
+              accountId: bankAccountModel.accountId,
+              selectedAccount: bankAccountModel.selectedAccount);
+
+      expect(bankAccountResponse.isRight(), true);
+      verify(mockBankAccountRepository.update(bankAccountModel));
+    });
+
+    test('Failure Response: Failure', () async {
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
+      Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(bankAccountModel.walletId);
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockBankAccountRepository.update(bankAccountModel))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
+
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateSelectedAccount(
+              accountId: bankAccountModel.accountId,
+              selectedAccount: bankAccountModel.selectedAccount);
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
+      expect(f, equals(FetchDataFailure()));
+      expect(bankAccountResponse.isLeft(), true);
+      verify(mockBankAccountRepository.update(bankAccountModel));
+    });
+
+    test('Read Wallet Id Failure: Failure', () async {
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
+      Either<Failure, String> dateStringMonad =
+          Left<Failure, String>(FetchDataFailure());
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockBankAccountRepository.update(bankAccountModel))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
+
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateSelectedAccount(
+              accountId: bankAccountModel.accountId,
+              selectedAccount: bankAccountModel.selectedAccount);
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
+      expect(f, equals(EmptyResponseFailure()));
+      expect(bankAccountResponse.isLeft(), true);
+      verifyNever(mockBankAccountRepository.update(bankAccountModel));
+    });
+  });
+
+  group('UpdateAccountBalance', () {
+    final bankAccountModel = BankAccount(
+        walletId: bankAccountModelAsJSON['walletId'] as String,
+        accountId: bankAccountModelAsJSON['accountId'] as String,
+        accountBalance:
+          parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']));
+
+    test('Success', () async {
+      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(bankAccountModel.walletId);
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockBankAccountRepository.update(bankAccountModel))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
+
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateAccountBalance(
+              accountId: bankAccountModel.accountId,
+              accountBalance: bankAccountModel.accountBalance);
+
+      expect(bankAccountResponse.isRight(), true);
+      verify(mockBankAccountRepository.update(bankAccountModel));
+    });
+
+    test('Failure Response: Failure', () async {
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
+      Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(bankAccountModel.walletId);
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockBankAccountRepository.update(bankAccountModel))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
+
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateAccountBalance(
+              accountId: bankAccountModel.accountId,
+              accountBalance: bankAccountModel.accountBalance);
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
+      expect(f, equals(FetchDataFailure()));
+      expect(bankAccountResponse.isLeft(), true);
+      verify(mockBankAccountRepository.update(bankAccountModel));
+    });
+
+    test('Read Wallet Id Failure: Failure', () async {
+      Either<Failure, void> updateBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
+      Either<Failure, String> dateStringMonad =
+          Left<Failure, String>(FetchDataFailure());
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockBankAccountRepository.update(bankAccountModel))
+          .thenAnswer((_) => Future.value(updateBankAccountMonad));
+
+      final bankAccountResponse =
+          await updateBankAccountUseCase.updateAccountBalance(
+              accountId: bankAccountModel.accountId,
+              accountBalance: bankAccountModel.accountBalance);
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
+      expect(f, equals(EmptyResponseFailure()));
+      expect(bankAccountResponse.isLeft(), true);
+      verifyNever(mockBankAccountRepository.update(bankAccountModel));
+    });
+  });
+}
