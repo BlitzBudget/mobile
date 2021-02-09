@@ -94,8 +94,6 @@ void main() {
       Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
       Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
-      final user = User(userId: userId);
-      Either<Failure, User> userMonad = Right<Failure, User>(user);
 
       when(mockBudgetRepository.add(budget))
           .thenAnswer((_) => Future.value(addBudgetMonad));

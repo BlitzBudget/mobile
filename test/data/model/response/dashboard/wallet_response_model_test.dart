@@ -35,45 +35,6 @@ void main() {
     });
 
     test(
-        'Should return a valid model when the JSON is parsed with empty bank account data',
-        () async {
-      final walletResponseModelWithEmptyBankAccountAsString = fixture(
-          'responses/partially-emtpy/wallet/empty_bank_account_wallet_info.json');
-      final walletResponseModelWithEmptyBankAccountAsJSON =
-          jsonDecode(walletResponseModelWithEmptyBankAccountAsString)
-              as Map<String, dynamic>;
-
-      /// Convert budgets from the response JSON to List<Budget>
-      /// If Empty then return an empty object list
-      final walletResponseModelWithEmptyBankAccountConverted =
-          convertToResponseModel(walletResponseModelWithEmptyBankAccountAsJSON);
-      final walletResponseModelWithEmptyBankAccountFromJSON =
-          WalletResponseModel.fromJSON(
-              walletResponseModelWithEmptyBankAccountAsJSON);
-      expect(walletResponseModelWithEmptyBankAccountFromJSON,
-          equals(walletResponseModelWithEmptyBankAccountConverted));
-    });
-
-    test(
-        'Should return a valid model when the JSON is parsed with empty date data',
-        () async {
-      final walletResponseModelWithEmptyDateAsString =
-          fixture('responses/partially-emtpy/wallet/empty_date_wallet_info.json');
-      final walletResponseModelWithEmptyDateAsJSON =
-          jsonDecode(walletResponseModelWithEmptyDateAsString)
-              as Map<String, dynamic>;
-
-      /// Convert budgets from the response JSON to List<Budget>
-      /// If Empty then return an empty object list
-      final walletResponseModelWithEmptyDateConverted =
-          convertToResponseModel(walletResponseModelWithEmptyDateAsJSON);
-      final walletResponseModelWithEmptyDateFromJSON =
-          WalletResponseModel.fromJSON(walletResponseModelWithEmptyDateAsJSON);
-      expect(walletResponseModelWithEmptyDateFromJSON,
-          equals(walletResponseModelWithEmptyDateConverted));
-    });
-
-    test(
         'Should return a valid model when the JSON is parsed with empty wallet data',
         () async {
       final walletResponseModelWithEmptywalletAsString =
@@ -90,25 +51,6 @@ void main() {
           WalletResponseModel.fromJSON(walletResponseModelWithEmptywalletAsJSON);
       expect(walletResponseModelWithEmptywalletFromJSON,
           equals(walletResponseModelWithEmptywalletConverted));
-    });
-
-    test(
-        'Should return a valid model when the JSON is parsed with empty wallet data',
-        () async {
-      final walletResponseModelWithEmptyWalletAsString =
-          fixture('responses/partially-emtpy/wallet/empty_wallet_wallet_info.json');
-      final walletResponseModelWithEmptyWalletAsJSON =
-          jsonDecode(walletResponseModelWithEmptyWalletAsString)
-              as Map<String, dynamic>;
-
-      /// Convert budgets from the response JSON to List<Budget>
-      /// If Empty then return an empty object list
-      final walletResponseModelWithEmptyWalletConverted =
-          convertToResponseModel(walletResponseModelWithEmptyWalletAsJSON);
-      final walletResponseModelWithEmptyWalletFromJSON =
-          WalletResponseModel.fromJSON(walletResponseModelWithEmptyWalletAsJSON);
-      expect(walletResponseModelWithEmptyWalletFromJSON,
-          equals(walletResponseModelWithEmptyWalletConverted));
     });
   });
 }
