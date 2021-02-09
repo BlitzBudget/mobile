@@ -149,8 +149,6 @@ void main() {
         jsonDecode(signupResponseAsString) as Map<String, dynamic>;
     var headers = constants.headers;
     headers['Accept-Language'] = 'en-US';
-    final firstName = 'john_doe';
-    final surname = ' ';
     test(
       'Should return Signup response once a correct email and password combination is provided',
       () async {
@@ -159,8 +157,6 @@ void main() {
                 body: jsonEncode({
                   'username': mockEmail,
                   'password': mockPassword,
-                  'firstname': firstName,
-                  'lastname': surname,
                   'checkPassword': false
                 }),
                 headers: headers))
@@ -173,8 +169,6 @@ void main() {
             body: jsonEncode({
               'username': mockEmail,
               'password': mockPassword,
-              'firstname': firstName,
-              'lastname': surname,
               'checkPassword': false
             }),
             headers: headers));
@@ -193,8 +187,6 @@ void main() {
                 body: jsonEncode({
                   'username': mockEmail,
                   'password': mockPassword,
-                  'firstname': firstName,
-                  'lastname': surname,
                   'checkPassword': false
                 }),
                 headers: constants.headers))
