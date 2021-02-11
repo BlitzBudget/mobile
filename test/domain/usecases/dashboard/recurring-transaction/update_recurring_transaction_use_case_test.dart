@@ -190,10 +190,9 @@ void main() {
 
       final recurringTransactionResponse =
           await updateRecurringTransactionUseCase.updateDescription(
-        recurringTransactionId:
-            recurringTransactionModel.recurringTransactionId,
-        description: recurringTransactionModel.description
-      );
+              recurringTransactionId:
+                  recurringTransactionModel.recurringTransactionId,
+              description: recurringTransactionModel.description);
 
       expect(recurringTransactionResponse.isRight(), true);
       verify(
@@ -270,10 +269,9 @@ void main() {
 
       final recurringTransactionResponse =
           await updateRecurringTransactionUseCase.updateAccountId(
-        recurringTransactionId:
-            recurringTransactionModel.recurringTransactionId,
-        accountId: recurringTransactionModel.accountId
-      );
+              recurringTransactionId:
+                  recurringTransactionModel.recurringTransactionId,
+              accountId: recurringTransactionModel.accountId);
 
       expect(recurringTransactionResponse.isRight(), true);
       verify(
@@ -350,10 +348,9 @@ void main() {
 
       final recurringTransactionResponse =
           await updateRecurringTransactionUseCase.updateCategoryId(
-        recurringTransactionId:
-            recurringTransactionModel.recurringTransactionId,
-        categoryId: recurringTransactionModel.category
-      );
+              recurringTransactionId:
+                  recurringTransactionModel.recurringTransactionId,
+              categoryId: recurringTransactionModel.category);
 
       expect(recurringTransactionResponse.isRight(), true);
       verify(
@@ -417,7 +414,7 @@ void main() {
         recurringTransactionId:
             recurringTransactionModelAsJSON['accountId'] as String,
         recurrence: parseDynamicAsRecurrence(
-          recurringTransactionModelAsJSON['recurrence']));
+            recurringTransactionModelAsJSON['recurrence']));
 
     test('Success', () async {
       Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
@@ -431,10 +428,9 @@ void main() {
 
       final recurringTransactionResponse =
           await updateRecurringTransactionUseCase.updateRecurrence(
-        recurringTransactionId:
-            recurringTransactionModel.recurringTransactionId,
-        recurrence: recurringTransactionModel.recurrence
-      );
+              recurringTransactionId:
+                  recurringTransactionModel.recurringTransactionId,
+              recurrence: recurringTransactionModel.recurrence);
 
       expect(recurringTransactionResponse.isRight(), true);
       verify(
@@ -511,10 +507,9 @@ void main() {
 
       final recurringTransactionResponse =
           await updateRecurringTransactionUseCase.updateTags(
-        recurringTransactionId:
-            recurringTransactionModel.recurringTransactionId,
-        tags: recurringTransactionModel.tags
-      );
+              recurringTransactionId:
+                  recurringTransactionModel.recurringTransactionId,
+              tags: recurringTransactionModel.tags);
 
       expect(recurringTransactionResponse.isRight(), true);
       verify(

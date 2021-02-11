@@ -116,9 +116,5 @@ flutter format .
 flutter upgrade
 
 
-### Flutter Test
-
-* Pending
-Domain Folder
-Data Folder (utils)
-Network Folder
+### Dart Analyser
+dart analyze

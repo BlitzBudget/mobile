@@ -31,8 +31,7 @@ void main() {
       final eitherUserResponseMonad = Right<Failure, void>('');
 
       when(mockAuthenticationRepository.signupUser(
-              email: email,
-              password: password))
+              email: email, password: password))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
       final signupUserResponse =
           await signupUser.signupUser(email: email, password: password);
@@ -45,8 +44,7 @@ void main() {
     test('Should receive a failure response', () async {
       final eitherUserResponseMonad = Left<Failure, void>(FetchDataFailure());
       when(mockAuthenticationRepository.signupUser(
-              email: email,
-              password: password))
+              email: email, password: password))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
       final signupUserResponse =
           await signupUser.signupUser(email: email, password: password);

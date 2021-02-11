@@ -80,8 +80,9 @@ void main() {
       final transactionResponse =
           await deleteTransactionUseCase.delete(itemId: transactionId);
 
-      final f = transactionResponse.fold((failure) => failure, (_) => GenericFailure());
-      
+      final f = transactionResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
       expect(f, EmptyResponseFailure());
       expect(transactionResponse.isLeft(), true);
       verifyNever(mockDeleteItemRepository.delete(

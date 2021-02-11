@@ -23,7 +23,7 @@ class UpdateBudgetUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updatePlanned(
-      {@required double planned,@required String budgetId}) async {
+      {@required double planned, @required String budgetId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -37,7 +37,7 @@ class UpdateBudgetUseCase extends UseCase {
 
   /// Updates the date meant for
   Future<Either<Failure, void>> updateDateMeantFor(
-      {@required String dateMeantFor,@required String budgetId}) async {
+      {@required String dateMeantFor, @required String budgetId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -51,7 +51,7 @@ class UpdateBudgetUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
-      {@required String categoryId,@required String budgetId}) async {
+      {@required String categoryId, @required String budgetId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {

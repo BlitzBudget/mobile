@@ -34,8 +34,7 @@ void main() {
 
   setUp(() {
     mockGoalRepository = MockGoalRepository();
-    updateGoalUseCase = UpdateGoalUseCase(
-        goalRepository: mockGoalRepository);
+    updateGoalUseCase = UpdateGoalUseCase(goalRepository: mockGoalRepository);
   });
 
   group('Update Goal', () {
@@ -45,8 +44,7 @@ void main() {
       when(mockGoalRepository.update(goal))
           .thenAnswer((_) => Future.value(updateGoalMonad));
 
-      final goalResponse =
-          await updateGoalUseCase.update(updateGoal: goal);
+      final goalResponse = await updateGoalUseCase.update(updateGoal: goal);
 
       expect(goalResponse.isRight(), true);
       verify(mockGoalRepository.update(goal));
@@ -59,8 +57,7 @@ void main() {
       when(mockGoalRepository.update(goal))
           .thenAnswer((_) => Future.value(updateGoalMonad));
 
-      final goalResponse =
-          await updateGoalUseCase.update(updateGoal: goal);
+      final goalResponse = await updateGoalUseCase.update(updateGoal: goal);
 
       expect(goalResponse.isLeft(), true);
       verify(mockGoalRepository.update(goal));

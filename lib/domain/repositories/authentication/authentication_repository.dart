@@ -8,8 +8,7 @@ abstract class AuthenticationRepository {
       {@required String email, @required String password});
 
   Future<Either<Failure, void>> signupUser(
-      {@required String email,
-      @required String password});
+      {@required String email, @required String password});
 
   Future<Either<Failure, void>> verifyEmail(
       {@required String email,

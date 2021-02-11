@@ -81,11 +81,9 @@ void main() {
     final userId = 'User#2020-12-21T20:32:06.003Z';
 
     test('Success', () async {
-      
       Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
-      
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
       when(mockEndsWithDateRepository.readEndsWithDate())
@@ -113,13 +111,11 @@ void main() {
     });
 
     test('Default Wallet Empty: Failure', () async {
-      
       final user = User(userId: userId);
       Either<Failure, User> userMonad = Right<Failure, User>(user);
       Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
-      
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
       when(mockEndsWithDateRepository.readEndsWithDate())
@@ -149,13 +145,11 @@ void main() {
     });
 
     test('Default Wallet Empty && User Attribute Failure: Failure', () async {
-      
       Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
       Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
-      
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
       when(mockEndsWithDateRepository.readEndsWithDate())
@@ -179,7 +173,7 @@ void main() {
 
 OverviewResponseModel convertToResponseModel(
     Map<String, dynamic> overviewResponseModelAsJSON) {
- /// Convert transactions from the response JSON to List<Transaction>
+  /// Convert transactions from the response JSON to List<Transaction>
   /// If Empty then return an empty object list
   var responseTransactions = overviewResponseModelAsJSON['Transaction'] as List;
   var convertedTransactions = List<Transaction>.from(

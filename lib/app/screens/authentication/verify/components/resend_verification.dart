@@ -12,8 +12,7 @@ class ResendVerification extends StatefulWidget {
   ResendVerification({Key key, @required this.email}) : super(key: key);
 
   @override
-  _ResendVerificationState createState() =>
-      _ResendVerificationState(email);
+  _ResendVerificationState createState() => _ResendVerificationState(email);
 }
 
 class _ResendVerificationState extends State<ResendVerification> {

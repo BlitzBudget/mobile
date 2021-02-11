@@ -40,35 +40,35 @@ void main() {
       categoryId: transactionModelAsJSON['category'] as String,
       dateMeantFor: transactionModelAsJSON['date_meant_for'] as String);
 
-
   setUp(() {
     mockTransactionRepository = MockTransactionRepository();
-    addTransactionUseCase = AddTransactionUseCase(
-        transactionRepository: mockTransactionRepository);
+    addTransactionUseCase =
+        AddTransactionUseCase(transactionRepository: mockTransactionRepository);
   });
 
   group('Add', () {
     test('Success', () async {
-
       Either<Failure, void> addTransactionMonad = Right<Failure, void>('');
 
       when(mockTransactionRepository.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
 
-      final transactionResponse = await addTransactionUseCase.add(addTransaction: transaction);
+      final transactionResponse =
+          await addTransactionUseCase.add(addTransaction: transaction);
 
       expect(transactionResponse.isRight(), true);
       verify(mockTransactionRepository.add(transaction));
     });
 
     test('Failure', () async {
-
-      Either<Failure, void> addTransactionMonad = Left<Failure, void>(FetchDataFailure());
+      Either<Failure, void> addTransactionMonad =
+          Left<Failure, void>(FetchDataFailure());
 
       when(mockTransactionRepository.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
 
-      final transactionResponse = await addTransactionUseCase.add(addTransaction: transaction);
+      final transactionResponse =
+          await addTransactionUseCase.add(addTransaction: transaction);
 
       expect(transactionResponse.isLeft(), true);
       verify(mockTransactionRepository.add(transaction));

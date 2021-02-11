@@ -37,8 +37,8 @@ void main() {
     test(
         'Should return a valid model when the JSON is parsed with empty wallet data',
         () async {
-      final walletResponseModelWithEmptywalletAsString =
-          fixture('responses/partially-emtpy/wallet/empty_wallet_wallet_info.json');
+      final walletResponseModelWithEmptywalletAsString = fixture(
+          'responses/partially-emtpy/wallet/empty_wallet_wallet_info.json');
       final walletResponseModelWithEmptywalletAsJSON =
           jsonDecode(walletResponseModelWithEmptywalletAsString)
               as Map<String, dynamic>;
@@ -48,7 +48,8 @@ void main() {
       final walletResponseModelWithEmptywalletConverted =
           convertToResponseModel(walletResponseModelWithEmptywalletAsJSON);
       final walletResponseModelWithEmptywalletFromJSON =
-          WalletResponseModel.fromJSON(walletResponseModelWithEmptywalletAsJSON);
+          WalletResponseModel.fromJSON(
+              walletResponseModelWithEmptywalletAsJSON);
       expect(walletResponseModelWithEmptywalletFromJSON,
           equals(walletResponseModelWithEmptywalletConverted));
     });
@@ -57,15 +58,13 @@ void main() {
 
 WalletResponseModel convertToResponseModel(
     Map<String, dynamic> walletResponseModelAsJSON) {
- 
-    /// Convert categories from the response JSON to List<Category>
-    /// If Empty then return an empty object list
-    var responseCategories = walletResponseModelAsJSON['Wallet'] as List;
-    var convertedWallet = List<Wallet>.from(
-        responseCategories?.map<dynamic>((dynamic model) =>
-                WalletModel.fromJSON(model as Map<String, dynamic>)) ??
-            <Wallet>[]);
+  /// Convert categories from the response JSON to List<Category>
+  /// If Empty then return an empty object list
+  var responseCategories = walletResponseModelAsJSON['Wallet'] as List;
+  var convertedWallet = List<Wallet>.from(responseCategories?.map<dynamic>(
+          (dynamic model) =>
+              WalletModel.fromJSON(model as Map<String, dynamic>)) ??
+      <Wallet>[]);
 
-    return WalletResponseModel(
-        wallets: convertedWallet);
+  return WalletResponseModel(wallets: convertedWallet);
 }

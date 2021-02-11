@@ -104,8 +104,8 @@ void main() {
 
       final walletResponse =
           await addWalletUseCase.add(currency: wallet.wallets.first.currency);
-      final f = walletResponse.fold(
-          (failure) => failure, (_) => GenericFailure());
+      final f =
+          walletResponse.fold((failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(walletResponse.isLeft(), true);

@@ -39,10 +39,10 @@ class FetchBudgetUseCase extends UseCase {
       } else {
         return Left(EmptyResponseFailure());
       }
-    } else if(defaultWallet.isRight()) {
+    } else if (defaultWallet.isRight()) {
       wallet = defaultWallet.getOrElse(null);
     }
-    
+
     return await budgetRepository.fetch(
         startsWithDate: startsWithDate,
         endsWithDate: endsWithDate,

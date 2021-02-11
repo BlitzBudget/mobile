@@ -38,16 +38,14 @@ void main() {
 
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
-      when(mockDeleteItemRepository.delete(
-              walletId: walletId, itemId: goalId))
+      when(mockDeleteItemRepository.delete(walletId: walletId, itemId: goalId))
           .thenAnswer((_) => Future.value(addGoalMonad));
 
-      final goalResponse =
-          await deleteGoalUseCase.delete(itemId: goalId);
+      final goalResponse = await deleteGoalUseCase.delete(itemId: goalId);
 
       expect(goalResponse.isRight(), true);
-      verify(mockDeleteItemRepository.delete(
-          itemId: goalId, walletId: walletId));
+      verify(
+          mockDeleteItemRepository.delete(itemId: goalId, walletId: walletId));
     });
 
     test('Failure', () async {
@@ -58,16 +56,14 @@ void main() {
 
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
-      when(mockDeleteItemRepository.delete(
-              walletId: walletId, itemId: goalId))
+      when(mockDeleteItemRepository.delete(walletId: walletId, itemId: goalId))
           .thenAnswer((_) => Future.value(deleteGoalMonad));
 
-      final goalResponse =
-          await deleteGoalUseCase.delete(itemId: goalId);
+      final goalResponse = await deleteGoalUseCase.delete(itemId: goalId);
 
       expect(goalResponse.isLeft(), true);
-      verify(mockDeleteItemRepository.delete(
-          itemId: goalId, walletId: walletId));
+      verify(
+          mockDeleteItemRepository.delete(itemId: goalId, walletId: walletId));
     });
 
     test('ReadDefaultWallet: Failure', () async {
@@ -77,15 +73,15 @@ void main() {
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
 
-      final goalResponse =
-          await deleteGoalUseCase.delete(itemId: goalId);
+      final goalResponse = await deleteGoalUseCase.delete(itemId: goalId);
 
-      final f = goalResponse.fold((failure) => failure, (_) => GenericFailure());
-      
+      final f =
+          goalResponse.fold((failure) => failure, (_) => GenericFailure());
+
       expect(f, EmptyResponseFailure());
       expect(goalResponse.isLeft(), true);
-      verifyNever(mockDeleteItemRepository.delete(
-          itemId: goalId, walletId: walletId));
+      verifyNever(
+          mockDeleteItemRepository.delete(itemId: goalId, walletId: walletId));
     });
   });
 }

@@ -42,8 +42,7 @@ void main() {
               walletId: walletId, itemId: budgetId))
           .thenAnswer((_) => Future.value(addBudgetMonad));
 
-      final budgetResponse =
-          await deleteBudgetUseCase.delete(itemId: budgetId);
+      final budgetResponse = await deleteBudgetUseCase.delete(itemId: budgetId);
 
       expect(budgetResponse.isRight(), true);
       verify(mockDeleteItemRepository.delete(
@@ -62,8 +61,7 @@ void main() {
               walletId: walletId, itemId: budgetId))
           .thenAnswer((_) => Future.value(deleteBudgetMonad));
 
-      final budgetResponse =
-          await deleteBudgetUseCase.delete(itemId: budgetId);
+      final budgetResponse = await deleteBudgetUseCase.delete(itemId: budgetId);
 
       expect(budgetResponse.isLeft(), true);
       verify(mockDeleteItemRepository.delete(
@@ -77,11 +75,11 @@ void main() {
       when(mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
 
-      final budgetResponse =
-          await deleteBudgetUseCase.delete(itemId: budgetId);
+      final budgetResponse = await deleteBudgetUseCase.delete(itemId: budgetId);
 
-      final f =budgetResponse.fold((failure) => failure, (_) => GenericFailure());
-      
+      final f =
+          budgetResponse.fold((failure) => failure, (_) => GenericFailure());
+
       expect(f, EmptyResponseFailure());
       expect(budgetResponse.isLeft(), true);
       verifyNever(mockDeleteItemRepository.delete(

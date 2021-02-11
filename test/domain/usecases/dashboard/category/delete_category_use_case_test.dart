@@ -80,8 +80,9 @@ void main() {
       final categoryResponse =
           await deleteCategoryUseCase.delete(itemId: categoryId);
 
-      final f =categoryResponse.fold((failure) => failure, (_) => GenericFailure());
-      
+      final f =
+          categoryResponse.fold((failure) => failure, (_) => GenericFailure());
+
       expect(f, EmptyResponseFailure());
       expect(categoryResponse.isLeft(), true);
       verifyNever(mockCategoryRepository.delete(

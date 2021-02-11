@@ -108,8 +108,7 @@ void main() {
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updatePlanned(
-          budgetId: budgetModel.budgetId,
-          planned: budgetModel.planned);
+          budgetId: budgetModel.budgetId, planned: budgetModel.planned);
       final f =
           budgetResponse.fold((failure) => failure, (_) => GenericFailure());
 
@@ -130,8 +129,7 @@ void main() {
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updatePlanned(
-          budgetId: budgetModel.budgetId,
-          planned: budgetModel.planned);
+          budgetId: budgetModel.budgetId, planned: budgetModel.planned);
       final f =
           budgetResponse.fold((failure) => failure, (_) => GenericFailure());
 
@@ -158,7 +156,8 @@ void main() {
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateDateMeantFor(
-          budgetId: budgetModel.budgetId, dateMeantFor: budgetModel.dateMeantFor);
+          budgetId: budgetModel.budgetId,
+          dateMeantFor: budgetModel.dateMeantFor);
 
       expect(budgetResponse.isRight(), true);
       verify(mockBudgetRepository.update(budgetModel));
@@ -211,9 +210,10 @@ void main() {
 
   group('UpdateCategoryId', () {
     final budgetModel = Budget(
-        walletId: budgetModelAsJSON['walletId'] as String,
-        budgetId: budgetModelAsJSON['accountId'] as String,
-        categoryId: budgetModelAsJSON['category'] as String,);
+      walletId: budgetModelAsJSON['walletId'] as String,
+      budgetId: budgetModelAsJSON['accountId'] as String,
+      categoryId: budgetModelAsJSON['category'] as String,
+    );
 
     test('Success', () async {
       Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
@@ -244,8 +244,7 @@ void main() {
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateCategoryId(
-          budgetId: budgetModel.budgetId,
-          categoryId: budgetModel.categoryId);
+          budgetId: budgetModel.budgetId, categoryId: budgetModel.categoryId);
       final f =
           budgetResponse.fold((failure) => failure, (_) => GenericFailure());
 
@@ -266,8 +265,7 @@ void main() {
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateCategoryId(
-          budgetId: budgetModel.budgetId,
-          categoryId: budgetModel.categoryId);
+          budgetId: budgetModel.budgetId, categoryId: budgetModel.categoryId);
       final f =
           budgetResponse.fold((failure) => failure, (_) => GenericFailure());
 

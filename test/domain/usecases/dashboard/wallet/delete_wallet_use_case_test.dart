@@ -41,8 +41,7 @@ void main() {
       when(mockWalletRepository.delete(userId: userId, walletId: walletId))
           .thenAnswer((_) => Future.value(addWalletMonad));
 
-      final walletResponse =
-          await deleteWalletUseCase.delete(itemId: walletId);
+      final walletResponse = await deleteWalletUseCase.delete(itemId: walletId);
 
       expect(walletResponse.isRight(), true);
       verify(mockWalletRepository.delete(walletId: walletId, userId: userId));
@@ -57,8 +56,7 @@ void main() {
       when(mockWalletRepository.delete(userId: userId, walletId: walletId))
           .thenAnswer((_) => Future.value(deleteWalletMonad));
 
-      final walletResponse =
-          await deleteWalletUseCase.delete(itemId: walletId);
+      final walletResponse = await deleteWalletUseCase.delete(itemId: walletId);
 
       expect(walletResponse.isLeft(), true);
       verify(mockWalletRepository.delete(walletId: walletId, userId: userId));
@@ -70,11 +68,10 @@ void main() {
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userFailure));
 
-      final walletResponse =
-          await deleteWalletUseCase.delete(itemId: walletId);
+      final walletResponse = await deleteWalletUseCase.delete(itemId: walletId);
 
-      final f = walletResponse.fold(
-          (failure) => failure, (_) => GenericFailure());
+      final f =
+          walletResponse.fold((failure) => failure, (_) => GenericFailure());
 
       expect(f, EmptyResponseFailure());
       expect(walletResponse.isLeft(), true);

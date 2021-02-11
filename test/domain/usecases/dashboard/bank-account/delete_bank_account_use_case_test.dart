@@ -80,8 +80,9 @@ void main() {
       final bankAccountResponse =
           await deleteBankAccountUseCase.delete(itemId: accountId);
 
-      final f =bankAccountResponse.fold((failure) => failure, (_) => GenericFailure());
-      
+      final f = bankAccountResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
       expect(f, EmptyResponseFailure());
       expect(bankAccountResponse.isLeft(), true);
       verifyNever(mockBankAccountRepository.delete(

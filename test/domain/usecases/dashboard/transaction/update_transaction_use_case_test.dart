@@ -15,8 +15,7 @@ import 'package:mockito/mockito.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
-class MockTransactionRepository extends Mock
-    implements TransactionRepository {}
+class MockTransactionRepository extends Mock implements TransactionRepository {}
 
 class MockDefaultWalletRepository extends Mock
     implements DefaultWalletRepository {}
@@ -58,15 +57,13 @@ void main() {
 
   group('Update Transaction', () {
     test('Success', () async {
-      Either<Failure, void> updateTransactionMonad =
-          Right<Failure, void>('');
+      Either<Failure, void> updateTransactionMonad = Right<Failure, void>('');
 
       when(mockTransactionRepository.update(transaction))
           .thenAnswer((_) => Future.value(updateTransactionMonad));
 
       final transactionResponse =
-          await updateTransactionUseCase.update(
-              updateTransaction: transaction);
+          await updateTransactionUseCase.update(updateTransaction: transaction);
 
       expect(transactionResponse.isRight(), true);
       verify(mockTransactionRepository.update(transaction));
@@ -80,8 +77,7 @@ void main() {
           .thenAnswer((_) => Future.value(updateTransactionMonad));
 
       final transactionResponse =
-          await updateTransactionUseCase.update(
-              updateTransaction: transaction);
+          await updateTransactionUseCase.update(updateTransaction: transaction);
 
       expect(transactionResponse.isLeft(), true);
       verify(mockTransactionRepository.update(transaction));
@@ -91,10 +87,8 @@ void main() {
   group('UpdateAmount', () {
     final transactionModel = Transaction(
         walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId:
-            transactionModelAsJSON['accountId'] as String,
-        amount:
-            parseDynamicAsDouble(transactionModelAsJSON['amount']));
+        transactionId: transactionModelAsJSON['accountId'] as String,
+        amount: parseDynamicAsDouble(transactionModelAsJSON['amount']));
 
     test('Success', () async {
       Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
@@ -106,15 +100,12 @@ void main() {
       when(mockTransactionRepository.update(transactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
-      final transactionResponse =
-          await updateTransactionUseCase.updateAmount(
-              transactionId:
-                  transactionModel.transactionId,
-              newAmount: transactionModel.amount);
+      final transactionResponse = await updateTransactionUseCase.updateAmount(
+          transactionId: transactionModel.transactionId,
+          newAmount: transactionModel.amount);
 
       expect(transactionResponse.isRight(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -128,18 +119,15 @@ void main() {
       when(mockTransactionRepository.update(transactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
-      final transactionResponse =
-          await updateTransactionUseCase.updateAmount(
-              transactionId:
-                  transactionModel.transactionId,
-              newAmount: transactionModel.amount);
+      final transactionResponse = await updateTransactionUseCase.updateAmount(
+          transactionId: transactionModel.transactionId,
+          newAmount: transactionModel.amount);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(transactionResponse.isLeft(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -153,26 +141,22 @@ void main() {
       when(mockTransactionRepository.update(transactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
-      final transactionResponse =
-          await updateTransactionUseCase.updateAmount(
-              transactionId:
-                  transactionModel.transactionId,
-              newAmount: transactionModel.amount);
+      final transactionResponse = await updateTransactionUseCase.updateAmount(
+          transactionId: transactionModel.transactionId,
+          newAmount: transactionModel.amount);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(transactionResponse.isLeft(), true);
-      verifyNever(
-          mockTransactionRepository.update(transactionModel));
+      verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
 
   group('UpdateDescription', () {
     final transactionModel = Transaction(
         walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId:
-            transactionModelAsJSON['accountId'] as String,
+        transactionId: transactionModelAsJSON['accountId'] as String,
         description: transactionModelAsJSON['description'] as String);
 
     test('Success', () async {
@@ -187,14 +171,11 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateDescription(
-        transactionId:
-            transactionModel.transactionId,
-        description: transactionModel.description
-      );
+              transactionId: transactionModel.transactionId,
+              description: transactionModel.description);
 
       expect(transactionResponse.isRight(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -210,16 +191,14 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateDescription(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               description: transactionModel.description);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(transactionResponse.isLeft(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -235,24 +214,21 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateDescription(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               description: transactionModel.description);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(transactionResponse.isLeft(), true);
-      verifyNever(
-          mockTransactionRepository.update(transactionModel));
+      verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
 
   group('UpdateAccountId', () {
     final transactionModel = Transaction(
         walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId:
-            transactionModelAsJSON['accountId'] as String,
+        transactionId: transactionModelAsJSON['accountId'] as String,
         accountId: transactionModelAsJSON['account'] as String);
 
     test('Success', () async {
@@ -267,14 +243,11 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateAccountId(
-        transactionId:
-            transactionModel.transactionId,
-        accountId: transactionModel.accountId
-      );
+              transactionId: transactionModel.transactionId,
+              accountId: transactionModel.accountId);
 
       expect(transactionResponse.isRight(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -290,16 +263,14 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateAccountId(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               accountId: transactionModel.accountId);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(transactionResponse.isLeft(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -315,24 +286,21 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateAccountId(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               accountId: transactionModel.accountId);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(transactionResponse.isLeft(), true);
-      verifyNever(
-          mockTransactionRepository.update(transactionModel));
+      verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
 
   group('UpdateCategoryId', () {
     final transactionModel = Transaction(
         walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId:
-            transactionModelAsJSON['accountId'] as String,
+        transactionId: transactionModelAsJSON['accountId'] as String,
         categoryId: transactionModelAsJSON['category'] as String);
 
     test('Success', () async {
@@ -347,14 +315,11 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateCategoryId(
-        transactionId:
-            transactionModel.transactionId,
-        categoryId: transactionModel.categoryId
-      );
+              transactionId: transactionModel.transactionId,
+              categoryId: transactionModel.categoryId);
 
       expect(transactionResponse.isRight(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -370,16 +335,14 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateCategoryId(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               categoryId: transactionModel.categoryId);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(transactionResponse.isLeft(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -395,26 +358,23 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateCategoryId(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               categoryId: transactionModel.categoryId);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(transactionResponse.isLeft(), true);
-      verifyNever(
-          mockTransactionRepository.update(transactionModel));
+      verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
 
   group('UpdateRecurrence', () {
     final transactionModel = Transaction(
         walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId:
-            transactionModelAsJSON['accountId'] as String,
-        recurrence: parseDynamicAsRecurrence(
-          transactionModelAsJSON['recurrence']));
+        transactionId: transactionModelAsJSON['accountId'] as String,
+        recurrence:
+            parseDynamicAsRecurrence(transactionModelAsJSON['recurrence']));
 
     test('Success', () async {
       Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
@@ -428,14 +388,11 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateRecurrence(
-        transactionId:
-            transactionModel.transactionId,
-        recurrence: transactionModel.recurrence
-      );
+              transactionId: transactionModel.transactionId,
+              recurrence: transactionModel.recurrence);
 
       expect(transactionResponse.isRight(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -451,16 +408,14 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateRecurrence(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               recurrence: transactionModel.recurrence);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(transactionResponse.isLeft(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -476,24 +431,21 @@ void main() {
 
       final transactionResponse =
           await updateTransactionUseCase.updateRecurrence(
-              transactionId:
-                  transactionModel.transactionId,
+              transactionId: transactionModel.transactionId,
               recurrence: transactionModel.recurrence);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(transactionResponse.isLeft(), true);
-      verifyNever(
-          mockTransactionRepository.update(transactionModel));
+      verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
 
   group('UpdateTags', () {
     final transactionModel = Transaction(
         walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId:
-            transactionModelAsJSON['accountId'] as String,
+        transactionId: transactionModelAsJSON['accountId'] as String,
         tags: tags);
 
     test('Success', () async {
@@ -506,16 +458,12 @@ void main() {
       when(mockTransactionRepository.update(transactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
-      final transactionResponse =
-          await updateTransactionUseCase.updateTags(
-        transactionId:
-            transactionModel.transactionId,
-        tags: transactionModel.tags
-      );
+      final transactionResponse = await updateTransactionUseCase.updateTags(
+          transactionId: transactionModel.transactionId,
+          tags: transactionModel.tags);
 
       expect(transactionResponse.isRight(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -529,18 +477,15 @@ void main() {
       when(mockTransactionRepository.update(transactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
-      final transactionResponse =
-          await updateTransactionUseCase.updateTags(
-              transactionId:
-                  transactionModel.transactionId,
-              tags: transactionModel.tags);
+      final transactionResponse = await updateTransactionUseCase.updateTags(
+          transactionId: transactionModel.transactionId,
+          tags: transactionModel.tags);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(transactionResponse.isLeft(), true);
-      verify(
-          mockTransactionRepository.update(transactionModel));
+      verify(mockTransactionRepository.update(transactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -554,18 +499,15 @@ void main() {
       when(mockTransactionRepository.update(transactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
-      final transactionResponse =
-          await updateTransactionUseCase.updateTags(
-              transactionId:
-                  transactionModel.transactionId,
-              tags: transactionModel.tags);
+      final transactionResponse = await updateTransactionUseCase.updateTags(
+          transactionId: transactionModel.transactionId,
+          tags: transactionModel.tags);
       final f = transactionResponse.fold(
           (failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(transactionResponse.isLeft(), true);
-      verifyNever(
-          mockTransactionRepository.update(transactionModel));
+      verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
 }

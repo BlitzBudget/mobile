@@ -9,8 +9,7 @@ import '../../use_case.dart';
 class AddBankAccountUseCase extends UseCase {
   final BankAccountRepository bankAccountRepository;
 
-  AddBankAccountUseCase(
-      {@required this.bankAccountRepository});
+  AddBankAccountUseCase({@required this.bankAccountRepository});
 
   Future<Either<Failure, void>> add(
       {@required BankAccount addBankAccount}) async {

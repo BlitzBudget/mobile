@@ -227,7 +227,7 @@ void main() {
         walletId: bankAccountModelAsJSON['walletId'] as String,
         accountId: bankAccountModelAsJSON['accountId'] as String,
         accountBalance:
-          parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']));
+            parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']));
 
     test('Success', () async {
       Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');

@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
@@ -12,10 +11,8 @@ class SignupUser extends UseCase {
 
   Future<Either<Failure, void>> signupUser(
       {@required String email, @required String password}) async {
-
     return authenticationRepository.signupUser(
-        email: email,
-        password: password);
+        email: email, password: password);
   }
 }
 

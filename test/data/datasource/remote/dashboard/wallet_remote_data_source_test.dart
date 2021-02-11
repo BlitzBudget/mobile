@@ -28,7 +28,8 @@ void main() {
           jsonDecode(fetchWalletAsString) as Map<String, dynamic>;
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet = fetchWalletAsJSON['Wallet'][0]['walletId'] as String;
+      final defaultWallet =
+          fetchWalletAsJSON['Wallet'][0]['walletId'] as String;
       String userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,

@@ -23,7 +23,7 @@ class UpdateBankAccountUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateBankAccountName(
-      {@required String bankAccountName,@required String accountId}) async {
+      {@required String bankAccountName, @required String accountId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -39,7 +39,7 @@ class UpdateBankAccountUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateSelectedAccount(
-      {@required bool selectedAccount,@required String accountId}) async {
+      {@required bool selectedAccount, @required String accountId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -55,7 +55,7 @@ class UpdateBankAccountUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateAccountBalance(
-      {@required double accountBalance,@required String accountId}) async {
+      {@required double accountBalance, @required String accountId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {

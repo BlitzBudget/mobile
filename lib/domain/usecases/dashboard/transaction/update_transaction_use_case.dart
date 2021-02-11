@@ -24,7 +24,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates to New Amount
   Future<Either<Failure, void>> updateAmount(
-      {@required double newAmount,@required String transactionId}) async {
+      {@required double newAmount, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -38,7 +38,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates the Description
   Future<Either<Failure, void>> updateDescription(
-      {@required String description,@required String transactionId}) async {
+      {@required String description, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -54,7 +54,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates the account id
   Future<Either<Failure, void>> updateAccountId(
-      {@required String accountId,@required String transactionId}) async {
+      {@required String accountId, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -68,7 +68,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates the date meant for
   Future<Either<Failure, void>> updateDateMeantFor(
-      {@required String dateMeantFor,@required String transactionId}) async {
+      {@required String dateMeantFor, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -84,7 +84,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
-      {@required String categoryId,@required String transactionId}) async {
+      {@required String categoryId, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -100,7 +100,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates the recurrence
   Future<Either<Failure, void>> updateRecurrence(
-      {@required Recurrence recurrence,@required String transactionId}) async {
+      {@required Recurrence recurrence, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -116,7 +116,7 @@ class UpdateTransactionUseCase extends UseCase {
 
   /// Updates the tags
   Future<Either<Failure, void>> updateTags(
-      {@required List<String> tags,@required String transactionId}) async {
+      {@required List<String> tags, @required String transactionId}) async {
     var defaultWalletResponse =
         await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {

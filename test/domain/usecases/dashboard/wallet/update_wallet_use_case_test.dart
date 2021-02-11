@@ -40,7 +40,8 @@ void main() {
 
   setUp(() {
     mockWalletRepository = MockWalletRepository();
-    updateWalletUseCase = UpdateWalletUseCase(walletRepository: mockWalletRepository);
+    updateWalletUseCase =
+        UpdateWalletUseCase(walletRepository: mockWalletRepository);
   });
 
   group('Update Wallet', () {
@@ -84,8 +85,7 @@ void main() {
           .thenAnswer((_) => Future.value(updateWalletMonad));
 
       final walletResponse = await updateWalletUseCase.updateWalletName(
-          walletId: walletModel.walletId,
-          name: walletModel.walletName);
+          walletId: walletModel.walletId, name: walletModel.walletName);
 
       expect(walletResponse.isRight(), true);
       verify(mockWalletRepository.update(walletModel));
@@ -99,10 +99,9 @@ void main() {
           .thenAnswer((_) => Future.value(updateWalletMonad));
 
       final walletResponse = await updateWalletUseCase.updateWalletName(
-          walletId: walletModel.walletId,
-          name: walletModel.walletName);
-      final f = walletResponse.fold(
-          (failure) => failure, (_) => GenericFailure());
+          walletId: walletModel.walletId, name: walletModel.walletName);
+      final f =
+          walletResponse.fold((failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(walletResponse.isLeft(), true);
@@ -121,10 +120,8 @@ void main() {
       when(mockWalletRepository.update(walletModel))
           .thenAnswer((_) => Future.value(updateWalletMonad));
 
-      final walletResponse =
-          await updateWalletUseCase.updateCurrency(
-              walletId: walletModel.walletId,
-              currency: walletModel.currency);
+      final walletResponse = await updateWalletUseCase.updateCurrency(
+          walletId: walletModel.walletId, currency: walletModel.currency);
 
       expect(walletResponse.isRight(), true);
       verify(mockWalletRepository.update(walletModel));
@@ -137,12 +134,10 @@ void main() {
       when(mockWalletRepository.update(walletModel))
           .thenAnswer((_) => Future.value(updateWalletMonad));
 
-      final walletResponse =
-          await updateWalletUseCase.updateCurrency(
-              walletId: walletModel.walletId,
-              currency: walletModel.currency);
-      final f = walletResponse.fold(
-          (failure) => failure, (_) => GenericFailure());
+      final walletResponse = await updateWalletUseCase.updateCurrency(
+          walletId: walletModel.walletId, currency: walletModel.currency);
+      final f =
+          walletResponse.fold((failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(FetchDataFailure()));
       expect(walletResponse.isLeft(), true);

@@ -22,7 +22,7 @@ class SecureKeyValueStoreImpl implements SecureKeyValueStore {
   }
 
   @override
-  Future<void> setString({@required String value,@required String key}) async {
+  Future<void> setString({@required String value, @required String key}) async {
     return flutterSecureStorage.write(key: key, value: value);
   }
 }

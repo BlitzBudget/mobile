@@ -37,16 +37,13 @@ void main() {
       targetDate: goalModelAsJSON['preferable_target_date'] as String,
       targetId: goalModelAsJSON['target_id'] as String);
 
-
   setUp(() {
     mockGoalRepository = MockGoalRepository();
-    addGoalUseCase = AddGoalUseCase(
-        goalRepository: mockGoalRepository);
+    addGoalUseCase = AddGoalUseCase(goalRepository: mockGoalRepository);
   });
 
   group('Add', () {
     test('Success', () async {
-
       Either<Failure, void> addGoalMonad = Right<Failure, void>('');
 
       when(mockGoalRepository.add(goal))
@@ -59,8 +56,8 @@ void main() {
     });
 
     test('Failure', () async {
-
-      Either<Failure, void> addGoalMonad = Left<Failure, void>(FetchDataFailure());
+      Either<Failure, void> addGoalMonad =
+          Left<Failure, void>(FetchDataFailure());
 
       when(mockGoalRepository.add(goal))
           .thenAnswer((_) => Future.value(addGoalMonad));

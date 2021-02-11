@@ -37,32 +37,33 @@ void main() {
 
   setUp(() {
     mockBankAccountRepository = MockBankAccountRepository();
-    addBankAccountUseCase = AddBankAccountUseCase(
-        bankAccountRepository: mockBankAccountRepository);
+    addBankAccountUseCase =
+        AddBankAccountUseCase(bankAccountRepository: mockBankAccountRepository);
   });
 
   group('Add', () {
     test('Success', () async {
-
       Either<Failure, void> addBankAccountMonad = Right<Failure, void>('');
 
       when(mockBankAccountRepository.add(bankAccount))
           .thenAnswer((_) => Future.value(addBankAccountMonad));
 
-      final bankAccountResponse = await addBankAccountUseCase.add(addBankAccount: bankAccount);
+      final bankAccountResponse =
+          await addBankAccountUseCase.add(addBankAccount: bankAccount);
 
       expect(bankAccountResponse.isRight(), true);
       verify(mockBankAccountRepository.add(bankAccount));
     });
 
     test('Failure', () async {
-
-      Either<Failure, void> addBankAccountMonad = Left<Failure, void>(FetchDataFailure());
+      Either<Failure, void> addBankAccountMonad =
+          Left<Failure, void>(FetchDataFailure());
 
       when(mockBankAccountRepository.add(bankAccount))
           .thenAnswer((_) => Future.value(addBankAccountMonad));
 
-      final bankAccountResponse = await addBankAccountUseCase.add(addBankAccount: bankAccount);
+      final bankAccountResponse =
+          await addBankAccountUseCase.add(addBankAccount: bankAccount);
 
       expect(bankAccountResponse.isLeft(), true);
       verify(mockBankAccountRepository.add(bankAccount));
