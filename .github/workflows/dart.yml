@@ -15,7 +15,7 @@ jobs:
     # available. See https://hub.docker.com/r/fluttersdk/fluttersdk for the available
     # images.
     container:
-      image:  fluttersdk/fluttersdk:latest
+      image:  mobiledevops/flutter-sdk-image:v1.12.13-hotfix.5
 
     steps:
       - uses: actions/checkout@v2
