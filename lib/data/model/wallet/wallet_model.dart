@@ -3,7 +3,7 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 class WalletModel extends Wallet {
   /// Optional field: wallet id, wallet name, total debt balance, wallet balance, total asset balance
-  WalletModel({
+  const WalletModel({
     String walletId,
     String userId,
     String walletName,
@@ -25,7 +25,7 @@ class WalletModel extends Wallet {
     return WalletModel(
         walletId: parseDynamicAsString(wallet['walletId']),
         userId: parseDynamicAsString(wallet['userId']),
-        walletName: parseDynamicAsString(wallet['name']),
+        walletName: parseDynamicAsString(wallet['wallet_name']),
         currency: parseDynamicAsString(wallet['currency']),
         totalDebtBalance: parseDynamicAsDouble(wallet['total_debt_balance']),
         walletBalance: parseDynamicAsDouble(wallet['wallet_balance']),
@@ -37,6 +37,9 @@ class WalletModel extends Wallet {
         'walletId': walletId,
         'userId': userId,
         'currency': currency,
-        'name': walletName
+        'walletName': walletName,
+        'totalDebtBalance': totalDebtBalance,
+        'totalAssetBalance': totalAssetBalance,
+        'walletBalance': walletBalance
       };
 }

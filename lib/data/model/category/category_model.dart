@@ -3,7 +3,7 @@ import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
 class CategoryModel extends Category {
-  CategoryModel(
+  const CategoryModel(
       {final String categoryId,
       final String walletId,
       final String categoryName,
@@ -23,6 +23,15 @@ class CategoryModel extends Category {
         walletId: parseDynamicAsString(category['walletId']),
         categoryName: parseDynamicAsString(category['category_name']),
         categoryTotal: parseDynamicAsDouble(category['category_total']),
-        categoryType: parseDynamicToCategoryType(category['category_type']));
+        categoryType: parseDynamicAsCategoryType(category['category_type']));
   }
+
+  /// Budget to JSON
+  Map<String, dynamic> toJSON() => <String, dynamic>{
+        'walletId': walletId,
+        'categoryId': categoryId,
+        'categoryName': categoryName,
+        'categoryTotal': categoryTotal,
+        'categoryType': categoryType.name
+      };
 }

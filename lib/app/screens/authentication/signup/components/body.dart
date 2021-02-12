@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
 import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
@@ -14,32 +13,31 @@ import 'social_icon.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
-  final String email, password;
-
   /// In the constructor, require a Todo.
-  Body({Key key, @required this.email, @required this.password})
+  const Body({Key key, @required this.email, @required this.password})
       : super(key: key);
 
+  final String email, password;
+
   @override
-  _BodyState createState() => _BodyState(email, password);
+  _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  /// Constructor for the private class
+  _BodyState();
+
   /// States
   bool _btnEnabled = true;
 
-  final String email, password;
   String confirmPassword;
   final signupText = 'SIGNUP';
   final yourEmail = 'Your Email';
   String signupButton = 'SIGNUP';
 
-  /// Constructor for the private class
-  _BodyState(this.email, this.password);
-
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -48,27 +46,28 @@ class _BodyState extends State<Body> {
             ///  Linear Progress indicator for loading
             /// Show text only when the button is enabled
             Visibility(
-                visible: _btnEnabled,
-                child: Text(
-                  signupText,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                replacement: LinearLoadingIndicator()),
+              visible: _btnEnabled,
+              replacement: const LinearLoadingIndicator(),
+              child: Text(
+                signupText,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               'assets/icons/signup.svg',
               height: size.height * 0.35,
             ),
             Text(
-              email,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              widget.email,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             RoundedPassword(
                 onChanged: (value) {
                   confirmPassword = value;
                 },
                 autofocus: true),
-            PasswordConstraint(),
+            const PasswordConstraint(),
             RoundedButton(
               text: signupButton,
               press: () async {
@@ -94,7 +93,7 @@ class _BodyState extends State<Body> {
                 Navigator.pushNamed(context, loginRoute);
               },
             ),
-            OrDivider(),
+            const OrDivider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

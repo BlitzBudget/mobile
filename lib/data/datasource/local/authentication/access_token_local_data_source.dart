@@ -8,21 +8,21 @@ abstract class AccessTokenLocalDataSource {
 }
 
 class AccessTokenLocalDataSourceImpl implements AccessTokenLocalDataSource {
-  final SecureKeyValueStore secureKeyValueStore;
-
   AccessTokenLocalDataSourceImpl({@required this.secureKeyValueStore});
+
+  final SecureKeyValueStore secureKeyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _accessToken = 'access_token';
+  static const String _accessToken = 'access_token';
 
   /// ------------------------------------------------------------
   /// Method that returns the user access token
   /// ------------------------------------------------------------
   @override
   Future<String> readAccessToken() async {
-    return await secureKeyValueStore.getString(key: _accessToken);
+    return secureKeyValueStore.getString(key: _accessToken);
   }
 
   /// ----------------------------------------------------------

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String text;
-  final Function press;
-  final Color color, textColor, disabledColor;
-  final bool enabled;
   const RoundedButton({
     Key key,
     this.text,
@@ -16,16 +12,21 @@ class RoundedButton extends StatelessWidget {
     this.disabledColor = primaryDisabledColor,
   }) : super(key: key);
 
+  final String text;
+  final Function press;
+  final Color color, textColor, disabledColor;
+  final bool enabled;
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(29),
         child: FlatButton(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           color: color,
           disabledColor: disabledColor,
           onPressed: () => enabled ? press : null,

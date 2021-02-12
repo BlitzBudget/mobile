@@ -6,11 +6,11 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_al
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ClearAllStorageRepositoryImpl implements ClearAllStorageRepository {
-  final SharedPreferences sharedPreferences;
-  final FlutterSecureStorage flutterSecureStorage;
-
   ClearAllStorageRepositoryImpl(
       {@required this.sharedPreferences, @required this.flutterSecureStorage});
+
+  final SharedPreferences sharedPreferences;
+  final FlutterSecureStorage flutterSecureStorage;
 
   @override
   Future<void> clearAllStorage() async {

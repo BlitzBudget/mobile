@@ -141,13 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.4"
-  devicelocale:
-    dependency: "direct main"
+  effective_dart:
+    dependency: "direct dev"
     description:
-      name: devicelocale
+      name: effective_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.3"
+    version: "1.3.0"
   email_validator:
     dependency: "direct main"
     description:

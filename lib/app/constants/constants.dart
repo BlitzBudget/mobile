@@ -18,7 +18,7 @@ const String verifyRoute = '/verify';
 const String forgotPasswordRoute = '/forgot-password';
 
 // Profile Tab
-const String logoutDescription = "Are you sure?";
+const String logoutDescription = 'Are you sure?';
 const String logoutTitle = 'Log out';
 const String logoutConfirmation = 'Log out?';
 const String logoutButton = 'Logout';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../components/rounded_input_field.dart';
@@ -11,13 +9,9 @@ import 'resend_verification.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
-  final String email, password;
-  final bool useVerifyURL;
-  final bool showResendVerificationCode;
-
   /// In the constructor, require a Todo.
   /// The verify URL is true by default
-  Body(
+  const Body(
       {Key key,
       @required this.email,
       @required this.password,
@@ -25,32 +19,29 @@ class Body extends StatefulWidget {
       this.showResendVerificationCode})
       : super(key: key);
 
-  @override
-  _BodyState createState() =>
-      _BodyState(email, password, useVerifyURL, showResendVerificationCode);
-}
-
-class _BodyState extends State<Body> {
-  /// States
-  bool _btnEnabled = true;
-
-  AuthenticationRemoteDataSource _AuthenticationRemoteDataSource;
-  String verificationCode;
-  final String verifyEmail = 'Verify Email';
-  final String verificationCodeText = 'Your verification code';
-  String verifyButton = 'VERIFY';
-  // Required parameters
   final String email, password;
   final bool useVerifyURL;
   final bool showResendVerificationCode;
 
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   /// In the constructor, require a body state.
-  _BodyState(this.email, this.password, this.useVerifyURL,
-      this.showResendVerificationCode);
+  _BodyState();
+
+  /// States
+  final bool _btnEnabled = true;
+
+  String verificationCode;
+  final String verifyEmail = 'Verify Email';
+  final String verificationCodeText = 'Your verification code';
+  String verifyButton = 'VERIFY';
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -60,11 +51,11 @@ class _BodyState extends State<Body> {
             /// Show text only when the button is enabled
             Visibility(
                 visible: _btnEnabled,
+                replacement: const LinearLoadingIndicator(),
                 child: Text(
                   verifyEmail,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                replacement: LinearLoadingIndicator()),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                )),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               'assets/icons/signup.svg',
@@ -96,8 +87,8 @@ class _BodyState extends State<Body> {
 
             /// Show text only when the showResendVerificationCode is enabled
             Visibility(
-              visible: showResendVerificationCode,
-              child: ResendVerification(email: email),
+              visible: widget.showResendVerificationCode,
+              child: ResendVerification(email: widget.email),
             ),
           ],
         ),

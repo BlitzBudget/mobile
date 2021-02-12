@@ -1,0 +1,59 @@
+{
+    "body-json": {
+      "name": "Nagarjun",
+      "family_name": "Nages",
+      "username": "nagarjun_nagesh@outlook.com"
+    },
+    "params": {
+      "path": {},
+      "querystring": {},
+      "header": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en",
+        "Authorization": "eyJraWQiOiJtNkhwVHRYQVNweE96MU5rS2JHT2xYSzA2b3RNNlVkak5RUkRidXJ5SXJrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1OTMxMmUyYS00OGQ1LTQyOTctYWJiOC1lOGI1M2E0M2EyZGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiY3VzdG9tOmZpbmFuY2lhbFBvcnRmb2xpb0lkIjoiVXNlciMyMDIwLTEyLTIxVDIwOjMyOjA2LjAwM1oiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9jamZDOHFOaUIiLCJjb2duaXRvOnVzZXJuYW1lIjoibmFnYXJqdW5fbmFnZXNoQG91dGxvb2suY29tIiwibG9jYWxlIjoiZW4tVVMiLCJhdWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsImV2ZW50X2lkIjoiOGVlNGIyNTItOTg2ZC00NTc5LWEwMzItMDkzMGJjNTgxMmVkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MTAxOTk2NjcsIm5hbWUiOiJOYWdhcmp1biIsImN1c3RvbTpleHBvcnRGaWxlRm9ybWF0IjoiWExTIiwiZXhwIjoxNjEwMjAzMjY3LCJpYXQiOjE2MTAxOTk2NjcsImZhbWlseV9uYW1lIjoiTmFnZXNoIiwiZW1haWwiOiJuYWdhcmp1bl9uYWdlc2hAb3V0bG9vay5jb20ifQ.kL6Q7e2Qped9sAsnuKv38u6vDZ--NkJOa34zpbEJsbz88iCCW2j8pQh6yEhG4qnIeROZSxMRTqtE-aFiLxHrSBYKjToFINvxBDG8BZS5O5I9JHQ8QtdXYHKe1vI7Mm1CODhvcY1o14B_-o6iW87zX9fNVGYZVSnexVaT-mVT2B8-SSHMYPGlAhw7_Rp_4kmbtsDAz0GOLRZy-YIiPGvW5Y0e6ike4YwaEzGgd_-26uyD5wtxhDiUhknlm4lineVpRctkFSFzvKiJGETTZodJO7Vru_NZ6EE-JbiQlFUyUCfdq-4mVC7MONx5X1xSi4tihoSNxQZ9SAlaLpSkzNzm9g",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "ES",
+        "content-type": "application/json;charset=UTF-8",
+        "Host": "api.blitzbudget.com",
+        "origin": "https://app.blitzbudget.com",
+        "sec-ch-ua": "\"Google Chrome\";v=\"87\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"87\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+        "Via": "2.0 cbd142ed1a4d4c12006d99756547bb8a.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "e2ayjs3B-ME-QBeThZaabdmJkcbrgAFfLRtbR3u6-Xkehua8aKobIg==",
+        "X-Amzn-Trace-Id": "Root=1-5ff9b28f-387a90e77c6b7bca46cf2c6b",
+        "X-Forwarded-For": "88.26.96.134, 52.46.44.131",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+      }
+    },
+    "stage-variables": {},
+    "context": {
+      "account-id": "",
+      "api-id": "xx0rmrzjr0",
+      "api-key": "",
+      "authorizer-principal-id": "",
+      "caller": "",
+      "cognito-authentication-provider": "",
+      "cognito-authentication-type": "",
+      "cognito-identity-id": "",
+      "cognito-identity-pool-id": "",
+      "http-method": "POST",
+      "stage": "prod",
+      "source-ip": "88.26.96.134",
+      "user": "",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+      "user-arn": "",
+      "request-id": "998783ba-1693-4dff-845b-cfd5d9513d85",
+      "resource-id": "pwwyb1",
+      "resource-path": "/profile/user-attribute"
+    }
+  }

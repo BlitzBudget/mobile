@@ -1,24 +1,52 @@
 import 'account_type.dart';
 
-class AccountSubType {
-  const AccountSubType(String val);
+enum AccountSubType {
+  savingsAccount,
+  currentAccount,
+  cash,
+  assets,
+  creditCard,
+  liability
+}
 
-  static const AccountSubType savingsAccount =
-      AccountSubType('Savings Account');
-  static const AccountSubType currentAccount =
-      AccountSubType('Current Account');
-  static const AccountSubType cash = AccountSubType('Cash');
-  static const AccountSubType assets = AccountSubType('Assets');
-  static const AccountSubType creditCard = AccountSubType('Credit Card');
-  static const AccountSubType liability = AccountSubType('Liability');
+extension AccountSubTypeExtension on AccountSubType {
+  /// Account Sub Type conversion to String name
+  String get name {
+    switch (this) {
+      case AccountSubType.savingsAccount:
+        return 'Savings Account';
+      case AccountSubType.currentAccount:
+        return 'Current Account';
+      case AccountSubType.cash:
+        return 'Cash';
+      case AccountSubType.assets:
+        return 'Assets';
+      case AccountSubType.creditCard:
+        return 'Credit Card';
+      case AccountSubType.liability:
+        return 'Liability';
+      default:
+        return null;
+    }
+  }
 
-  /// GET Account Subtype vs Account type relationship
-  Map<AccountSubType, AccountType> toJSON() => <AccountSubType, AccountType>{
-        savingsAccount: AccountType.ASSET,
-        currentAccount: AccountType.ASSET,
-        cash: AccountType.ASSET,
-        assets: AccountType.ASSET,
-        creditCard: AccountType.ASSET,
-        liability: AccountType.ASSET
-      };
+  /// Account Sub Type conversion to Account Type
+  String get accountType {
+    switch (this) {
+      case AccountSubType.savingsAccount:
+        return AccountType.asset.name;
+      case AccountSubType.currentAccount:
+        return AccountType.asset.name;
+      case AccountSubType.cash:
+        return AccountType.asset.name;
+      case AccountSubType.assets:
+        return AccountType.asset.name;
+      case AccountSubType.creditCard:
+        return AccountType.debt.name;
+      case AccountSubType.liability:
+        return AccountType.debt.name;
+      default:
+        return null;
+    }
+  }
 }

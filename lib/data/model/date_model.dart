@@ -2,7 +2,7 @@ import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/date.dart';
 
 class DateModel extends Date {
-  DateModel(
+  const DateModel(
       {final String walletId,
       final String dateId,
       final double incomeTotal,

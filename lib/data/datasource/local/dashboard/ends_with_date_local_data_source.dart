@@ -8,14 +8,14 @@ abstract class EndsWithDateLocalDataSource {
 }
 
 class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
-  final KeyValueStore keyValueStore;
-
   EndsWithDateLocalDataSourceImpl({@required this.keyValueStore});
+
+  final KeyValueStore keyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _endsWithDate = 'ends_with_date';
+  static const String _endsWithDate = 'ends_with_date';
 
   /// ------------------------------------------------------------
   /// Method that returns the user ends with date

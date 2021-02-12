@@ -28,20 +28,19 @@ void main() {
       () async {
         final addBankAccountAsString = fixture(
             'responses/dashboard/bank-account/add_bank_account_info.json');
-        final addBankAccountAsJSON =
-            jsonDecode(addBankAccountAsString) as Map<String, dynamic>;
+        final addBankAccountAsJSON = jsonDecode(addBankAccountAsString);
         final bankAccount = BankAccountModel(
-            walletId: addBankAccountAsJSON['body-json']['walletId'] as String,
-            accountId: addBankAccountAsJSON['body-json']['accountId'] as String,
-            linked: addBankAccountAsJSON['body-json']['linked'] as bool,
-            selectedAccount:
-                addBankAccountAsJSON['body-json']['selectedAccount'] as bool,
-            accountType: BankAccountModel.parseDynamicToAccountType(
+            walletId: addBankAccountAsJSON['body-json']['walletId'],
+            accountId: addBankAccountAsJSON['body-json']['accountId'],
+            linked: addBankAccountAsJSON['body-json']['linked'],
+            selectedAccount: addBankAccountAsJSON['body-json']
+                ['selectedAccount'],
+            accountType: parseDynamicAsAccountType(
                 addBankAccountAsJSON['body-json']['accountType']),
-            accountSubType: BankAccountModel.parseDynamicToAccountSubType(
+            accountSubType: parseDynamicAsAccountSubType(
                 addBankAccountAsJSON['body-json']['accountSubType']),
-            bankAccountName:
-                addBankAccountAsJSON['body-json']['bankAccountName'] as String);
+            bankAccountName: addBankAccountAsJSON['body-json']
+                ['bankAccountName']);
         // arrange
         when(mockHTTPClientImpl.put(constants.bankAccountURL,
                 body: jsonEncode(bankAccount.toJSON()),
@@ -63,12 +62,10 @@ void main() {
       () async {
         final updateAmountAsString = fixture(
             'responses/dashboard/bank-account/update/update_bank_account_balanace_info.json');
-        final updateAmountAsJSON =
-            jsonDecode(updateAmountAsString) as Map<String, dynamic>;
+        final updateAmountAsJSON = jsonDecode(updateAmountAsString);
         final bankAccount = BankAccountModel(
-            walletId: updateAmountAsJSON['body-json']['walletId'] as String,
-            accountId:
-                updateAmountAsJSON['body-json']['bankAccountId'] as String,
+            walletId: updateAmountAsJSON['body-json']['walletId'],
+            accountId: updateAmountAsJSON['body-json']['bankAccountId'],
             accountBalance: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['accountBalance']));
         // arrange
@@ -90,15 +87,12 @@ void main() {
       () async {
         final updateDescriptionAsString = fixture(
             'responses/dashboard/bank-account/update/select_bank_account_info.json');
-        final updateDescriptionAsJSON =
-            jsonDecode(updateDescriptionAsString) as Map<String, dynamic>;
+        final updateDescriptionAsJSON = jsonDecode(updateDescriptionAsString);
         final bankAccount = BankAccountModel(
-            walletId:
-                updateDescriptionAsJSON['body-json']['walletId'] as String,
-            accountId:
-                updateDescriptionAsJSON['body-json']['bankAccountId'] as String,
+            walletId: updateDescriptionAsJSON['body-json']['walletId'],
+            accountId: updateDescriptionAsJSON['body-json']['bankAccountId'],
             selectedAccount: updateDescriptionAsJSON['body-json']
-                ['selectedAccount'] as bool);
+                ['selectedAccount']);
         // arrange
         when(mockHTTPClientImpl.patch(constants.bankAccountURL,
                 body: jsonEncode(bankAccount.toJSON()),

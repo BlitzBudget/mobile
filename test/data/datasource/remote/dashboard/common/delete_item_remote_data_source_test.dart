@@ -22,10 +22,9 @@ void main() {
   group('Attempt to delete an item', () {
     final deleteItemResponseAsString =
         fixture('responses/dashboard/common/delete_item_info.json');
-    final deleteItemResponseAsJSON =
-        jsonDecode(deleteItemResponseAsString) as Map<String, dynamic>;
-    final walletId = 'Wallet#2020-12-21T20:35:49.295Z';
-    final itemId = 'Transaction#2021-01-04T15:20:36.079Z';
+    final deleteItemResponseAsJSON = jsonDecode(deleteItemResponseAsString);
+    const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
+    const itemId = 'Transaction#2021-01-04T15:20:36.079Z';
     test(
       'Should delete the appropriate item when invoked',
       () async {
@@ -38,7 +37,7 @@ void main() {
                 headers: constants.headers))
             .thenAnswer((_) async => deleteItemResponseAsJSON);
         // act
-        await dataSource.delete(walletId, itemId);
+        await dataSource.delete(walletId: walletId, itemId: itemId);
         // assert
         verify(mockHTTPClientImpl.post(constants.deleteItemURL,
             body: jsonEncode({

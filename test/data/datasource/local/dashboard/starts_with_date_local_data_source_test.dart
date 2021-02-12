@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/persistence/key_value_store_impl.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
 import 'package:mockito/mockito.dart';
@@ -10,7 +10,7 @@ class MockKeyValueStoreImpl extends Mock implements KeyValueStoreImpl {}
 void main() {
   StartsWithDateLocalDataSourceImpl dataSource;
   KeyValueStoreImpl mockKeyValueStoreImpl;
-  final startsWithDateCacheName = 'starts_with_date';
+  const startsWithDateCacheName = 'starts_with_date';
 
   setUp(() {
     mockKeyValueStoreImpl = MockKeyValueStoreImpl();
@@ -19,8 +19,8 @@ void main() {
   });
 
   group('Fetch Starts With Date from Key Value Store', () {
-    var now = DateTime.now();
-    var startsWithDateModel = now.toIso8601String();
+    final now = DateTime.now();
+    final startsWithDateModel = now.toIso8601String();
 
     test(
       'Should return Starts With Date from KeyValueStore when there is one in the SharedPreferences',
@@ -44,14 +44,14 @@ void main() {
             .thenThrow(NoValueInCacheException());
         // assert
         expect(() => dataSource.readStartsWithDate(),
-            throwsA(TypeMatcher<NoValueInCacheException>()));
+            throwsA(const TypeMatcher<NoValueInCacheException>()));
       },
     );
   });
 
   group('Set Starts with date to KeyValueStore', () {
-    var now = DateTime.now();
-    var startsWithDateModel = now.toIso8601String();
+    final now = DateTime.now();
+    final startsWithDateModel = now.toIso8601String();
 
     test(
       'Should call KeyValueStore to store the data',

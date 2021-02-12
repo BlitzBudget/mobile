@@ -10,8 +10,11 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/budget_response_model.dart';
 
 abstract class BudgetRemoteDataSource {
-  Future<BudgetResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<BudgetResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 
   Future<void> update(BudgetModel updateBudget);
 
@@ -19,15 +22,18 @@ abstract class BudgetRemoteDataSource {
 }
 
 class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
-  final HTTPClient httpClient;
-
   BudgetRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Budgets
   @override
-  Future<BudgetResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
-    var contentBody = <String, dynamic>{
+  Future<BudgetResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -43,7 +49,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<BudgetResponseModel>((dynamic res) {
       debugPrint('The response from the budget is $res');
-      return BudgetResponseModel.fromJSON(res as Map<String, dynamic>);
+      return BudgetResponseModel.fromJSON(res);
     });
   }
 

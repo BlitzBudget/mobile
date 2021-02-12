@@ -3,16 +3,8 @@ import 'package:equatable/equatable.dart';
 import '../category/category_type.dart' show CategoryType;
 
 class Budget extends Equatable {
-  final String budgetId;
-  final String walletId;
-  final double planned;
-  final double used;
-  final String dateMeantFor;
-  final String categoryId;
-  final CategoryType categoryType;
-
   // Optional category type and Budget id fields
-  Budget(
+  const Budget(
       {this.walletId,
       this.planned,
       this.dateMeantFor,
@@ -20,6 +12,14 @@ class Budget extends Equatable {
       this.categoryType,
       this.budgetId,
       this.used});
+
+  final String budgetId;
+  final String walletId;
+  final double planned;
+  final double used;
+  final String dateMeantFor;
+  final String categoryId;
+  final CategoryType categoryType;
 
   @override
   List<Object> get props => [

@@ -1,8 +1,18 @@
-class Recurrence {
-  const Recurrence(String val);
+enum Recurrence { weekly, biMonthly, monthly, never }
 
-  static const Recurrence weekly = Recurrence('WEEKLY');
-  static const Recurrence biMonthly = Recurrence('BI-MONTHLY');
-  static const Recurrence monthly = Recurrence('MONTHLY');
-  static const Recurrence never = Recurrence('NEVER');
+extension RecurrenceExtension on Recurrence {
+  String get name {
+    switch (this) {
+      case Recurrence.weekly:
+        return 'WEEKLY';
+      case Recurrence.biMonthly:
+        return 'BI-MONTHLY';
+      case Recurrence.monthly:
+        return 'MONTHLY';
+      case Recurrence.never:
+        return 'NEVER';
+      default:
+        return null;
+    }
+  }
 }

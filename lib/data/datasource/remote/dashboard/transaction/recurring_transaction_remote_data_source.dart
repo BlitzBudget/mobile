@@ -6,15 +6,15 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 
-abstract class RecurringTransactionRemoteDataSource {
+mixin RecurringTransactionRemoteDataSource {
   Future<void> update(RecurringTransactionModel updateRecurringTransaction);
 }
 
 class RecurringTransactionRemoteDataSourceImpl
     implements RecurringTransactionRemoteDataSource {
-  final HTTPClient httpClient;
-
   RecurringTransactionRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Update Transaction
   @override

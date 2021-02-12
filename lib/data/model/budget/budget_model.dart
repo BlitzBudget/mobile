@@ -4,7 +4,7 @@ import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
 class BudgetModel extends Budget {
   // Optional category type and Budget id fields
-  BudgetModel({
+  const BudgetModel({
     String budgetId,
     String walletId,
     double planned,
@@ -28,7 +28,9 @@ class BudgetModel extends Budget {
         walletId: parseDynamicAsString(budget['walletId']),
         planned: parseDynamicAsDouble(budget['planned']),
         used: parseDynamicAsDouble(budget['used']),
-        category: parseDynamicAsString(budget['category']));
+        category: parseDynamicAsString(budget['category']),
+        dateMeantFor: parseDynamicAsString(budget['date_meant_for']),
+        categoryType: parseDynamicAsCategoryType(budget['category_type']));
   }
 
   /// Budget to JSON
@@ -38,6 +40,6 @@ class BudgetModel extends Budget {
         'dateMeantFor': dateMeantFor,
         'planned': planned,
         'category': categoryId,
-        'categoryType': categoryType
+        'categoryType': categoryType.name
       };
 }

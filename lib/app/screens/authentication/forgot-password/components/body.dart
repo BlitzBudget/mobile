@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../data/datasource/remote/authentication_remote_data_source.dart';
 import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
@@ -12,30 +11,28 @@ import 'background.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
+  /// In the constructor, require a Todo.
+  const Body({Key key, this.email, this.password}) : super(key: key);
+
   final String email, password;
 
-  /// In the constructor, require a Todo.
-  Body({Key key, this.email, this.password}) : super(key: key);
-
   @override
-  _BodyState createState() => _BodyState(this.email, this.password);
+  _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  _BodyState();
+
   /// States
   bool _btnEnabled = true;
   final String forgotPasswordText = 'Forgot Password';
   String forgotPasswordButton = 'FORGOT PASSWORD';
   final yourEmail = 'Your Email';
   final String hintPassword = 'New Password';
-  String email, password;
-
-  /// In the constructor, require a body state.
-  _BodyState(this.email, this.password);
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -44,28 +41,29 @@ class _BodyState extends State<Body> {
             ///  Linear Progress indicator for loading
             /// Show text only when the button is enabled
             Visibility(
-                visible: _btnEnabled,
-                child: Text(
-                  forgotPasswordText,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                replacement: LinearLoadingIndicator()),
+              visible: _btnEnabled,
+              replacement: const LinearLoadingIndicator(),
+              child: Text(
+                forgotPasswordText,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               'assets/icons/signup.svg',
               height: size.height * 0.35,
             ),
             RoundedInputField(
-                initialValue: email,
+                initialValue: widget.email,
                 hintText: yourEmail,
                 onChanged: (value) {
-                  email = value;
+                  //widget.email = value;
                 },
                 autofocus: true),
             RoundedPassword(
-                initialValue: password,
+                initialValue: widget.password,
                 onChanged: (value) {
-                  password = value;
+                  //widget.password = value;
                 },
                 hintText: hintPassword),
             RoundedButton(
@@ -77,7 +75,7 @@ class _BodyState extends State<Body> {
                 });
                 // TODO
                 /*await _AuthenticationRemoteDataSource.forgotPassword(
-                    context, email, password);*/
+                    context, widget.email, widget.password);*/
                 setState(() {
                   forgotPasswordButton = 'FORGOT PASSWORD';
                   _btnEnabled = true;

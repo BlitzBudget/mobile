@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:english_words/english_words.dart';
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
+final findWhiteSpace = RegExp(r'\s+');
 // This file has a number of platform-agnostic non-Widget utility functions.
 
 const _myListOfRandomColors = [
@@ -27,7 +29,7 @@ final _random = Random();
 final wordPairIterator = generateWordPairs();
 
 String generateRandomHeadline() {
-  final artist = capitalizePair(wordPairIterator.first);
+  final artist = capitalizePair(wordPairIterator.first).getOrElse(null);
 
   switch (_random.nextInt(10)) {
     case 0:
@@ -35,7 +37,7 @@ String generateRandomHeadline() {
     case 1:
       return '$artist arrested due to ${wordPairIterator.first.join(' ')}';
     case 2:
-      return '$artist releases ${capitalizePair(wordPairIterator.first)}';
+      return '$artist releases ${capitalizePair(wordPairIterator.first).getOrElse(null)}';
     case 3:
       return '$artist talks about his ${nouns[_random.nextInt(nouns.length)]}';
     case 4:
@@ -53,7 +55,7 @@ String generateRandomHeadline() {
   }
 
   assert(false, 'Failed to generate news headline');
-  return null;
+  return '';
 }
 
 List<MaterialColor> getRandomColors(int amount) {
@@ -65,55 +67,64 @@ List<MaterialColor> getRandomColors(int amount) {
 List<String> getRandomNames(int amount) {
   return wordPairIterator
       .take(amount)
-      .map((pair) => capitalizePair(pair))
+      .map((pair) => capitalizePair(pair).getOrElse(null))
       .toList();
 }
 
-String capitalize(String word) {
-  return '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}';
+Option<String> capitalize(String word) {
+  return isEmpty(word)
+      ? const None()
+      : Some('${word[0].toUpperCase()}${word.substring(1).toLowerCase()}');
 }
 
-String capitalizePair(WordPair pair) {
-  return '${capitalize(pair.first)} ${capitalize(pair.second)}';
+Option<String> capitalizePair(WordPair pair) {
+  return (pair == null) ? const None() : Some(pair.asPascalCase);
 }
 
-dynamic lastElement(List arr) {
-  if (arr.isEmpty) {
-    return arr;
+Option<dynamic> lastElement(List<dynamic> arr) {
+  if (arr == null || arr.isEmpty) {
+    return const None<dynamic>();
   } else if (arr.isNotEmpty) {
-    return arr[arr.length - 1];
+    return Some<dynamic>(arr[arr.length - 1]);
   }
-  return arr;
+  return const None<dynamic>();
 }
 
-List<String> splitElement(String str, String splitString) {
-  if (includesStr(str, splitString)) {
-    if (isEmpty(str)) {
-      return null;
+Option<List<String>> splitElement({String stringToSplit, String character}) {
+  if (includesStr(value: character, array: stringToSplit)
+      .getOrElse(() => false)) {
+    if (isEmpty(stringToSplit) || isEmpty(character)) {
+      return const None();
     } else {
-      return str.split(splitString);
+      return Some(stringToSplit.split(character));
     }
   }
 
-  return null;
+  return const None();
 }
 
-bool includesStr(String arr, String val) {
-  if (arr.isEmpty) {
-    return null;
-  } else {
-    return arr.contains(val);
+Option<bool> includesStr({dynamic array, dynamic value}) {
+  if (isEmpty(array) || isEmpty(value)) {
+    return const None();
   }
+
+  if (array is String && value is String) {
+    return Some(array.contains(value));
+  }
+
+  return const None();
 }
 
 bool isEmpty(String obj) {
   /// Check if objext is a number or a boolean
-  if (['', null, false, 0].contains(obj)) return true;
+  if (['', null, false, 0].contains(obj)) {
+    return true;
+  }
 
   return false;
 }
 
-bool isNotEmpty(String obj) {
+bool isNotEmpty(dynamic obj) {
   return !isEmpty(obj);
 }
 
@@ -123,3 +134,17 @@ void displayDialog(BuildContext context, String title, String text) =>
       builder: (context) =>
           AlertDialog(title: Text(title), content: Text(text)),
     );
+
+/// String to Enum Conversion
+///
+/// Convert all Enum to String
+/// Convert both string and enum to lower case
+/// Replace all white space with empty string for the String
+T stringToEnum<T>(String str, Iterable<T> values) {
+  return values.firstWhere(
+    (value) =>
+        value.toString().split('.')[1].toLowerCase() ==
+        str?.replaceAll(findWhiteSpace, '')?.toLowerCase(),
+    orElse: () => null,
+  );
+}

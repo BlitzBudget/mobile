@@ -1,21 +1,29 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
+import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
+import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
 
-class DeleteWalletUseCase {
-  WalletRepository walletRepository;
-  DefaultWalletRepository defaultWalletRepository;
+import '../../use_case.dart';
+
+class DeleteWalletUseCase extends UseCase {
+  DeleteWalletUseCase(
+      {@required this.walletRepository,
+      @required this.userAttributesRepository});
+
+  final WalletRepository walletRepository;
+  final UserAttributesRepository userAttributesRepository;
 
   Future<Either<Failure, void>> delete({@required String itemId}) async {
-    var defaultWallet = await defaultWalletRepository.readDefaultWallet();
-
-    if (defaultWallet.isLeft()) {
+    String userId;
+    final userResponse = await userAttributesRepository.readUserAttributes();
+    if (userResponse.isRight()) {
+      userId = userResponse.getOrElse(null).userId;
+    } else {
       return Left(EmptyResponseFailure());
     }
 
-    return await walletRepository.delete(defaultWallet.getOrElse(null), itemId);
+    return walletRepository.delete(userId: userId, walletId: itemId);
   }
 }

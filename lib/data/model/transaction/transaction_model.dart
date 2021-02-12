@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart'
 
 class TransactionModel extends Transaction {
   /// Optional Transactions id, description, recurrence, category type, category name and tags
-  TransactionModel(
+  const TransactionModel(
       {String transactionId,
       String walletId,
       double amount,
@@ -32,9 +32,8 @@ class TransactionModel extends Transaction {
 
   /// Map JSON transactions to List of object
   factory TransactionModel.fromJSON(Map<String, dynamic> transaction) {
-    final tags = (transaction['tags'] as List)
-        ?.map((dynamic item) => item as String)
-        ?.toList();
+    final tags =
+        transaction['tags']?.map<String>(parseDynamicAsString)?.toList();
     return TransactionModel(
         transactionId: parseDynamicAsString(transaction['transactionId']),
         walletId: parseDynamicAsString(transaction['walletId']),
@@ -43,8 +42,8 @@ class TransactionModel extends Transaction {
         accountId: parseDynamicAsString(transaction['account']),
         dateMeantFor: parseDynamicAsString(transaction['date_meant_for']),
         categoryId: parseDynamicAsString(transaction['category']),
-        recurrence: parseDynamicToRecurrence(transaction['recurrence']),
-        categoryType: parseDynamicToCategoryType(transaction['category_type']),
+        recurrence: parseDynamicAsRecurrence(transaction['recurrence']),
+        categoryType: parseDynamicAsCategoryType(transaction['category_type']),
         categoryName: parseDynamicAsString(transaction['category_name']),
         tags: tags);
   }
@@ -54,13 +53,13 @@ class TransactionModel extends Transaction {
         'walletId': walletId,
         'transactionId': transactionId,
         'amount': amount,
-        'recurrence': recurrence,
+        'recurrence': recurrence.name,
         'account': accountId,
         'dateMeantFor': dateMeantFor,
         'description': description,
         'tags': tags,
         'category': categoryId,
-        'categoryType': categoryType,
+        'categoryType': categoryType.name,
         'categoryName': categoryName
       };
 }

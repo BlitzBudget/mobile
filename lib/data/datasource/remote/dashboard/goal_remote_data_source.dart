@@ -9,8 +9,11 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_model.dart';
 
 abstract class GoalRemoteDataSource {
-  Future<GoalResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId);
+  Future<GoalResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId});
 
   Future<void> update(GoalModel updateGoal);
 
@@ -18,15 +21,18 @@ abstract class GoalRemoteDataSource {
 }
 
 class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
-  final HTTPClient httpClient;
-
   GoalRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Goals
   @override
-  Future<GoalResponseModel> fetch(String startsWithDate, String endsWithDate,
-      String defaultWallet, String userId) async {
-    var contentBody = <String, dynamic>{
+  Future<GoalResponseModel> fetch(
+      {@required String startsWithDate,
+      @required String endsWithDate,
+      @required String defaultWallet,
+      @required String userId}) async {
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -41,7 +47,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<GoalResponseModel>((dynamic res) {
       debugPrint('The response from the goal is $res');
-      return GoalResponseModel.fromJSON(res as Map<String, dynamic>);
+      return GoalResponseModel.fromJSON(res);
     });
   }
 

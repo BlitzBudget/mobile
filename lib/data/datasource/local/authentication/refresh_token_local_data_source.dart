@@ -8,21 +8,21 @@ abstract class RefreshTokenLocalDataSource {
 }
 
 class RefreshTokenLocalDataSourceImpl implements RefreshTokenLocalDataSource {
-  final SecureKeyValueStore secureKeyValueStore;
-
   RefreshTokenLocalDataSourceImpl({@required this.secureKeyValueStore});
+
+  final SecureKeyValueStore secureKeyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _refreshToken = 'refresh_token';
+  static const String _refreshToken = 'refresh_token';
 
   /// ------------------------------------------------------------
   /// Method that returns the user refresh token
   /// ------------------------------------------------------------
   @override
   Future<String> readRefreshToken() async {
-    return await secureKeyValueStore.getString(key: _refreshToken);
+    return secureKeyValueStore.getString(key: _refreshToken);
   }
 
   /// ----------------------------------------------------------

@@ -23,12 +23,10 @@ void main() {
     test('Should fetch all data for overview with wallet id', () async {
       final fetchOverviewAsString =
           fixture('responses/dashboard/overview_info.json');
-      final fetchOverviewAsJSON =
-          jsonDecode(fetchOverviewAsString) as Map<String, dynamic>;
+      final fetchOverviewAsJSON = jsonDecode(fetchOverviewAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet =
-          fetchOverviewAsJSON['BankAccount'][0]['walletId'] as String;
+      final defaultWallet = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
       String userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -40,27 +38,28 @@ void main() {
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchOverviewAsJSON);
       // act
-      var overviewResponse = await dataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId);
+      final overviewResponse = await dataSource.fetch(
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
       // assert
       verify(mockHTTPClientImpl.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
       expect(overviewResponse.dates.last.dateId,
-          equals(fetchOverviewAsJSON['Date'][0]['dateId'] as String));
+          equals(fetchOverviewAsJSON['Date'][0]['dateId']));
       expect(overviewResponse.bankAccounts.last.accountId,
-          equals(fetchOverviewAsJSON['BankAccount'][0]['accountId'] as String));
+          equals(fetchOverviewAsJSON['BankAccount'][0]['accountId']));
     });
 
     test('Should fetch all data for overview with user Id', () async {
       final fetchOverviewAsString =
           fixture('responses/dashboard/overview_info.json');
-      final fetchOverviewAsJSON =
-          jsonDecode(fetchOverviewAsString) as Map<String, dynamic>;
+      final fetchOverviewAsJSON = jsonDecode(fetchOverviewAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final userId =
-          fetchOverviewAsJSON['BankAccount'][0]['walletId'] as String;
+      final userId = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
       String defaultWallet;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -72,16 +71,19 @@ void main() {
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchOverviewAsJSON);
       // act
-      var overviewResponse = await dataSource.fetch(
-          startsWithDate, endsWithDate, defaultWallet, userId);
+      final overviewResponse = await dataSource.fetch(
+          startsWithDate: startsWithDate,
+          endsWithDate: endsWithDate,
+          defaultWallet: defaultWallet,
+          userId: userId);
       // assert
       verify(mockHTTPClientImpl.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
       expect(overviewResponse.dates.last.dateId,
-          equals(fetchOverviewAsJSON['Date'][0]['dateId'] as String));
+          equals(fetchOverviewAsJSON['Date'][0]['dateId']));
       expect(overviewResponse.bankAccounts.last.accountId,
-          equals(fetchOverviewAsJSON['BankAccount'][0]['accountId'] as String));
+          equals(fetchOverviewAsJSON['BankAccount'][0]['accountId']));
     });
   });
 }

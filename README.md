@@ -114,3 +114,7 @@ flutter format .
 
 * Upgrade Flutter Package
 flutter upgrade
+
+
+### Dart Analyser
+dart analyze

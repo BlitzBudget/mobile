@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/error/generic-exception.dart';
+import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
@@ -8,9 +8,9 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_to
 import '../../datasource/local/authentication/refresh_token_local_data_source.dart';
 
 class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
-  final RefreshTokenLocalDataSource refreshTokenLocalDataSource;
-
   RefreshTokenRepositoryImpl({@required this.refreshTokenLocalDataSource});
+
+  final RefreshTokenLocalDataSource refreshTokenLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readRefreshToken() async {
@@ -23,7 +23,7 @@ class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
 
   @override
   Future<void> writeRefreshToken(UserResponse userResponse) async {
-    return await refreshTokenLocalDataSource
+    return refreshTokenLocalDataSource
         .writeRefreshToken(userResponse.refreshToken);
   }
 }

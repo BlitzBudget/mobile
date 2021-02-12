@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 
 class GoalModel extends Goal {
   // Mandatory wallet ID
-  GoalModel({
+  const GoalModel({
     String walletId,
     String goalId,
     GoalType goalType,
@@ -41,27 +41,11 @@ class GoalModel extends Goal {
   Map<String, dynamic> toJSON() => <String, dynamic>{
         'walletId': walletId,
         'goalId': goalId,
-        'goalType': goalType,
-        'targetType': targetType,
+        'goalType': goalType.name,
+        'targetType': targetType.name,
         'monthlyContribution': monthlyContribution,
         'targetAmount': targetAmount,
         'targetDate': targetDate,
         'targetId': targetId
       };
-
-  /// Parse dynamic to Goal Type
-  static GoalType parseDynamicAsGoalType(dynamic obj) {
-    if (obj is GoalType) {
-      return obj;
-    }
-    return null;
-  }
-
-  /// Parse dynamic to Target Type
-  static TargetType parseDynamicAsTargetType(dynamic obj) {
-    if (obj is TargetType) {
-      return obj;
-    }
-    return null;
-  }
 }

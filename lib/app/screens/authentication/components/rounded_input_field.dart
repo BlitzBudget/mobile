@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'text_field_container.dart';
+
 import '../../../constants/constants.dart';
+import 'text_field_container.dart';
 
 class RoundedInputField extends StatelessWidget {
-  final String hintText, initialValue;
-  final IconData icon;
-  final ValueChanged<String> onChanged;
-  final bool autofocus;
   const RoundedInputField(
       {Key key,
       this.hintText,
       this.icon = Icons.person,
       this.onChanged,
       this.autofocus,
-      this.initialValue = ""})
+      this.initialValue = ''})
       : super(key: key);
+
+  final String hintText, initialValue;
+  final IconData icon;
+  final ValueChanged<String> onChanged;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {

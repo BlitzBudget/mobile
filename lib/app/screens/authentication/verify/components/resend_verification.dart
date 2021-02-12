@@ -6,24 +6,22 @@ import '../../../../constants/constants.dart';
 
 // Public exposed class
 class ResendVerification extends StatefulWidget {
+  /// In the constructor, require an email.
+  const ResendVerification({Key key, @required this.email}) : super(key: key);
+
   final String email;
 
-  /// In the constructor, require an email.
-  ResendVerification({Key key, @required this.email}) : super(key: key);
-
   @override
-  _ResendVerificationState createState() =>
-      _ResendVerificationState(this.email);
+  _ResendVerificationState createState() => _ResendVerificationState();
 }
 
 class _ResendVerificationState extends State<ResendVerification> {
+  _ResendVerificationState();
+
   /// States
   bool _btnEnabled = true;
   Timer _timer;
-  final String email;
   final timeout = const Duration(seconds: 60);
-
-  _ResendVerificationState(this.email);
 
   @override
   void dispose() {
@@ -39,7 +37,7 @@ class _ResendVerificationState extends State<ResendVerification> {
         /// Show text only when the button is enabled
         Visibility(
             visible: _btnEnabled,
-            child: Text(
+            child: const Text(
               'Resend ',
               style: TextStyle(color: primaryColor),
             )),
@@ -57,7 +55,7 @@ class _ResendVerificationState extends State<ResendVerification> {
               /// Show text only when the button is enabled
               Visibility(
             visible: _btnEnabled,
-            child: Text('Verification Code',
+            child: const Text('Verification Code',
                 style: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,

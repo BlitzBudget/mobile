@@ -1,45 +1,51 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/error/authentication-exception.dart';
+import 'package:mobile_blitzbudget/core/error/authentication_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 
-import '../../datasource/remote/authentication_remote_data_source.dart';
+import '../../datasource/remote/authentication/authentication_remote_data_source.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  final AuthenticationRemoteDataSource authenticationRemoteDataSource;
-
   AuthenticationRepositoryImpl({@required this.authenticationRemoteDataSource});
 
+  final AuthenticationRemoteDataSource authenticationRemoteDataSource;
+
   @override
-  Future<Either<Failure, UserResponse>> loginUser(
-      String email, String password) async {
+  Future<Either<Failure, Option<UserResponse>>> loginUser(
+      {@required String email, @required String password}) async {
     try {
-      return Right(
-          await authenticationRemoteDataSource.attemptLogin(email, password));
+      return Right(await authenticationRemoteDataSource.attemptLogin(
+          email: email, password: password));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> signupUser(String email, String password,
-      String firstName, String surName, String acceptLanguage) async {
+  Future<Either<Failure, void>> signupUser(
+      {@required String email, @required String password}) async {
     try {
       return Right(await authenticationRemoteDataSource.signupUser(
-          email, password, firstName, surName, acceptLanguage));
+          email: email, password: password));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> verifyEmail(String email, String password,
-      String verificationCode, bool useVerifyURL) async {
+  Future<Either<Failure, void>> verifyEmail(
+      {@required String email,
+      @required String password,
+      @required String verificationCode,
+      @required bool useVerifyURL}) async {
     try {
       return Right(await authenticationRemoteDataSource.verifyEmail(
-          email, password, verificationCode, useVerifyURL));
+          email: email,
+          password: password,
+          verificationCode: verificationCode,
+          useVerifyURL: useVerifyURL));
     } on Exception catch (e) {
       return Left(AuthenticationException.convertExceptionToFailure(e));
     }
@@ -57,7 +63,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<Either<Failure, void>> forgotPassword(
-      String email, String password) async {
+      {@required String email, @required String password}) async {
     try {
       return Right(await authenticationRemoteDataSource.forgotPassword(email));
     } on Exception catch (e) {

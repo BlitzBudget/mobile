@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/core/failure/generic-failure.dart';
+import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
@@ -11,27 +11,33 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attri
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class LoginUser extends UseCase {
-  AuthenticationRepository authenticationRepository;
-  UserAttributesRepository userAttributesRepository;
-  RefreshTokenRepository refreshTokenRepository;
-  AccessTokenRepository accessTokenRepository;
-  AuthTokenRepository authTokenRepository;
+  LoginUser(
+      {@required this.authenticationRepository,
+      @required this.userAttributesRepository,
+      @required this.refreshTokenRepository,
+      @required this.accessTokenRepository,
+      @required this.authTokenRepository});
 
-  Future<Either<Failure, UserResponse>> loginUser(
+  final AuthenticationRepository authenticationRepository;
+  final UserAttributesRepository userAttributesRepository;
+  final RefreshTokenRepository refreshTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final AuthTokenRepository authTokenRepository;
+
+  Future<Either<Failure, Option<UserResponse>>> loginUser(
       {@required String email, @required String password}) async {
-    /// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-
-    var response = await authenticationRepository.loginUser(
-        email, password); // Either<Failure, UserResponse>
+    final response = await authenticationRepository.loginUser(
+        email: email, password: password); // Either<Failure, UserResponse>
 
     if (response.isRight()) {
-      var user = response.getOrElse(null);
+      final userResponse = response.getOrElse(null);
 
       /// If the user information is empty then
-      if (user == null) {
+      if (userResponse.isNone()) {
         return Left(EmptyResponseFailure());
       }
+
+      final user = userResponse.getOrElse(null);
 
       /// Store User Attributes
       await userAttributesRepository.writeUserAttributes(user);
@@ -50,7 +56,10 @@ class LoginUser extends UseCase {
   }
 }
 
-/*if (isEmpty(email)) {
+/*
+/// Change all the email to lower case and trim the string
+    email = email.toLowerCase().trim();
+if (isEmpty(email)) {
       displayDialog(context, 'Empty Email', 'The email cannot be empty');
       return null;
     } else if (!EmailValidator.validate(email.trim())) {

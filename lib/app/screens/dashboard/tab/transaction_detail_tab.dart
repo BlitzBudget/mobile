@@ -8,7 +8,8 @@ import '../../../widgets/dashboard_widget.dart';
 /// On Android, this page sits at the top of your app. On iOS, this page is on
 /// top of the transactions tab's content but is below the tab bar itself.
 class TransactionDetailTab extends StatelessWidget {
-  const TransactionDetailTab({this.id, this.transaction, this.color});
+  const TransactionDetailTab({Key key, this.id, this.transaction, this.color})
+      : super(key: key);
 
   final int id;
   final String transaction;
@@ -24,11 +25,6 @@ class TransactionDetailTab extends StatelessWidget {
         children: [
           Hero(
             tag: id,
-            child: HeroAnimatingTransactionCard(
-              transaction: transaction,
-              color: color,
-              heroAnimation: AlwaysStoppedAnimation(1),
-            ),
 
             /// This app uses a flightShuttleBuilder to specify the exact widget
             /// to build while the hero transition is mid-flight.
@@ -42,8 +38,13 @@ class TransactionDetailTab extends StatelessWidget {
                 heroAnimation: animation,
               );
             },
+            child: HeroAnimatingTransactionCard(
+              transaction: transaction,
+              color: color,
+              heroAnimation: const AlwaysStoppedAnimation(1),
+            ),
           ),
-          Divider(
+          const Divider(
             height: 0,
             color: Colors.grey,
           ),
@@ -52,9 +53,8 @@ class TransactionDetailTab extends StatelessWidget {
               itemCount: 10,
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.only(left: 15, top: 16, bottom: 8),
+                  return const Padding(
+                    padding: EdgeInsets.only(left: 15, top: 16, bottom: 8),
                     child: Text(
                       'You might also like:',
                       style: TextStyle(
@@ -66,7 +66,7 @@ class TransactionDetailTab extends StatelessWidget {
                 }
 
                 /// Just a bunch of boxes that simulates loading transaction choices.
-                return transactionPlaceholderTile();
+                return const TransactionPlaceHolderTile();
               },
             ),
           ),
