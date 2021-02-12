@@ -7,9 +7,9 @@ import 'screens/authentication/welcome/welcome_screen.dart';
 import 'screens/dashboard/dashboard_screen.dart';
 
 final routes = {
-  welcomeRoute: (BuildContext context) => WelcomeScreen(),
-  loginRoute: (BuildContext context) => LoginScreen(),
-  dashboardRoute: (BuildContext context) => DashboardScreen(),
-  forgotPasswordRoute: (BuildContext context) => ForgotPasswordScreen(),
-  initialRoute: (BuildContext context) => WelcomeScreen(),
+  welcomeRoute: (BuildContext context) => const WelcomeScreen(),
+  loginRoute: (BuildContext context) => const LoginScreen(),
+  dashboardRoute: (BuildContext context) => const DashboardScreen(),
+  forgotPasswordRoute: (BuildContext context) => const ForgotPasswordScreen(),
+  initialRoute: (BuildContext context) => const WelcomeScreen(),
 };

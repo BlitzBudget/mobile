@@ -52,24 +52,24 @@ void main() {
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON =
-      jsonDecode(budgetModelAsString) as Map<String, dynamic>;
+      jsonDecode(budgetModelAsString);
   final budget = Budget(
-      walletId: budgetModelAsJSON['walletId'] as String,
-      budgetId: budgetModelAsJSON['budgetId'] as String,
+      walletId: budgetModelAsJSON['walletId'],
+      budgetId: budgetModelAsJSON['budgetId'],
       planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
-      categoryId: budgetModelAsJSON['category'] as String,
+      categoryId: budgetModelAsJSON['category'],
       categoryType:
           parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for'] as String);
+      dateMeantFor: budgetModelAsJSON['date_meant_for']);
 
   final budgetResponseModelAsString =
       fixture('responses/dashboard/budget/fetch_budget_info.json');
   final budgetResponseModelAsJSON =
-      jsonDecode(budgetResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(budgetResponseModelAsString);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var budgetResponseModel = convertToResponseModel(budgetResponseModelAsJSON);
+  final budgetResponseModel = convertToResponseModel(budgetResponseModelAsJSON);
 
   setUp(() {
     mockBudgetRepository = MockBudgetRepository();
@@ -86,13 +86,13 @@ void main() {
   });
 
   group('Fetch', () {
-    var now = DateTime.now();
-    var dateString = now.toIso8601String();
-    final userId = 'User#2020-12-21T20:32:06.003Z';
+    final now = DateTime.now();
+    final dateString = now.toIso8601String();
+    const userId = 'User#2020-12-21T20:32:06.003Z';
 
     test('Success', () async {
-      Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
       when(mockBudgetRepository.add(budget))
@@ -103,7 +103,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      Either<Failure, BudgetResponse> fetchBudgetMonad =
+      final Either<Failure, BudgetResponse> fetchBudgetMonad =
           Right<Failure, BudgetResponse>(budgetResponseModel);
 
       when(mockBudgetRepository.fetch(
@@ -124,10 +124,10 @@ void main() {
     });
 
     test('Default Wallet Empty: Failure', () async {
-      Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
-      final user = User(userId: userId);
-      Either<Failure, User> userMonad = Right<Failure, User>(user);
-      Either<Failure, String> dateFailure =
+      const Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
+      const user = User(userId: userId);
+      const Either<Failure, User> userMonad = Right<Failure, User>(user);
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockBudgetRepository.add(budget))
@@ -140,7 +140,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
-      Either<Failure, BudgetResponse> fetchBudgetMonad =
+      final Either<Failure, BudgetResponse> fetchBudgetMonad =
           Right<Failure, BudgetResponse>(budgetResponseModel);
 
       when(mockBudgetRepository.fetch(
@@ -161,10 +161,10 @@ void main() {
     });
 
     test('Default Wallet Empty && User Attribute Failure: Failure', () async {
-      Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateFailure =
+      const Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
-      Either<Failure, User> userFailure =
+      final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
       when(mockBudgetRepository.add(budget))
@@ -194,37 +194,33 @@ BudgetResponseModel convertToResponseModel(
     Map<String, dynamic> budgetResponseModelAsJSON) {
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var responseBudgets = budgetResponseModelAsJSON['Budget'] as List;
-  var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
-          (dynamic model) =>
-              BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+  final responseBudgets = budgetResponseModelAsJSON['Budget'];
+  final convertedBudgets = List<Budget>.from(responseBudgets
+          ?.map<dynamic>((dynamic model) => BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = budgetResponseModelAsJSON['Category'] as List;
-  var convertedCategories = List<Category>.from(
-      responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
-          <Category>[]);
+  final responseCategories = budgetResponseModelAsJSON['Category'];
+  final convertedCategories = List<Category>.from(responseCategories
+          ?.map<dynamic>((dynamic model) => CategoryModel.fromJSON(model)) ??
+      <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts = budgetResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
-      responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
-          <BankAccount>[]);
+  final responseBankAccounts = budgetResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
+          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
+      <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = budgetResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
-          (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+  final responseDate = budgetResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate
+          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = budgetResponseModelAsJSON['Wallet'];
+  final dynamic responseWallet = budgetResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -232,12 +228,10 @@ BudgetResponseModel convertToResponseModel(
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+    convertedWallet = WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
-        (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+    final convertedWallets = List<Wallet>.from(responseWallet
+        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

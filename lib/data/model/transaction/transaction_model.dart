@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart'
 
 class TransactionModel extends Transaction {
   /// Optional Transactions id, description, recurrence, category type, category name and tags
-  TransactionModel(
+  const TransactionModel(
       {String transactionId,
       String walletId,
       double amount,
@@ -32,9 +32,7 @@ class TransactionModel extends Transaction {
 
   /// Map JSON transactions to List of object
   factory TransactionModel.fromJSON(Map<String, dynamic> transaction) {
-    final tags = (transaction['tags'] as List)
-        ?.map((dynamic item) => item as String)
-        ?.toList();
+    final tags = transaction['tags']?.map<String>(parseDynamicAsString)?.toList();
     return TransactionModel(
         transactionId: parseDynamicAsString(transaction['transactionId']),
         walletId: parseDynamicAsString(transaction['walletId']),

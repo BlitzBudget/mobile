@@ -20,7 +20,7 @@ void main() {
   group('GET: Key Value Store Impl', () {
     test('Should throw NoValueInCacheException if empty', () async {
       expect(() => secureKeyValueStoreImpl.getString(key: 'sharedPreferences'),
-          throwsA(TypeMatcher<NoValueInCacheException>()));
+          throwsA(const TypeMatcher<NoValueInCacheException>()));
     });
 
     test('Should return a string if not empty', () async {

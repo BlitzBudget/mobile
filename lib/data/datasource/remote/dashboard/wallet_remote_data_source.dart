@@ -23,9 +23,11 @@ abstract class WalletRemoteDataSource {
 }
 
 class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
-  final HTTPClient httpClient;
+  
 
   WalletRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Wallet
   @override
@@ -34,7 +36,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
       @required String endsWithDate,
       @required String defaultWallet,
       @required String userId}) async {
-    var contentBody = <String, dynamic>{
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -49,7 +51,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<WalletResponseModel>((dynamic res) {
       debugPrint('The response from the wallet is $res');
-      return WalletResponseModel.fromJSON(res as Map<String, dynamic>);
+      return WalletResponseModel.fromJSON(res);
     });
   }
 
@@ -71,7 +73,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   @override
   Future<void> delete({@required String walletId, @required String userId}) {
     // JSON for Get wallet [_jsonForGetWallet]
-    var _jsonForDeleteWallet = <String, dynamic>{
+    final _jsonForDeleteWallet = <String, dynamic>{
       'walletId': walletId,
       'deleteAccount': false,
       'referenceNumber': userId
@@ -89,7 +91,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   @override
   Future<void> add({@required String userId, @required String currency}) {
     // JSON for Get budget [_jsonForAddWallet]
-    var _jsonForAddWallet = <String, dynamic>{
+    final _jsonForAddWallet = <String, dynamic>{
       'userId': userId,
       'currency': currency,
     };

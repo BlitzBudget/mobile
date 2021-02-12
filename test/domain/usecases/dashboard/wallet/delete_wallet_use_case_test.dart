@@ -28,13 +28,13 @@ void main() {
   });
 
   group('Delete Wallet', () {
-    final walletId = 'Wallet#2021-01-06T12:51:31.215Z';
-    final userId = 'User#2020-12-21T20:35:49.295Z';
-    final user = User(userId: userId);
-    Either<Failure, User> userMonad = Right<Failure, User>(user);
+    const walletId = 'Wallet#2021-01-06T12:51:31.215Z';
+    const userId = 'User#2020-12-21T20:35:49.295Z';
+    const user = User(userId: userId);
+    const Either<Failure, User> userMonad = Right<Failure, User>(user);
 
     test('Success', () async {
-      Either<Failure, void> addWalletMonad = Right<Failure, void>('');
+      const Either<Failure, void> addWalletMonad = Right<Failure, void>('');
 
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
@@ -48,7 +48,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> deleteWalletMonad =
+      final Either<Failure, void> deleteWalletMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockUserAttributesRepository.readUserAttributes())
@@ -63,7 +63,7 @@ void main() {
     });
 
     test('ReadDefaultWallet: Failure', () async {
-      Either<Failure, User> userFailure =
+      final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userFailure));

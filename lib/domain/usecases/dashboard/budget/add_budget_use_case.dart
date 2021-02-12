@@ -7,10 +7,11 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/budget_reposito
 import '../../use_case.dart';
 
 class AddBudgetUseCase extends UseCase {
+  AddBudgetUseCase({@required this.budgetRepository});
+
   final BudgetRepository budgetRepository;
 
-  AddBudgetUseCase({@required this.budgetRepository});
   Future<Either<Failure, void>> add({@required Budget addBudget}) async {
-    return await budgetRepository.add(addBudget);
+    return budgetRepository.add(addBudget);
   }
 }

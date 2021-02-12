@@ -21,9 +21,9 @@ abstract class TransactionRemoteDataSource {
 }
 
 class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
-  final HTTPClient httpClient;
-
   TransactionRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Transaction
   @override
@@ -32,7 +32,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
       @required String endsWithDate,
       @required String defaultWallet,
       @required String userId}) async {
-    var contentBody = <String, dynamic>{
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -47,7 +47,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<TransactionResponseModel>((dynamic res) {
       debugPrint('The response from the transaction is $res');
-      return TransactionResponseModel.fromJSON(res as Map<String, dynamic>);
+      return TransactionResponseModel.fromJSON(res);
     });
   }
 

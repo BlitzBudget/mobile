@@ -15,12 +15,12 @@ class MockSecureKeyValueStoreImpl extends Mock
 void main() {
   UserAttributesLocalDataSourceImpl dataSource;
   SecureKeyValueStoreImpl mockSecureKeyValueStoreImpl;
-  final userAttributesCacheName = 'user_attributes';
-  var loginResponseAsString =
+  const userAttributesCacheName = 'user_attributes';
+  final loginResponseAsString =
       fixture('responses/authentication/login_info.json');
-  var userAttributesAsMap =
-      jsonDecode(loginResponseAsString)['UserAttributes'] as List<dynamic>;
-  var userAttributeAsString = jsonEncode(userAttributesAsMap);
+  final userAttributesAsMap =
+      jsonDecode(loginResponseAsString)['UserAttributes'];
+  final userAttributeAsString = jsonEncode(userAttributesAsMap);
 
   setUp(() {
     mockSecureKeyValueStoreImpl = MockSecureKeyValueStoreImpl();
@@ -54,7 +54,7 @@ void main() {
             .thenThrow(NoValueInCacheException());
         // assert
         expect(() => dataSource.readUserAttributes(),
-            throwsA(TypeMatcher<NoValueInCacheException>()));
+            throwsA(const TypeMatcher<NoValueInCacheException>()));
       },
     );
   });

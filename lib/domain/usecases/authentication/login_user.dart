@@ -11,12 +11,6 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attri
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class LoginUser extends UseCase {
-  final AuthenticationRepository authenticationRepository;
-  final UserAttributesRepository userAttributesRepository;
-  final RefreshTokenRepository refreshTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final AuthTokenRepository authTokenRepository;
-
   LoginUser(
       {@required this.authenticationRepository,
       @required this.userAttributesRepository,
@@ -24,20 +18,26 @@ class LoginUser extends UseCase {
       @required this.accessTokenRepository,
       @required this.authTokenRepository});
 
+  final AuthenticationRepository authenticationRepository;
+  final UserAttributesRepository userAttributesRepository;
+  final RefreshTokenRepository refreshTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final AuthTokenRepository authTokenRepository;
+
   Future<Either<Failure, Option<UserResponse>>> loginUser(
       {@required String email, @required String password}) async {
-    var response = await authenticationRepository.loginUser(
+    final response = await authenticationRepository.loginUser(
         email: email, password: password); // Either<Failure, UserResponse>
 
     if (response.isRight()) {
-      var userResponse = response.getOrElse(null);
+      final userResponse = response.getOrElse(null);
 
       /// If the user information is empty then
       if (userResponse.isNone()) {
         return Left(EmptyResponseFailure());
       }
 
-      var user = userResponse.getOrElse(null);
+      final user = userResponse.getOrElse(null);
 
       /// Store User Attributes
       await userAttributesRepository.writeUserAttributes(user);

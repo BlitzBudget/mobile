@@ -8,6 +8,8 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import '../../../widgets/dashboard_widget.dart';
 
 class BudgetTab extends StatefulWidget {
+  const BudgetTab({Key key}) : super(key: key);
+
   static const title = 'Budget';
   static const androidIcon = Icon(Mdi.sack);
   static const iosIcon = Icon(Mdi.sack);
@@ -34,14 +36,16 @@ class _BudgetTabState extends State<BudgetTab> {
   }
 
   Widget _listBuilder(BuildContext context, int index) {
-    if (index >= _itemsLength) return null;
+    if (index >= _itemsLength) {
+      return null;
+    }
 
     return SafeArea(
       top: false,
       bottom: false,
       child: Card(
         elevation: 1.5,
-        margin: EdgeInsets.fromLTRB(6, 12, 6, 0),
+        margin: const EdgeInsets.fromLTRB(6, 12, 6, 0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),
@@ -50,7 +54,7 @@ class _BudgetTabState extends State<BudgetTab> {
           /// was a real card but this is just a demo. Skip the splash on iOS.
           onTap: defaultTargetPlatform == TargetPlatform.iOS ? null : () {},
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,22 +62,22 @@ class _BudgetTabState extends State<BudgetTab> {
                   backgroundColor: colors[index],
                   child: Text(
                     titles[index].substring(0, 1),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(left: 16)),
+                const Padding(padding: EdgeInsets.only(left: 16)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         titles[index],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Padding(padding: EdgeInsets.only(top: 8)),
+                      const Padding(padding: EdgeInsets.only(top: 8)),
                       Text(
                         contents[index],
                       ),
@@ -95,19 +99,17 @@ class _BudgetTabState extends State<BudgetTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(BudgetTab.title),
+        title: const Text(BudgetTab.title),
       ),
-      body: Container(
-        child: ListView.builder(
+      body: ListView.builder(
           itemBuilder: _listBuilder,
         ),
-      ),
     );
   }
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
         itemBuilder: _listBuilder,
       ),

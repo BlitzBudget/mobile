@@ -10,12 +10,12 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   final walletModelAsString = fixture('models/get/wallet/wallet_model.json');
   final walletModelAsJSON =
-      jsonDecode(walletModelAsString) as Map<String, dynamic>;
+      jsonDecode(walletModelAsString);
   final walletModel = WalletModel(
-      walletId: walletModelAsJSON['walletId'] as String,
-      userId: walletModelAsJSON['userId'] as String,
+      walletId: walletModelAsJSON['walletId'],
+      userId: walletModelAsJSON['userId'],
       currency: parseDynamicAsString(walletModelAsJSON['currency']),
-      walletName: walletModelAsJSON['wallet_name'] as String,
+      walletName: walletModelAsJSON['wallet_name'],
       totalAssetBalance:
           parseDynamicAsDouble(walletModelAsJSON['total_asset_balance']),
       totalDebtBalance:
@@ -42,7 +42,7 @@ void main() {
       final addWalletModelAsString =
           fixture('models/add/wallet/wallet_model.json');
       final addWalletModelAsJSON =
-          jsonDecode(addWalletModelAsString) as Map<String, dynamic>;
+          jsonDecode(addWalletModelAsString);
       expect(walletModel.toJSON(), equals(addWalletModelAsJSON));
     });
   });

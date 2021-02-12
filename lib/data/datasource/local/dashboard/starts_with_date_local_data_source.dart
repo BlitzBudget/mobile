@@ -9,14 +9,15 @@ abstract class StartsWithDateLocalDataSource {
 
 class StartsWithDateLocalDataSourceImpl
     implements StartsWithDateLocalDataSource {
-  final KeyValueStore keyValueStore;
 
   StartsWithDateLocalDataSourceImpl({@required this.keyValueStore});
+
+  final KeyValueStore keyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _startsWithDate = 'starts_with_date';
+  static const String _startsWithDate = 'starts_with_date';
 
   /// ------------------------------------------------------------
   /// Method that returns the user starts with date

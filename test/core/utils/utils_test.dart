@@ -77,18 +77,18 @@ void main() {
   group('IncludesStr', () {
     test('Should check included string', () async {
       final isIncluded =
-          utils.includesStr(arr: 'CheckIfStringContains', val: 'i');
+          utils.includesStr(array: 'CheckIfStringContains', value: 'i');
       expect(isIncluded.isSome(), equals(true));
       expect(isIncluded.getOrElse(() => false), equals(true));
     });
 
     test('Empty Array: Should return None()', () async {
-      final isIncluded = utils.includesStr(arr: '', val: 'i');
+      final isIncluded = utils.includesStr(array: '', value: 'i');
       expect(isIncluded.isNone(), equals(true));
     });
 
     test('Character Empty: Should return None()', () async {
-      final isIncluded = utils.includesStr(arr: 'i', val: '');
+      final isIncluded = utils.includesStr(array: 'i', value: '');
       expect(isIncluded.isNone(), equals(true));
     });
   });

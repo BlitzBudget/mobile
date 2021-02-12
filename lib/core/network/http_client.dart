@@ -23,35 +23,35 @@ abstract class HTTPClient {
 }
 
 class HTTPClientImpl implements HTTPClient {
-  final AuthTokenRepository authTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper;
-  final RefreshTokenHelper refreshTokenHelper;
-
   HTTPClientImpl(
       {@required this.authTokenRepository,
       @required this.accessTokenRepository,
       @required this.refreshTokenHelper,
       @required this.networkHelper});
 
+  final AuthTokenRepository authTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final NetworkHelper networkHelper;
+  final RefreshTokenHelper refreshTokenHelper;
+
   @override
   Future<dynamic> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    return await processAPICallAndRefreshTokenIfNeeded(
+    return processAPICallAndRefreshTokenIfNeeded(
         url, body, headers, encoding, HTTPAPICalls.post);
   }
 
   @override
   Future<dynamic> put(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    return await processAPICallAndRefreshTokenIfNeeded(
+    return processAPICallAndRefreshTokenIfNeeded(
         url, body, headers, encoding, HTTPAPICalls.put);
   }
 
   @override
   Future<dynamic> patch(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    return await processAPICallAndRefreshTokenIfNeeded(
+    return processAPICallAndRefreshTokenIfNeeded(
         url, body, headers, encoding, HTTPAPICalls.patch);
   }
 
@@ -77,8 +77,8 @@ class HTTPClientImpl implements HTTPClient {
   }
 
   /// Populate Authorization Header
-  Future populateAuthHeader(Map<String, String> headers) async {
-    var authToken = await authTokenRepository.readAuthToken();
+  Future<dynamic> populateAuthHeader(Map<String, String> headers) async {
+    final authToken = await authTokenRepository.readAuthToken();
 
     /// Check if authorization is empty
     if (authToken.isLeft()) {
@@ -89,7 +89,7 @@ class HTTPClientImpl implements HTTPClient {
   }
 
   /// Process API Calls and handle refresh token
-  Future processAPICallAndRefreshTokenIfNeeded(
+  Future<dynamic> processAPICallAndRefreshTokenIfNeeded(
       String url,
       dynamic body,
       Map<String, String> headers,
@@ -113,7 +113,7 @@ class HTTPClientImpl implements HTTPClient {
   }
 
   // Make the relevant API Calls
-  Future makeAppropriateAPICall(String url, dynamic body,
+  Future<dynamic> makeAppropriateAPICall(String url, dynamic body,
       Map<String, String> headers, HTTPAPICalls httpapiCalls) async {
     Response response;
     switch (httpapiCalls) {

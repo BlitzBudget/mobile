@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
@@ -9,8 +8,6 @@ import 'package:mockito/mockito.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
-
-class MockDevicelocale extends Mock implements Devicelocale {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized(); // Initialize service bindings
@@ -28,7 +25,7 @@ void main() {
 
   group('Success: SignupUser', () {
     test('Should receive a successful response', () async {
-      final eitherUserResponseMonad = Right<Failure, void>('');
+      const eitherUserResponseMonad = Right<Failure, void>('');
 
       when(mockAuthenticationRepository.signupUser(
               email: email, password: password))

@@ -11,24 +11,24 @@ void main() {
   final transactionModelAsString =
       fixture('models/get/transaction/transaction_model.json');
   final transactionModelAsJSON =
-      jsonDecode(transactionModelAsString) as Map<String, dynamic>;
-  final tags = (transactionModelAsJSON['tags'] as List)
-      ?.map((dynamic item) => item as String)
+      jsonDecode(transactionModelAsString);
+  final tags = (transactionModelAsJSON['tags'])
+      ?.map<String>(parseDynamicAsString)
       ?.toList();
   final transactionModel = TransactionModel(
-      walletId: transactionModelAsJSON['walletId'] as String,
-      accountId: transactionModelAsJSON['account'] as String,
-      transactionId: transactionModelAsJSON['transactionId'] as String,
+      walletId: transactionModelAsJSON['walletId'],
+      accountId: transactionModelAsJSON['account'],
+      transactionId: transactionModelAsJSON['transactionId'],
       amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
-      description: transactionModelAsJSON['description'] as String,
+      description: transactionModelAsJSON['description'],
       recurrence:
           parseDynamicAsRecurrence(transactionModelAsJSON['recurrence']),
       categoryType:
           parseDynamicAsCategoryType(transactionModelAsJSON['category_type']),
-      categoryName: transactionModelAsJSON['category_name'] as String,
+      categoryName: transactionModelAsJSON['category_name'],
       tags: tags,
-      categoryId: transactionModelAsJSON['category'] as String,
-      dateMeantFor: transactionModelAsJSON['date_meant_for'] as String);
+      categoryId: transactionModelAsJSON['category'],
+      dateMeantFor: transactionModelAsJSON['date_meant_for']);
   test(
     'Should be a subclass of Transaction entity',
     () async {
@@ -51,7 +51,7 @@ void main() {
       final addTransactionModelAsString =
           fixture('models/add/transaction/transaction_model.json');
       final addTransactionModelAsJSON =
-          jsonDecode(addTransactionModelAsString) as Map<String, dynamic>;
+          jsonDecode(addTransactionModelAsString);
       expect(transactionModel.toJSON(), equals(addTransactionModelAsJSON));
     });
   });

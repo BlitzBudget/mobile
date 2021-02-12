@@ -7,13 +7,13 @@ import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/network/network_info.dart';
 
 class NetworkHelper {
-  final NetworkInfo networkInfo;
-  final http.Client httpClient;
-
   NetworkHelper({
     @required this.networkInfo,
     @required this.httpClient,
   });
+
+  final NetworkInfo networkInfo;
+  final http.Client httpClient;
 
   /// Generic POST api call
   Future<http.Response> post(String url,

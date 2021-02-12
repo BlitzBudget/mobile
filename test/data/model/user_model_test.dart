@@ -9,8 +9,8 @@ import '../../fixtures/fixture_reader.dart';
 void main() {
   final userModelAsString =
       fixture('models/get/authentication/login_info.json');
-  final userModelAsJSON = jsonDecode(userModelAsString) as List<dynamic>;
-  final userModel = UserModel(
+  final userModelAsJSON = jsonDecode(userModelAsString);
+  const userModel = UserModel(
       userId: 'User#2020-12-21T20:32:06.003Z',
       familyName: ' ',
       name: 'nagarjun_nagesh',
@@ -38,7 +38,7 @@ void main() {
       final addUserModelAsString =
           fixture('models/add/authentication/user_model.json');
       final addUserModelAsJSON =
-          jsonDecode(addUserModelAsString) as Map<String, dynamic>;
+          jsonDecode(addUserModelAsString);
       expect(userModel.toJSON(), equals(addUserModelAsJSON));
     });
   });

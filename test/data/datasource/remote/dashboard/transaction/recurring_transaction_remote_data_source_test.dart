@@ -29,11 +29,11 @@ void main() {
         final updateAmountAsString = fixture(
             'responses/dashboard/recurring-transaction/update_recurring_transaction_amount_info.json');
         final updateAmountAsJSON =
-            jsonDecode(updateAmountAsString) as Map<String, dynamic>;
+            jsonDecode(updateAmountAsString);
         final recurTransaction = RecurringTransactionModel(
-            walletId: updateAmountAsJSON['body-json']['walletId'] as String,
+            walletId: updateAmountAsJSON['body-json']['walletId'],
             recurringTransactionId: updateAmountAsJSON['body-json']
-                ['recurringTransactionId'] as String,
+                ['recurringTransactionId'],
             amount: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['amount']));
         // arrange
@@ -56,14 +56,14 @@ void main() {
         final updateDescriptionAsString = fixture(
             'responses/dashboard/recurring-transaction/update_recurring_transaction_description_info.json');
         final updateDescriptionAsJSON =
-            jsonDecode(updateDescriptionAsString) as Map<String, dynamic>;
+            jsonDecode(updateDescriptionAsString);
         final recurTransaction = RecurringTransactionModel(
             walletId:
-                updateDescriptionAsJSON['body-json']['walletId'] as String,
+                updateDescriptionAsJSON['body-json']['walletId'],
             recurringTransactionId: updateDescriptionAsJSON['body-json']
-                ['recurringTransactionId'] as String,
+                ['recurringTransactionId'],
             description:
-                updateDescriptionAsJSON['body-json']['description'] as String);
+                updateDescriptionAsJSON['body-json']['description']);
         // arrange
         when(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
                 body: jsonEncode(recurTransaction.toJSON()),
@@ -84,14 +84,14 @@ void main() {
         final updateTagsAsString = fixture(
             'responses/dashboard/recurring-transaction/update_recurring_transaction_tags_info.json');
         final updateTagsAsJSON =
-            jsonDecode(updateTagsAsString) as Map<String, dynamic>;
-        final tags = (updateTagsAsJSON['body-json']['tags'] as List)
-            ?.map((dynamic item) => item as String)
+            jsonDecode(updateTagsAsString);
+        final tags = (updateTagsAsJSON['body-json']['tags'])
+            ?.map<String>(parseDynamicAsString)
             ?.toList();
         final recurTransaction = RecurringTransactionModel(
-            walletId: updateTagsAsJSON['body-json']['walletId'] as String,
+            walletId: updateTagsAsJSON['body-json']['walletId'],
             recurringTransactionId: updateTagsAsJSON['body-json']
-                ['recurringTransactionId'] as String,
+                ['recurringTransactionId'],
             tags: tags);
         // arrange
         when(mockHTTPClientImpl.patch(constants.recurringTransactionURL,

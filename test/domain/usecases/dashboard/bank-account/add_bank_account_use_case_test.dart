@@ -21,19 +21,19 @@ void main() {
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
   final bankAccountModelAsJSON =
-      jsonDecode(bankAccountModelAsString) as Map<String, dynamic>;
+      jsonDecode(bankAccountModelAsString);
   final bankAccount = BankAccount(
-      walletId: bankAccountModelAsJSON['walletId'] as String,
-      accountId: bankAccountModelAsJSON['accountId'] as String,
+      walletId: bankAccountModelAsJSON['walletId'],
+      accountId: bankAccountModelAsJSON['accountId'],
       accountBalance:
           parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']),
-      bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String,
+      bankAccountName: bankAccountModelAsJSON['bank_account_name'],
       accountType:
           parseDynamicAsAccountType(bankAccountModelAsJSON['account_type']),
       accountSubType: parseDynamicAsAccountSubType(
           bankAccountModelAsJSON['account_sub_type']),
-      selectedAccount: bankAccountModelAsJSON['selected_account'] as bool,
-      linked: bankAccountModelAsJSON['linked'] as bool);
+      selectedAccount: bankAccountModelAsJSON['selected_account'],
+      linked: bankAccountModelAsJSON['linked']);
 
   setUp(() {
     mockBankAccountRepository = MockBankAccountRepository();
@@ -43,7 +43,7 @@ void main() {
 
   group('Add', () {
     test('Success', () async {
-      Either<Failure, void> addBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> addBankAccountMonad = Right<Failure, void>('');
 
       when(mockBankAccountRepository.add(bankAccount))
           .thenAnswer((_) => Future.value(addBankAccountMonad));
@@ -56,7 +56,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> addBankAccountMonad =
+      final Either<Failure, void> addBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockBankAccountRepository.add(bankAccount))

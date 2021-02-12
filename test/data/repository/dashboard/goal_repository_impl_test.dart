@@ -30,13 +30,13 @@ void main() {
 
   group('Update Goals', () {
     test('Should return FetchDataFailure ', () async {
-      var goalModel = GoalModel();
+      const goalModel = GoalModel();
       when(mockGoalRemoteDataSource.update(goalModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var goalReceived = await goalRepositoryImpl.update(goalModel);
+      final goalReceived = await goalRepositoryImpl.update(goalModel);
 
       /// Expect an exception to be thrown
-      var f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockGoalRemoteDataSource.update(goalModel));
       expect(goalReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
@@ -51,11 +51,11 @@ void main() {
               startsWithDate: '',
               userId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var goalReceived = await goalRepositoryImpl.fetch(
+      final goalReceived = await goalRepositoryImpl.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
-      var f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockGoalRemoteDataSource.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(goalReceived.isLeft(), equals(true));
@@ -65,13 +65,13 @@ void main() {
 
   group('Add Goal', () {
     test('Should return FetchDataFailure ', () async {
-      var addGoalModel = GoalModel();
+      const addGoalModel = GoalModel();
       when(mockGoalRemoteDataSource.add(addGoalModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var goalReceived = await goalRepositoryImpl.add(addGoalModel);
+      final goalReceived = await goalRepositoryImpl.add(addGoalModel);
 
       /// Expect an exception to be thrown
-      var f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockGoalRemoteDataSource.add(addGoalModel));
       expect(goalReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));

@@ -28,12 +28,11 @@ void main() {
 
   final walletResponseModelAsString =
       fixture('responses/dashboard/wallet/fetch_wallet_info.json');
-  final walletResponseModelAsJSON =
-      jsonDecode(walletResponseModelAsString) as Map<String, dynamic>;
+  final walletResponseModelAsJSON = jsonDecode(walletResponseModelAsString);
 
   /// Convert wallets from the response JSON to List<Wallet>
   /// If Empty then return an empty object list
-  var wallet = convertToResponseModel(walletResponseModelAsJSON);
+  final wallet = convertToResponseModel(walletResponseModelAsJSON);
 
   setUp(() {
     mockWalletRepository = MockWalletRepository();
@@ -45,10 +44,10 @@ void main() {
 
   group('Add', () {
     final user = User(userId: wallet.wallets.first.userId);
-    Either<Failure, User> userMonad = Right<Failure, User>(user);
+    final Either<Failure, User> userMonad = Right<Failure, User>(user);
 
     test('Success', () async {
-      Either<Failure, void> addWalletMonad = Right<Failure, void>('');
+      const Either<Failure, void> addWalletMonad = Right<Failure, void>('');
 
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
@@ -68,7 +67,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> addWalletMonad =
+      final Either<Failure, void> addWalletMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockUserAttributesRepository.readUserAttributes())
@@ -89,9 +88,9 @@ void main() {
     });
 
     test('User Attribute Failure', () async {
-      Either<Failure, void> addWalletMonad =
+      final Either<Failure, void> addWalletMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, User> userFailure =
+      final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
       when(mockUserAttributesRepository.readUserAttributes())
@@ -120,10 +119,9 @@ WalletResponseModel convertToResponseModel(
     Map<String, dynamic> walletResponseModelAsJSON) {
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = walletResponseModelAsJSON['Wallet'] as List;
-  var convertedWallet = List<Wallet>.from(responseCategories?.map<dynamic>(
-          (dynamic model) =>
-              WalletModel.fromJSON(model as Map<String, dynamic>)) ??
+  final responseCategories = walletResponseModelAsJSON['Wallet'];
+  final convertedWallet = List<Wallet>.from(responseCategories
+          ?.map<dynamic>((dynamic model) => WalletModel.fromJSON(model)) ??
       <Wallet>[]);
 
   return WalletResponseModel(wallets: convertedWallet);

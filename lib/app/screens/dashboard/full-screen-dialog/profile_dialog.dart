@@ -7,6 +7,10 @@ import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
 
 class ProfileDialog extends StatelessWidget {
+  const ProfileDialog({
+    Key key,
+  }) : super(key: key);
+
   static const title = 'Profile';
   static const androidIcon = Icon(Icons.person);
   static const iosIcon = Icon(CupertinoIcons.profile_circled);
@@ -14,10 +18,10 @@ class ProfileDialog extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(8),
               child: Center(
                 child: Text(
@@ -29,7 +33,7 @@ class ProfileDialog extends StatelessWidget {
                 ),
               ),
             ),
-            PreferenceCard(
+            const PreferenceCard(
               header: 'MY INTENSITY PREFERENCE',
               content: '🔥',
               preferenceChoices: [
@@ -40,7 +44,7 @@ class ProfileDialog extends StatelessWidget {
                 'My neighbor hates me',
               ],
             ),
-            PreferenceCard(
+            const PreferenceCard(
               header: 'CURRENT MOOD',
               content: '🤘🏾🚀',
               preferenceChoices: [
@@ -53,7 +57,7 @@ class ProfileDialog extends StatelessWidget {
             Expanded(
               child: Container(),
             ),
-            LogOutButton(),
+            const LogOutButton(),
           ],
         ),
       ),
@@ -68,7 +72,7 @@ class ProfileDialog extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text(title),
       ),
       body: _buildBody(context),
     );
@@ -76,7 +80,7 @@ class ProfileDialog extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: const CupertinoNavigationBar(),
       child: _buildBody(context),
     );
   }
@@ -91,28 +95,33 @@ class ProfileDialog extends StatelessWidget {
 }
 
 class PreferenceCard extends StatelessWidget {
-  const PreferenceCard({this.header, this.content, this.preferenceChoices});
+  const PreferenceCard(
+      {Key key, this.header, this.content, this.preferenceChoices})
+      : super(key: key);
 
   final String header;
   final String content;
   final List<String> preferenceChoices;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return PressableCard(
       color: Colors.green,
-      flattenAnimation: AlwaysStoppedAnimation(0),
+      flattenAnimation: const AlwaysStoppedAnimation(0),
+      onPressed: () {
+        showChoices(context, preferenceChoices);
+      },
       child: Stack(
         children: [
           Container(
             height: 120,
             width: 250,
             child: Padding(
-              padding: EdgeInsets.only(top: 40),
+              padding: const EdgeInsets.only(top: 40),
               child: Center(
                 child: Text(
                   content,
-                  style: TextStyle(fontSize: 48),
+                  style: const TextStyle(fontSize: 48),
                 ),
               ),
             ),
@@ -124,11 +133,11 @@ class PreferenceCard extends StatelessWidget {
             child: Container(
               color: Colors.black12,
               height: 40,
-              padding: EdgeInsets.only(left: 12),
+              padding: const EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,
               child: Text(
                 header,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -138,14 +147,15 @@ class PreferenceCard extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: () {
-        showChoices(context, preferenceChoices);
-      },
     );
   }
 }
 
 class LogOutButton extends StatelessWidget {
+  const LogOutButton({
+    Key key,
+  }) : super(key: key);
+
   static const _logoutMessage = Text(logoutDescription);
 
   /// ===========================================================================
@@ -168,18 +178,18 @@ class LogOutButton extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text(logoutConfirmation),
+              title: const Text(logoutConfirmation),
               content: _logoutMessage,
               actions: [
                 FlatButton(
-                  child: const Text(logoutButton),
                   onPressed: () => () async {
                     await _logoutAndRedirect(context);
                   },
+                  child: const Text(logoutButton),
                 ),
                 FlatButton(
-                  child: const Text(logoutCancel),
                   onPressed: () => Navigator.pop(context),
+                  child: const Text(logoutCancel),
                 ),
               ],
             );
@@ -200,19 +210,20 @@ class LogOutButton extends StatelessWidget {
           context: context,
           builder: (context) {
             return CupertinoActionSheet(
-              title: Text(logoutConfirmation),
+              title: const Text(logoutConfirmation),
               message: _logoutMessage,
               actions: [
                 CupertinoActionSheetAction(
-                    child: const Text(logoutButton),
-                    onPressed: () async {
-                      await _logoutAndRedirect(context);
-                    }),
+                  onPressed: () async {
+                    await _logoutAndRedirect(context);
+                  },
+                  child: const Text(logoutButton),
+                )
               ],
               cancelButton: CupertinoActionSheetAction(
-                child: const Text(logoutCancel),
                 isDefaultAction: true,
                 onPressed: () => Navigator.pop(context),
+                child: const Text(logoutCancel),
               ),
             );
           },
@@ -233,7 +244,7 @@ class LogOutButton extends StatelessWidget {
   Future<void> _logoutAndRedirect(BuildContext context) async {
     /// Create storage
     /// Delete all
-    await FlutterSecureStorage().deleteAll();
+    await const FlutterSecureStorage().deleteAll();
 
     /// Navigate to the second screen using a named route.
     await Navigator.pushNamed(context, welcomeRoute);

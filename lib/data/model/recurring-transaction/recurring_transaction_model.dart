@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 
 class RecurringTransactionModel extends RecurringTransaction {
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
-  RecurringTransactionModel(
+  const RecurringTransactionModel(
       {String recurringTransactionId,
       String walletId,
       double amount,
@@ -25,6 +25,7 @@ class RecurringTransactionModel extends RecurringTransaction {
             recurringTransactionId: recurringTransactionId,
             description: description,
             recurrence: recurrence,
+            category: category,
             categoryType: categoryType,
             categoryName: categoryName,
             tags: tags,
@@ -34,8 +35,8 @@ class RecurringTransactionModel extends RecurringTransaction {
   /// Map JSON recurring transactions to List of object
   factory RecurringTransactionModel.fromJSON(
       Map<String, dynamic> recurringTransaction) {
-    final tags = (recurringTransaction['tags'] as List)
-        ?.map((dynamic item) => item as String)
+    final tags = (recurringTransaction['tags'])
+        ?.map<String>(parseDynamicAsString)
         ?.toList();
     return RecurringTransactionModel(
         recurringTransactionId: parseDynamicAsString(

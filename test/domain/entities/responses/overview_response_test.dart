@@ -7,7 +7,7 @@ void main() {
     'Should be a subclass of Equatable entity',
     () async {
       // assert
-      expect(OverviewResponse(), isA<Equatable>());
+      expect(const OverviewResponse(), isA<Equatable>());
     },
   );
 }

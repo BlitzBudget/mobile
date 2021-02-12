@@ -33,11 +33,11 @@ void main() {
       when(mockChangePasswordRemoteDataSource.changePassword(
               accessToken: '', oldPassword: '', newPassword: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var changePasswordReceived = await changePasswordRepositoryImpl
+      final changePasswordReceived = await changePasswordRepositoryImpl
           .changePassword(accessToken: '', oldPassword: '', newPassword: '');
 
       /// Expect an exception to be thrown
-      var f = changePasswordReceived.fold<Failure>(
+      final f = changePasswordReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
       verify(mockChangePasswordRemoteDataSource.changePassword(
           accessToken: '', oldPassword: '', newPassword: ''));

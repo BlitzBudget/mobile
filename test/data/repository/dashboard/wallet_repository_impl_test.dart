@@ -36,11 +36,11 @@ void main() {
               startsWithDate: '',
               userId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var walletReceived = await walletRepositoryImpl.fetch(
+      final walletReceived = await walletRepositoryImpl.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
-      var f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockWalletRemoteDataSource.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(walletReceived.isLeft(), equals(true));
@@ -52,11 +52,11 @@ void main() {
     test('Should return FetchDataFailure ', () async {
       when(mockWalletRemoteDataSource.add(currency: '', userId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var walletReceived =
+      final walletReceived =
           await walletRepositoryImpl.add(currency: '', userId: '');
 
       /// Expect an exception to be thrown
-      var f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockWalletRemoteDataSource.add(currency: '', userId: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
@@ -67,11 +67,11 @@ void main() {
     test('Should return FetchDataFailure ', () async {
       when(mockWalletRemoteDataSource.delete(userId: '', walletId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var walletReceived =
+      final walletReceived =
           await walletRepositoryImpl.delete(userId: '', walletId: '');
 
       /// Expect an exception to be thrown
-      var f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockWalletRemoteDataSource.delete(userId: '', walletId: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));

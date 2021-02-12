@@ -8,15 +8,15 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_reposito
 import '../../use_case.dart';
 
 class AddWalletUseCase extends UseCase {
-  final WalletRepository walletRepository;
-  final UserAttributesRepository userAttributesRepository;
-
   AddWalletUseCase(
       {@required this.walletRepository,
       @required this.userAttributesRepository});
 
+  final WalletRepository walletRepository;
+  final UserAttributesRepository userAttributesRepository;
+
   Future<Either<Failure, void>> add({@required String currency}) async {
-    var userResponse = await userAttributesRepository.readUserAttributes();
+    final userResponse = await userAttributesRepository.readUserAttributes();
     String userId;
     if (userResponse.isRight()) {
       userId = userResponse.getOrElse(null).userId;
@@ -24,6 +24,6 @@ class AddWalletUseCase extends UseCase {
       return Left(EmptyResponseFailure());
     }
 
-    return await walletRepository.add(userId: userId, currency: currency);
+    return walletRepository.add(userId: userId, currency: currency);
   }
 }

@@ -12,12 +12,6 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_w
 import '../../use_case.dart';
 
 class FetchBudgetUseCase extends UseCase {
-  final BudgetRepository budgetRepository;
-  final StartsWithDateRepository startsWithDateRepository;
-  final EndsWithDateRepository endsWithDateRepository;
-  final DefaultWalletRepository defaultWalletRepository;
-  final UserAttributesRepository userAttributesRepository;
-
   FetchBudgetUseCase(
       {@required this.budgetRepository,
       @required this.startsWithDateRepository,
@@ -25,15 +19,21 @@ class FetchBudgetUseCase extends UseCase {
       @required this.defaultWalletRepository,
       @required this.userAttributesRepository});
 
+  final BudgetRepository budgetRepository;
+  final StartsWithDateRepository startsWithDateRepository;
+  final EndsWithDateRepository endsWithDateRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+  final UserAttributesRepository userAttributesRepository;
+
   Future<Either<Failure, BudgetResponse>> fetch() async {
-    var startsWithDate = await startsWithDateRepository.readStartsWithDate();
-    var endsWithDate = await endsWithDateRepository.readEndsWithDate();
-    var defaultWallet = await defaultWalletRepository.readDefaultWallet();
+    final startsWithDate = await startsWithDateRepository.readStartsWithDate();
+    final endsWithDate = await endsWithDateRepository.readEndsWithDate();
+    final defaultWallet = await defaultWalletRepository.readDefaultWallet();
     String userId, wallet;
 
     /// Get User id only when the default wallet is empty
     if (defaultWallet.isLeft()) {
-      var userResponse = await userAttributesRepository.readUserAttributes();
+      final userResponse = await userAttributesRepository.readUserAttributes();
       if (userResponse.isRight()) {
         userId = userResponse.getOrElse(null).userId;
       } else {
@@ -43,7 +43,7 @@ class FetchBudgetUseCase extends UseCase {
       wallet = defaultWallet.getOrElse(null);
     }
 
-    return await budgetRepository.fetch(
+    return budgetRepository.fetch(
         startsWithDate: startsWithDate,
         endsWithDate: endsWithDate,
         defaultWallet: wallet,

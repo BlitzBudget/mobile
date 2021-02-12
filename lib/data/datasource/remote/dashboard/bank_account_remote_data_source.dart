@@ -16,9 +16,9 @@ abstract class BankAccountRemoteDataSource {
 }
 
 class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
-  final HTTPClient httpClient;
-
   BankAccountRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Update BankAccount
   @override
@@ -51,7 +51,7 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
   @override
   Future<void> delete({@required String walletId, @required String account}) {
     // JSON for Get wallet [_jsonForGetWallet]
-    var _jsonForDeleteCategory = <String, dynamic>{
+    final _jsonForDeleteCategory = <String, dynamic>{
       'walletId': walletId,
       'account': account
     };

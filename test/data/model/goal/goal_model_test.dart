@@ -10,17 +10,17 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   final goalModelAsString =
       fixture('models/get/goal/emergency_fund_model.json');
-  final goalModelAsJSON = jsonDecode(goalModelAsString) as Map<String, dynamic>;
+  final goalModelAsJSON = jsonDecode(goalModelAsString);
   final goalModel = GoalModel(
-      walletId: goalModelAsJSON['walletId'] as String,
-      goalId: goalModelAsJSON['goalId'] as String,
+      walletId: goalModelAsJSON['walletId'],
+      goalId: goalModelAsJSON['goalId'],
       goalType: parseDynamicAsGoalType(goalModelAsJSON['goal_type']),
       targetType: parseDynamicAsTargetType(goalModelAsJSON['target_type']),
       monthlyContribution:
           parseDynamicAsDouble(goalModelAsJSON['monthly_contribution']),
       targetAmount: parseDynamicAsDouble(goalModelAsJSON['final_amount']),
-      targetDate: goalModelAsJSON['preferable_target_date'] as String,
-      targetId: goalModelAsJSON['target_id'] as String);
+      targetDate: goalModelAsJSON['preferable_target_date'],
+      targetId: goalModelAsJSON['target_id']);
   test(
     'Should be a subclass of Goal entity',
     () async {
@@ -42,7 +42,7 @@ void main() {
       final addGoalModelAsString =
           fixture('models/add/goal/emergency_fund_model.json');
       final addGoalModelAsJSON =
-          jsonDecode(addGoalModelAsString) as Map<String, dynamic>;
+          jsonDecode(addGoalModelAsString);
       expect(goalModel.toJSON(), equals(addGoalModelAsJSON));
     });
   });

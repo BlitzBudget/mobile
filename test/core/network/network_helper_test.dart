@@ -29,13 +29,13 @@ void main() {
     final addBudgetAsString =
         fixture('responses/dashboard/budget/add_budget_info.json');
     when(mockHttpClient.post(any,
-            body: jsonEncode(''), headers: constants.headers, encoding: null))
+            body: jsonEncode(''), headers: constants.headers))
         .thenAnswer((_) async => http.Response(addBudgetAsString, 200));
     when(mockHttpClient.patch(any,
-            body: jsonEncode(''), headers: constants.headers, encoding: null))
+            body: jsonEncode(''), headers: constants.headers))
         .thenAnswer((_) async => http.Response(addBudgetAsString, 200));
     when(mockHttpClient.put(any,
-            body: jsonEncode(''), headers: constants.headers, encoding: null))
+            body: jsonEncode(''), headers: constants.headers))
         .thenAnswer((_) async => http.Response(addBudgetAsString, 200));
     // MOck Network Call then return
     when(mockNetworkInfo.isConnected).thenAnswer((_) => Future.value(true));
@@ -47,10 +47,10 @@ void main() {
       setUpMockHttpClientSuccess200();
       // Network Helper
       await networkHelper.post(constants.budgetURL,
-          body: jsonEncode(''), headers: constants.headers, encoding: null);
+          body: jsonEncode(''), headers: constants.headers);
 
       verify(mockHttpClient.post(constants.budgetURL,
-          body: jsonEncode(''), headers: constants.headers, encoding: null));
+          body: jsonEncode(''), headers: constants.headers));
     });
   });
 
@@ -60,10 +60,10 @@ void main() {
       setUpMockHttpClientSuccess200();
       // Network Helper
       await networkHelper.patch(constants.budgetURL,
-          body: jsonEncode(''), headers: constants.headers, encoding: null);
+          body: jsonEncode(''), headers: constants.headers);
 
       verify(mockHttpClient.patch(constants.budgetURL,
-          body: jsonEncode(''), headers: constants.headers, encoding: null));
+          body: jsonEncode(''), headers: constants.headers));
     });
   });
 
@@ -73,10 +73,10 @@ void main() {
       setUpMockHttpClientSuccess200();
       // Network Helper
       await networkHelper.put(constants.budgetURL,
-          body: jsonEncode(''), headers: constants.headers, encoding: null);
+          body: jsonEncode(''), headers: constants.headers);
 
       verify(mockHttpClient.put(constants.budgetURL,
-          body: jsonEncode(''), headers: constants.headers, encoding: null));
+          body: jsonEncode(''), headers: constants.headers));
     });
   });
 }

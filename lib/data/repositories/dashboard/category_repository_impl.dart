@@ -6,9 +6,9 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/category_rem
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/category_repository.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
-  final CategoryRemoteDataSource categoryRemoteDataSource;
-
   CategoryRepositoryImpl({@required this.categoryRemoteDataSource});
+
+  final CategoryRemoteDataSource categoryRemoteDataSource;
 
   @override
   Future<Either<Failure, void>> delete(

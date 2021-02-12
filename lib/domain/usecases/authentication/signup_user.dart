@@ -5,9 +5,9 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/authentica
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class SignupUser extends UseCase {
-  final AuthenticationRepository authenticationRepository;
-
   SignupUser({@required this.authenticationRepository});
+
+  final AuthenticationRepository authenticationRepository;
 
   Future<Either<Failure, void>> signupUser(
       {@required String email, @required String password}) async {

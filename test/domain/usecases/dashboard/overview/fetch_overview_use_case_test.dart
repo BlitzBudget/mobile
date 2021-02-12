@@ -54,11 +54,11 @@ void main() {
   final overviewResponseModelAsString =
       fixture('responses/dashboard/overview_info.json');
   final overviewResponseModelAsJSON =
-      jsonDecode(overviewResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(overviewResponseModelAsString);
 
   /// Convert overviews from the response JSON to List<Overview>
   /// If Empty then return an empty object list
-  var overviewResponseModel =
+  final overviewResponseModel =
       convertToResponseModel(overviewResponseModelAsJSON);
 
   setUp(() {
@@ -76,12 +76,12 @@ void main() {
   });
 
   group('Fetch Overview', () {
-    var now = DateTime.now();
-    var dateString = now.toIso8601String();
-    final userId = 'User#2020-12-21T20:32:06.003Z';
+    final now = DateTime.now();
+    final dateString = now.toIso8601String();
+    const userId = 'User#2020-12-21T20:32:06.003Z';
 
     test('Success', () async {
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -90,7 +90,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      Either<Failure, OverviewResponse> fetchOverviewMonad =
+      final Either<Failure, OverviewResponse> fetchOverviewMonad =
           Right<Failure, OverviewResponse>(overviewResponseModel);
 
       when(mockOverviewRepository.fetch(
@@ -111,9 +111,9 @@ void main() {
     });
 
     test('Default Wallet Empty: Failure', () async {
-      final user = User(userId: userId);
-      Either<Failure, User> userMonad = Right<Failure, User>(user);
-      Either<Failure, String> dateFailure =
+      const user = User(userId: userId);
+      const Either<Failure, User> userMonad = Right<Failure, User>(user);
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -124,7 +124,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
-      Either<Failure, OverviewResponse> fetchOverviewMonad =
+      final Either<Failure, OverviewResponse> fetchOverviewMonad =
           Right<Failure, OverviewResponse>(overviewResponseModel);
 
       when(mockOverviewRepository.fetch(
@@ -145,9 +145,9 @@ void main() {
     });
 
     test('Default Wallet Empty && User Attribute Failure: Failure', () async {
-      Either<Failure, String> dateFailure =
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
-      Either<Failure, User> userFailure =
+      final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -175,45 +175,45 @@ OverviewResponseModel convertToResponseModel(
     Map<String, dynamic> overviewResponseModelAsJSON) {
   /// Convert transactions from the response JSON to List<Transaction>
   /// If Empty then return an empty object list
-  var responseTransactions = overviewResponseModelAsJSON['Transaction'] as List;
-  var convertedTransactions = List<Transaction>.from(
+  final  responseTransactions = overviewResponseModelAsJSON['Transaction'];
+  final  convertedTransactions = List<Transaction>.from(
       responseTransactions?.map<dynamic>((dynamic model) =>
-              TransactionModel.fromJSON(model as Map<String, dynamic>)) ??
+              TransactionModel.fromJSON(model)) ??
           <Transaction>[]);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var responseBudgets = overviewResponseModelAsJSON['Budget'] as List;
-  var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
+  final  responseBudgets = overviewResponseModelAsJSON['Budget'];
+  final  convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
           (dynamic model) =>
-              BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+              BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = overviewResponseModelAsJSON['Category'] as List;
-  var convertedCategories = List<Category>.from(
+  final  responseCategories = overviewResponseModelAsJSON['Category'];
+  final  convertedCategories = List<Category>.from(
       responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
+              CategoryModel.fromJSON(model)) ??
           <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts = overviewResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
+  final  responseBankAccounts = overviewResponseModelAsJSON['BankAccount'];
+  final  convertedBankAccounts = List<BankAccount>.from(
       responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+              BankAccountModel.fromJSON(model)) ??
           <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = overviewResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+  final  responseDate = overviewResponseModelAsJSON['Date'];
+  final  convertedDates = List<Date>.from(responseDate?.map<dynamic>(
           (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+              DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = overviewResponseModelAsJSON['Wallet'];
+  final  responseWallet = overviewResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -222,11 +222,11 @@ OverviewResponseModel convertToResponseModel(
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
     convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+        WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
+    final  convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
         (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+            WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

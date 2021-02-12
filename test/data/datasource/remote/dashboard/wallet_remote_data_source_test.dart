@@ -25,11 +25,11 @@ void main() {
       final fetchWalletAsString =
           fixture('responses/dashboard/wallet/fetch_wallet_info.json');
       final fetchWalletAsJSON =
-          jsonDecode(fetchWalletAsString) as Map<String, dynamic>;
+          jsonDecode(fetchWalletAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet =
-          fetchWalletAsJSON['Wallet'][0]['walletId'] as String;
+          fetchWalletAsJSON['Wallet'][0]['walletId'];
       String userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -41,7 +41,7 @@ void main() {
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchWalletAsJSON);
       // act
-      var wallet = await dataSource.fetch(
+      final wallet = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
           defaultWallet: defaultWallet,
@@ -51,7 +51,7 @@ void main() {
           body: jsonEncode(contentBody), headers: constants.headers));
 
       expect(wallet.wallets.first.walletId,
-          equals(fetchWalletAsJSON['Wallet'][0]['walletId'] as String));
+          equals(fetchWalletAsJSON['Wallet'][0]['walletId']));
     });
   });
 
@@ -62,9 +62,9 @@ void main() {
         final addWalletAsString =
             fixture('responses/dashboard/wallet/add_wallet_info.json');
         final addWalletAsJSON =
-            jsonDecode(addWalletAsString) as Map<String, dynamic>;
-        final userId = addWalletAsJSON['body-json']['userId'] as String;
-        final currency = addWalletAsJSON['body-json']['currency'] as String;
+            jsonDecode(addWalletAsString);
+        final userId = addWalletAsJSON['body-json']['userId'];
+        final currency = addWalletAsJSON['body-json']['currency'];
         final contentBody = <String, dynamic>{
           'userId': userId,
           'currency': currency,
@@ -89,14 +89,14 @@ void main() {
         final updateWalletCurrencyAsString = fixture(
             'responses/dashboard/wallet/update/update_wallet_currency_info.json');
         final updateWalletCurrencyAsJSON =
-            jsonDecode(updateWalletCurrencyAsString) as Map<String, dynamic>;
+            jsonDecode(updateWalletCurrencyAsString);
         final wallet = WalletModel(
             walletId:
-                updateWalletCurrencyAsJSON['body-json']['walletId'] as String,
+                updateWalletCurrencyAsJSON['body-json']['walletId'],
             userId:
-                updateWalletCurrencyAsJSON['body-json']['walletId'] as String,
+                updateWalletCurrencyAsJSON['body-json']['walletId'],
             currency:
-                updateWalletCurrencyAsJSON['body-json']['currency'] as String);
+                updateWalletCurrencyAsJSON['body-json']['currency']);
         // arrange
         when(mockHTTPClientImpl.patch(constants.walletURL,
                 body: jsonEncode(wallet.toJSON()), headers: constants.headers))
@@ -115,11 +115,11 @@ void main() {
         final updateWalletNameAsString = fixture(
             'responses/dashboard/wallet/update/update_wallet_name_info.json');
         final updateWalletNameAsJSON =
-            jsonDecode(updateWalletNameAsString) as Map<String, dynamic>;
+            jsonDecode(updateWalletNameAsString);
         final wallet = WalletModel(
-            walletId: updateWalletNameAsJSON['body-json']['walletId'] as String,
-            userId: updateWalletNameAsJSON['body-json']['walletId'] as String,
-            walletName: updateWalletNameAsJSON['body-json']['name'] as String);
+            walletId: updateWalletNameAsJSON['body-json']['walletId'],
+            userId: updateWalletNameAsJSON['body-json']['walletId'],
+            walletName: updateWalletNameAsJSON['body-json']['name']);
         // arrange
         when(mockHTTPClientImpl.patch(constants.walletURL,
                 body: jsonEncode(wallet.toJSON()), headers: constants.headers))
@@ -137,9 +137,9 @@ void main() {
     final deleteWalletResponseAsString =
         fixture('responses/dashboard/wallet/delete_wallet_info.json');
     final deleteWalletResponseAsJSON =
-        jsonDecode(deleteWalletResponseAsString) as Map<String, dynamic>;
-    final walletId = 'Wallet#2020-12-21T20:35:49.295Z';
-    final userId = 'User#2021-01-04T15:20:36.079Z';
+        jsonDecode(deleteWalletResponseAsString);
+    const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
+    const userId = 'User#2021-01-04T15:20:36.079Z';
     test(
       'Should delete the appropriate wallet item when invoked',
       () async {

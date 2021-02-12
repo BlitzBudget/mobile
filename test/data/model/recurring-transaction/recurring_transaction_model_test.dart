@@ -11,27 +11,26 @@ void main() {
   final recurringTransactionModelAsString = fixture(
       'models/get/recurring-transaction/recurring_transaction_model.json');
   final recurringTransactionModelAsJSON =
-      jsonDecode(recurringTransactionModelAsString) as Map<String, dynamic>;
-  final tags = (recurringTransactionModelAsJSON['tags'] as List)
-      ?.map((dynamic item) => item as String)
+      jsonDecode(recurringTransactionModelAsString);
+  final tags = (recurringTransactionModelAsJSON['tags'])
+      ?.map<String>(parseDynamicAsString)
       ?.toList();
   final recurringTransactionModel = RecurringTransactionModel(
-      walletId: recurringTransactionModelAsJSON['walletId'] as String,
-      accountId: recurringTransactionModelAsJSON['account'] as String,
+      walletId: recurringTransactionModelAsJSON['walletId'],
+      accountId: recurringTransactionModelAsJSON['account'],
       recurringTransactionId:
-          recurringTransactionModelAsJSON['recurringTransactionsId'] as String,
+          recurringTransactionModelAsJSON['recurringTransactionsId'],
       amount: parseDynamicAsDouble(recurringTransactionModelAsJSON['amount']),
-      description: recurringTransactionModelAsJSON['description'] as String,
+      description: recurringTransactionModelAsJSON['description'],
       recurrence: parseDynamicAsRecurrence(
           recurringTransactionModelAsJSON['recurrence']),
       categoryType: parseDynamicAsCategoryType(
           recurringTransactionModelAsJSON['category_type']),
-      categoryName: recurringTransactionModelAsJSON['category_name'] as String,
-      category: recurringTransactionModelAsJSON['category'] as String,
+      categoryName: recurringTransactionModelAsJSON['category_name'],
+      category: recurringTransactionModelAsJSON['category'],
       tags: tags,
-      nextScheduled:
-          recurringTransactionModelAsJSON['next_scheduled'] as String,
-      creationDate: recurringTransactionModelAsJSON['creation_date'] as String);
+      nextScheduled: recurringTransactionModelAsJSON['next_scheduled'],
+      creationDate: recurringTransactionModelAsJSON['creation_date']);
   test(
     'Should be a subclass of RecurringTransaction entity',
     () async {
@@ -55,8 +54,7 @@ void main() {
       final addRecurringTransactionModelAsString = fixture(
           'models/add/recurring-transaction/recurring_transaction_model.json');
       final addRecurringTransactionModelAsJSON =
-          jsonDecode(addRecurringTransactionModelAsString)
-              as Map<String, dynamic>;
+          jsonDecode(addRecurringTransactionModelAsString);
       expect(recurringTransactionModel.toJSON(),
           equals(addRecurringTransactionModelAsJSON));
     });

@@ -4,7 +4,7 @@ import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dar
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 
 class BankAccountModel extends BankAccount {
-  BankAccountModel(
+  const BankAccountModel(
       {String walletId,
       double accountBalance,
       String accountId,

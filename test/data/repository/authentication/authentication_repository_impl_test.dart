@@ -34,11 +34,11 @@ void main() {
       when(mockAuthenticationRemoteDataSource.attemptLogin(
               email: '', password: ''))
           .thenThrow(UserNotFoundException());
-      var loginInfo =
+      final loginInfo =
           await authenticationRepositoryImpl.loginUser(email: '', password: '');
 
       /// Expect an exception to be thrown
-      var f = loginInfo.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = loginInfo.fold<Failure>((f) => f, (_) => GenericFailure());
       expect(loginInfo.isLeft(), equals(true));
       expect(f, equals(RedirectToSignupDueToFailure()));
     });
@@ -47,11 +47,11 @@ void main() {
       when(mockAuthenticationRemoteDataSource.signupUser(
               email: '', password: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var loginInfo = await authenticationRepositoryImpl.signupUser(
+      final loginInfo = await authenticationRepositoryImpl.signupUser(
           email: '', password: '');
 
       /// Expect an exception to be thrown
-      var f = loginInfo.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = loginInfo.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockAuthenticationRemoteDataSource.signupUser(
           email: '', password: ''));
       expect(loginInfo.isLeft(), equals(true));

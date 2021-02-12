@@ -67,13 +67,13 @@ void main() {
         'Should return clearStoreAndThrowException if unable to read refresh token',
         () async {
       // If refresh token is empty
-      Either<Failure, String> refreshTokenMonad =
+      final Either<Failure, String> refreshTokenMonad =
           Left<Failure, String>(EmptyResponseFailure());
       when(mockRefreshTokenRepository.readRefreshToken())
           .thenAnswer((_) => Future.value(refreshTokenMonad));
       // assert
       expect(() => refreshTokenHelper.refreshAuthToken(constants.headers, null),
-          throwsA(TypeMatcher<UnableToRefreshTokenException>()));
+          throwsA(const TypeMatcher<UnableToRefreshTokenException>()));
 
       verify(mockRefreshTokenRepository.readRefreshToken());
     });
@@ -82,18 +82,18 @@ void main() {
       final userModelAsString =
           fixture('responses/authentication/login_info.json');
       final userModelAsJSON =
-          jsonDecode(userModelAsString) as Map<String, dynamic>;
+          jsonDecode(userModelAsString);
       final userModel = UserResponseModel(
           accessToken:
-              userModelAsJSON['AuthenticationResult']['AccessToken'] as String,
+              userModelAsJSON['AuthenticationResult']['AccessToken'],
           authenticationToken:
-              userModelAsJSON['AuthenticationResult']['IdToken'] as String,
+              userModelAsJSON['AuthenticationResult']['IdToken'],
           refreshToken:
-              userModelAsJSON['AuthenticationResult']['RefreshToken'] as String,
+              userModelAsJSON['AuthenticationResult']['RefreshToken'],
           user: UserModel.fromJSON(
-              userModelAsJSON['UserAttributes'] as List<dynamic>),
+              userModelAsJSON['UserAttributes']),
           wallet: WalletModel.fromJSON(
-              userModelAsJSON['Wallet'][0] as Map<String, dynamic>));
+              userModelAsJSON['Wallet'][0]));
       refreshTokenMonad = Right<Failure, String>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
@@ -106,8 +106,7 @@ void main() {
       when(mockHttpClient.post(refreshTokenURL,
               body: jsonEncode(
                   {'refreshToken': refreshTokenMonad.getOrElse(null)}),
-              headers: headers,
-              encoding: null))
+              headers: headers))
           .thenAnswer(
               (_) async => http.Response(refreshTokenResponseString, 500));
     }
@@ -120,11 +119,11 @@ void main() {
       final userModelAsString =
           fixture('responses/authentication/refresh_token_info.json');
       final userModelAsJSON =
-          jsonDecode(userModelAsString) as Map<String, dynamic>;
+          jsonDecode(userModelAsString);
       final userModel = UserResponseModel.fromJSON(userModelAsJSON);
       // assert
       expect(() => refreshTokenHelper.refreshAuthToken(constants.headers, null),
-          throwsA(TypeMatcher<UnableToRefreshTokenException>()));
+          throwsA(const TypeMatcher<UnableToRefreshTokenException>()));
 
       verify(mockRefreshTokenRepository.readRefreshToken());
       verifyNever(mockAuthTokenRepository.writeAuthToken(userModel));
@@ -139,18 +138,18 @@ void main() {
       final userModelAsString =
           fixture('responses/authentication/login_info.json');
       final userModelAsJSON =
-          jsonDecode(userModelAsString) as Map<String, dynamic>;
+          jsonDecode(userModelAsString);
       final userModel = UserResponseModel(
           accessToken:
-              userModelAsJSON['AuthenticationResult']['AccessToken'] as String,
+              userModelAsJSON['AuthenticationResult']['AccessToken'],
           authenticationToken:
-              userModelAsJSON['AuthenticationResult']['IdToken'] as String,
+              userModelAsJSON['AuthenticationResult']['IdToken'],
           refreshToken:
-              userModelAsJSON['AuthenticationResult']['RefreshToken'] as String,
+              userModelAsJSON['AuthenticationResult']['RefreshToken'],
           user: UserModel.fromJSON(
-              userModelAsJSON['UserAttributes'] as List<dynamic>),
+              userModelAsJSON['UserAttributes']),
           wallet: WalletModel.fromJSON(
-              userModelAsJSON['Wallet'][0] as Map<String, dynamic>));
+              userModelAsJSON['Wallet'][0]));
       refreshTokenMonad = Right<Failure, String>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
@@ -163,8 +162,7 @@ void main() {
       when(mockHttpClient.post(refreshTokenURL,
               body: jsonEncode(
                   {'refreshToken': refreshTokenMonad.getOrElse(null)}),
-              headers: headers,
-              encoding: null))
+              headers: headers))
           .thenAnswer(
               (_) async => http.Response(refreshTokenResponseString, 200));
     }
@@ -175,7 +173,7 @@ void main() {
       final userModelAsString =
           fixture('responses/authentication/refresh_token_info.json');
       final userModelAsJSON =
-          jsonDecode(userModelAsString) as Map<String, dynamic>;
+          jsonDecode(userModelAsString);
       final userModel = UserResponseModel.fromJSON(userModelAsJSON);
       // assert
       await refreshTokenHelper.refreshAuthToken(constants.headers, null);
@@ -183,8 +181,7 @@ void main() {
       verify(mockRefreshTokenRepository.readRefreshToken());
       verify(mockHttpClient.post(refreshTokenURL,
           body: jsonEncode({'refreshToken': refreshTokenMonad.getOrElse(null)}),
-          headers: headers,
-          encoding: null));
+          headers: headers));
       verify(mockAuthTokenRepository.writeAuthToken(userModel));
       verify(mockAccessTokenRepository.writeAccessToken(userModel));
       expect(constants.headers['Authorization'],

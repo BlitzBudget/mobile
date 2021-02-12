@@ -18,11 +18,11 @@ void main() {
   final goalResponseModelAsString =
       fixture('responses/dashboard/goal/fetch_goal_info.json');
   final goalResponseModelAsJSON =
-      jsonDecode(goalResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(goalResponseModelAsString);
 
   /// Convert goals from the response JSON to List<Goal>
   /// If Empty then return an empty object list
-  var goalResponseModel = convertToResponseModel(goalResponseModelAsJSON);
+  final goalResponseModel = convertToResponseModel(goalResponseModelAsJSON);
 
   test(
     'Should be a subclass of GoalModel entity',
@@ -47,7 +47,7 @@ void main() {
           'responses/partially-emtpy/goal/empty_bank_account_goal_info.json');
       final goalResponseModelWithEmptyBankAccountAsJSON =
           jsonDecode(goalResponseModelWithEmptyBankAccountAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -67,7 +67,7 @@ void main() {
           fixture('responses/partially-emtpy/goal/empty_date_goal_info.json');
       final goalResponseModelWithEmptyDateAsJSON =
           jsonDecode(goalResponseModelWithEmptyDateAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -86,7 +86,7 @@ void main() {
           fixture('responses/partially-emtpy/goal/empty_goal_goal_info.json');
       final goalResponseModelWithEmptyGoalAsJSON =
           jsonDecode(goalResponseModelWithEmptyGoalAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -105,7 +105,7 @@ void main() {
           fixture('responses/partially-emtpy/goal/empty_wallet_goal_info.json');
       final goalResponseModelWithEmptyWalletAsJSON =
           jsonDecode(goalResponseModelWithEmptyWalletAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -123,29 +123,29 @@ GoalResponseModel convertToResponseModel(
     Map<String, dynamic> goalResponseModelAsJSON) {
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseGoals = goalResponseModelAsJSON['Goal'] as List;
-  var convertedGoals = List<Goal>.from(responseGoals?.map<dynamic>(
+  final responseGoals = goalResponseModelAsJSON['Goal'];
+  final convertedGoals = List<Goal>.from(responseGoals?.map<dynamic>(
           (dynamic model) =>
-              GoalModel.fromJSON(model as Map<String, dynamic>)) ??
+              GoalModel.fromJSON(model)) ??
       <Goal>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts = goalResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
+  final responseBankAccounts = goalResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(
       responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+              BankAccountModel.fromJSON(model)) ??
           <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = goalResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+  final responseDate = goalResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
           (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+              DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = goalResponseModelAsJSON['Wallet'];
+  final responseWallet = goalResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -154,11 +154,11 @@ GoalResponseModel convertToResponseModel(
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
     convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+        WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
+    final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
         (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+            WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

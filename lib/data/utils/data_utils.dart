@@ -31,9 +31,7 @@ bool parseDynamicAsBool(dynamic obj) {
 }
 
 double parseDynamicAsDouble(dynamic obj) {
-  if (obj is double) {
-    return obj;
-  } else if (obj is int) {
+  if (obj is num) {
     return obj.toDouble();
   }
   return null;

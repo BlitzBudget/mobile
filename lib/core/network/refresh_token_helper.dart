@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
+import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
@@ -13,13 +14,6 @@ import '../../data/constants/constants.dart';
 import 'network_helper.dart';
 
 class RefreshTokenHelper {
-  final RefreshTokenRepository refreshTokenRepository;
-  final AuthTokenRepository authTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper;
-  final ClearAllStorageRepository clearAllStorageRepository;
-  final http.Client httpClient;
-
   RefreshTokenHelper(
       {@required this.refreshTokenRepository,
       @required this.authTokenRepository,
@@ -27,6 +21,13 @@ class RefreshTokenHelper {
       @required this.networkHelper,
       @required this.clearAllStorageRepository,
       @required this.httpClient});
+
+  final RefreshTokenRepository refreshTokenRepository;
+  final AuthTokenRepository authTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final NetworkHelper networkHelper;
+  final ClearAllStorageRepository clearAllStorageRepository;
+  final http.Client httpClient;
 
   /// Refresh authorization token
   ///
@@ -53,11 +54,11 @@ class RefreshTokenHelper {
         .then((response) async {
       debugPrint(' The authorization token has been refreshed successfully.');
 
-      dynamic res = await _response(response);
+      final res = await _response(response);
 
       // Set the new Authorization header
       headers['Authorization'] =
-          res['AuthenticationResult']['IdToken'] as String;
+          parseDynamicAsString(res['AuthenticationResult']['IdToken']);
     });
   }
 
@@ -71,10 +72,10 @@ class RefreshTokenHelper {
       } else {
         debugPrint(
             ' The response code is ${statusCode.toString()} with the response $response');
-        dynamic res = jsonDecode(response.body);
+        final res = jsonDecode(response.body);
 
         /// Map From JSON to user response model
-        var user = UserResponseModel.fromJSON(res as Map<String, dynamic>);
+        final user = UserResponseModel.fromJSON(res);
 
         /// Store Auth Token
         await authTokenRepository.writeAuthToken(user);
@@ -91,7 +92,7 @@ class RefreshTokenHelper {
   }
 
   /// Clear all Storage (keyValue and SecureKeyValue)
-  Future clearStoreAndThrowException() async {
+  Future<void> clearStoreAndThrowException() async {
     await clearAllStorageRepository.clearAllStorage();
     throw UnableToRefreshTokenException();
   }

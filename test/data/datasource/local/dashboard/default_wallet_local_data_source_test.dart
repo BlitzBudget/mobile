@@ -10,7 +10,7 @@ class MockKeyValueStoreImpl extends Mock implements KeyValueStoreImpl {}
 void main() {
   DefaultWalletLocalDataSourceImpl dataSource;
   KeyValueStoreImpl mockKeyValueStoreImpl;
-  final defaultWalletCacheName = 'default_wallet';
+  const defaultWalletCacheName = 'default_wallet';
 
   setUp(() {
     mockKeyValueStoreImpl = MockKeyValueStoreImpl();
@@ -19,8 +19,8 @@ void main() {
   });
 
   group('Fetch Ends With Date from Key Value Store', () {
-    var now = DateTime.now();
-    var defaultWalletModel = now.toIso8601String();
+    final now = DateTime.now();
+    final defaultWalletModel = now.toIso8601String();
 
     test(
       'Should return Ends With Date from KeyValueStore when there is one in the SharedPreferences',
@@ -44,14 +44,14 @@ void main() {
             .thenThrow(NoValueInCacheException());
         // assert
         expect(() => dataSource.readDefaultWallet(),
-            throwsA(TypeMatcher<NoValueInCacheException>()));
+            throwsA(const TypeMatcher<NoValueInCacheException>()));
       },
     );
   });
 
   group('Set Ends with date to KeyValueStore', () {
-    var now = DateTime.now();
-    var defaultWalletModel = now.toIso8601String();
+    final now = DateTime.now();
+    final defaultWalletModel = now.toIso8601String();
 
     test(
       'Should call KeyValueStore to store the data',

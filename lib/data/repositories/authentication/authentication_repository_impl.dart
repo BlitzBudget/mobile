@@ -8,9 +8,9 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/authentica
 import '../../datasource/remote/authentication/authentication_remote_data_source.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  final AuthenticationRemoteDataSource authenticationRemoteDataSource;
-
   AuthenticationRepositoryImpl({@required this.authenticationRemoteDataSource});
+
+  final AuthenticationRemoteDataSource authenticationRemoteDataSource;
 
   @override
   Future<Either<Failure, Option<UserResponse>>> loginUser(

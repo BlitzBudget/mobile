@@ -10,9 +10,9 @@ abstract class NetworkInfo {
 /// Pings Cloudflare / OpenDNS / Google
 /// To ensure 100% connectivity check
 class NetworkInfoImpl implements NetworkInfo {
-  final DataConnectionChecker connectionChecker;
-
   NetworkInfoImpl({@required this.connectionChecker});
+
+  final DataConnectionChecker connectionChecker;
 
   @override
   Future<bool> get isConnected => connectionChecker.hasConnection;

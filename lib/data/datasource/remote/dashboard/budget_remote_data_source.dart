@@ -22,9 +22,9 @@ abstract class BudgetRemoteDataSource {
 }
 
 class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
-  final HTTPClient httpClient;
-
   BudgetRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Budgets
   @override
@@ -33,7 +33,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
       @required String endsWithDate,
       @required String defaultWallet,
       @required String userId}) async {
-    var contentBody = <String, dynamic>{
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -49,7 +49,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<BudgetResponseModel>((dynamic res) {
       debugPrint('The response from the budget is $res');
-      return BudgetResponseModel.fromJSON(res as Map<String, dynamic>);
+      return BudgetResponseModel.fromJSON(res);
     });
   }
 

@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import '../../../../widgets/dashboard_widget.dart';
 
 class AddNewWallet extends StatelessWidget {
+  const AddNewWallet({
+    Key key,
+  }) : super(key: key);
+
   static const title = 'Add new wallet';
 
   Widget _buildBody(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(8),
               child: Center(
                 child: Text(
@@ -40,7 +44,7 @@ class AddNewWallet extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text(title),
       ),
       body: _buildBody(context),
     );
@@ -48,7 +52,7 @@ class AddNewWallet extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: const CupertinoNavigationBar(),
       child: _buildBody(context),
     );
   }

@@ -5,10 +5,6 @@ import 'text_field_container.dart';
 
 // Public exposed class
 class RoundedPassword extends StatefulWidget {
-  final ValueChanged<String> onChanged;
-  final bool autofocus;
-  final String hintText, initialValue;
-
   /// Constructor that accepts the onchanged variable
   const RoundedPassword(
       {Key key,
@@ -18,20 +14,22 @@ class RoundedPassword extends StatefulWidget {
       this.initialValue = ''})
       : super(key: key);
 
+  final ValueChanged<String> onChanged;
+  final bool autofocus;
+  final String hintText, initialValue;
+
   @override
-  _RoundedPasswordField createState() =>
-      _RoundedPasswordField(onChanged, autofocus, hintText, initialValue);
+  _RoundedPasswordField createState() => _RoundedPasswordField();
 }
 
 // Private Class
 class _RoundedPasswordField extends State<RoundedPassword> {
-  final ValueChanged<String> onChanged;
-  final bool autofocus;
+  /// Constructor for the private class
+  _RoundedPasswordField();
 
   /// Initially password is obscure
   bool _obscureText;
   bool isPasswordVisible;
-  final String hintText, initialValue;
 
   @override
   void initState() {
@@ -40,22 +38,18 @@ class _RoundedPasswordField extends State<RoundedPassword> {
     super.initState();
   }
 
-  /// Constructor for the private class
-  _RoundedPasswordField(
-      this.onChanged, this.autofocus, this.hintText, this.initialValue);
-
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        initialValue: initialValue,
+        initialValue: widget.initialValue,
         obscureText: _obscureText,
         autocorrect: false,
-        onChanged: onChanged,
+        onChanged: widget.onChanged,
         cursorColor: primaryColor,
         decoration: InputDecoration(
-          hintText: hintText,
-          icon: Icon(
+          hintText: widget.hintText,
+          icon: const Icon(
             Icons.lock,
             color: primaryColor,
           ),

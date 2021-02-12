@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/domain/entities/user.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 class UserModel extends User {
-  UserModel(
+  const UserModel(
       {String userId,
       String email,
       String name,
@@ -21,14 +21,14 @@ class UserModel extends User {
             fileFormat: fileFormat);
 
   factory UserModel.fromJSON(List<dynamic> userAttributes) {
-    var currentUserLocal = extractUserAttributes(userAttributes);
+    final currentUserLocal = extractUserAttributes(userAttributes);
     return UserModel(
-        userId: currentUserLocal['financialPortfolioId'] as String,
-        email: currentUserLocal['email'] as String,
-        name: currentUserLocal['name'] as String,
-        locale: currentUserLocal['locale'] as String,
-        fileFormat: currentUserLocal['exportFileFormat'] as String,
-        familyName: currentUserLocal['family_name'] as String);
+        userId: currentUserLocal['financialPortfolioId'],
+        email: currentUserLocal['email'],
+        name: currentUserLocal['name'],
+        locale: currentUserLocal['locale'],
+        fileFormat: currentUserLocal['exportFileFormat'],
+        familyName: currentUserLocal['family_name']);
   }
 
   Map<String, dynamic> toJSON() => <String, dynamic>{
@@ -39,19 +39,19 @@ class UserModel extends User {
         'exportFileFormat': fileFormat
       };
 
-  static Map extractUserAttributes(List<dynamic> userAttributes) {
-    Map currentUserLocal = <String, dynamic>{};
+  static Map<String, dynamic> extractUserAttributes(List<dynamic> userAttributes) {
+    final currentUserLocal = <String, dynamic>{};
 
     /// SUCCESS Scenarios
     for (var i = 0; i < userAttributes.length; i++) {
-      var name = userAttributes[i]['Name'] as String;
+      final name = userAttributes[i]['Name'];
       developer.log('Printing User Attributes $name');
 
       if (name.contains('custom:')) {
         /// if custom values then remove custom:
-        var elemName = lastElement(
+        final elemName = lastElement(
             splitElement(stringToSplit: name, character: ':')
-                .getOrElse(() => <String>[])).getOrElse(() => '') as String;
+                .getOrElse(() => <String>[])).getOrElse(() => '');
         developer.log('User:: The elemName is $elemName');
         currentUserLocal[elemName] = userAttributes[i]['Value'];
       } else {

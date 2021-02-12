@@ -28,24 +28,24 @@ void main() {
   final transactionModelAsString =
       fixture('models/get/transaction/transaction_model.json');
   final transactionModelAsJSON =
-      jsonDecode(transactionModelAsString) as Map<String, dynamic>;
-  final tags = (transactionModelAsJSON['tags'] as List)
-      ?.map((dynamic item) => item as String)
+      jsonDecode(transactionModelAsString);
+  final tags = (transactionModelAsJSON['tags'])
+      ?.map<String>(parseDynamicAsString)
       ?.toList();
   final transaction = TransactionModel(
-      walletId: transactionModelAsJSON['walletId'] as String,
-      accountId: transactionModelAsJSON['account'] as String,
-      transactionId: transactionModelAsJSON['transactionId'] as String,
+      walletId: transactionModelAsJSON['walletId'],
+      accountId: transactionModelAsJSON['account'],
+      transactionId: transactionModelAsJSON['transactionId'],
       amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
-      description: transactionModelAsJSON['description'] as String,
+      description: transactionModelAsJSON['description'],
       recurrence:
           parseDynamicAsRecurrence(transactionModelAsJSON['recurrence']),
       categoryType:
           parseDynamicAsCategoryType(transactionModelAsJSON['category_type']),
-      categoryName: transactionModelAsJSON['category_name'] as String,
+      categoryName: transactionModelAsJSON['category_name'],
       tags: tags,
-      categoryId: transactionModelAsJSON['category'] as String,
-      dateMeantFor: transactionModelAsJSON['date_meant_for'] as String);
+      categoryId: transactionModelAsJSON['category'],
+      dateMeantFor: transactionModelAsJSON['date_meant_for']);
 
   setUp(() {
     mockTransactionRepository = MockTransactionRepository();
@@ -57,7 +57,7 @@ void main() {
 
   group('Update Transaction', () {
     test('Success', () async {
-      Either<Failure, void> updateTransactionMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateTransactionMonad = Right<Failure, void>('');
 
       when(mockTransactionRepository.update(transaction))
           .thenAnswer((_) => Future.value(updateTransactionMonad));
@@ -70,7 +70,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> updateTransactionMonad =
+      final Either<Failure, void> updateTransactionMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockTransactionRepository.update(transaction))
@@ -86,13 +86,13 @@ void main() {
 
   group('UpdateAmount', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId: transactionModelAsJSON['accountId'] as String,
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
         amount: parseDynamicAsDouble(transactionModelAsJSON['amount']));
 
     test('Success', () async {
-      Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -109,9 +109,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -131,9 +131,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -155,13 +155,13 @@ void main() {
 
   group('UpdateDescription', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId: transactionModelAsJSON['accountId'] as String,
-        description: transactionModelAsJSON['description'] as String);
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
+        description: transactionModelAsJSON['description']);
 
     test('Success', () async {
-      Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -179,9 +179,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -202,9 +202,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -227,13 +227,13 @@ void main() {
 
   group('UpdateAccountId', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId: transactionModelAsJSON['accountId'] as String,
-        accountId: transactionModelAsJSON['account'] as String);
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
+        accountId: transactionModelAsJSON['account']);
 
     test('Success', () async {
-      Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -251,9 +251,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -274,9 +274,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -299,13 +299,13 @@ void main() {
 
   group('UpdateCategoryId', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId: transactionModelAsJSON['accountId'] as String,
-        categoryId: transactionModelAsJSON['category'] as String);
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
+        categoryId: transactionModelAsJSON['category']);
 
     test('Success', () async {
-      Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -323,9 +323,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -346,9 +346,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -371,14 +371,14 @@ void main() {
 
   group('UpdateRecurrence', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId: transactionModelAsJSON['accountId'] as String,
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
         recurrence:
             parseDynamicAsRecurrence(transactionModelAsJSON['recurrence']));
 
     test('Success', () async {
-      Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -396,9 +396,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -419,9 +419,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -444,13 +444,13 @@ void main() {
 
   group('UpdateTags', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'] as String,
-        transactionId: transactionModelAsJSON['accountId'] as String,
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
         tags: tags);
 
     test('Success', () async {
-      Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -467,9 +467,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(transactionModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -489,9 +489,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBudgetMonad =
+      final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())

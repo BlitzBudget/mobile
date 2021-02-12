@@ -9,6 +9,10 @@ import 'settings_dialog.dart';
 import 'wallet/add_new_wallet.dart';
 
 class WalletDialog extends StatelessWidget {
+  const WalletDialog({
+    Key key,
+  }) : super(key: key);
+
   static const title = 'Wallets';
   static const androidIcon = Icon(Icons.person);
   static const iosIcon = Icon(CupertinoIcons.profile_circled);
@@ -16,10 +20,10 @@ class WalletDialog extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(8),
               child: Center(
                 child: Text(
@@ -34,7 +38,7 @@ class WalletDialog extends StatelessWidget {
             Expanded(
               child: Container(),
             ),
-            AddNewWalletButton(),
+            const AddNewWalletButton(),
           ],
         ),
       ),
@@ -49,7 +53,7 @@ class WalletDialog extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text(title),
       ),
       body: _buildBody(context),
     );
@@ -63,7 +67,6 @@ class WalletDialog extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
         CupertinoButton(
           padding: EdgeInsets.zero,
-          child: SettingsDialog.iosIcon,
           onPressed: () {
             /// This pushes the settings page as a full page modal dialog on top
             /// of the tab bar and everything.
@@ -71,14 +74,14 @@ class WalletDialog extends StatelessWidget {
               CupertinoPageRoute(
                 title: SettingsDialog.title,
                 fullscreenDialog: true,
-                builder: (context) => SettingsDialog(),
+                builder: (context) => const SettingsDialog(),
               ),
             );
           },
+          child: SettingsDialog.iosIcon,
         ),
         CupertinoButton(
           padding: EdgeInsets.zero,
-          child: ProfileDialog.iosIcon,
           onPressed: () {
             /// This pushes the profile page as a full page modal dialog on top
             /// of the tab bar and everything.
@@ -86,10 +89,11 @@ class WalletDialog extends StatelessWidget {
               CupertinoPageRoute(
                 title: ProfileDialog.title,
                 fullscreenDialog: true,
-                builder: (context) => ProfileDialog(),
+                builder: (context) => const ProfileDialog(),
               ),
             );
           },
+          child: ProfileDialog.iosIcon,
         ),
       ])),
       child: _buildBody(context),
@@ -106,6 +110,10 @@ class WalletDialog extends StatelessWidget {
 }
 
 class AddNewWalletButton extends StatelessWidget {
+  const AddNewWalletButton({
+    Key key,
+  }) : super(key: key);
+
   static const addNewWallet = 'Add new wallet';
 
   /// ===========================================================================
@@ -124,7 +132,7 @@ class AddNewWalletButton extends StatelessWidget {
       press: () {
         Navigator.pop(context);
         Navigator.push<void>(
-            context, MaterialPageRoute(builder: (context) => AddNewWallet()));
+            context, MaterialPageRoute(builder: (context) => const AddNewWallet()));
       },
     );
   }
@@ -140,7 +148,7 @@ class AddNewWalletButton extends StatelessWidget {
           CupertinoPageRoute(
             title: WalletDialog.title,
             fullscreenDialog: true,
-            builder: (context) => AddNewWallet(),
+            builder: (context) => const AddNewWallet(),
           ),
         );
       },

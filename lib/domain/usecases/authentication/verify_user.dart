@@ -5,16 +5,16 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/authentica
 import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class VerifyUser extends UseCase {
-  final AuthenticationRepository authenticationRepository;
-
   VerifyUser({@required this.authenticationRepository});
+
+  final AuthenticationRepository authenticationRepository;
 
   Future<Either<Failure, void>> verifyUser(
       {@required String email,
       @required String password,
       @required String verificationCode,
       @required bool useVerifyURL}) async {
-    return await authenticationRepository.verifyEmail(
+    return authenticationRepository.verifyEmail(
         email: email,
         password: password,
         verificationCode: verificationCode,
@@ -23,7 +23,7 @@ class VerifyUser extends UseCase {
 
   Future<Either<Failure, void>> resendVerificationCode(
       {@required String email}) async {
-    return await authenticationRepository.resendVerificationCode(email);
+    return authenticationRepository.resendVerificationCode(email);
   }
 }
 

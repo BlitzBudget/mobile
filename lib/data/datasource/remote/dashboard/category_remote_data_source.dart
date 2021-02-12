@@ -4,20 +4,20 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
-abstract class CategoryRemoteDataSource {
+mixin CategoryRemoteDataSource {
   Future<void> delete({@required String walletId, @required String category});
 }
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
-  final HTTPClient httpClient;
-
   CategoryRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Delete Wallet
   @override
   Future<void> delete({@required String walletId, @required String category}) {
     // JSON for Get wallet [_jsonForGetWallet]
-    var _jsonForDeleteCategory = <String, dynamic>{
+    final _jsonForDeleteCategory = <String, dynamic>{
       'walletId': walletId,
       'category': category
     };

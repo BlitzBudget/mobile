@@ -4,10 +4,7 @@ import '../../../constants/constants.dart';
 import 'text_field_container.dart';
 
 class RoundedInputField extends StatelessWidget {
-  final String hintText, initialValue;
-  final IconData icon;
-  final ValueChanged<String> onChanged;
-  final bool autofocus;
+  
   const RoundedInputField(
       {Key key,
       this.hintText,
@@ -16,6 +13,11 @@ class RoundedInputField extends StatelessWidget {
       this.autofocus,
       this.initialValue = ''})
       : super(key: key);
+
+  final String hintText, initialValue;
+  final IconData icon;
+  final ValueChanged<String> onChanged;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {

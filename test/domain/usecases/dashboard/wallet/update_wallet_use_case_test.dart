@@ -26,12 +26,12 @@ void main() {
 
   final walletModelAsString = fixture('models/get/wallet/wallet_model.json');
   final walletModelAsJSON =
-      jsonDecode(walletModelAsString) as Map<String, dynamic>;
+      jsonDecode(walletModelAsString);
   final wallet = WalletModel(
-      walletId: walletModelAsJSON['walletId'] as String,
-      userId: walletModelAsJSON['userId'] as String,
+      walletId: walletModelAsJSON['walletId'],
+      userId: walletModelAsJSON['userId'],
       currency: parseDynamicAsString(walletModelAsJSON['currency']),
-      walletName: walletModelAsJSON['wallet_name'] as String,
+      walletName: walletModelAsJSON['wallet_name'],
       totalAssetBalance:
           parseDynamicAsDouble(walletModelAsJSON['total_asset_balance']),
       totalDebtBalance:
@@ -46,7 +46,7 @@ void main() {
 
   group('Update Wallet', () {
     test('Success', () async {
-      Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
 
       when(mockWalletRepository.update(wallet))
           .thenAnswer((_) => Future.value(updateWalletMonad));
@@ -59,7 +59,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> updateWalletMonad =
+      final Either<Failure, void> updateWalletMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockWalletRepository.update(wallet))
@@ -75,11 +75,11 @@ void main() {
 
   group('UpdateWalletName', () {
     final walletModel = Wallet(
-        walletId: walletModelAsJSON['walletId'] as String,
-        walletName: walletModelAsJSON['bank_account_name'] as String);
+        walletId: walletModelAsJSON['walletId'],
+        walletName: walletModelAsJSON['bank_account_name']);
 
     test('Success', () async {
-      Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
 
       when(mockWalletRepository.update(walletModel))
           .thenAnswer((_) => Future.value(updateWalletMonad));
@@ -92,7 +92,7 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateWalletMonad =
+      final Either<Failure, void> updateWalletMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockWalletRepository.update(walletModel))
@@ -111,11 +111,11 @@ void main() {
 
   group('updateCurrency', () {
     final walletModel = Wallet(
-        walletId: walletModelAsJSON['walletId'] as String,
-        currency: walletModelAsJSON['currency'] as String);
+        walletId: walletModelAsJSON['walletId'],
+        currency: walletModelAsJSON['currency']);
 
     test('Success', () async {
-      Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
 
       when(mockWalletRepository.update(walletModel))
           .thenAnswer((_) => Future.value(updateWalletMonad));
@@ -128,7 +128,7 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateWalletMonad =
+      final Either<Failure, void> updateWalletMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockWalletRepository.update(walletModel))

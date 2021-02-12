@@ -6,9 +6,9 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_w
 import '../../../constants/constants.dart' as constants;
 
 class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
-  final StartsWithDateLocalDataSource startsWithDateLocalDataSource;
-
   StartsWithDateRepositoryImpl({@required this.startsWithDateLocalDataSource});
+
+  final StartsWithDateLocalDataSource startsWithDateLocalDataSource;
 
   @override
   Future<String> readStartsWithDate() async {
@@ -30,6 +30,6 @@ class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
 
   @override
   Future<void> writeStartsWithDate(String value) async {
-    return await startsWithDateLocalDataSource.writeStartsWithDate(value);
+    return startsWithDateLocalDataSource.writeStartsWithDate(value);
   }
 }

@@ -1,3 +1,3 @@
-abstract class ClearAllStorageRepository {
+mixin ClearAllStorageRepository {
   Future<void> clearAllStorage();
 }

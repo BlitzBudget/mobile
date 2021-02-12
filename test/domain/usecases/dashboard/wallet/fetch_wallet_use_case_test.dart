@@ -43,11 +43,11 @@ void main() {
   final walletResponseModelAsString =
       fixture('responses/dashboard/wallet/fetch_wallet_info.json');
   final walletResponseModelAsJSON =
-      jsonDecode(walletResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(walletResponseModelAsString);
 
   /// Convert wallets from the response JSON to List<Wallet>
   /// If Empty then return an empty object list
-  var walletResponseModel = convertToResponseModel(walletResponseModelAsJSON);
+  final walletResponseModel = convertToResponseModel(walletResponseModelAsJSON);
 
   setUp(() {
     mockWalletRepository = MockWalletRepository();
@@ -64,12 +64,12 @@ void main() {
   });
 
   group('Fetch', () {
-    var now = DateTime.now();
-    var dateString = now.toIso8601String();
-    final userId = 'User#2020-12-21T20:32:06.003Z';
+    final now = DateTime.now();
+    final dateString = now.toIso8601String();
+    const userId = 'User#2020-12-21T20:32:06.003Z';
 
     test('Success', () async {
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -78,7 +78,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      Either<Failure, List<Wallet>> fetchWalletMonad =
+      final Either<Failure, List<Wallet>> fetchWalletMonad =
           Right<Failure, List<Wallet>>(walletResponseModel.wallets);
 
       when(mockWalletRepository.fetch(
@@ -99,9 +99,9 @@ void main() {
     });
 
     test('Default Wallet Empty: Failure', () async {
-      final user = User(userId: userId);
-      Either<Failure, User> userMonad = Right<Failure, User>(user);
-      Either<Failure, String> dateFailure =
+      const user = User(userId: userId);
+      const Either<Failure, User> userMonad = Right<Failure, User>(user);
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -112,7 +112,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
-      Either<Failure, List<Wallet>> fetchWalletMonad =
+      final Either<Failure, List<Wallet>> fetchWalletMonad =
           Right<Failure, List<Wallet>>(walletResponseModel.wallets);
 
       when(mockWalletRepository.fetch(
@@ -133,9 +133,9 @@ void main() {
     });
 
     test('Default Wallet Empty && User Attribute Failure: Failure', () async {
-      Either<Failure, String> dateFailure =
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
-      Either<Failure, User> userFailure =
+      final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -163,10 +163,10 @@ WalletResponseModel convertToResponseModel(
     Map<String, dynamic> walletResponseModelAsJSON) {
   /// Convert wallets from the response JSON to List<Wallet>
   /// If Empty then return an empty object list
-  var responseWallets = walletResponseModelAsJSON['Wallet'] as List;
-  var convertedWallets = List<Wallet>.from(responseWallets?.map<dynamic>(
+  final responseWallets = walletResponseModelAsJSON['Wallet'];
+  final convertedWallets = List<Wallet>.from(responseWallets?.map<dynamic>(
           (dynamic model) =>
-              WalletModel.fromJSON(model as Map<String, dynamic>)) ??
+              WalletModel.fromJSON(model)) ??
       <Wallet>[]);
 
   final walletResponseModel = WalletResponseModel(wallets: convertedWallets);

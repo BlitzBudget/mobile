@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformAdaptingHomePage();
+    return const PlatformAdaptingHomePage();
   }
 }
 
@@ -29,6 +29,9 @@ class Body extends StatelessWidget {
 // These differences are also subjective and have more than one 'right' answer
 // depending on the app and content.
 class PlatformAdaptingHomePage extends StatefulWidget {
+  /// In the constructor
+  const PlatformAdaptingHomePage({Key key}) : super(key: key);
+
   @override
   _PlatformAdaptingHomePageState createState() =>
       _PlatformAdaptingHomePageState();
@@ -36,7 +39,7 @@ class PlatformAdaptingHomePage extends StatefulWidget {
 
 class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
   static const plusIcon = Icon(CupertinoIcons.plus_circle_fill,
-      color: primaryColor, size: 50.0, semanticLabel: 'Add');
+      color: primaryColor, size: 50, semanticLabel: 'Add');
 
   /// This app keeps a global key for the transactions tab because it owns a bunch of
   /// data. Since changing platform re-parents those tabs into different
@@ -67,7 +70,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
   Widget _buildIosHomePage(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
               label: TransactionsTab.title, icon: TransactionsTab.iosIcon),
           BottomNavigationBarItem(
@@ -88,18 +91,18 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
           case 1:
             return CupertinoTabView(
               defaultTitle: OverviewTab.title,
-              builder: (context) => OverviewTab(),
+              builder: (context) => const OverviewTab(),
             );
           case 2:
           case 3:
             return CupertinoTabView(
               defaultTitle: BudgetTab.title,
-              builder: (context) => BudgetTab(),
+              builder: (context) => const BudgetTab(),
             );
           case 4:
             return CupertinoTabView(
               defaultTitle: GoalTab.title,
-              builder: (context) => GoalTab(),
+              builder: (context) => const GoalTab(),
             );
           default:
             assert(false, 'Unexpected tab');
@@ -129,10 +132,10 @@ class _AndroidDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push<void>(context,
-                    MaterialPageRoute(builder: (context) => ProfileDialog()));
+                    MaterialPageRoute(builder: (context) => const ProfileDialog()));
               },
               child: DrawerHeader(
-                decoration: BoxDecoration(color: Colors.green),
+                decoration: const BoxDecoration(color: Colors.green),
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Icon(
@@ -144,51 +147,51 @@ class _AndroidDrawer extends StatelessWidget {
               )),
           ListTile(
             leading: TransactionsTab.androidIcon,
-            title: Text(TransactionsTab.title),
+            title: const Text(TransactionsTab.title),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
             leading: OverviewTab.androidIcon,
-            title: Text(OverviewTab.title),
+            title: const Text(OverviewTab.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => OverviewTab()));
+                  MaterialPageRoute(builder: (context) => const OverviewTab()));
             },
           ),
           ListTile(
             leading: BudgetTab.androidIcon,
-            title: Text(BudgetTab.title),
+            title: const Text(BudgetTab.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => BudgetTab()));
+                  MaterialPageRoute(builder: (context) => const BudgetTab()));
             },
           ),
           ListTile(
             leading: GoalTab.androidIcon,
-            title: Text(GoalTab.title),
+            title: const Text(GoalTab.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(
-                  context, MaterialPageRoute(builder: (context) => GoalTab()));
+                  context, MaterialPageRoute(builder: (context) => const GoalTab()));
             },
           ),
 
           /// Long drawer contents are often segmented.
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Divider(),
           ),
           ListTile(
             leading: SettingsDialog.androidIcon,
-            title: Text(SettingsDialog.title),
+            title: const Text(SettingsDialog.title),
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => SettingsDialog()));
+                  MaterialPageRoute(builder: (context) => const SettingsDialog()));
             },
           ),
         ],

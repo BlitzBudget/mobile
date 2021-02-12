@@ -21,9 +21,9 @@ abstract class GoalRemoteDataSource {
 }
 
 class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
-  final HTTPClient httpClient;
-
   GoalRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Goals
   @override
@@ -32,7 +32,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
       @required String endsWithDate,
       @required String defaultWallet,
       @required String userId}) async {
-    var contentBody = <String, dynamic>{
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -47,7 +47,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<GoalResponseModel>((dynamic res) {
       debugPrint('The response from the goal is $res');
-      return GoalResponseModel.fromJSON(res as Map<String, dynamic>);
+      return GoalResponseModel.fromJSON(res);
     });
   }
 

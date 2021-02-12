@@ -6,9 +6,9 @@ import 'package:mobile_blitzbudget/data/datasource/local/dashboard/default_walle
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 
 class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
-  final DefaultWalletLocalDataSource defaultWalletLocalDataSource;
-
   DefaultWalletRepositoryImpl({@required this.defaultWalletLocalDataSource});
+
+  final DefaultWalletLocalDataSource defaultWalletLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readDefaultWallet() async {
@@ -21,6 +21,6 @@ class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
 
   @override
   Future<void> writeDefaultWallet(String value) async {
-    return await defaultWalletLocalDataSource.writeDefaultWallet(value);
+    return defaultWalletLocalDataSource.writeDefaultWallet(value);
   }
 }

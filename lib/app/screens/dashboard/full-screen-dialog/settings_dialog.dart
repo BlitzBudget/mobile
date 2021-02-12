@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import '../../../widgets/dashboard_widget.dart';
 
 class SettingsDialog extends StatefulWidget {
+  const SettingsDialog({
+    Key key,
+  }) : super(key: key);
+
   static const title = 'Settings';
   static const androidIcon = Icon(Icons.settings);
   static const iosIcon = Icon(CupertinoIcons.gear);
@@ -22,11 +26,11 @@ class _SettingsDialogState extends State<SettingsDialog> {
   var switch7 = true;
 
   Widget _buildList() {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return ListView(
       children: [
-        Padding(padding: EdgeInsets.only(top: 24)),
-        ListTile(
+        const Padding(padding: EdgeInsets.only(top: 24)),
+        const ListTile(
           title: Text(
             'General',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -34,7 +38,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
         ),
         SizedBox(height: size.height * 0.01),
         ListTile(
-          title: Text('Categories'),
+          title: const Text('Categories'),
 
           /// The Material switch has a platform adaptive constructor.
           trailing: Switch.adaptive(
@@ -43,35 +47,35 @@ class _SettingsDialogState extends State<SettingsDialog> {
           ),
         ),
         ListTile(
-          title: Text('Currency'),
+          title: const Text('Currency'),
           trailing: Switch.adaptive(
             value: switch2,
             onChanged: (value) => setState(() => switch2 = value),
           ),
         ),
         ListTile(
-          title: Text('Notifications'),
+          title: const Text('Notifications'),
           trailing: Switch.adaptive(
             value: switch5,
             onChanged: (value) => setState(() => switch5 = value),
           ),
         ),
         ListTile(
-          title: Text('Language'),
+          title: const Text('Language'),
           trailing: Switch.adaptive(
             value: switch6,
             onChanged: (value) => setState(() => switch6 = value),
           ),
         ),
         ListTile(
-          title: Text('Country'),
+          title: const Text('Country'),
           trailing: Switch.adaptive(
             value: switch6,
             onChanged: (value) => setState(() => switch6 = value),
           ),
         ),
         SizedBox(height: size.height * 0.01),
-        ListTile(
+        const ListTile(
           title: Text(
             'Extra Security',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -79,21 +83,21 @@ class _SettingsDialogState extends State<SettingsDialog> {
         ),
         SizedBox(height: size.height * 0.01),
         ListTile(
-          title: Text('Passcode'),
+          title: const Text('Passcode'),
           trailing: Switch.adaptive(
             value: switch3,
             onChanged: (value) => setState(() => switch3 = value),
           ),
         ),
         ListTile(
-          title: Text('Face ID'),
+          title: const Text('Face ID'),
           trailing: Switch.adaptive(
             value: switch4,
             onChanged: (value) => setState(() => switch4 = value),
           ),
         ),
         SizedBox(height: size.height * 0.01),
-        ListTile(
+        const ListTile(
           title: Text(
             'Got a question?',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -101,21 +105,21 @@ class _SettingsDialogState extends State<SettingsDialog> {
         ),
         SizedBox(height: size.height * 0.01),
         ListTile(
-          title: Text('Help center'),
+          title: const Text('Help center'),
           trailing: Switch.adaptive(
             value: switch3,
             onChanged: (value) => setState(() => switch3 = value),
           ),
         ),
         ListTile(
-          title: Text('Ask a question'),
+          title: const Text('Ask a question'),
           trailing: Switch.adaptive(
             value: switch4,
             onChanged: (value) => setState(() => switch4 = value),
           ),
         ),
         ListTile(
-          title: Text('Send a feature request'),
+          title: const Text('Send a feature request'),
           trailing: Switch.adaptive(
             value: switch4,
             onChanged: (value) => setState(() => switch4 = value),
@@ -132,7 +136,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(SettingsDialog.title),
+        title: const Text(SettingsDialog.title),
       ),
       body: _buildList(),
     );
@@ -140,7 +144,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: const CupertinoNavigationBar(),
       child: _buildList(),
     );
   }

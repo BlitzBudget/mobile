@@ -7,25 +7,25 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_reposito
 import '../../use_case.dart';
 
 class UpdateWalletUseCase extends UseCase {
-  final WalletRepository walletRepository;
-
   UpdateWalletUseCase({@required this.walletRepository});
 
+  final WalletRepository walletRepository;
+
   Future<Either<Failure, void>> update({@required Wallet updateWallet}) async {
-    return await walletRepository.update(updateWallet);
+    return walletRepository.update(updateWallet);
   }
 
   /// Updates the update currenct=y
   Future<Either<Failure, void>> updateCurrency(
       {@required String currency, @required String walletId}) async {
     final wallet = Wallet(walletId: walletId, currency: currency);
-    return await update(updateWallet: wallet);
+    return update(updateWallet: wallet);
   }
 
   /// Updates the wallet name
   Future<Either<Failure, void>> updateWalletName(
       {@required String name, @required String walletId}) async {
     final wallet = Wallet(walletId: walletId, walletName: name);
-    return await update(updateWallet: wallet);
+    return update(updateWallet: wallet);
   }
 }

@@ -20,15 +20,15 @@ void main() {
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON =
-      jsonDecode(budgetModelAsString) as Map<String, dynamic>;
+      jsonDecode(budgetModelAsString);
   final budget = BudgetModel(
-      walletId: budgetModelAsJSON['walletId'] as String,
-      budgetId: budgetModelAsJSON['budgetId'] as String,
+      walletId: budgetModelAsJSON['walletId'],
+      budgetId: budgetModelAsJSON['budgetId'],
       planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
-      category: budgetModelAsJSON['category'] as String,
+      category: budgetModelAsJSON['category'],
       categoryType:
           parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for'] as String);
+      dateMeantFor: budgetModelAsJSON['date_meant_for']);
 
   setUp(() {
     mockBudgetRepository = MockBudgetRepository();
@@ -37,7 +37,7 @@ void main() {
 
   group('Add', () {
     test('Success', () async {
-      Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
+      const Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
 
       when(mockBudgetRepository.add(budget))
           .thenAnswer((_) => Future.value(addBudgetMonad));
@@ -49,7 +49,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> addBudgetMonad =
+      final Either<Failure, void> addBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockBudgetRepository.add(budget))

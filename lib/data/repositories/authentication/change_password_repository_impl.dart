@@ -6,9 +6,9 @@ import 'package:mobile_blitzbudget/data/datasource/remote/authentication/change_
 import 'package:mobile_blitzbudget/domain/repositories/authentication/change_password_repository.dart';
 
 class ChangePasswordRepositoryImpl implements ChangePasswordRepository {
-  final ChangePasswordRemoteDataSource changePasswordRemoteDataSource;
-
   ChangePasswordRepositoryImpl({@required this.changePasswordRemoteDataSource});
+
+  final ChangePasswordRemoteDataSource changePasswordRemoteDataSource;
   @override
   Future<Either<Failure, void>> changePassword(
       {String accessToken, String newPassword, String oldPassword}) async {

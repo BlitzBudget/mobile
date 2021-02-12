@@ -31,14 +31,14 @@ void main() {
 
   group('Update Transactions', () {
     test('Should return FetchDataFailure ', () async {
-      var transactionModel = TransactionModel();
+      const transactionModel = TransactionModel();
       when(mockTransactionRemoteDataSource.update(transactionModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var transactionReceived =
+      final transactionReceived =
           await transactionRepositoryImpl.update(transactionModel);
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockTransactionRemoteDataSource.update(transactionModel));
       expect(transactionReceived.isLeft(), equals(true));
@@ -54,11 +54,11 @@ void main() {
               startsWithDate: '',
               userId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var transactionReceived = await transactionRepositoryImpl.fetch(
+      final transactionReceived = await transactionRepositoryImpl.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockTransactionRemoteDataSource.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));

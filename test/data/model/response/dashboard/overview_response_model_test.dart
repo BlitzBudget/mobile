@@ -22,11 +22,11 @@ void main() {
   final overviewResponseModelAsString =
       fixture('responses/dashboard/overview_info.json');
   final overviewResponseModelAsJSON =
-      jsonDecode(overviewResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(overviewResponseModelAsString);
 
   /// Convert overviews from the response JSON to List<Overview>
   /// If Empty then return an empty object list
-  var overviewResponseModel =
+  final overviewResponseModel =
       convertToResponseModel(overviewResponseModelAsJSON);
 
   test(
@@ -53,7 +53,7 @@ void main() {
         'responses/partially-emtpy/overview/empty_bank_account_overview_info.json');
     final overviewResponseModelWithEmptyBankAccountAsJSON =
         jsonDecode(overviewResponseModelWithEmptyBankAccountAsString)
-            as Map<String, dynamic>;
+            ;
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
@@ -73,7 +73,7 @@ void main() {
         'responses/partially-emtpy/overview/empty_category_overview_info.json');
     final overviewResponseModelWithEmptyCategoryAsJSON =
         jsonDecode(overviewResponseModelWithEmptyCategoryAsString)
-            as Map<String, dynamic>;
+            ;
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
@@ -93,7 +93,7 @@ void main() {
         'responses/partially-emtpy/overview/empty_date_overview_info.json');
     final overviewResponseModelWithEmptyDateAsJSON =
         jsonDecode(overviewResponseModelWithEmptyDateAsString)
-            as Map<String, dynamic>;
+            ;
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
@@ -113,7 +113,7 @@ void main() {
         'responses/partially-emtpy/overview/empty_transaction_overview_info.json');
     final overviewResponseModelWithEmptyTransactionAsJSON =
         jsonDecode(overviewResponseModelWithEmptyTransactionAsString)
-            as Map<String, dynamic>;
+            ;
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
@@ -133,7 +133,7 @@ void main() {
         'responses/partially-emtpy/overview/empty_wallet_overview_info.json');
     final overviewResponseModelWithEmptyWalletAsJSON =
         jsonDecode(overviewResponseModelWithEmptyWalletAsString)
-            as Map<String, dynamic>;
+            ;
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
@@ -151,45 +151,45 @@ OverviewResponseModel convertToResponseModel(
     Map<String, dynamic> overviewResponseModelAsJSON) {
   /// Convert transactions from the response JSON to List<Transaction>
   /// If Empty then return an empty object list
-  var responseTransactions = overviewResponseModelAsJSON['Transaction'] as List;
-  var convertedTransactions = List<Transaction>.from(
+  final responseTransactions = overviewResponseModelAsJSON['Transaction'];
+  final convertedTransactions = List<Transaction>.from(
       responseTransactions?.map<dynamic>((dynamic model) =>
-              TransactionModel.fromJSON(model as Map<String, dynamic>)) ??
+              TransactionModel.fromJSON(model)) ??
           <Transaction>[]);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var responseBudgets = overviewResponseModelAsJSON['Budget'] as List;
-  var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
+  final responseBudgets = overviewResponseModelAsJSON['Budget'];
+  final convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
           (dynamic model) =>
-              BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+              BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = overviewResponseModelAsJSON['Category'] as List;
-  var convertedCategories = List<Category>.from(
+  final responseCategories = overviewResponseModelAsJSON['Category'];
+  final convertedCategories = List<Category>.from(
       responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
+              CategoryModel.fromJSON(model)) ??
           <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts = overviewResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
+  final responseBankAccounts = overviewResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(
       responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+              BankAccountModel.fromJSON(model)) ??
           <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = overviewResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+  final responseDate = overviewResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
           (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+              DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = overviewResponseModelAsJSON['Wallet'];
+  final responseWallet = overviewResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -198,11 +198,11 @@ OverviewResponseModel convertToResponseModel(
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
     convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+        WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
+    final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
         (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+            WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

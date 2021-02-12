@@ -6,9 +6,9 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/common/delet
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/delete_item_repository.dart';
 
 class DeleteItemRepositoryImpl implements DeleteItemRepository {
-  final DeleteItemRemoteDataSource deleteItemRemoteDataSource;
-
   DeleteItemRepositoryImpl({@required this.deleteItemRemoteDataSource});
+
+  final DeleteItemRemoteDataSource deleteItemRemoteDataSource;
 
   @override
   Future<Either<Failure, void>> delete(

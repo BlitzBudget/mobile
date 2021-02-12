@@ -32,11 +32,11 @@ void main() {
     test('Should return No Value in Cache Exception', () async {
       when(mockRefreshTokenLocalDataSource.readRefreshToken())
           .thenThrow(NoValueInCacheException());
-      var refreshTokenReceived =
+      final refreshTokenReceived =
           await refreshTokenRepositoryImpl.readRefreshToken();
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           refreshTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockRefreshTokenLocalDataSource.readRefreshToken());
       expect(refreshTokenReceived.isLeft(), equals(true));

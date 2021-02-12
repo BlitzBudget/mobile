@@ -31,13 +31,13 @@ void main() {
 
   group('Update Budgets', () {
     test('Should return FetchDataFailure ', () async {
-      var budgetModel = BudgetModel();
+      const budgetModel = BudgetModel();
       when(mockBudgetRemoteDataSource.update(budgetModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var budgetReceived = await budgetRepositoryImpl.update(budgetModel);
+      final budgetReceived = await budgetRepositoryImpl.update(budgetModel);
 
       /// Expect an exception to be thrown
-      var f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockBudgetRemoteDataSource.update(budgetModel));
       expect(budgetReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
@@ -52,11 +52,11 @@ void main() {
               startsWithDate: '',
               userId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var budgetReceived = await budgetRepositoryImpl.fetch(
+      final budgetReceived = await budgetRepositoryImpl.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
-      var f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockBudgetRemoteDataSource.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(budgetReceived.isLeft(), equals(true));
@@ -66,13 +66,13 @@ void main() {
 
   group('Add Budget', () {
     test('Should return FetchDataFailure ', () async {
-      var addBudgetModel = BudgetModel();
+      const addBudgetModel = BudgetModel();
       when(mockBudgetRemoteDataSource.add(addBudgetModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var budgetReceived = await budgetRepositoryImpl.add(addBudgetModel);
+      final budgetReceived = await budgetRepositoryImpl.add(addBudgetModel);
 
       /// Expect an exception to be thrown
-      var f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockBudgetRemoteDataSource.add(addBudgetModel));
       expect(budgetReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));

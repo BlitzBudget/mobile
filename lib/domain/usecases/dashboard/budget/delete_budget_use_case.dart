@@ -8,21 +8,21 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/delete_i
 import '../../use_case.dart';
 
 class DeleteBudgetUseCase extends UseCase {
-  final DeleteItemRepository deleteItemRepository;
-  final DefaultWalletRepository defaultWalletRepository;
-
   DeleteBudgetUseCase(
       {@required this.deleteItemRepository,
       @required this.defaultWalletRepository});
 
+  final DeleteItemRepository deleteItemRepository;
+  final DefaultWalletRepository defaultWalletRepository;
+
   Future<Either<Failure, void>> delete({@required String itemId}) async {
-    var defaultWallet = await defaultWalletRepository.readDefaultWallet();
+    final defaultWallet = await defaultWalletRepository.readDefaultWallet();
 
     if (defaultWallet.isLeft()) {
       return Left(EmptyResponseFailure());
     }
 
-    return await deleteItemRepository.delete(
+    return deleteItemRepository.delete(
         walletId: defaultWallet.getOrElse(null), itemId: itemId);
   }
 }

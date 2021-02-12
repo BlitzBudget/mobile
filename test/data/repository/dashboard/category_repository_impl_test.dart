@@ -32,11 +32,11 @@ void main() {
     test('Should return FetchDataFailure ', () async {
       when(mockCategoryRemoteDataSource.delete(category: '', walletId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var categoryReceived =
+      final categoryReceived =
           await categoryRepositoryImpl.delete(category: '', walletId: '');
 
       /// Expect an exception to be thrown
-      var f = categoryReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f = categoryReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockCategoryRemoteDataSource.delete(category: '', walletId: ''));
       expect(categoryReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));

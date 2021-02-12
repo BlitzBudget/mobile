@@ -9,21 +9,21 @@ abstract class UserAttributesLocalDataSource {
 
 class UserAttributesLocalDataSourceImpl
     implements UserAttributesLocalDataSource {
-  final SecureKeyValueStore secureKeyValueStore;
-
   UserAttributesLocalDataSourceImpl({@required this.secureKeyValueStore});
+
+  final SecureKeyValueStore secureKeyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _userAttributes = 'user_attributes';
+  static const String _userAttributes = 'user_attributes';
 
   /// ------------------------------------------------------------
   /// Method that returns the user user attributes
   /// ------------------------------------------------------------
   @override
   Future<String> readUserAttributes() async {
-    return await secureKeyValueStore.getString(key: _userAttributes);
+    return secureKeyValueStore.getString(key: _userAttributes);
   }
 
   /// ----------------------------------------------------------

@@ -8,15 +8,17 @@ import 'package:mobile_blitzbudget/data/model/user_model.dart';
 
 import '../../../constants/constants.dart' as constants;
 
-abstract class UserAttributesRemoteDataSource {
+mixin UserAttributesRemoteDataSource {
   Future<void> updateUserAttributes(UserModel userModel);
 }
 
 class UserAttributesRemoteDataSourceImpl
-    implements UserAttributesRemoteDataSource {
-  final HTTPClient httpClient;
+    with UserAttributesRemoteDataSource {
+ 
 
   UserAttributesRemoteDataSourceImpl({@required this.httpClient});
+
+   final HTTPClient httpClient;
 
   /// Update User Attributes
   @override
@@ -26,7 +28,7 @@ class UserAttributesRemoteDataSourceImpl
             body: jsonEncode(userModel.toJSON()), headers: constants.headers)
         .then<void>((dynamic res) {
       developer
-          .log('User Attributes  ${res['UserAttributes'] as List<dynamic>}');
+          .log('User Attributes  ${res['UserAttributes']}');
     });
   }
 }

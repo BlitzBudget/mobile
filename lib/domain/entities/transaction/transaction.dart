@@ -4,20 +4,8 @@ import '../category/category_type.dart';
 import 'recurrence.dart';
 
 class Transaction extends Equatable {
-  final String transactionId;
-  final String walletId;
-  final double amount;
-  final String description;
-  final String accountId;
-  final String dateMeantFor;
-  final String categoryId;
-  final Recurrence recurrence;
-  final CategoryType categoryType;
-  final String categoryName;
-  final List<String> tags;
-
   /// Optional Transactions id, description, recurrence, category type, category name and tags
-  Transaction(
+  const Transaction(
       {this.walletId,
       this.amount,
       this.accountId,
@@ -29,6 +17,18 @@ class Transaction extends Equatable {
       this.categoryType,
       this.categoryName,
       this.tags});
+
+  final String transactionId;
+  final String walletId;
+  final double amount;
+  final String description;
+  final String accountId;
+  final String dateMeantFor;
+  final String categoryId;
+  final Recurrence recurrence;
+  final CategoryType categoryType;
+  final String categoryName;
+  final List<String> tags;
 
   @override
   List<Object> get props => [

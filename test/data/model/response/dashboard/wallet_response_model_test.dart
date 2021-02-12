@@ -11,8 +11,7 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   final walletResponseModelAsString =
       fixture('responses/dashboard/wallet/fetch_wallet_info.json');
-  final walletResponseModelAsJSON =
-      jsonDecode(walletResponseModelAsString) as Map<String, dynamic>;
+  final walletResponseModelAsJSON = jsonDecode(walletResponseModelAsString);
 
   /// Convert wallets from the response JSON to List<wallet>
   /// If Empty then return an empty object list
@@ -40,8 +39,7 @@ void main() {
       final walletResponseModelWithEmptywalletAsString = fixture(
           'responses/partially-emtpy/wallet/empty_wallet_wallet_info.json');
       final walletResponseModelWithEmptywalletAsJSON =
-          jsonDecode(walletResponseModelWithEmptywalletAsString)
-              as Map<String, dynamic>;
+          jsonDecode(walletResponseModelWithEmptywalletAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -60,10 +58,9 @@ WalletResponseModel convertToResponseModel(
     Map<String, dynamic> walletResponseModelAsJSON) {
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = walletResponseModelAsJSON['Wallet'] as List;
-  var convertedWallet = List<Wallet>.from(responseCategories?.map<dynamic>(
-          (dynamic model) =>
-              WalletModel.fromJSON(model as Map<String, dynamic>)) ??
+  final responseCategories = walletResponseModelAsJSON['Wallet'];
+  final convertedWallet = List<Wallet>.from(responseCategories
+          ?.map<dynamic>((dynamic model) => WalletModel.fromJSON(model)) ??
       <Wallet>[]);
 
   return WalletResponseModel(wallets: convertedWallet);

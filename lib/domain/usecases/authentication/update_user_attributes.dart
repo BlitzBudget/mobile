@@ -7,11 +7,11 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attri
 import '../use_case.dart';
 
 class UpdateUserAttributes extends UseCase {
-  final UserAttributesRepository userAttributesRepository;
-
   UpdateUserAttributes({@required this.userAttributesRepository});
 
+  final UserAttributesRepository userAttributesRepository;
+
   Future<Either<Failure, void>> updateUserAttributes(User user) async {
-    return await userAttributesRepository.updateUserAttributes(user);
+    return userAttributesRepository.updateUserAttributes(user);
   }
 }

@@ -6,11 +6,14 @@ import '../../../../widgets/rounded_button.dart';
 import 'background.dart';
 
 class Body extends StatelessWidget {
+  /// In the constructor
+  const Body({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final welcomeToBlitzBudget = 'WELCOME TO BlitzBudget';
-    final startButton = 'START';
+    final size = MediaQuery.of(context).size;
+    const welcomeToBlitzBudget = 'WELCOME TO BlitzBudget';
+    const startButton = 'START';
 
     /// This size provide us total height and width of our screen
     return Background(
@@ -18,7 +21,7 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               welcomeToBlitzBudget,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),

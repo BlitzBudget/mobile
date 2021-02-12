@@ -9,9 +9,9 @@ import '../../datasource/local/authentication/auth_token_local_data_source.dart'
     show AuthTokenLocalDataSource;
 
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
-  final AuthTokenLocalDataSource authTokenLocalDataSource;
-
   AuthTokenRepositoryImpl({@required this.authTokenLocalDataSource});
+
+  final AuthTokenLocalDataSource authTokenLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readAuthToken() async {
@@ -24,7 +24,7 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
 
   @override
   Future<void> writeAuthToken(UserResponse userResponse) async {
-    return await authTokenLocalDataSource
+    return authTokenLocalDataSource
         .writeAuthToken(userResponse.authenticationToken);
   }
 }

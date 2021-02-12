@@ -54,11 +54,11 @@ void main() {
     test(
       'parseDynamicAsString with dynamic data',
       () async {
-        dynamic dynString = 'week';
-        final recurrence = parseDynamicAsString(dynString);
+        const week = 'week';
+        final recurrence = parseDynamicAsString(week);
         // assert
         expect(recurrence, isA<String>());
-        expect(recurrence, equals(dynString));
+        expect(recurrence, equals(week));
       },
     );
 
@@ -153,7 +153,6 @@ void main() {
       () async {
         final obj = parseDynamicAsAccountType('');
         // assert
-        expect(obj, isA<Null>());
         expect(obj, equals(null));
       },
     );
@@ -185,7 +184,6 @@ void main() {
       () async {
         final obj = parseDynamicAsAccountSubType('');
         // assert
-        expect(obj, isA<Null>());
         expect(obj, equals(null));
       },
     );
@@ -217,7 +215,6 @@ void main() {
       () async {
         final obj = parseDynamicAsGoalType('');
         // assert
-        expect(obj, isA<Null>());
         expect(obj, equals(null));
       },
     );
@@ -249,7 +246,6 @@ void main() {
       () async {
         final obj = parseDynamicAsTargetType('');
         // assert
-        expect(obj, isA<Null>());
         expect(obj, equals(null));
       },
     );

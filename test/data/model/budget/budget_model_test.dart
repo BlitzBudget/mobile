@@ -10,15 +10,15 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON =
-      jsonDecode(budgetModelAsString) as Map<String, dynamic>;
+      jsonDecode(budgetModelAsString);
   final budgetModel = BudgetModel(
-      walletId: budgetModelAsJSON['walletId'] as String,
-      budgetId: budgetModelAsJSON['budgetId'] as String,
+      walletId: budgetModelAsJSON['walletId'],
+      budgetId: budgetModelAsJSON['budgetId'],
       planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
-      category: budgetModelAsJSON['category'] as String,
+      category: budgetModelAsJSON['category'],
       categoryType:
           parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for'] as String);
+      dateMeantFor: budgetModelAsJSON['date_meant_for']);
   test(
     'Should be a subclass of Budget entity',
     () async {
@@ -40,7 +40,7 @@ void main() {
       final addBudgetModelAsString =
           fixture('models/add/budget/budget_model.json');
       final addBudgetModelAsJSON =
-          jsonDecode(addBudgetModelAsString) as Map<String, dynamic>;
+          jsonDecode(addBudgetModelAsString);
       expect(budgetModel.toJSON(), equals(addBudgetModelAsJSON));
     });
   });

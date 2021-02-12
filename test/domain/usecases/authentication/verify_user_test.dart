@@ -24,7 +24,7 @@ void main() {
 
   group('Success: VerifyUser', () {
     test('Should receive a successful response', () async {
-      final eitherUserResponseMonad = Right<Failure, void>('');
+      const  eitherUserResponseMonad = Right<Failure, void>('');
       when(mockAuthenticationRepository.verifyEmail(
               email: email,
               password: password,

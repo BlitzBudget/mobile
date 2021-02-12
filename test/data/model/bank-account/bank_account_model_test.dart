@@ -11,19 +11,19 @@ void main() {
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
   final bankAccountModelAsJSON =
-      jsonDecode(bankAccountModelAsString) as Map<String, dynamic>;
+      jsonDecode(bankAccountModelAsString);
   final bankAccountModel = BankAccountModel(
-      walletId: bankAccountModelAsJSON['walletId'] as String,
-      accountId: bankAccountModelAsJSON['accountId'] as String,
+      walletId: bankAccountModelAsJSON['walletId'],
+      accountId: bankAccountModelAsJSON['accountId'],
       accountBalance:
           parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']),
-      bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String,
+      bankAccountName: bankAccountModelAsJSON['bank_account_name'],
       accountType:
           parseDynamicAsAccountType(bankAccountModelAsJSON['account_type']),
       accountSubType: parseDynamicAsAccountSubType(
           bankAccountModelAsJSON['account_sub_type']),
-      selectedAccount: bankAccountModelAsJSON['selected_account'] as bool,
-      linked: bankAccountModelAsJSON['linked'] as bool);
+      selectedAccount: bankAccountModelAsJSON['selected_account'],
+      linked: bankAccountModelAsJSON['linked']);
   test(
     'Should be a subclass of BankAccount entity',
     () async {
@@ -46,7 +46,7 @@ void main() {
       final addBankAccountModelAsString =
           fixture('models/add/bank-account/bank_account_model.json');
       final addBankAccountModelAsJSON =
-          jsonDecode(addBankAccountModelAsString) as Map<String, dynamic>;
+          jsonDecode(addBankAccountModelAsString);
       expect(bankAccountModel.toJSON(), equals(addBankAccountModelAsJSON));
     });
   });

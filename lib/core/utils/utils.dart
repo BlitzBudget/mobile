@@ -73,51 +73,58 @@ List<String> getRandomNames(int amount) {
 
 Option<String> capitalize(String word) {
   return isEmpty(word)
-      ? None()
+      ? const None()
       : Some('${word[0].toUpperCase()}${word.substring(1).toLowerCase()}');
 }
 
 Option<String> capitalizePair(WordPair pair) {
-  return (pair == null) ? None() : Some(pair.asPascalCase);
+  return (pair == null) ? const None() : Some(pair.asPascalCase);
 }
 
-Option<dynamic> lastElement(List arr) {
+Option<dynamic> lastElement(List<dynamic> arr) {
   if (arr == null || arr.isEmpty) {
-    return None<dynamic>();
+    return const None<dynamic>();
   } else if (arr.isNotEmpty) {
     return Some<dynamic>(arr[arr.length - 1]);
   }
-  return None<dynamic>();
+  return const None<dynamic>();
 }
 
 Option<List<String>> splitElement({String stringToSplit, String character}) {
-  if (includesStr(val: character, arr: stringToSplit).getOrElse(() => false)) {
-    if (isEmpty(stringToSplit)) {
-      return None();
+  if (includesStr(value: character, array: stringToSplit)
+      .getOrElse(() => false)) {
+    if (isEmpty(stringToSplit) || isEmpty(character)) {
+      return const None();
     } else {
       return Some(stringToSplit.split(character));
     }
   }
 
-  return None();
+  return const None();
 }
 
-Option<bool> includesStr({String arr, String val}) {
-  if (val == null || arr == null || arr.isEmpty || val.isEmpty) {
-    return None();
-  } else {
-    return Some(arr.contains(val));
+Option<bool> includesStr({dynamic array, dynamic value}) {
+  if (isEmpty(array) || isEmpty(value)) {
+    return const None();
   }
+
+  if (array is String && value is String) {
+    return Some(array.contains(value));
+  }
+
+  return const None();
 }
 
 bool isEmpty(String obj) {
   /// Check if objext is a number or a boolean
-  if (['', null, false, 0].contains(obj)) return true;
+  if (['', null, false, 0].contains(obj)) {
+    return true;
+  }
 
   return false;
 }
 
-bool isNotEmpty(String obj) {
+bool isNotEmpty(dynamic obj) {
   return !isEmpty(obj);
 }
 

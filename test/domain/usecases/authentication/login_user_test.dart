@@ -49,10 +49,10 @@ void main() {
 
   group('Success: LoginUser', () {
     test('Should receive a successful response', () async {
-      final userEmail = 'nagarjun_nagesh@outlook.com';
-      final userPassword = 'password';
-      final optionResponse = Some(UserResponse());
-      final eitherUserResponseMonad =
+      const userEmail = 'nagarjun_nagesh@outlook.com';
+      const userPassword = 'password';
+      const optionResponse = Some(UserResponse());
+      const eitherUserResponseMonad =
           Right<Failure, Option<UserResponse>>(optionResponse);
       when(mockAuthenticationRepository.loginUser(
               email: userEmail, password: userPassword))
@@ -74,10 +74,10 @@ void main() {
 
   group('Error: LoginUser', () {
     test('Option Failure: Should receive a failure response', () async {
-      final userEmail = 'nagarjun_nagesh@outlook.com';
-      final userPassword = 'password';
-      final optionResponse = None<UserResponse>();
-      final eitherUserResponseMonad =
+      const userEmail = 'nagarjun_nagesh@outlook.com';
+      const userPassword = 'password';
+      const optionResponse = None<UserResponse>();
+      const eitherUserResponseMonad =
           Right<Failure, Option<UserResponse>>(optionResponse);
       when(mockAuthenticationRepository.loginUser(
               email: userEmail, password: userPassword))
@@ -98,8 +98,8 @@ void main() {
     });
 
     test('Response Failure: Should receive a failure response', () async {
-      final userEmail = 'nagarjun_nagesh@outlook.com';
-      final userPassword = 'password';
+      const userEmail = 'nagarjun_nagesh@outlook.com';
+      const userPassword = 'password';
       final eitherUserResponseMonad =
           Left<Failure, Option<UserResponse>>(RedirectToSignupDueToFailure());
       when(mockAuthenticationRepository.loginUser(

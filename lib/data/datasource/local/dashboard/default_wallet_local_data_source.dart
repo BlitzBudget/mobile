@@ -8,14 +8,14 @@ abstract class DefaultWalletLocalDataSource {
 }
 
 class DefaultWalletLocalDataSourceImpl implements DefaultWalletLocalDataSource {
-  final KeyValueStore keyValueStore;
-
   DefaultWalletLocalDataSourceImpl({@required this.keyValueStore});
+
+  final KeyValueStore keyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
   ///
-  static final String _defaultWallet = 'default_wallet';
+  static const String _defaultWallet = 'default_wallet';
 
   /// ------------------------------------------------------------
   /// Method that returns the user default wallet

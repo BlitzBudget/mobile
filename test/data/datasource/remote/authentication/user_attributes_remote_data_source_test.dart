@@ -27,13 +27,11 @@ void main() {
       () async {
         final updateUserNameAsString = fixture(
             'responses/user-attributes/update/user_attribute_name_info.json');
-        final updateUserNameAsJSON =
-            jsonDecode(updateUserNameAsString) as Map<String, dynamic>;
+        final updateUserNameAsJSON = jsonDecode(updateUserNameAsString);
         final userAttributes = UserModel(
-            email: updateUserNameAsJSON['body-json']['username'] as String,
-            name: updateUserNameAsJSON['body-json']['name'] as String,
-            familyName:
-                updateUserNameAsJSON['body-json']['family_name'] as String);
+            email: updateUserNameAsJSON['body-json']['username'],
+            name: updateUserNameAsJSON['body-json']['name'],
+            familyName: updateUserNameAsJSON['body-json']['family_name']);
         // arrange
         when(mockHTTPClientImpl.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),
@@ -53,11 +51,10 @@ void main() {
       () async {
         final updateUserNameAsString = fixture(
             'responses/user-attributes/update/user_attribute_locale_info.json');
-        final updateUserNameAsJSON =
-            jsonDecode(updateUserNameAsString) as Map<String, dynamic>;
+        final updateUserNameAsJSON = jsonDecode(updateUserNameAsString);
         final userAttributes = UserModel(
-            email: updateUserNameAsJSON['body-json']['username'] as String,
-            locale: updateUserNameAsJSON['body-json']['locale'] as String);
+            email: updateUserNameAsJSON['body-json']['username'],
+            locale: updateUserNameAsJSON['body-json']['locale']);
         // arrange
         when(mockHTTPClientImpl.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),
@@ -77,12 +74,10 @@ void main() {
       () async {
         final updateUserNameAsString = fixture(
             'responses/user-attributes/update/user_attribute_file_format_info.json');
-        final updateUserNameAsJSON =
-            jsonDecode(updateUserNameAsString) as Map<String, dynamic>;
+        final updateUserNameAsJSON = jsonDecode(updateUserNameAsString);
         final userAttributes = UserModel(
-            email: updateUserNameAsJSON['body-json']['username'] as String,
-            locale: updateUserNameAsJSON['body-json']['exportFileFormat']
-                as String);
+            email: updateUserNameAsJSON['body-json']['username'],
+            locale: updateUserNameAsJSON['body-json']['exportFileFormat']);
         // arrange
         when(mockHTTPClientImpl.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),

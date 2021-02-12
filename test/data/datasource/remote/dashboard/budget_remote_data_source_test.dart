@@ -27,12 +27,10 @@ void main() {
     test('Should fetch all budgets with wallet id', () async {
       final fetchBudgetAsString =
           fixture('responses/dashboard/budget/fetch_budget_info.json');
-      final fetchBudgetAsJSON =
-          jsonDecode(fetchBudgetAsString) as Map<String, dynamic>;
+      final fetchBudgetAsJSON = jsonDecode(fetchBudgetAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet =
-          fetchBudgetAsJSON['Budget'][0]['walletId'] as String;
+      final defaultWallet = fetchBudgetAsJSON['Budget'][0]['walletId'];
       String userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -44,7 +42,7 @@ void main() {
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchBudgetAsJSON);
       // act
-      var budget = await dataSource.fetch(
+      final budget = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
           defaultWallet: defaultWallet,
@@ -54,7 +52,7 @@ void main() {
           body: jsonEncode(contentBody), headers: constants.headers));
 
       expect(budget.budgets.first.budgetId,
-          equals(fetchBudgetAsJSON['Budget'][0]['budgetId'] as String));
+          equals(fetchBudgetAsJSON['Budget'][0]['budgetId']));
     });
   });
 
@@ -64,17 +62,15 @@ void main() {
       () async {
         final addBudgetAsString =
             fixture('responses/dashboard/budget/add_budget_info.json');
-        final addBudgetAsJSON =
-            jsonDecode(addBudgetAsString) as Map<String, dynamic>;
+        final addBudgetAsJSON = jsonDecode(addBudgetAsString);
         final budget = BudgetModel(
-            walletId: addBudgetAsJSON['body-json']['walletId'] as String,
-            budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
+            walletId: addBudgetAsJSON['body-json']['walletId'],
+            budgetId: addBudgetAsJSON['body-json']['accountId'],
             categoryType: parseDynamicAsCategoryType(
                 addBudgetAsJSON['body-json']['categoryType']),
             planned:
                 parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-            dateMeantFor:
-                addBudgetAsJSON['body-json']['dateMeantFor'] as String);
+            dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor']);
         // arrange
         when(mockHTTPClientImpl.put(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
@@ -94,11 +90,10 @@ void main() {
       () async {
         final updateAmountAsString = fixture(
             'responses/dashboard/budget/update/update_budget_amount_info.json');
-        final updateAmountAsJSON =
-            jsonDecode(updateAmountAsString) as Map<String, dynamic>;
+        final updateAmountAsJSON = jsonDecode(updateAmountAsString);
         final budget = BudgetModel(
-            walletId: updateAmountAsJSON['body-json']['walletId'] as String,
-            budgetId: updateAmountAsJSON['body-json']['budgetId'] as String,
+            walletId: updateAmountAsJSON['body-json']['walletId'],
+            budgetId: updateAmountAsJSON['body-json']['budgetId'],
             planned: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['planned']));
         // arrange
@@ -118,15 +113,11 @@ void main() {
       () async {
         final updateDescriptionAsString = fixture(
             'responses/dashboard/budget/update/update_budget_category_info.json');
-        final updateDescriptionAsJSON =
-            jsonDecode(updateDescriptionAsString) as Map<String, dynamic>;
+        final updateDescriptionAsJSON = jsonDecode(updateDescriptionAsString);
         final budget = BudgetModel(
-            walletId:
-                updateDescriptionAsJSON['body-json']['walletId'] as String,
-            budgetId:
-                updateDescriptionAsJSON['body-json']['budgetId'] as String,
-            category:
-                updateDescriptionAsJSON['body-json']['category'] as String);
+            walletId: updateDescriptionAsJSON['body-json']['walletId'],
+            budgetId: updateDescriptionAsJSON['body-json']['budgetId'],
+            category: updateDescriptionAsJSON['body-json']['category']);
         // arrange
         when(mockHTTPClientImpl.patch(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
@@ -140,5 +131,3 @@ void main() {
     );
   });
 }
-
-// TODO FETCH

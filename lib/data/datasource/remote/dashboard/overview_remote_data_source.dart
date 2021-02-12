@@ -7,7 +7,7 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/overview_response_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/overview_response.dart';
 
-abstract class OverviewRemoteDataSource {
+mixin OverviewRemoteDataSource {
   Future<OverviewResponse> fetch(
       {@required String startsWithDate,
       @required String endsWithDate,
@@ -15,10 +15,10 @@ abstract class OverviewRemoteDataSource {
       @required String userId});
 }
 
-class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
-  final HTTPClient httpClient;
-
+class OverviewRemoteDataSourceImpl with OverviewRemoteDataSource {
   OverviewRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Get Wallet
   @override
@@ -27,7 +27,7 @@ class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
       @required String endsWithDate,
       @required String defaultWallet,
       @required String userId}) async {
-    var contentBody = <String, dynamic>{
+    final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
     };
@@ -44,7 +44,7 @@ class OverviewRemoteDataSourceImpl implements OverviewRemoteDataSource {
         .then<OverviewResponseModel>((dynamic res) {
       debugPrint('The response from the overview is $res');
 
-      return OverviewResponseModel.fromJSON(res as Map<String, dynamic>);
+      return OverviewResponseModel.fromJSON(res);
     });
   }
 }

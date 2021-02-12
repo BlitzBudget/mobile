@@ -41,11 +41,11 @@ void main() {
     test('Should return Empty Response Failure', () async {
       when(mockUserAttributesLocalDataSource.readUserAttributes())
           .thenThrow(NoValueInCacheException());
-      var userAttributesReceived =
+      final userAttributesReceived =
           await userAttributesRepositoryImpl.readUserAttributes();
 
       /// Expect an exception to be thrown
-      var f = userAttributesReceived.fold<Failure>(
+      final f = userAttributesReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
       expect(userAttributesReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
@@ -54,14 +54,14 @@ void main() {
 
   group('Update User Attributes', () {
     test('Should return Fetch Data Failure', () async {
-      var userModel = UserModel();
+      const userModel = UserModel();
       when(mockUserAttributesRemoteDataSource.updateUserAttributes(userModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var userAttributesReceived =
+      final userAttributesReceived =
           await userAttributesRepositoryImpl.updateUserAttributes(userModel);
 
       /// Expect an exception to be thrown
-      var f = userAttributesReceived.fold<Failure>(
+      final f = userAttributesReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
       verify(
           mockUserAttributesRemoteDataSource.updateUserAttributes(userModel));

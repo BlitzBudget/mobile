@@ -25,11 +25,11 @@ void main() {
   final transactionResponseModelAsString =
       fixture('responses/dashboard/transaction/fetch_transaction_info.json');
   final transactionResponseModelAsJSON =
-      jsonDecode(transactionResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(transactionResponseModelAsString);
 
   /// Convert transactions from the response JSON to List<Transaction>
   /// If Empty then return an empty object list
-  var transactionResponseModel =
+  final transactionResponseModel =
       convertToResponseModel(transactionResponseModelAsJSON);
 
   test(
@@ -55,7 +55,7 @@ void main() {
           'responses/partially-emtpy/transaction/empty_bank_account_transaction_info.json');
       final transactionResponseModelWithEmptyBankAccountAsJSON =
           jsonDecode(transactionResponseModelWithEmptyBankAccountAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -76,7 +76,7 @@ void main() {
           'responses/partially-emtpy/transaction/empty_budget_transaction_info.json');
       final transactionResponseModelWithEmptyBudgetAsJSON =
           jsonDecode(transactionResponseModelWithEmptyBudgetAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -96,7 +96,7 @@ void main() {
           'responses/partially-emtpy/transaction/empty_category_transaction_info.json');
       final transactionResponseModelWithEmptyCategoryAsJSON =
           jsonDecode(transactionResponseModelWithEmptyCategoryAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -117,7 +117,7 @@ void main() {
           'responses/partially-emtpy/transaction/empty_date_transaction_info.json');
       final transactionResponseModelWithEmptyDateAsJSON =
           jsonDecode(transactionResponseModelWithEmptyDateAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -138,7 +138,7 @@ void main() {
       final transactionResponseModelWithEmptyRecurringTransactionAsJSON =
           jsonDecode(
                   transactionResponseModelWithEmptyRecurringTransactionAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -161,7 +161,7 @@ void main() {
           'responses/partially-emtpy/transaction/empty_transaction_transaction_info.json');
       final transactionResponseModelWithEmptyTransactionAsJSON =
           jsonDecode(transactionResponseModelWithEmptyTransactionAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -181,56 +181,56 @@ TransactionResponseModel convertToResponseModel(
     Map<String, dynamic> transactionResponseModelAsJSON) {
   /// Convert transactions from the response JSON to List<Transaction>
   /// If Empty then return an empty object list
-  var responseTransactions =
-      transactionResponseModelAsJSON['Transaction'] as List;
-  var convertedTransactions = List<Transaction>.from(
+  final responseTransactions =
+      transactionResponseModelAsJSON['Transaction'];
+  final convertedTransactions = List<Transaction>.from(
       responseTransactions?.map<dynamic>((dynamic model) =>
-          TransactionModel.fromJSON(model as Map<String, dynamic>)));
+          TransactionModel.fromJSON(model)));
 
   /// Convert recurring transactions from the response JSON to List<RecurringTransaction>
   /// If Empty then return an empty object list
-  var responseRecurringTransactions =
-      transactionResponseModelAsJSON['RecurringTransactions'] as List;
-  var convertedRecurringTransactions = List<RecurringTransaction>.from(
+  final responseRecurringTransactions =
+      transactionResponseModelAsJSON['RecurringTransactions'];
+  final convertedRecurringTransactions = List<RecurringTransaction>.from(
       responseRecurringTransactions?.map<dynamic>((dynamic model) =>
               RecurringTransactionModel.fromJSON(
-                  model as Map<String, dynamic>)) ??
+                  model)) ??
           <RecurringTransaction>[]);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var responseBudgets = transactionResponseModelAsJSON['Budget'] as List;
-  var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
+  final responseBudgets = transactionResponseModelAsJSON['Budget'];
+  final convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
           (dynamic model) =>
-              BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+              BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = transactionResponseModelAsJSON['Category'] as List;
-  var convertedCategories = List<Category>.from(
+  final responseCategories = transactionResponseModelAsJSON['Category'];
+  final convertedCategories = List<Category>.from(
       responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
+              CategoryModel.fromJSON(model)) ??
           <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts =
-      transactionResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
+  final responseBankAccounts =
+      transactionResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(
       responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+              BankAccountModel.fromJSON(model)) ??
           <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = transactionResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+  final responseDate = transactionResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
           (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+              DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = transactionResponseModelAsJSON['Wallet'];
+  final responseWallet = transactionResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -239,11 +239,11 @@ TransactionResponseModel convertToResponseModel(
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
     convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+        WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
+    final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
         (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+            WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

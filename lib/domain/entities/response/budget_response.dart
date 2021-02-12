@@ -7,18 +7,18 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import '../date.dart';
 
 class BudgetResponse extends Equatable {
-  final List<Budget> budgets;
-  final List<Category> categories;
-  final List<BankAccount> bankAccounts;
-  final List<Date> dates;
-  final Wallet wallet;
-
-  BudgetResponse(
+  const BudgetResponse(
       {this.budgets,
       this.categories,
       this.bankAccounts,
       this.dates,
       this.wallet});
+
+  final List<Budget> budgets;
+  final List<Category> categories;
+  final List<BankAccount> bankAccounts;
+  final List<Date> dates;
+  final Wallet wallet;
 
   @override
   List<Object> get props => [budgets, categories, bankAccounts, dates, wallet];

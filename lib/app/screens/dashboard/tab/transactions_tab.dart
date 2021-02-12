@@ -8,11 +8,11 @@ import '../full-screen-dialog/wallet_dialog.dart';
 import 'transaction_detail_tab.dart';
 
 class TransactionsTab extends StatefulWidget {
+  const TransactionsTab({Key key, this.androidDrawer}) : super(key: key);
+  
   static const title = 'Transactions';
   static const androidIcon = Icon(CupertinoIcons.news_solid);
   static const iosIcon = Icon(CupertinoIcons.news_solid);
-
-  const TransactionsTab({Key key, this.androidDrawer}) : super(key: key);
 
   final Widget androidDrawer;
 
@@ -43,12 +43,14 @@ class _TransactionsTabState extends State<TransactionsTab> {
     return Future.delayed(
       /// This is just an arbitrary delay that simulates some network activity.
       const Duration(seconds: 2),
-      () => setState(() => _setData()),
+      () => setState(_setData),
     );
   }
 
   Widget _listBuilder(BuildContext context, int index) {
-    if (index >= _itemsLength) return null;
+    if (index >= _itemsLength) {
+      return null;
+    }
 
     /// Show a slightly different color palette. Show poppy-ier colors on iOS
     /// due to lighter contrasting bars and tone it down on Android.
@@ -64,7 +66,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
         child: HeroAnimatingTransactionCard(
           transaction: transactionNames[index],
           color: color,
-          heroAnimation: AlwaysStoppedAnimation(0),
+          heroAnimation: const AlwaysStoppedAnimation(0),
           onPressed: () => Navigator.of(context).push<void>(
             MaterialPageRoute(
               builder: (context) => TransactionDetailTab(
@@ -111,14 +113,14 @@ class _TransactionsTabState extends State<TransactionsTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(TransactionsTab.title),
+        title: const Text(TransactionsTab.title),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () async => await _androidRefreshKey.currentState.show(),
+            icon: const Icon(Icons.refresh),
+            onPressed: () async => _androidRefreshKey.currentState.show(),
           ),
           IconButton(
-            icon: Icon(Icons.shuffle),
+            icon: const Icon(Icons.shuffle),
             onPressed: _togglePlatform,
           ),
         ],
@@ -128,7 +130,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
         key: _androidRefreshKey,
         onRefresh: _refreshData,
         child: ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           itemBuilder: _listBuilder,
         ),
       ),
@@ -142,7 +144,6 @@ class _TransactionsTabState extends State<TransactionsTab> {
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           CupertinoButton(
             padding: EdgeInsets.zero,
-            child: Icon(CupertinoIcons.square_grid_2x2),
             onPressed: () =>
 
                 /// This pushes the Wallets page as a full page modal dialog on top
@@ -151,14 +152,15 @@ class _TransactionsTabState extends State<TransactionsTab> {
               CupertinoPageRoute(
                 title: WalletDialog.title,
                 fullscreenDialog: true,
-                builder: (context) => WalletDialog(),
+                builder: (context) => const WalletDialog(),
               ),
             ),
+            child: const Icon(CupertinoIcons.square_grid_2x2),
           ),
           CupertinoButton(
             padding: EdgeInsets.zero,
-            child: Icon(CupertinoIcons.shuffle),
             onPressed: _togglePlatform,
+            child: const Icon(CupertinoIcons.shuffle),
           ),
         ])),
         CupertinoSliverRefreshControl(
@@ -167,7 +169,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
         SliverSafeArea(
           top: false,
           sliver: SliverPadding(
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(_listBuilder),
             ),

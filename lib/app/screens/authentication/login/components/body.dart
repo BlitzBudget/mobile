@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../constants/constants.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../components/already_have_an_account_check.dart';
@@ -13,6 +11,9 @@ import 'background.dart';
 
 // Public exposed class
 class Body extends StatefulWidget {
+  /// In the constructor
+  const Body({Key key}) : super(key: key);
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -29,7 +30,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -38,12 +39,13 @@ class _BodyState extends State<Body> {
             ///  Linear Progress indicator for loading
             /// Show text only when the button is enabled
             Visibility(
-                visible: _btnEnabled,
-                child: Text(
-                  login,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                replacement: LinearLoadingIndicator()),
+              visible: _btnEnabled,
+              replacement: const LinearLoadingIndicator(),
+              child: Text(
+                login,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               'assets/icons/login.svg',
@@ -61,7 +63,7 @@ class _BodyState extends State<Body> {
                 password = value;
               },
             ),
-            PasswordConstraint(),
+            const PasswordConstraint(),
             RoundedButton(
               text: continueButton,
 
@@ -80,7 +82,6 @@ class _BodyState extends State<Body> {
                   _btnEnabled = true;
                 });
               },
-              color: primaryColor,
               enabled: _btnEnabled,
             ),
             SizedBox(height: size.height * 0.03),

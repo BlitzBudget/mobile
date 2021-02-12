@@ -6,12 +6,7 @@ import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/bank_account_repository.dart';
-import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/goal_repository.dart';
-import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/add_bank_account_use_case.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/add_goal_use_case.dart';
 import 'package:mockito/mockito.dart';
 
@@ -25,17 +20,17 @@ void main() {
 
   final goalModelAsString =
       fixture('models/get/goal/emergency_fund_model.json');
-  final goalModelAsJSON = jsonDecode(goalModelAsString) as Map<String, dynamic>;
+  final goalModelAsJSON = jsonDecode(goalModelAsString);
   final goal = GoalModel(
-      walletId: goalModelAsJSON['walletId'] as String,
-      goalId: goalModelAsJSON['goalId'] as String,
+      walletId: goalModelAsJSON['walletId'],
+      goalId: goalModelAsJSON['goalId'],
       goalType: parseDynamicAsGoalType(goalModelAsJSON['goal_type']),
       targetType: parseDynamicAsTargetType(goalModelAsJSON['target_type']),
       monthlyContribution:
           parseDynamicAsDouble(goalModelAsJSON['monthly_contribution']),
       targetAmount: parseDynamicAsDouble(goalModelAsJSON['final_amount']),
-      targetDate: goalModelAsJSON['preferable_target_date'] as String,
-      targetId: goalModelAsJSON['target_id'] as String);
+      targetDate: goalModelAsJSON['preferable_target_date'],
+      targetId: goalModelAsJSON['target_id']);
 
   setUp(() {
     mockGoalRepository = MockGoalRepository();
@@ -44,7 +39,7 @@ void main() {
 
   group('Add', () {
     test('Success', () async {
-      Either<Failure, void> addGoalMonad = Right<Failure, void>('');
+      const Either<Failure, void> addGoalMonad = Right<Failure, void>('');
 
       when(mockGoalRepository.add(goal))
           .thenAnswer((_) => Future.value(addGoalMonad));
@@ -56,7 +51,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> addGoalMonad =
+      final Either<Failure, void> addGoalMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockGoalRepository.add(goal))

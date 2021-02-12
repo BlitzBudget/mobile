@@ -3,7 +3,7 @@ import 'package:mobile_blitzbudget/domain/entities/response/wallet_response.dart
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 class WalletResponseModel extends WalletResponse {
-  WalletResponseModel({
+  const WalletResponseModel({
     List<Wallet> wallets,
   }) : super(wallets: wallets);
 
@@ -11,10 +11,10 @@ class WalletResponseModel extends WalletResponse {
       Map<String, dynamic> walletResponseModel) {
     /// Convert categories from the response JSON to List<Category>
     /// If Empty then return an empty object list
-    var responseCategories = walletResponseModel['Wallet'] as List;
-    var convertedWallet = List<Wallet>.from(responseCategories?.map<dynamic>(
+    final responseCategories = walletResponseModel['Wallet'];
+    final convertedWallet = List<Wallet>.from(responseCategories?.map<dynamic>(
             (dynamic model) =>
-                WalletModel.fromJSON(model as Map<String, dynamic>)) ??
+                WalletModel.fromJSON(model)) ??
         <Wallet>[]);
 
     return WalletResponseModel(wallets: convertedWallet);

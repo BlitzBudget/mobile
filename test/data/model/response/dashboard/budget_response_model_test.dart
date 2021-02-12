@@ -20,11 +20,11 @@ void main() {
   final budgetResponseModelAsString =
       fixture('responses/dashboard/budget/fetch_budget_info.json');
   final budgetResponseModelAsJSON =
-      jsonDecode(budgetResponseModelAsString) as Map<String, dynamic>;
+      jsonDecode(budgetResponseModelAsString);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var budgetResponseModel = convertToResponseModel(budgetResponseModelAsJSON);
+  final budgetResponseModel = convertToResponseModel(budgetResponseModelAsJSON);
 
   test(
     'Should be a subclass of BudgetModel entity',
@@ -49,7 +49,7 @@ void main() {
           'responses/partially-emtpy/budget/empty_budget_budget_info.json');
       final budgetResponseModelWithEmptyBudgetAsJSON =
           jsonDecode(budgetResponseModelWithEmptyBudgetAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -69,7 +69,7 @@ void main() {
           'responses/partially-emtpy/budget/empty_bank_account_budget_info.json');
       final budgetResponseModelWithEmptyBankAccountAsJSON =
           jsonDecode(budgetResponseModelWithEmptyBankAccountAsString)
-              as Map<String, dynamic>;
+              ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -89,7 +89,7 @@ void main() {
           'responses/partially-emtpy/budget/empty_category_budget_info.json');
       final budgetResponseModelWithEmptyCategoryAsJSON =
           jsonDecode(budgetResponseModelWithEmptyCategoryAsString)
-              as Map<String, dynamic>;
+               ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -109,7 +109,7 @@ void main() {
           'responses/partially-emtpy/budget/empty_date_budget_info.json');
       final budgetResponseModelWithEmptyDateAsJSON =
           jsonDecode(budgetResponseModelWithEmptyDateAsString)
-              as Map<String, dynamic>;
+            ;
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -127,37 +127,37 @@ BudgetResponseModel convertToResponseModel(
     Map<String, dynamic> budgetResponseModelAsJSON) {
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  var responseBudgets = budgetResponseModelAsJSON['Budget'] as List;
-  var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
+  final responseBudgets = budgetResponseModelAsJSON['Budget'];
+  final convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
           (dynamic model) =>
-              BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+              BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  var responseCategories = budgetResponseModelAsJSON['Category'] as List;
-  var convertedCategories = List<Category>.from(
+  final responseCategories = budgetResponseModelAsJSON['Category'];
+  final convertedCategories = List<Category>.from(
       responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
+              CategoryModel.fromJSON(model)) ??
           <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts = budgetResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
+  final responseBankAccounts = budgetResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(
       responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+              BankAccountModel.fromJSON(model)) ??
           <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = budgetResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+  final responseDate = budgetResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
           (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+              DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = budgetResponseModelAsJSON['Wallet'];
+  final responseWallet = budgetResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -166,11 +166,11 @@ BudgetResponseModel convertToResponseModel(
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
     convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+        WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
+    final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
         (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+            WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

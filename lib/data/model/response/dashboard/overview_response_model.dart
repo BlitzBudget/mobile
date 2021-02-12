@@ -14,7 +14,7 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import '../../date_model.dart';
 
 class OverviewResponseModel extends OverviewResponse {
-  OverviewResponseModel(
+  const OverviewResponseModel(
       {List<Transaction> transactions,
       List<Budget> budgets,
       List<Category> categories,
@@ -33,45 +33,45 @@ class OverviewResponseModel extends OverviewResponse {
       Map<String, dynamic> overviewResponseModel) {
     /// Convert transactions from the response JSON to List<Transaction>
     /// If Empty then return an empty object list
-    var responseTransactions = overviewResponseModel['Transaction'] as List;
-    var convertedTransactions = List<Transaction>.from(
+    final responseTransactions = overviewResponseModel['Transaction'];
+    final convertedTransactions = List<Transaction>.from(
         responseTransactions?.map<dynamic>((dynamic model) =>
-                TransactionModel.fromJSON(model as Map<String, dynamic>)) ??
+                TransactionModel.fromJSON(model)) ??
             <Transaction>[]);
 
     /// Convert budgets from the response JSON to List<Budget>
     /// If Empty then return an empty object list
-    var responseBudgets = overviewResponseModel['Budget'] as List;
-    var convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
+    final responseBudgets = overviewResponseModel['Budget'];
+    final convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
             (dynamic model) =>
-                BudgetModel.fromJSON(model as Map<String, dynamic>)) ??
+                BudgetModel.fromJSON(model)) ??
         <Budget>[]);
 
     /// Convert categories from the response JSON to List<Category>
     /// If Empty then return an empty object list
-    var responseCategories = overviewResponseModel['Category'] as List;
-    var convertedCategories = List<Category>.from(
+    final responseCategories = overviewResponseModel['Category'];
+    final convertedCategories = List<Category>.from(
         responseCategories?.map<dynamic>((dynamic model) =>
-                CategoryModel.fromJSON(model as Map<String, dynamic>)) ??
+                CategoryModel.fromJSON(model)) ??
             <Category>[]);
 
     /// Convert BankAccount from the response JSON to List<BankAccount>
     /// If Empty then return an empty object list
-    var responseBankAccounts = overviewResponseModel['BankAccount'] as List;
-    var convertedBankAccounts = List<BankAccount>.from(
+    final responseBankAccounts = overviewResponseModel['BankAccount'];
+    final convertedBankAccounts = List<BankAccount>.from(
         responseBankAccounts?.map<dynamic>((dynamic model) =>
-                BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
+                BankAccountModel.fromJSON(model)) ??
             <BankAccount>[]);
 
     /// Convert Dates from the response JSON to List<Date>
     /// If Empty then return an empty object list
-    var responseDate = overviewResponseModel['Date'] as List;
-    var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
+    final responseDate = overviewResponseModel['Date'];
+    final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
             (dynamic model) =>
-                DateModel.fromJSON(model as Map<String, dynamic>)) ??
+                DateModel.fromJSON(model)) ??
         <Date>[]);
 
-    dynamic responseWallet = overviewResponseModel['Wallet'];
+    final responseWallet = overviewResponseModel['Wallet'];
     Wallet convertedWallet;
 
     /// Check if the response is a string or a list
@@ -80,11 +80,11 @@ class OverviewResponseModel extends OverviewResponse {
     /// If List then convert them into list of wallets and take the first wallet.
     if (responseWallet is Map) {
       convertedWallet =
-          WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+          WalletModel.fromJSON(responseWallet);
     } else if (responseWallet is List) {
-      var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
+      final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
           (dynamic model) =>
-              WalletModel.fromJSON(model as Map<String, dynamic>)));
+              WalletModel.fromJSON(model)));
 
       convertedWallet = convertedWallets[0];
     }

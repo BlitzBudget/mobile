@@ -32,11 +32,11 @@ void main() {
     test('Should return FetchDataFailure ', () async {
       when(mockDeleteItemRemoteDataSource.delete(itemId: '', walletId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var deleteItemReceived =
+      final deleteItemReceived =
           await deleteItemRepositoryImpl.delete(itemId: '', walletId: '');
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           deleteItemReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockDeleteItemRemoteDataSource.delete(itemId: '', walletId: ''));
       expect(deleteItemReceived.isLeft(), equals(true));

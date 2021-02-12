@@ -4,7 +4,7 @@ import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
 class BudgetModel extends Budget {
   // Optional category type and Budget id fields
-  BudgetModel({
+  const BudgetModel({
     String budgetId,
     String walletId,
     double planned,

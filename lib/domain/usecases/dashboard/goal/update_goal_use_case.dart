@@ -7,11 +7,11 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/goal_repository
 import '../../use_case.dart';
 
 class UpdateGoalUseCase extends UseCase {
-  final GoalRepository goalRepository;
-
   UpdateGoalUseCase({@required this.goalRepository});
 
+  final GoalRepository goalRepository;
+
   Future<Either<Failure, void>> update({@required Goal updateGoal}) async {
-    return await goalRepository.update(updateGoal);
+    return goalRepository.update(updateGoal);
   }
 }

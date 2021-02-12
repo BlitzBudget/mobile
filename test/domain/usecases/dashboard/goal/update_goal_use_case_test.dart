@@ -20,17 +20,17 @@ void main() {
 
   final goalModelAsString =
       fixture('models/get/goal/emergency_fund_model.json');
-  final goalModelAsJSON = jsonDecode(goalModelAsString) as Map<String, dynamic>;
+  final goalModelAsJSON = jsonDecode(goalModelAsString);
   final goal = GoalModel(
-      walletId: goalModelAsJSON['walletId'] as String,
-      goalId: goalModelAsJSON['goalId'] as String,
+      walletId: goalModelAsJSON['walletId'],
+      goalId: goalModelAsJSON['goalId'],
       goalType: parseDynamicAsGoalType(goalModelAsJSON['goal_type']),
       targetType: parseDynamicAsTargetType(goalModelAsJSON['target_type']),
       monthlyContribution:
           parseDynamicAsDouble(goalModelAsJSON['monthly_contribution']),
       targetAmount: parseDynamicAsDouble(goalModelAsJSON['final_amount']),
-      targetDate: goalModelAsJSON['preferable_target_date'] as String,
-      targetId: goalModelAsJSON['target_id'] as String);
+      targetDate: goalModelAsJSON['preferable_target_date'],
+      targetId: goalModelAsJSON['target_id']);
 
   setUp(() {
     mockGoalRepository = MockGoalRepository();
@@ -39,7 +39,7 @@ void main() {
 
   group('Update Goal', () {
     test('Success', () async {
-      Either<Failure, void> updateGoalMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateGoalMonad = Right<Failure, void>('');
 
       when(mockGoalRepository.update(goal))
           .thenAnswer((_) => Future.value(updateGoalMonad));
@@ -51,7 +51,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> updateGoalMonad =
+      final Either<Failure, void> updateGoalMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockGoalRepository.update(goal))

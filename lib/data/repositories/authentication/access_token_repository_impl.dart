@@ -9,9 +9,9 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/access_tok
 import '../../datasource/local/authentication/access_token_local_data_source.dart';
 
 class AccessTokenRepositoryImpl implements AccessTokenRepository {
-  final AccessTokenLocalDataSource accessTokenLocalDataSource;
-
   AccessTokenRepositoryImpl({@required this.accessTokenLocalDataSource});
+
+  final AccessTokenLocalDataSource accessTokenLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readAccessToken() async {
@@ -24,7 +24,7 @@ class AccessTokenRepositoryImpl implements AccessTokenRepository {
 
   @override
   Future<void> writeAccessToken(UserResponse userResponse) async {
-    return await accessTokenLocalDataSource
+    return accessTokenLocalDataSource
         .writeAccessToken(userResponse.accessToken);
   }
 }

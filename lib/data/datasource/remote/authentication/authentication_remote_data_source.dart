@@ -31,14 +31,13 @@ abstract class AuthenticationRemoteDataSource {
 
 class AuthenticationRemoteDataSourceImpl
     implements AuthenticationRemoteDataSource {
-  final HTTPClient httpClient;
-  static final _checkPassword = false;
-
-  static final _userNotFoundException = 'UserNotFoundException';
-  static final _userNotConfirmedException = 'UserNotConfirmedException';
-  static final _notAuthorizedException = 'NotAuthorizedException';
-
   AuthenticationRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
+  static const _checkPassword = false;
+  static const _userNotFoundException = 'UserNotFoundException';
+  static const _userNotConfirmedException = 'UserNotConfirmedException';
+  static const _notAuthorizedException = 'NotAuthorizedException';
 
   /// Login Screen
   ///
@@ -59,36 +58,37 @@ class AuthenticationRemoteDataSourceImpl
               }),
               headers: constants.headers)
           .then<Option<UserResponseModel>>((dynamic res) {
-        developer
-            .log('User Attributes  ${res['UserAttributes'] as List<dynamic>}');
+        developer.log('User Attributes  ${res['UserAttributes']}');
 
-        return Some(UserResponseModel.fromJSON(res as Map<String, dynamic>));
+        return (res is Map<String, dynamic>)
+            ? Some(UserResponseModel.fromJSON(res))
+            : const None();
       });
     } on APIException catch (e) {
-      dynamic res = e.res;
+      final res = e.res;
       if (res['errorType'] != null) {
         /// Conditionally process error messages
         if (includesStr(
-                arr: res['errorMessage'] as String, val: _userNotFoundException)
+                array: res['errorMessage'], value: _userNotFoundException)
             .getOrElse(() => false)) {
           /// Navigate user to signup screen
           throw UserNotFoundException();
         } else if (includesStr(
-                arr: res['errorMessage'] as String,
-                val: _userNotConfirmedException)
+                array: res['errorMessage'],
+                value: _userNotConfirmedException)
             .getOrElse(() => false)) {
           /// Navigate to the verification screen
           throw UserNotConfirmedException();
         } else if (includesStr(
-                arr: res['errorMessage'] as String,
-                val: _notAuthorizedException)
+                array: res['errorMessage'],
+                value: _notAuthorizedException)
             .getOrElse(() => false)) {
           /// Exception to handle invalid credentials
           throw NotAuthorizedException();
         }
       }
     }
-    return None();
+    return const None();
   }
 
   /// SIGNUP module
@@ -100,7 +100,7 @@ class AuthenticationRemoteDataSourceImpl
       {@required String email, @required String password}) async {
     try {
       /// Set accept language headers
-      var headers = constants.headers;
+      final headers = constants.headers;
 
       /// Start signup process
       return httpClient.post(constants.signupURL,
@@ -112,13 +112,13 @@ class AuthenticationRemoteDataSourceImpl
           headers: headers);
     } on APIException catch (e) {
       /// Fetch response from the exception
-      dynamic res = e.res;
+      final dynamic res = e.res;
 
       /// Error Type for signup
       /// UsernameExistsException is excluded from showing error message
-      var errorMessage = res['errorMessage'] as String;
-      if (isNotEmpty(res['errorType'] as String) &&
-          includesStr(arr: errorMessage, val: 'UsernameExistsException')
+      final errorMessage = res['errorMessage'];
+      if (isNotEmpty(res['errorType']) &&
+          includesStr(array: errorMessage, value: 'UsernameExistsException')
               .getOrElse(() => false)) {
         throw UserAlreadyExistsException();
       }

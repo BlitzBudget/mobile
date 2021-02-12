@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 
 class GoalModel extends Goal {
   // Mandatory wallet ID
-  GoalModel({
+  const GoalModel({
     String walletId,
     String goalId,
     GoalType goalType,

@@ -31,10 +31,10 @@ void main() {
     test('Should return No Value in Cache Exception', () async {
       when(mockAuthTokenLocalDataSource.readAuthToken())
           .thenThrow(NoValueInCacheException());
-      var authTokenReceived = await authTokenRepositoryImpl.readAuthToken();
+      final authTokenReceived = await authTokenRepositoryImpl.readAuthToken();
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           authTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockAuthTokenLocalDataSource.readAuthToken());
       expect(authTokenReceived.isLeft(), equals(true));

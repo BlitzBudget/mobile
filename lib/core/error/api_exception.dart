@@ -7,10 +7,10 @@ import '../failure/failure.dart';
 /// API Flow Exceptions
 ///
 class APIException implements Exception {
-  dynamic res;
-
   // Constructor to set response
   APIException({@required this.res});
+  
+  dynamic res;
 
   ///
   /// Convert Exception to Failure

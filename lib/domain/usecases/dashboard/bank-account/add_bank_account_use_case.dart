@@ -7,12 +7,12 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/bank_account_re
 import '../../use_case.dart';
 
 class AddBankAccountUseCase extends UseCase {
-  final BankAccountRepository bankAccountRepository;
-
   AddBankAccountUseCase({@required this.bankAccountRepository});
+
+  final BankAccountRepository bankAccountRepository;
 
   Future<Either<Failure, void>> add(
       {@required BankAccount addBankAccount}) async {
-    return await bankAccountRepository.add(addBankAccount);
+    return bankAccountRepository.add(addBankAccount);
   }
 }

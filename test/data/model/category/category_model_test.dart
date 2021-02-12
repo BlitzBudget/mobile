@@ -11,15 +11,15 @@ void main() {
   final categoryModelAsString =
       fixture('models/get/category/category_model.json');
   final categoryModelAsJSON =
-      jsonDecode(categoryModelAsString) as Map<String, dynamic>;
+      jsonDecode(categoryModelAsString);
   final categoryModel = CategoryModel(
-      walletId: categoryModelAsJSON['walletId'] as String,
-      categoryId: categoryModelAsJSON['categoryId'] as String,
+      walletId: categoryModelAsJSON['walletId'],
+      categoryId: categoryModelAsJSON['categoryId'],
       categoryTotal:
           parseDynamicAsDouble(categoryModelAsJSON['category_total']),
       categoryType:
           parseDynamicAsCategoryType(categoryModelAsJSON['category_type']),
-      categoryName: categoryModelAsJSON['category_name'] as String);
+      categoryName: categoryModelAsJSON['category_name']);
   test(
     'Should be a subclass of Category entity',
     () async {
@@ -42,7 +42,7 @@ void main() {
       final addCategoryModelAsString =
           fixture('models/add/category/category_model.json');
       final addCategoryModelAsJSON =
-          jsonDecode(addCategoryModelAsString) as Map<String, dynamic>;
+          jsonDecode(addCategoryModelAsString);
       expect(categoryModel.toJSON(), equals(addCategoryModelAsJSON));
     });
   });

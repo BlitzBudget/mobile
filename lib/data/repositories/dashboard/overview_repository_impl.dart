@@ -7,9 +7,9 @@ import 'package:mobile_blitzbudget/domain/entities/response/overview_response.da
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/overview_repository.dart';
 
 class OverviewRepositoryImpl implements OverviewRepository {
-  final OverviewRemoteDataSource overviewRemoteDataSource;
-
   OverviewRepositoryImpl({@required this.overviewRemoteDataSource});
+
+  final OverviewRemoteDataSource overviewRemoteDataSource;
 
   @override
   Future<Either<Failure, OverviewResponse>> fetch(

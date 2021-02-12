@@ -14,22 +14,21 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attri
 import '../../datasource/local/authentication/user_attributes_local_data_source.dart';
 
 class UserAttributesRepositoryImpl implements UserAttributesRepository {
-  final UserAttributesLocalDataSource userAttributesLocalDataSource;
-  final UserAttributesRemoteDataSource userAttributesRemoteDataSource;
-
   UserAttributesRepositoryImpl(
       {@required this.userAttributesLocalDataSource,
       @required this.userAttributesRemoteDataSource});
 
+  final UserAttributesLocalDataSource userAttributesLocalDataSource;
+  final UserAttributesRemoteDataSource userAttributesRemoteDataSource;
+
   @override
   Future<Either<Failure, User>> readUserAttributes() async {
     try {
-      var userJSONEncoded =
+      final userJSONEncoded =
           await userAttributesLocalDataSource.readUserAttributes();
 
       /// Convert String to JSON and then Convert them back to User entity
-      var user =
-          User.fromJSON(jsonDecode(userJSONEncoded) as Map<String, dynamic>);
+      final user = UserModel.fromJSON(jsonDecode(userJSONEncoded));
       return Right(user);
     } on Exception catch (e) {
       return Left(GenericException.convertExceptionToFailure(e));
@@ -39,9 +38,9 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   @override
   Future<void> writeUserAttributes(UserResponse userResponse) async {
     /// Encode the User Model as String
-    var userJSONEncoded = jsonEncode(userResponse.user);
+    final userJSONEncoded = jsonEncode(userResponse.user);
 
-    return await userAttributesLocalDataSource
+    return userAttributesLocalDataSource
         .writeUserAttributes(userJSONEncoded);
   }
 
@@ -49,7 +48,7 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   Future<Either<Failure, void>> updateUserAttributes(User user) async {
     try {
       return Right(await userAttributesRemoteDataSource
-          .updateUserAttributes(user as UserModel));
+          .updateUserAttributes(user));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

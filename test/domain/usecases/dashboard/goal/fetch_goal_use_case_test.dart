@@ -9,7 +9,6 @@ import 'package:mobile_blitzbudget/data/model/date_model.dart';
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/entities/date.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
@@ -48,28 +47,13 @@ void main() {
   MockStartsWithDateRepository mockStartsWithDateRepository;
   MockUserAttributesRepository mockUserAttributesRepository;
 
-  final goalModelAsString =
-      fixture('models/get/goal/emergency_fund_model.json');
-  final goalModelAsJSON = jsonDecode(goalModelAsString) as Map<String, dynamic>;
-  final goal = GoalModel(
-      walletId: goalModelAsJSON['walletId'] as String,
-      goalId: goalModelAsJSON['goalId'] as String,
-      goalType: parseDynamicAsGoalType(goalModelAsJSON['goal_type']),
-      targetType: parseDynamicAsTargetType(goalModelAsJSON['target_type']),
-      monthlyContribution:
-          parseDynamicAsDouble(goalModelAsJSON['monthly_contribution']),
-      targetAmount: parseDynamicAsDouble(goalModelAsJSON['final_amount']),
-      targetDate: goalModelAsJSON['preferable_target_date'] as String,
-      targetId: goalModelAsJSON['target_id'] as String);
-
   final goalResponseModelAsString =
       fixture('responses/dashboard/goal/fetch_goal_info.json');
-  final goalResponseModelAsJSON =
-      jsonDecode(goalResponseModelAsString) as Map<String, dynamic>;
+  final goalResponseModelAsJSON = jsonDecode(goalResponseModelAsString);
 
   /// Convert goals from the response JSON to List<Goal>
   /// If Empty then return an empty object list
-  var goalResponseModel = convertToResponseModel(goalResponseModelAsJSON);
+  final goalResponseModel = convertToResponseModel(goalResponseModelAsJSON);
 
   setUp(() {
     mockGoalRepository = MockGoalRepository();
@@ -86,12 +70,12 @@ void main() {
   });
 
   group('Fetch', () {
-    var now = DateTime.now();
-    var dateString = now.toIso8601String();
-    final userId = 'User#2020-12-21T20:32:06.003Z';
+    final now = DateTime.now();
+    final dateString = now.toIso8601String();
+    const userId = 'User#2020-12-21T20:32:06.003Z';
 
     test('Success', () async {
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -100,7 +84,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      Either<Failure, GoalResponse> fetchGoalMonad =
+      final Either<Failure, GoalResponse> fetchGoalMonad =
           Right<Failure, GoalResponse>(goalResponseModel);
 
       when(mockGoalRepository.fetch(
@@ -121,9 +105,9 @@ void main() {
     });
 
     test('Default Wallet Empty: Failure', () async {
-      final user = User(userId: userId);
-      Either<Failure, User> userMonad = Right<Failure, User>(user);
-      Either<Failure, String> dateFailure =
+      const user = User(userId: userId);
+      const Either<Failure, User> userMonad = Right<Failure, User>(user);
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -134,7 +118,7 @@ void main() {
           .thenAnswer((_) => Future.value(dateString));
       when(mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
-      Either<Failure, GoalResponse> fetchGoalMonad =
+      final Either<Failure, GoalResponse> fetchGoalMonad =
           Right<Failure, GoalResponse>(goalResponseModel);
 
       when(mockGoalRepository.fetch(
@@ -155,9 +139,9 @@ void main() {
     });
 
     test('Default Wallet Empty && User Attribute Failure: Failure', () async {
-      Either<Failure, String> dateFailure =
+      final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
-      Either<Failure, User> userFailure =
+      final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -185,29 +169,26 @@ GoalResponseModel convertToResponseModel(
     Map<String, dynamic> goalResponseModelAsJSON) {
   /// Convert goals from the response JSON to List<Goal>
   /// If Empty then return an empty object list
-  var responseGoals = goalResponseModelAsJSON['Goal'] as List;
-  var convertedGoals = List<Goal>.from(responseGoals?.map<dynamic>(
-          (dynamic model) =>
-              GoalModel.fromJSON(model as Map<String, dynamic>)) ??
+  final responseGoals = goalResponseModelAsJSON['Goal'];
+  final convertedGoals = List<Goal>.from(responseGoals
+          ?.map<dynamic>((dynamic model) => GoalModel.fromJSON(model)) ??
       <Goal>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  var responseBankAccounts = goalResponseModelAsJSON['BankAccount'] as List;
-  var convertedBankAccounts = List<BankAccount>.from(
-      responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model as Map<String, dynamic>)) ??
-          <BankAccount>[]);
+  final responseBankAccounts = goalResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
+          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
+      <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  var responseDate = goalResponseModelAsJSON['Date'] as List;
-  var convertedDates = List<Date>.from(responseDate?.map<dynamic>(
-          (dynamic model) =>
-              DateModel.fromJSON(model as Map<String, dynamic>)) ??
+  final responseDate = goalResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate
+          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  dynamic responseWallet = goalResponseModelAsJSON['Wallet'];
+  final responseWallet = goalResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -215,12 +196,10 @@ GoalResponseModel convertToResponseModel(
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
+    convertedWallet = WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    var convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
-        (dynamic model) =>
-            WalletModel.fromJSON(model as Map<String, dynamic>)));
+    final convertedWallets = List<Wallet>.from(responseWallet
+        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

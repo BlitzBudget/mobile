@@ -9,10 +9,10 @@ import '../../fixtures/fixture_reader.dart';
 
 void main() {
   final dateModelAsString = fixture('models/get/date/date_model.json');
-  final dateModelAsJSON = jsonDecode(dateModelAsString) as Map<String, dynamic>;
+  final dateModelAsJSON = jsonDecode(dateModelAsString);
   final dateModel = DateModel(
-      walletId: dateModelAsJSON['walletId'] as String,
-      dateId: dateModelAsJSON['dateId'] as String,
+      walletId: dateModelAsJSON['walletId'],
+      dateId: dateModelAsJSON['dateId'],
       expenseTotal: parseDynamicAsDouble(dateModelAsJSON['expense_total']),
       incomeTotal: parseDynamicAsDouble(dateModelAsJSON['income_total']),
       balance: parseDynamicAsDouble(dateModelAsJSON['balance']));

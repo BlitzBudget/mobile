@@ -34,7 +34,7 @@ void main() {
   MockAccessTokenRepository mockAccessTokenRepository;
   MockAuthTokenRepository mockAuthTokenRepository;
   MockRefreshTokenHelper mockRefreshTokenHelper;
-  final authTokenString =
+  const authTokenString =
       'eyJraWQiOiJ5UG14MUFmdzFZa0U4ZHZ3YlgxcjUwMitmOTM1NGM1ZURZUmlcL3RxQ296VT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1OTMxMmUyYS00OGQ1LTQyOTctYWJiOC1lOGI1M2E0M2EyZGUiLCJldmVudF9pZCI6IjdlMTRmZGViLWMyODEtNDZlMC1hM2EwLTU4ZTM1ZDY0NzQyZCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2MDk3NzM0MjAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0xX2NqZkM4cU5pQiIsImV4cCI6MTYwOTc3NzAyMCwiaWF0IjoxNjA5NzczNDIwLCJqdGkiOiIxN2EzMjM0Yy0xMWZkLTRhNDItYWIzYi05MGVhM2VhOWI3M2IiLCJjbGllbnRfaWQiOiIyZnRsYnMxa2ZtcjJ1YjBlNHAxNXRzYWc4ZyIsInVzZXJuYW1lIjoibmFnYXJqdW5fbmFnZXNoQG91dGxvb2suY29tIn0.npmtjthQi53SSX9R2xRzuOEcsXXyD-YuQsdGwOoscbfg-f1HJ7-4SJH7KZFzUTTerQXli-82nlr9OeCoG7gWf0SSXim1O7pw2HiT5zLkmNETY-AH2uuTfJheqx85QHl55qiFfK9PfrP7JBoxb0YPYkGoquD1vR1rtEjXtXasYNknM8FyKxfr35fCW1CBFLdwPdp-5QKYh_ahIf3EVsDB7qD9-j3AvkYTAwSAhwuPAFRAcRTXRNc8XdX7sfIvFRcul4tVENdqNF5Im0bUPfWkuvaINbaRRL6gX_0Syjlfe4tzTNKXT3Xz4_CxqH5lSJOHwivcYecv7XQrDljewjNBCQ';
 
   setUp(() {
@@ -49,7 +49,7 @@ void main() {
         refreshTokenHelper: mockRefreshTokenHelper);
 
     /// Auth Token mocking
-    Either<Failure, String> authEither =
+    const Either<Failure, String> authEither =
         Right<Failure, String>(authTokenString);
     when(mockAuthTokenRepository.readAuthToken())
         .thenAnswer((_) => Future.value(authEither));
@@ -59,14 +59,14 @@ void main() {
     final addBudgetAsString =
         fixture('responses/dashboard/budget/add_budget_info.json');
     final addBudgetAsJSON =
-        jsonDecode(addBudgetAsString) as Map<String, dynamic>;
+        jsonDecode(addBudgetAsString);
     final budget = BudgetModel(
-        walletId: addBudgetAsJSON['body-json']['walletId'] as String,
-        budgetId: addBudgetAsJSON['body-json']['accountId'] as String,
+        walletId: addBudgetAsJSON['body-json']['walletId'],
+        budgetId: addBudgetAsJSON['body-json']['accountId'],
         categoryType: parseDynamicAsCategoryType(
             addBudgetAsJSON['body-json']['categoryType']),
         planned: parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-        dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor'] as String);
+        dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor']);
     test(
       'Valid POST call',
       () async {
@@ -130,7 +130,7 @@ void main() {
       'Empty Authorization Exception',
       () async {
         /// Auth Token mocking
-        Either<Failure, String> failureAuth =
+        final Either<Failure, String> failureAuth =
             Left<Failure, String>(EmptyResponseFailure());
         when(mockAuthTokenRepository.readAuthToken())
             .thenAnswer((_) => Future.value(failureAuth));
@@ -138,8 +138,8 @@ void main() {
         // assert
         expect(
             () => httpClientImpl.post(constants.budgetURL,
-                headers: constants.headers, body: null),
-            throwsA(TypeMatcher<EmptyAuthorizationTokenException>()));
+                headers: constants.headers),
+            throwsA(const TypeMatcher<EmptyAuthorizationTokenException>()));
         // Verify Auth token called
         verify(mockAuthTokenRepository.readAuthToken());
       },
@@ -149,15 +149,14 @@ void main() {
       'TokenExpiredException',
       () async {
         /// Throw 401 Error
-        when(mockNetworkHelper.post(constants.budgetURL,
-                body: null, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 401)));
 
         // assert
         expect(
             () => httpClientImpl.post(constants.budgetURL,
-                headers: constants.headers, body: null),
-            throwsA(TypeMatcher<TokenExpiredException>()));
+                headers: constants.headers),
+            throwsA(const TypeMatcher<TokenExpiredException>()));
         // Verify Auth token called
         verify(mockAuthTokenRepository.readAuthToken());
       },
@@ -167,15 +166,14 @@ void main() {
       'ClientErrorException',
       () async {
         /// Throw 400 Error
-        when(mockNetworkHelper.post(constants.budgetURL,
-                body: null, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 400)));
 
         // assert
         expect(
             () => httpClientImpl.post(constants.budgetURL,
-                headers: constants.headers, body: null),
-            throwsA(TypeMatcher<ClientErrorException>()));
+                headers: constants.headers),
+            throwsA(const TypeMatcher<ClientErrorException>()));
         // Verify Auth token called
         verify(mockAuthTokenRepository.readAuthToken());
       },
@@ -185,15 +183,14 @@ void main() {
       'ServerErrorException',
       () async {
         /// Throw 500 Error
-        when(mockNetworkHelper.post(constants.budgetURL,
-                body: null, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 500)));
 
         // assert
         expect(
             () => httpClientImpl.post(constants.budgetURL,
-                headers: constants.headers, body: null),
-            throwsA(TypeMatcher<ServerErrorException>()));
+                headers: constants.headers),
+            throwsA(const TypeMatcher<ServerErrorException>()));
         // Verify Auth token called
         verify(mockAuthTokenRepository.readAuthToken());
       },
@@ -203,15 +200,14 @@ void main() {
       'UnknownException',
       () async {
         /// Throw unknown Error
-        when(mockNetworkHelper.post(constants.budgetURL,
-                body: null, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 601)));
 
         // assert
         expect(
             () => httpClientImpl.post(constants.budgetURL,
-                headers: constants.headers, body: null),
-            throwsA(TypeMatcher<UnknownException>()));
+                headers: constants.headers),
+            throwsA(const TypeMatcher<UnknownException>()));
         // Verify Auth token called
         verify(mockAuthTokenRepository.readAuthToken());
       },
@@ -223,8 +219,7 @@ void main() {
       /// Throw 401 Error
       var callCount = 0;
       // First Response is 401, Second response is 200
-      when(mockNetworkHelper.post(constants.budgetURL,
-              body: null, headers: constants.headers, encoding: null))
+      when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
           .thenAnswer((_) async => [
                 Future.value(http.Response('', 401)),
                 Future.value(http.Response('', 200))
@@ -232,10 +227,9 @@ void main() {
 
       // assert
       await httpClientImpl.post(constants.budgetURL,
-          headers: constants.headers, body: null);
+          headers: constants.headers);
       // Verify if a mathod is called twice
-      verify(mockNetworkHelper.post(constants.budgetURL,
-              body: null, headers: constants.headers, encoding: null))
+      verify(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
           .called(2);
 
       // Verify Auth token called
@@ -248,8 +242,7 @@ void main() {
       /// Throw 401 Error
       var callCount = 0;
       // First Response is 401, Second response is 200
-      when(mockNetworkHelper.put(constants.budgetURL,
-              body: null, headers: constants.headers, encoding: null))
+      when(mockNetworkHelper.put(constants.budgetURL, headers: constants.headers))
           .thenAnswer((_) async => [
                 Future.value(http.Response('', 401)),
                 Future.value(http.Response('', 200))
@@ -257,10 +250,9 @@ void main() {
 
       // assert
       await httpClientImpl.put(constants.budgetURL,
-          headers: constants.headers, body: null);
+          headers: constants.headers);
       // Verify if a mathod is called twice
-      verify(mockNetworkHelper.put(constants.budgetURL,
-              body: null, headers: constants.headers, encoding: null))
+      verify(mockNetworkHelper.put(constants.budgetURL, headers: constants.headers))
           .called(2);
 
       // Verify Auth token called
@@ -273,8 +265,7 @@ void main() {
       /// Throw 401 Error
       var callCount = 0;
       // First Response is 401, Second response is 200
-      when(mockNetworkHelper.patch(constants.budgetURL,
-              body: null, headers: constants.headers, encoding: null))
+      when(mockNetworkHelper.patch(constants.budgetURL, headers: constants.headers))
           .thenAnswer((_) async => [
                 Future.value(http.Response('', 401)),
                 Future.value(http.Response('', 200))
@@ -282,10 +273,9 @@ void main() {
 
       // assert
       await httpClientImpl.patch(constants.budgetURL,
-          headers: constants.headers, body: null);
+          headers: constants.headers);
       // Verify if a mathod is called twice
-      verify(mockNetworkHelper.patch(constants.budgetURL,
-              body: null, headers: constants.headers, encoding: null))
+      verify(mockNetworkHelper.patch(constants.budgetURL, headers: constants.headers))
           .called(2);
 
       // Verify Auth token called

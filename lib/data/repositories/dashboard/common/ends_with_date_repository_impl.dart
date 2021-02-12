@@ -5,9 +5,9 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_wit
 import '../../../constants/constants.dart' as constants;
 
 class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
-  final EndsWithDateLocalDataSource endsWithDateLocalDataSource;
-
   EndsWithDateRepositoryImpl({@required this.endsWithDateLocalDataSource});
+
+  final EndsWithDateLocalDataSource endsWithDateLocalDataSource;
 
   @override
   Future<String> readEndsWithDate() async {
@@ -30,6 +30,6 @@ class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
 
   @override
   Future<void> writeEndsWithDate(String value) async {
-    return await endsWithDateLocalDataSource.writeEndsWithDate(value);
+    return endsWithDateLocalDataSource.writeEndsWithDate(value);
   }
 }

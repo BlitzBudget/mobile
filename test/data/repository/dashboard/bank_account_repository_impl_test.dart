@@ -31,14 +31,14 @@ void main() {
 
   group('Update BankAccounts', () {
     test('Should return FetchDataFailure ', () async {
-      var bankAccountModel = BankAccountModel();
+      const bankAccountModel = BankAccountModel();
       when(mockBankAccountRemoteDataSource.update(bankAccountModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var bankAccountReceived =
+      final bankAccountReceived =
           await bankAccountRepositoryImpl.update(bankAccountModel);
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           bankAccountReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockBankAccountRemoteDataSource.update(bankAccountModel));
       expect(bankAccountReceived.isLeft(), equals(true));
@@ -50,11 +50,11 @@ void main() {
     test('Should return FetchDataFailure ', () async {
       when(mockBankAccountRemoteDataSource.delete(account: '', walletId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
-      var bankAccountReceived =
+      final bankAccountReceived =
           await bankAccountRepositoryImpl.delete(account: '', walletId: '');
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           bankAccountReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockBankAccountRemoteDataSource.delete(account: '', walletId: ''));
       expect(bankAccountReceived.isLeft(), equals(true));
@@ -64,14 +64,14 @@ void main() {
 
   group('Add Bank Account', () {
     test('Should return FetchDataFailure ', () async {
-      var addBankAccountModel = BankAccountModel();
+      const addBankAccountModel = BankAccountModel();
       when(mockBankAccountRemoteDataSource.add(addBankAccountModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var bankAccountReceived =
+      final bankAccountReceived =
           await bankAccountRepositoryImpl.add(addBankAccountModel);
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           bankAccountReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockBankAccountRemoteDataSource.add(addBankAccountModel));
       expect(bankAccountReceived.isLeft(), equals(true));

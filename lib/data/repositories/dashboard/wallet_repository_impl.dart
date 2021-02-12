@@ -3,15 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/wallet_remote_data_source.dart';
-import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/wallet_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
 
 class WalletRepositoryImpl implements WalletRepository {
-  final WalletRemoteDataSource walletRemoteDataSource;
-
   WalletRepositoryImpl({@required this.walletRemoteDataSource});
+
+  final WalletRemoteDataSource walletRemoteDataSource;
 
   @override
   Future<Either<Failure, List<Wallet>>> fetch(
@@ -20,7 +19,7 @@ class WalletRepositoryImpl implements WalletRepository {
       @required String defaultWallet,
       @required String userId}) async {
     try {
-      WalletResponse walletResponse = await walletRemoteDataSource.fetch(
+      final WalletResponse walletResponse = await walletRemoteDataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
           defaultWallet: defaultWallet,
@@ -45,8 +44,7 @@ class WalletRepositoryImpl implements WalletRepository {
   @override
   Future<Either<Failure, void>> update(Wallet updateWallet) async {
     try {
-      return Right(
-          await walletRemoteDataSource.update(updateWallet as WalletModel));
+      return Right(await walletRemoteDataSource.update(updateWallet));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

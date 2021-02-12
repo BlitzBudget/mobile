@@ -35,16 +35,16 @@ void main() {
 
   group('Update Recurring Transactions', () {
     test('Should return FetchDataFailure ', () async {
-      var recurringTransactionModel = RecurringTransactionModel();
+      const recurringTransactionModel = RecurringTransactionModel();
       when(mockRecurringTransactionRemoteDataSource
               .update(recurringTransactionModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      var recurringTransactionReceived =
+      final recurringTransactionReceived =
           await recurringTransactionRepositoryImpl
               .update(recurringTransactionModel);
 
       /// Expect an exception to be thrown
-      var f = recurringTransactionReceived.fold<Failure>(
+      final f = recurringTransactionReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
       verify(mockRecurringTransactionRemoteDataSource
           .update(recurringTransactionModel));

@@ -3,7 +3,7 @@ import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
 class CategoryModel extends Category {
-  CategoryModel(
+  const CategoryModel(
       {final String categoryId,
       final String walletId,
       final String categoryName,

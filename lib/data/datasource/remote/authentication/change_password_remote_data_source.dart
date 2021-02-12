@@ -7,16 +7,16 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 
 import '../../../constants/constants.dart' as constants;
 
-abstract class ChangePasswordRemoteDataSource {
+mixin ChangePasswordRemoteDataSource {
   Future<void> changePassword(
       {String accessToken, String newPassword, String oldPassword});
 }
 
 class ChangePasswordRemoteDataSourceImpl
-    implements ChangePasswordRemoteDataSource {
-  final HTTPClient httpClient;
-
+    with ChangePasswordRemoteDataSource {
   ChangePasswordRemoteDataSourceImpl({@required this.httpClient});
+
+  final HTTPClient httpClient;
 
   /// Update User Attributes
   @override
@@ -32,7 +32,7 @@ class ChangePasswordRemoteDataSourceImpl
             headers: constants.headers)
         .then<void>((dynamic res) {
       developer
-          .log('User Attributes  ${res['UserAttributes'] as List<dynamic>}');
+          .log('User Attributes  ${res['UserAttributes']}');
     });
   }
 }

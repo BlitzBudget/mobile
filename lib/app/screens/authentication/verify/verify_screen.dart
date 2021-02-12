@@ -4,19 +4,19 @@ import '../../../widgets/dashboard_widget.dart';
 import 'components/body.dart';
 
 class VerifyScreen extends StatelessWidget {
-  static final title = 'Verify email';
-  final String email, password;
-  final bool useVerifyURL;
-  final bool showResendVerificationCode;
-
   /// In the constructor, require a Todo.
-  VerifyScreen(
+  const VerifyScreen(
       {Key key,
       @required this.email,
       @required this.password,
       this.useVerifyURL = true,
       this.showResendVerificationCode = true})
       : super(key: key);
+
+  static const title = 'Verify email';
+  final String email, password;
+  final bool useVerifyURL;
+  final bool showResendVerificationCode;
 
   /// ===========================================================================
   /// Non-shared code below because on iOS, the settings tab is nested inside of
@@ -25,7 +25,7 @@ class VerifyScreen extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text(title),
       ),
       body: Body(
           email: email,
@@ -37,7 +37,7 @@ class VerifyScreen extends StatelessWidget {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
+      navigationBar: const CupertinoNavigationBar(
         backgroundColor: Colors.transparent,
         border: Border(bottom: BorderSide(color: Colors.transparent)),
       ),

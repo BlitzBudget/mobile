@@ -27,19 +27,19 @@ void main() {
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
   final bankAccountModelAsJSON =
-      jsonDecode(bankAccountModelAsString) as Map<String, dynamic>;
+      jsonDecode(bankAccountModelAsString);
   final bankAccount = BankAccount(
-      walletId: bankAccountModelAsJSON['walletId'] as String,
-      accountId: bankAccountModelAsJSON['accountId'] as String,
+      walletId: bankAccountModelAsJSON['walletId'],
+      accountId: bankAccountModelAsJSON['accountId'],
       accountBalance:
           parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']),
-      bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String,
+      bankAccountName: bankAccountModelAsJSON['bank_account_name'],
       accountType:
           parseDynamicAsAccountType(bankAccountModelAsJSON['account_type']),
       accountSubType: parseDynamicAsAccountSubType(
           bankAccountModelAsJSON['account_sub_type']),
-      selectedAccount: bankAccountModelAsJSON['selected_account'] as bool,
-      linked: bankAccountModelAsJSON['linked'] as bool);
+      selectedAccount: bankAccountModelAsJSON['selected_account'],
+      linked: bankAccountModelAsJSON['linked']);
 
   setUp(() {
     mockBankAccountRepository = MockBankAccountRepository();
@@ -51,7 +51,7 @@ void main() {
 
   group('Update', () {
     test('Success', () async {
-      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
 
       when(mockBankAccountRepository.update(bankAccount))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockBankAccountRepository.update(bankAccount))
@@ -80,13 +80,13 @@ void main() {
 
   group('UpdateBankAccountName', () {
     final bankAccountModel = BankAccount(
-        walletId: bankAccountModelAsJSON['walletId'] as String,
-        accountId: bankAccountModelAsJSON['accountId'] as String,
-        bankAccountName: bankAccountModelAsJSON['bank_account_name'] as String);
+        walletId: bankAccountModelAsJSON['walletId'],
+        accountId: bankAccountModelAsJSON['accountId'],
+        bankAccountName: bankAccountModelAsJSON['bank_account_name']);
 
     test('Success', () async {
-      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -104,9 +104,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -127,9 +127,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -152,13 +152,13 @@ void main() {
 
   group('UpdateSelectedAccount', () {
     final bankAccountModel = BankAccount(
-        walletId: bankAccountModelAsJSON['walletId'] as String,
-        accountId: bankAccountModelAsJSON['accountId'] as String,
-        selectedAccount: bankAccountModelAsJSON['selected_account'] as bool);
+        walletId: bankAccountModelAsJSON['walletId'],
+        accountId: bankAccountModelAsJSON['accountId'],
+        selectedAccount: bankAccountModelAsJSON['selected_account']);
 
     test('Success', () async {
-      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -176,9 +176,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -199,9 +199,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -224,14 +224,14 @@ void main() {
 
   group('UpdateAccountBalance', () {
     final bankAccountModel = BankAccount(
-        walletId: bankAccountModelAsJSON['walletId'] as String,
-        accountId: bankAccountModelAsJSON['accountId'] as String,
+        walletId: bankAccountModelAsJSON['walletId'],
+        accountId: bankAccountModelAsJSON['accountId'],
         accountBalance:
             parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']));
 
     test('Success', () async {
-      Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
-      Either<Failure, String> dateStringMonad =
+      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -249,9 +249,9 @@ void main() {
     });
 
     test('Failure Response: Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -272,9 +272,9 @@ void main() {
     });
 
     test('Read Wallet Id Failure: Failure', () async {
-      Either<Failure, void> updateBankAccountMonad =
+      final Either<Failure, void> updateBankAccountMonad =
           Left<Failure, void>(FetchDataFailure());
-      Either<Failure, String> dateStringMonad =
+      final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())

@@ -31,11 +31,11 @@ void main() {
     test('Should return No Value in Cache Exception', () async {
       when(mockAccessTokenLocalDataSource.readAccessToken())
           .thenThrow(NoValueInCacheException());
-      var accessTokenReceived =
+      final accessTokenReceived =
           await accessTokenRepositoryImpl.readAccessToken();
 
       /// Expect an exception to be thrown
-      var f =
+      final f =
           accessTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockAccessTokenLocalDataSource.readAccessToken());
       expect(accessTokenReceived.isLeft(), equals(true));

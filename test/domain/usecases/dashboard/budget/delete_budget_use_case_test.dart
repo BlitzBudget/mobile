@@ -27,13 +27,13 @@ void main() {
   });
 
   group('Delete', () {
-    final budgetId = 'Budget#2021-01-06T12:51:31.215Z';
-    final walletId = 'Wallet#2020-12-21T20:35:49.295Z';
+    const budgetId = 'Budget#2021-01-06T12:51:31.215Z';
+    const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
 
     test('Success', () async {
-      Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
+      const Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
 
-      Either<Failure, String> defaultWalletMonad =
+      const Either<Failure, String> defaultWalletMonad =
           Right<Failure, String>(walletId);
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -50,9 +50,9 @@ void main() {
     });
 
     test('Failure', () async {
-      Either<Failure, String> defaultWalletMonad =
+      const  Either<Failure, String> defaultWalletMonad =
           Right<Failure, String>(walletId);
-      Either<Failure, void> deleteBudgetMonad =
+      final Either<Failure, void> deleteBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
@@ -69,7 +69,7 @@ void main() {
     });
 
     test('ReadDefaultWallet: Failure', () async {
-      Either<Failure, String> defaultWalletMonad =
+      final Either<Failure, String> defaultWalletMonad =
           Left<Failure, String>(EmptyResponseFailure());
 
       when(mockDefaultWalletRepository.readDefaultWallet())
