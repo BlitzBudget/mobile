@@ -41,8 +41,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addGoalModelAsString =
           fixture('models/add/goal/emergency_fund_model.json');
-      final addGoalModelAsJSON =
-          jsonDecode(addGoalModelAsString);
+      final addGoalModelAsJSON = jsonDecode(addGoalModelAsString);
       expect(goalModel.toJSON(), equals(addGoalModelAsJSON));
     });
   });

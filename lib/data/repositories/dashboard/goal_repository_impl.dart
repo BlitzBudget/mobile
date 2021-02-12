@@ -8,8 +8,6 @@ import 'package:mobile_blitzbudget/domain/entities/response/goal_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/goal_repository.dart';
 
 class GoalRepositoryImpl implements GoalRepository {
-  
-
   GoalRepositoryImpl({@required this.goalRemoteDataSource});
 
   final GoalRemoteDataSource goalRemoteDataSource;

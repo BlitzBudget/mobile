@@ -39,7 +39,8 @@ class UserModel extends User {
         'exportFileFormat': fileFormat
       };
 
-  static Map<String, dynamic> extractUserAttributes(List<dynamic> userAttributes) {
+  static Map<String, dynamic> extractUserAttributes(
+      List<dynamic> userAttributes) {
     final currentUserLocal = <String, dynamic>{};
 
     /// SUCCESS Scenarios

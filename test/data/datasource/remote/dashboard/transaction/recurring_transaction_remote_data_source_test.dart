@@ -28,8 +28,7 @@ void main() {
       () async {
         final updateAmountAsString = fixture(
             'responses/dashboard/recurring-transaction/update_recurring_transaction_amount_info.json');
-        final updateAmountAsJSON =
-            jsonDecode(updateAmountAsString);
+        final updateAmountAsJSON = jsonDecode(updateAmountAsString);
         final recurTransaction = RecurringTransactionModel(
             walletId: updateAmountAsJSON['body-json']['walletId'],
             recurringTransactionId: updateAmountAsJSON['body-json']
@@ -55,15 +54,12 @@ void main() {
       () async {
         final updateDescriptionAsString = fixture(
             'responses/dashboard/recurring-transaction/update_recurring_transaction_description_info.json');
-        final updateDescriptionAsJSON =
-            jsonDecode(updateDescriptionAsString);
+        final updateDescriptionAsJSON = jsonDecode(updateDescriptionAsString);
         final recurTransaction = RecurringTransactionModel(
-            walletId:
-                updateDescriptionAsJSON['body-json']['walletId'],
+            walletId: updateDescriptionAsJSON['body-json']['walletId'],
             recurringTransactionId: updateDescriptionAsJSON['body-json']
                 ['recurringTransactionId'],
-            description:
-                updateDescriptionAsJSON['body-json']['description']);
+            description: updateDescriptionAsJSON['body-json']['description']);
         // arrange
         when(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
                 body: jsonEncode(recurTransaction.toJSON()),
@@ -83,8 +79,7 @@ void main() {
       () async {
         final updateTagsAsString = fixture(
             'responses/dashboard/recurring-transaction/update_recurring_transaction_tags_info.json');
-        final updateTagsAsJSON =
-            jsonDecode(updateTagsAsString);
+        final updateTagsAsJSON = jsonDecode(updateTagsAsString);
         final tags = (updateTagsAsJSON['body-json']['tags'])
             ?.map<String>(parseDynamicAsString)
             ?.toList();

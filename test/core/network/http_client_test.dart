@@ -58,8 +58,7 @@ void main() {
   group('Attempt to make a valid API call', () {
     final addBudgetAsString =
         fixture('responses/dashboard/budget/add_budget_info.json');
-    final addBudgetAsJSON =
-        jsonDecode(addBudgetAsString);
+    final addBudgetAsJSON = jsonDecode(addBudgetAsString);
     final budget = BudgetModel(
         walletId: addBudgetAsJSON['body-json']['walletId'],
         budgetId: addBudgetAsJSON['body-json']['accountId'],
@@ -149,7 +148,8 @@ void main() {
       'TokenExpiredException',
       () async {
         /// Throw 401 Error
-        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL,
+                headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 401)));
 
         // assert
@@ -166,7 +166,8 @@ void main() {
       'ClientErrorException',
       () async {
         /// Throw 400 Error
-        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL,
+                headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 400)));
 
         // assert
@@ -183,7 +184,8 @@ void main() {
       'ServerErrorException',
       () async {
         /// Throw 500 Error
-        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL,
+                headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 500)));
 
         // assert
@@ -200,7 +202,8 @@ void main() {
       'UnknownException',
       () async {
         /// Throw unknown Error
-        when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
+        when(mockNetworkHelper.post(constants.budgetURL,
+                headers: constants.headers))
             .thenAnswer((_) async => Future.value(http.Response('', 601)));
 
         // assert
@@ -219,7 +222,8 @@ void main() {
       /// Throw 401 Error
       var callCount = 0;
       // First Response is 401, Second response is 200
-      when(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
+      when(mockNetworkHelper.post(constants.budgetURL,
+              headers: constants.headers))
           .thenAnswer((_) async => [
                 Future.value(http.Response('', 401)),
                 Future.value(http.Response('', 200))
@@ -229,7 +233,8 @@ void main() {
       await httpClientImpl.post(constants.budgetURL,
           headers: constants.headers);
       // Verify if a mathod is called twice
-      verify(mockNetworkHelper.post(constants.budgetURL, headers: constants.headers))
+      verify(mockNetworkHelper.post(constants.budgetURL,
+              headers: constants.headers))
           .called(2);
 
       // Verify Auth token called
@@ -242,17 +247,18 @@ void main() {
       /// Throw 401 Error
       var callCount = 0;
       // First Response is 401, Second response is 200
-      when(mockNetworkHelper.put(constants.budgetURL, headers: constants.headers))
+      when(mockNetworkHelper.put(constants.budgetURL,
+              headers: constants.headers))
           .thenAnswer((_) async => [
                 Future.value(http.Response('', 401)),
                 Future.value(http.Response('', 200))
               ][callCount++]);
 
       // assert
-      await httpClientImpl.put(constants.budgetURL,
-          headers: constants.headers);
+      await httpClientImpl.put(constants.budgetURL, headers: constants.headers);
       // Verify if a mathod is called twice
-      verify(mockNetworkHelper.put(constants.budgetURL, headers: constants.headers))
+      verify(mockNetworkHelper.put(constants.budgetURL,
+              headers: constants.headers))
           .called(2);
 
       // Verify Auth token called
@@ -265,7 +271,8 @@ void main() {
       /// Throw 401 Error
       var callCount = 0;
       // First Response is 401, Second response is 200
-      when(mockNetworkHelper.patch(constants.budgetURL, headers: constants.headers))
+      when(mockNetworkHelper.patch(constants.budgetURL,
+              headers: constants.headers))
           .thenAnswer((_) async => [
                 Future.value(http.Response('', 401)),
                 Future.value(http.Response('', 200))
@@ -275,7 +282,8 @@ void main() {
       await httpClientImpl.patch(constants.budgetURL,
           headers: constants.headers);
       // Verify if a mathod is called twice
-      verify(mockNetworkHelper.patch(constants.budgetURL, headers: constants.headers))
+      verify(mockNetworkHelper.patch(constants.budgetURL,
+              headers: constants.headers))
           .called(2);
 
       // Verify Auth token called

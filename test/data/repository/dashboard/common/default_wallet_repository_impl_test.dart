@@ -31,7 +31,8 @@ void main() {
     test('Throw a Failure when no value is found', () async {
       when(mockDefaultWalletLocalDataSourceImpl.readDefaultWallet())
           .thenThrow(NoValueInCacheException());
-      final defaultWallet = await defaultWalletRepositoryImpl.readDefaultWallet();
+      final defaultWallet =
+          await defaultWalletRepositoryImpl.readDefaultWallet();
       verify(mockDefaultWalletLocalDataSourceImpl.readDefaultWallet());
       final f =
           defaultWallet.fold((failure) => failure, (_) => GenericFailure());

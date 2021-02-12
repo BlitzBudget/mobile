@@ -37,8 +37,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addUserModelAsString =
           fixture('models/add/authentication/user_model.json');
-      final addUserModelAsJSON =
-          jsonDecode(addUserModelAsString);
+      final addUserModelAsJSON = jsonDecode(addUserModelAsString);
       expect(userModel.toJSON(), equals(addUserModelAsJSON));
     });
   });

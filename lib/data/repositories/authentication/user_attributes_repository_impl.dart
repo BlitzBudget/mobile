@@ -40,15 +40,14 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
     /// Encode the User Model as String
     final userJSONEncoded = jsonEncode(userResponse.user);
 
-    return userAttributesLocalDataSource
-        .writeUserAttributes(userJSONEncoded);
+    return userAttributesLocalDataSource.writeUserAttributes(userJSONEncoded);
   }
 
   @override
   Future<Either<Failure, void>> updateUserAttributes(User user) async {
     try {
-      return Right(await userAttributesRemoteDataSource
-          .updateUserAttributes(user));
+      return Right(
+          await userAttributesRemoteDataSource.updateUserAttributes(user));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

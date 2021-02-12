@@ -10,8 +10,7 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   final categoryModelAsString =
       fixture('models/get/category/category_model.json');
-  final categoryModelAsJSON =
-      jsonDecode(categoryModelAsString);
+  final categoryModelAsJSON = jsonDecode(categoryModelAsString);
   final categoryModel = CategoryModel(
       walletId: categoryModelAsJSON['walletId'],
       categoryId: categoryModelAsJSON['categoryId'],
@@ -41,8 +40,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addCategoryModelAsString =
           fixture('models/add/category/category_model.json');
-      final addCategoryModelAsJSON =
-          jsonDecode(addCategoryModelAsString);
+      final addCategoryModelAsJSON = jsonDecode(addCategoryModelAsString);
       expect(categoryModel.toJSON(), equals(addCategoryModelAsJSON));
     });
   });

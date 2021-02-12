@@ -131,8 +131,8 @@ class AddNewWalletButton extends StatelessWidget {
       color: secondaryColor,
       press: () {
         Navigator.pop(context);
-        Navigator.push<void>(
-            context, MaterialPageRoute(builder: (context) => const AddNewWallet()));
+        Navigator.push<void>(context,
+            MaterialPageRoute(builder: (context) => const AddNewWallet()));
       },
     );
   }

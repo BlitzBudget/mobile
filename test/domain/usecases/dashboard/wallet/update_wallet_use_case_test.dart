@@ -25,8 +25,7 @@ void main() {
   MockWalletRepository mockWalletRepository;
 
   final walletModelAsString = fixture('models/get/wallet/wallet_model.json');
-  final walletModelAsJSON =
-      jsonDecode(walletModelAsString);
+  final walletModelAsJSON = jsonDecode(walletModelAsString);
   final wallet = WalletModel(
       walletId: walletModelAsJSON['walletId'],
       userId: walletModelAsJSON['userId'],

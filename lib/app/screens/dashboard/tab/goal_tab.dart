@@ -103,8 +103,8 @@ class _GoalTabState extends State<GoalTab> {
         title: const Text(GoalTab.title),
       ),
       body: ListView.builder(
-          itemBuilder: _listBuilder,
-        ),
+        itemBuilder: _listBuilder,
+      ),
     );
   }
 

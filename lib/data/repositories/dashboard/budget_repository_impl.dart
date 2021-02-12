@@ -17,8 +17,7 @@ class BudgetRepositoryImpl extends BudgetRepository {
   @override
   Future<Either<Failure, void>> update(Budget updateBudget) async {
     try {
-      return Right(
-          await budgetRemoteDataSource.update(updateBudget));
+      return Right(await budgetRemoteDataSource.update(updateBudget));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

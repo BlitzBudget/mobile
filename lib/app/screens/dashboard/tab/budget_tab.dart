@@ -102,8 +102,8 @@ class _BudgetTabState extends State<BudgetTab> {
         title: const Text(BudgetTab.title),
       ),
       body: ListView.builder(
-          itemBuilder: _listBuilder,
-        ),
+        itemBuilder: _listBuilder,
+      ),
     );
   }
 

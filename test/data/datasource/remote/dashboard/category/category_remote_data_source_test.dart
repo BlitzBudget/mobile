@@ -22,8 +22,7 @@ void main() {
   group('Attempt to delete a category item', () {
     final deleteItemResponseAsString =
         fixture('responses/dashboard/common/delete_item_info.json');
-    final deleteItemResponseAsJSON =
-        jsonDecode(deleteItemResponseAsString);
+    final deleteItemResponseAsJSON = jsonDecode(deleteItemResponseAsString);
     const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
     const categoryId = 'Category#2021-01-04T15:20:36.079Z';
     test(

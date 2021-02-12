@@ -31,7 +31,8 @@ void main() {
     const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
 
     test('Success', () async {
-      const Either<Failure, void> addTransactionMonad = Right<Failure, void>('');
+      const Either<Failure, void> addTransactionMonad =
+          Right<Failure, void>('');
 
       const Either<Failure, String> defaultWalletMonad =
           Right<Failure, String>(walletId);

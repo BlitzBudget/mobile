@@ -12,13 +12,10 @@ mixin UserAttributesRemoteDataSource {
   Future<void> updateUserAttributes(UserModel userModel);
 }
 
-class UserAttributesRemoteDataSourceImpl
-    with UserAttributesRemoteDataSource {
- 
-
+class UserAttributesRemoteDataSourceImpl with UserAttributesRemoteDataSource {
   UserAttributesRemoteDataSourceImpl({@required this.httpClient});
 
-   final HTTPClient httpClient;
+  final HTTPClient httpClient;
 
   /// Update User Attributes
   @override
@@ -27,8 +24,7 @@ class UserAttributesRemoteDataSourceImpl
         .post(constants.userAttributesURL,
             body: jsonEncode(userModel.toJSON()), headers: constants.headers)
         .then<void>((dynamic res) {
-      developer
-          .log('User Attributes  ${res['UserAttributes']}');
+      developer.log('User Attributes  ${res['UserAttributes']}');
     });
   }
 }

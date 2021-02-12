@@ -19,8 +19,7 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   final budgetResponseModelAsString =
       fixture('responses/dashboard/budget/fetch_budget_info.json');
-  final budgetResponseModelAsJSON =
-      jsonDecode(budgetResponseModelAsString);
+  final budgetResponseModelAsJSON = jsonDecode(budgetResponseModelAsString);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
@@ -48,8 +47,7 @@ void main() {
       final budgetResponseModelWithEmptyBudgetAsString = fixture(
           'responses/partially-emtpy/budget/empty_budget_budget_info.json');
       final budgetResponseModelWithEmptyBudgetAsJSON =
-          jsonDecode(budgetResponseModelWithEmptyBudgetAsString)
-              ;
+          jsonDecode(budgetResponseModelWithEmptyBudgetAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -68,8 +66,7 @@ void main() {
       final budgetResponseModelWithEmptyBankAccountAsString = fixture(
           'responses/partially-emtpy/budget/empty_bank_account_budget_info.json');
       final budgetResponseModelWithEmptyBankAccountAsJSON =
-          jsonDecode(budgetResponseModelWithEmptyBankAccountAsString)
-              ;
+          jsonDecode(budgetResponseModelWithEmptyBankAccountAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -88,8 +85,7 @@ void main() {
       final budgetResponseModelWithEmptyCategoryAsString = fixture(
           'responses/partially-emtpy/budget/empty_category_budget_info.json');
       final budgetResponseModelWithEmptyCategoryAsJSON =
-          jsonDecode(budgetResponseModelWithEmptyCategoryAsString)
-               ;
+          jsonDecode(budgetResponseModelWithEmptyCategoryAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -108,8 +104,7 @@ void main() {
       final budgetResponseModelWithEmptyDateAsString = fixture(
           'responses/partially-emtpy/budget/empty_date_budget_info.json');
       final budgetResponseModelWithEmptyDateAsJSON =
-          jsonDecode(budgetResponseModelWithEmptyDateAsString)
-            ;
+          jsonDecode(budgetResponseModelWithEmptyDateAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -128,33 +123,29 @@ BudgetResponseModel convertToResponseModel(
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
   final responseBudgets = budgetResponseModelAsJSON['Budget'];
-  final convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
-          (dynamic model) =>
-              BudgetModel.fromJSON(model)) ??
+  final convertedBudgets = List<Budget>.from(responseBudgets
+          ?.map<dynamic>((dynamic model) => BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
   final responseCategories = budgetResponseModelAsJSON['Category'];
-  final convertedCategories = List<Category>.from(
-      responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model)) ??
-          <Category>[]);
+  final convertedCategories = List<Category>.from(responseCategories
+          ?.map<dynamic>((dynamic model) => CategoryModel.fromJSON(model)) ??
+      <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
   final responseBankAccounts = budgetResponseModelAsJSON['BankAccount'];
-  final convertedBankAccounts = List<BankAccount>.from(
-      responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model)) ??
-          <BankAccount>[]);
+  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
+          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
+      <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
   final responseDate = budgetResponseModelAsJSON['Date'];
-  final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
-          (dynamic model) =>
-              DateModel.fromJSON(model)) ??
+  final convertedDates = List<Date>.from(responseDate
+          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
       <Date>[]);
 
   final responseWallet = budgetResponseModelAsJSON['Wallet'];
@@ -165,12 +156,10 @@ BudgetResponseModel convertToResponseModel(
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet);
+    convertedWallet = WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
-        (dynamic model) =>
-            WalletModel.fromJSON(model)));
+    final convertedWallets = List<Wallet>.from(responseWallet
+        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

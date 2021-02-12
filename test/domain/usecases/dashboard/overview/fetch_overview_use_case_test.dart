@@ -53,8 +53,7 @@ void main() {
 
   final overviewResponseModelAsString =
       fixture('responses/dashboard/overview_info.json');
-  final overviewResponseModelAsJSON =
-      jsonDecode(overviewResponseModelAsString);
+  final overviewResponseModelAsJSON = jsonDecode(overviewResponseModelAsString);
 
   /// Convert overviews from the response JSON to List<Overview>
   /// If Empty then return an empty object list
@@ -175,45 +174,40 @@ OverviewResponseModel convertToResponseModel(
     Map<String, dynamic> overviewResponseModelAsJSON) {
   /// Convert transactions from the response JSON to List<Transaction>
   /// If Empty then return an empty object list
-  final  responseTransactions = overviewResponseModelAsJSON['Transaction'];
-  final  convertedTransactions = List<Transaction>.from(
-      responseTransactions?.map<dynamic>((dynamic model) =>
-              TransactionModel.fromJSON(model)) ??
-          <Transaction>[]);
+  final responseTransactions = overviewResponseModelAsJSON['Transaction'];
+  final convertedTransactions = List<Transaction>.from(responseTransactions
+          ?.map<dynamic>((dynamic model) => TransactionModel.fromJSON(model)) ??
+      <Transaction>[]);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  final  responseBudgets = overviewResponseModelAsJSON['Budget'];
-  final  convertedBudgets = List<Budget>.from(responseBudgets?.map<dynamic>(
-          (dynamic model) =>
-              BudgetModel.fromJSON(model)) ??
+  final responseBudgets = overviewResponseModelAsJSON['Budget'];
+  final convertedBudgets = List<Budget>.from(responseBudgets
+          ?.map<dynamic>((dynamic model) => BudgetModel.fromJSON(model)) ??
       <Budget>[]);
 
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
-  final  responseCategories = overviewResponseModelAsJSON['Category'];
-  final  convertedCategories = List<Category>.from(
-      responseCategories?.map<dynamic>((dynamic model) =>
-              CategoryModel.fromJSON(model)) ??
-          <Category>[]);
+  final responseCategories = overviewResponseModelAsJSON['Category'];
+  final convertedCategories = List<Category>.from(responseCategories
+          ?.map<dynamic>((dynamic model) => CategoryModel.fromJSON(model)) ??
+      <Category>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
-  final  responseBankAccounts = overviewResponseModelAsJSON['BankAccount'];
-  final  convertedBankAccounts = List<BankAccount>.from(
-      responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model)) ??
-          <BankAccount>[]);
+  final responseBankAccounts = overviewResponseModelAsJSON['BankAccount'];
+  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
+          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
+      <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
-  final  responseDate = overviewResponseModelAsJSON['Date'];
-  final  convertedDates = List<Date>.from(responseDate?.map<dynamic>(
-          (dynamic model) =>
-              DateModel.fromJSON(model)) ??
+  final responseDate = overviewResponseModelAsJSON['Date'];
+  final convertedDates = List<Date>.from(responseDate
+          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
       <Date>[]);
 
-  final  responseWallet = overviewResponseModelAsJSON['Wallet'];
+  final responseWallet = overviewResponseModelAsJSON['Wallet'];
   Wallet convertedWallet;
 
   /// Check if the response is a string or a list
@@ -221,12 +215,10 @@ OverviewResponseModel convertToResponseModel(
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet);
+    convertedWallet = WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    final  convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
-        (dynamic model) =>
-            WalletModel.fromJSON(model)));
+    final convertedWallets = List<Wallet>.from(responseWallet
+        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

@@ -81,19 +81,14 @@ void main() {
     void setUpMockHttpClientError500() {
       final userModelAsString =
           fixture('responses/authentication/login_info.json');
-      final userModelAsJSON =
-          jsonDecode(userModelAsString);
+      final userModelAsJSON = jsonDecode(userModelAsString);
       final userModel = UserResponseModel(
-          accessToken:
-              userModelAsJSON['AuthenticationResult']['AccessToken'],
-          authenticationToken:
-              userModelAsJSON['AuthenticationResult']['IdToken'],
-          refreshToken:
-              userModelAsJSON['AuthenticationResult']['RefreshToken'],
-          user: UserModel.fromJSON(
-              userModelAsJSON['UserAttributes']),
-          wallet: WalletModel.fromJSON(
-              userModelAsJSON['Wallet'][0]));
+          accessToken: userModelAsJSON['AuthenticationResult']['AccessToken'],
+          authenticationToken: userModelAsJSON['AuthenticationResult']
+              ['IdToken'],
+          refreshToken: userModelAsJSON['AuthenticationResult']['RefreshToken'],
+          user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
+          wallet: WalletModel.fromJSON(userModelAsJSON['Wallet'][0]));
       refreshTokenMonad = Right<Failure, String>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
@@ -118,8 +113,7 @@ void main() {
       // UserModel from Refresh Token Response
       final userModelAsString =
           fixture('responses/authentication/refresh_token_info.json');
-      final userModelAsJSON =
-          jsonDecode(userModelAsString);
+      final userModelAsJSON = jsonDecode(userModelAsString);
       final userModel = UserResponseModel.fromJSON(userModelAsJSON);
       // assert
       expect(() => refreshTokenHelper.refreshAuthToken(constants.headers, null),
@@ -137,19 +131,14 @@ void main() {
     void setUpMockHttpClientSuccess200() {
       final userModelAsString =
           fixture('responses/authentication/login_info.json');
-      final userModelAsJSON =
-          jsonDecode(userModelAsString);
+      final userModelAsJSON = jsonDecode(userModelAsString);
       final userModel = UserResponseModel(
-          accessToken:
-              userModelAsJSON['AuthenticationResult']['AccessToken'],
-          authenticationToken:
-              userModelAsJSON['AuthenticationResult']['IdToken'],
-          refreshToken:
-              userModelAsJSON['AuthenticationResult']['RefreshToken'],
-          user: UserModel.fromJSON(
-              userModelAsJSON['UserAttributes']),
-          wallet: WalletModel.fromJSON(
-              userModelAsJSON['Wallet'][0]));
+          accessToken: userModelAsJSON['AuthenticationResult']['AccessToken'],
+          authenticationToken: userModelAsJSON['AuthenticationResult']
+              ['IdToken'],
+          refreshToken: userModelAsJSON['AuthenticationResult']['RefreshToken'],
+          user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
+          wallet: WalletModel.fromJSON(userModelAsJSON['Wallet'][0]));
       refreshTokenMonad = Right<Failure, String>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
@@ -172,8 +161,7 @@ void main() {
       // UserModel from Refresh Token Response
       final userModelAsString =
           fixture('responses/authentication/refresh_token_info.json');
-      final userModelAsJSON =
-          jsonDecode(userModelAsString);
+      final userModelAsJSON = jsonDecode(userModelAsString);
       final userModel = UserResponseModel.fromJSON(userModelAsJSON);
       // assert
       await refreshTokenHelper.refreshAuthToken(constants.headers, null);

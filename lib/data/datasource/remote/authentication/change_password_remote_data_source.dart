@@ -12,8 +12,7 @@ mixin ChangePasswordRemoteDataSource {
       {String accessToken, String newPassword, String oldPassword});
 }
 
-class ChangePasswordRemoteDataSourceImpl
-    with ChangePasswordRemoteDataSource {
+class ChangePasswordRemoteDataSourceImpl with ChangePasswordRemoteDataSource {
   ChangePasswordRemoteDataSourceImpl({@required this.httpClient});
 
   final HTTPClient httpClient;
@@ -31,8 +30,7 @@ class ChangePasswordRemoteDataSourceImpl
             }),
             headers: constants.headers)
         .then<void>((dynamic res) {
-      developer
-          .log('User Attributes  ${res['UserAttributes']}');
+      developer.log('User Attributes  ${res['UserAttributes']}');
     });
   }
 }

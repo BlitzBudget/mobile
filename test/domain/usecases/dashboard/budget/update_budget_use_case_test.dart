@@ -25,8 +25,7 @@ void main() {
   MockDefaultWalletRepository mockDefaultWalletRepository;
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
-  final budgetModelAsJSON =
-      jsonDecode(budgetModelAsString);
+  final budgetModelAsJSON = jsonDecode(budgetModelAsString);
   final budget = Budget(
       walletId: budgetModelAsJSON['walletId'],
       budgetId: budgetModelAsJSON['budgetId'],

@@ -26,8 +26,7 @@ void main() {
 
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
-  final bankAccountModelAsJSON =
-      jsonDecode(bankAccountModelAsString);
+  final bankAccountModelAsJSON = jsonDecode(bankAccountModelAsString);
   final bankAccount = BankAccount(
       walletId: bankAccountModelAsJSON['walletId'],
       accountId: bankAccountModelAsJSON['accountId'],
@@ -51,7 +50,8 @@ void main() {
 
   group('Update', () {
     test('Success', () async {
-      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateBankAccountMonad =
+          Right<Failure, void>('');
 
       when(mockBankAccountRepository.update(bankAccount))
           .thenAnswer((_) => Future.value(updateBankAccountMonad));
@@ -85,7 +85,8 @@ void main() {
         bankAccountName: bankAccountModelAsJSON['bank_account_name']);
 
     test('Success', () async {
-      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateBankAccountMonad =
+          Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
@@ -157,7 +158,8 @@ void main() {
         selectedAccount: bankAccountModelAsJSON['selected_account']);
 
     test('Success', () async {
-      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateBankAccountMonad =
+          Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 
@@ -230,7 +232,8 @@ void main() {
             parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']));
 
     test('Success', () async {
-      const Either<Failure, void> updateBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateBankAccountMonad =
+          Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(bankAccountModel.walletId);
 

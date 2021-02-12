@@ -9,8 +9,7 @@ import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   final walletModelAsString = fixture('models/get/wallet/wallet_model.json');
-  final walletModelAsJSON =
-      jsonDecode(walletModelAsString);
+  final walletModelAsJSON = jsonDecode(walletModelAsString);
   final walletModel = WalletModel(
       walletId: walletModelAsJSON['walletId'],
       userId: walletModelAsJSON['userId'],
@@ -41,8 +40,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addWalletModelAsString =
           fixture('models/add/wallet/wallet_model.json');
-      final addWalletModelAsJSON =
-          jsonDecode(addWalletModelAsString);
+      final addWalletModelAsJSON = jsonDecode(addWalletModelAsString);
       expect(walletModel.toJSON(), equals(addWalletModelAsJSON));
     });
   });

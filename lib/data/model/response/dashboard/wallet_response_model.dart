@@ -12,9 +12,8 @@ class WalletResponseModel extends WalletResponse {
     /// Convert categories from the response JSON to List<Category>
     /// If Empty then return an empty object list
     final responseCategories = walletResponseModel['Wallet'];
-    final convertedWallet = List<Wallet>.from(responseCategories?.map<dynamic>(
-            (dynamic model) =>
-                WalletModel.fromJSON(model)) ??
+    final convertedWallet = List<Wallet>.from(responseCategories
+            ?.map<dynamic>((dynamic model) => WalletModel.fromJSON(model)) ??
         <Wallet>[]);
 
     return WalletResponseModel(wallets: convertedWallet);

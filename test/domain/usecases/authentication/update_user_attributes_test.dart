@@ -14,12 +14,12 @@ void main() {
   MockUserAttributesRepository mockUserAttributesRepository;
   UpdateUserAttributes updateUserAttributes;
   const user = User(
-        userId: 'User#2020-12-21T20:32:06.003Z',
-        email: 'nagarjun_nagesh@outlook.com',
-        locale: 'en-US',
-        name: 'Nagarjun',
-        familyName: 'Nagesh',
-        fileFormat: 'XLS');
+      userId: 'User#2020-12-21T20:32:06.003Z',
+      email: 'nagarjun_nagesh@outlook.com',
+      locale: 'en-US',
+      name: 'Nagarjun',
+      familyName: 'Nagesh',
+      fileFormat: 'XLS');
 
   setUp(() {
     mockUserAttributesRepository = MockUserAttributesRepository();
@@ -29,7 +29,7 @@ void main() {
 
   group('Success: UpdateUserAttributes', () {
     test('Should receive a successful response', () async {
-      const  eitherUserResponseMonad = Right<Failure, void>('');
+      const eitherUserResponseMonad = Right<Failure, void>('');
       when(mockUserAttributesRepository.updateUserAttributes(user))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
       final userAttributeResponse =

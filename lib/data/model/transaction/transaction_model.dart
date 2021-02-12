@@ -32,7 +32,8 @@ class TransactionModel extends Transaction {
 
   /// Map JSON transactions to List of object
   factory TransactionModel.fromJSON(Map<String, dynamic> transaction) {
-    final tags = transaction['tags']?.map<String>(parseDynamicAsString)?.toList();
+    final tags =
+        transaction['tags']?.map<String>(parseDynamicAsString)?.toList();
     return TransactionModel(
         transactionId: parseDynamicAsString(transaction['transactionId']),
         walletId: parseDynamicAsString(transaction['walletId']),

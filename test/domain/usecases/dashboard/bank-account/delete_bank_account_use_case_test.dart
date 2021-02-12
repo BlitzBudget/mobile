@@ -27,11 +27,12 @@ void main() {
   });
 
   group('Delete', () {
-    const  accountId = 'BankAccount#2021-01-06T12:51:31.215Z';
-    const  walletId = 'Wallet#2020-12-21T20:35:49.295Z';
+    const accountId = 'BankAccount#2021-01-06T12:51:31.215Z';
+    const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
 
     test('Success', () async {
-      const Either<Failure, void> addBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> addBankAccountMonad =
+          Right<Failure, void>('');
 
       const Either<Failure, String> defaultWalletMonad =
           Right<Failure, String>(walletId);

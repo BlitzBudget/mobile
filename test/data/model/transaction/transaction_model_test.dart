@@ -10,8 +10,7 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   final transactionModelAsString =
       fixture('models/get/transaction/transaction_model.json');
-  final transactionModelAsJSON =
-      jsonDecode(transactionModelAsString);
+  final transactionModelAsJSON = jsonDecode(transactionModelAsString);
   final tags = (transactionModelAsJSON['tags'])
       ?.map<String>(parseDynamicAsString)
       ?.toList();
@@ -50,8 +49,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addTransactionModelAsString =
           fixture('models/add/transaction/transaction_model.json');
-      final addTransactionModelAsJSON =
-          jsonDecode(addTransactionModelAsString);
+      final addTransactionModelAsJSON = jsonDecode(addTransactionModelAsString);
       expect(transactionModel.toJSON(), equals(addTransactionModelAsJSON));
     });
   });

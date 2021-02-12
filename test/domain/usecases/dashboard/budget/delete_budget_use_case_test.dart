@@ -50,7 +50,7 @@ void main() {
     });
 
     test('Failure', () async {
-      const  Either<Failure, String> defaultWalletMonad =
+      const Either<Failure, String> defaultWalletMonad =
           Right<Failure, String>(walletId);
       final Either<Failure, void> deleteBudgetMonad =
           Left<Failure, void>(FetchDataFailure());

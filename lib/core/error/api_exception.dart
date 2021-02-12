@@ -9,7 +9,7 @@ import '../failure/failure.dart';
 class APIException implements Exception {
   // Constructor to set response
   APIException({@required this.res});
-  
+
   dynamic res;
 
   ///

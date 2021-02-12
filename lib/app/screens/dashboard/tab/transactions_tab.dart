@@ -9,7 +9,7 @@ import 'transaction_detail_tab.dart';
 
 class TransactionsTab extends StatefulWidget {
   const TransactionsTab({Key key, this.androidDrawer}) : super(key: key);
-  
+
   static const title = 'Transactions';
   static const androidIcon = Icon(CupertinoIcons.news_solid);
   static const iosIcon = Icon(CupertinoIcons.news_solid);

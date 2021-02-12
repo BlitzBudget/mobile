@@ -19,8 +19,7 @@ class UpdateRecurringTransactionUseCase extends UseCase {
 
   Future<Either<Failure, void>> update(
       {@required RecurringTransaction updateRecurringTransaction}) async {
-    return recurringTransactionRepository
-        .update(updateRecurringTransaction);
+    return recurringTransactionRepository.update(updateRecurringTransaction);
   }
 
   /// Updates to New Amount

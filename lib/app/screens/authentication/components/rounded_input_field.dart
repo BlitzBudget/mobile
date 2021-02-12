@@ -4,7 +4,6 @@ import '../../../constants/constants.dart';
 import 'text_field_container.dart';
 
 class RoundedInputField extends StatelessWidget {
-  
   const RoundedInputField(
       {Key key,
       this.hintText,

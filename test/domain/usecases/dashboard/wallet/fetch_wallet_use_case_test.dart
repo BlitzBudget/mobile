@@ -42,8 +42,7 @@ void main() {
 
   final walletResponseModelAsString =
       fixture('responses/dashboard/wallet/fetch_wallet_info.json');
-  final walletResponseModelAsJSON =
-      jsonDecode(walletResponseModelAsString);
+  final walletResponseModelAsJSON = jsonDecode(walletResponseModelAsString);
 
   /// Convert wallets from the response JSON to List<Wallet>
   /// If Empty then return an empty object list
@@ -164,9 +163,8 @@ WalletResponseModel convertToResponseModel(
   /// Convert wallets from the response JSON to List<Wallet>
   /// If Empty then return an empty object list
   final responseWallets = walletResponseModelAsJSON['Wallet'];
-  final convertedWallets = List<Wallet>.from(responseWallets?.map<dynamic>(
-          (dynamic model) =>
-              WalletModel.fromJSON(model)) ??
+  final convertedWallets = List<Wallet>.from(responseWallets
+          ?.map<dynamic>((dynamic model) => WalletModel.fromJSON(model)) ??
       <Wallet>[]);
 
   final walletResponseModel = WalletResponseModel(wallets: convertedWallets);

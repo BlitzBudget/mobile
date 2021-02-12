@@ -225,7 +225,7 @@ class TransactionPlaceHolderTile extends StatelessWidget {
   const TransactionPlaceHolderTile({
     Key key,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

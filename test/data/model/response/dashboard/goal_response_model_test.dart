@@ -17,8 +17,7 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   final goalResponseModelAsString =
       fixture('responses/dashboard/goal/fetch_goal_info.json');
-  final goalResponseModelAsJSON =
-      jsonDecode(goalResponseModelAsString);
+  final goalResponseModelAsJSON = jsonDecode(goalResponseModelAsString);
 
   /// Convert goals from the response JSON to List<Goal>
   /// If Empty then return an empty object list
@@ -46,8 +45,7 @@ void main() {
       final goalResponseModelWithEmptyBankAccountAsString = fixture(
           'responses/partially-emtpy/goal/empty_bank_account_goal_info.json');
       final goalResponseModelWithEmptyBankAccountAsJSON =
-          jsonDecode(goalResponseModelWithEmptyBankAccountAsString)
-              ;
+          jsonDecode(goalResponseModelWithEmptyBankAccountAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -66,8 +64,7 @@ void main() {
       final goalResponseModelWithEmptyDateAsString =
           fixture('responses/partially-emtpy/goal/empty_date_goal_info.json');
       final goalResponseModelWithEmptyDateAsJSON =
-          jsonDecode(goalResponseModelWithEmptyDateAsString)
-              ;
+          jsonDecode(goalResponseModelWithEmptyDateAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -85,8 +82,7 @@ void main() {
       final goalResponseModelWithEmptyGoalAsString =
           fixture('responses/partially-emtpy/goal/empty_goal_goal_info.json');
       final goalResponseModelWithEmptyGoalAsJSON =
-          jsonDecode(goalResponseModelWithEmptyGoalAsString)
-              ;
+          jsonDecode(goalResponseModelWithEmptyGoalAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -104,8 +100,7 @@ void main() {
       final goalResponseModelWithEmptyWalletAsString =
           fixture('responses/partially-emtpy/goal/empty_wallet_goal_info.json');
       final goalResponseModelWithEmptyWalletAsJSON =
-          jsonDecode(goalResponseModelWithEmptyWalletAsString)
-              ;
+          jsonDecode(goalResponseModelWithEmptyWalletAsString);
 
       /// Convert budgets from the response JSON to List<Budget>
       /// If Empty then return an empty object list
@@ -124,25 +119,22 @@ GoalResponseModel convertToResponseModel(
   /// Convert categories from the response JSON to List<Category>
   /// If Empty then return an empty object list
   final responseGoals = goalResponseModelAsJSON['Goal'];
-  final convertedGoals = List<Goal>.from(responseGoals?.map<dynamic>(
-          (dynamic model) =>
-              GoalModel.fromJSON(model)) ??
+  final convertedGoals = List<Goal>.from(responseGoals
+          ?.map<dynamic>((dynamic model) => GoalModel.fromJSON(model)) ??
       <Goal>[]);
 
   /// Convert BankAccount from the response JSON to List<BankAccount>
   /// If Empty then return an empty object list
   final responseBankAccounts = goalResponseModelAsJSON['BankAccount'];
-  final convertedBankAccounts = List<BankAccount>.from(
-      responseBankAccounts?.map<dynamic>((dynamic model) =>
-              BankAccountModel.fromJSON(model)) ??
-          <BankAccount>[]);
+  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
+          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
+      <BankAccount>[]);
 
   /// Convert Dates from the response JSON to List<Date>
   /// If Empty then return an empty object list
   final responseDate = goalResponseModelAsJSON['Date'];
-  final convertedDates = List<Date>.from(responseDate?.map<dynamic>(
-          (dynamic model) =>
-              DateModel.fromJSON(model)) ??
+  final convertedDates = List<Date>.from(responseDate
+          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
       <Date>[]);
 
   final responseWallet = goalResponseModelAsJSON['Wallet'];
@@ -153,12 +145,10 @@ GoalResponseModel convertToResponseModel(
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet);
+    convertedWallet = WalletModel.fromJSON(responseWallet);
   } else if (responseWallet is List) {
-    final convertedWallets = List<Wallet>.from(responseWallet.map<dynamic>(
-        (dynamic model) =>
-            WalletModel.fromJSON(model)));
+    final convertedWallets = List<Wallet>.from(responseWallet
+        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
     convertedWallet = convertedWallets[0];
   }

@@ -8,7 +8,6 @@ abstract class AccessTokenLocalDataSource {
 }
 
 class AccessTokenLocalDataSourceImpl implements AccessTokenLocalDataSource {
-
   AccessTokenLocalDataSourceImpl({@required this.secureKeyValueStore});
 
   final SecureKeyValueStore secureKeyValueStore;

@@ -10,8 +10,7 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
-  final bankAccountModelAsJSON =
-      jsonDecode(bankAccountModelAsString);
+  final bankAccountModelAsJSON = jsonDecode(bankAccountModelAsString);
   final bankAccountModel = BankAccountModel(
       walletId: bankAccountModelAsJSON['walletId'],
       accountId: bankAccountModelAsJSON['accountId'],
@@ -45,8 +44,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addBankAccountModelAsString =
           fixture('models/add/bank-account/bank_account_model.json');
-      final addBankAccountModelAsJSON =
-          jsonDecode(addBankAccountModelAsString);
+      final addBankAccountModelAsJSON = jsonDecode(addBankAccountModelAsString);
       expect(bankAccountModel.toJSON(), equals(addBankAccountModelAsJSON));
     });
   });

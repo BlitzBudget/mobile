@@ -27,8 +27,7 @@ void main() {
 
   final transactionModelAsString =
       fixture('models/get/transaction/transaction_model.json');
-  final transactionModelAsJSON =
-      jsonDecode(transactionModelAsString);
+  final transactionModelAsJSON = jsonDecode(transactionModelAsString);
   final tags = (transactionModelAsJSON['tags'])
       ?.map<String>(parseDynamicAsString)
       ?.toList();
@@ -57,7 +56,8 @@ void main() {
 
   group('Update Transaction', () {
     test('Success', () async {
-      const Either<Failure, void> updateTransactionMonad = Right<Failure, void>('');
+      const Either<Failure, void> updateTransactionMonad =
+          Right<Failure, void>('');
 
       when(mockTransactionRepository.update(transaction))
           .thenAnswer((_) => Future.value(updateTransactionMonad));

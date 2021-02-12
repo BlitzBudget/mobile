@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'key_value_store.dart';
 
 class KeyValueStoreImpl implements KeyValueStore {
-  
-
   KeyValueStoreImpl({@required this.sharedPreferences});
 
   final SharedPreferences sharedPreferences;

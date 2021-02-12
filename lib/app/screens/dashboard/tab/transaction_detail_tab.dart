@@ -8,7 +8,8 @@ import '../../../widgets/dashboard_widget.dart';
 /// On Android, this page sits at the top of your app. On iOS, this page is on
 /// top of the transactions tab's content but is below the tab bar itself.
 class TransactionDetailTab extends StatelessWidget {
-  const TransactionDetailTab({Key key, this.id, this.transaction, this.color}) : super(key: key);
+  const TransactionDetailTab({Key key, this.id, this.transaction, this.color})
+      : super(key: key);
 
   final int id;
   final String transaction;

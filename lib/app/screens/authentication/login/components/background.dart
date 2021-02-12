@@ -7,7 +7,7 @@ class Background extends StatelessWidget {
   }) : super(key: key);
 
   final Widget child;
-  
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

@@ -40,7 +40,8 @@ void main() {
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
-      final f = overviewReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      final f =
+          overviewReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockOverviewRemoteDataSource.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(overviewReceived.isLeft(), equals(true));

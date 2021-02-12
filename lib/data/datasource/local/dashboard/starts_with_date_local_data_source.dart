@@ -9,7 +9,6 @@ abstract class StartsWithDateLocalDataSource {
 
 class StartsWithDateLocalDataSourceImpl
     implements StartsWithDateLocalDataSource {
-
   StartsWithDateLocalDataSourceImpl({@required this.keyValueStore});
 
   final KeyValueStore keyValueStore;

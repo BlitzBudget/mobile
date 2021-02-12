@@ -51,8 +51,7 @@ void main() {
   MockUserAttributesRepository mockUserAttributesRepository;
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
-  final budgetModelAsJSON =
-      jsonDecode(budgetModelAsString);
+  final budgetModelAsJSON = jsonDecode(budgetModelAsString);
   final budget = Budget(
       walletId: budgetModelAsJSON['walletId'],
       budgetId: budgetModelAsJSON['budgetId'],
@@ -64,8 +63,7 @@ void main() {
 
   final budgetResponseModelAsString =
       fixture('responses/dashboard/budget/fetch_budget_info.json');
-  final budgetResponseModelAsJSON =
-      jsonDecode(budgetResponseModelAsString);
+  final budgetResponseModelAsJSON = jsonDecode(budgetResponseModelAsString);
 
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list

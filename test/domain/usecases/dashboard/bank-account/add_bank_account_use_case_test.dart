@@ -20,8 +20,7 @@ void main() {
 
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
-  final bankAccountModelAsJSON =
-      jsonDecode(bankAccountModelAsString);
+  final bankAccountModelAsJSON = jsonDecode(bankAccountModelAsString);
   final bankAccount = BankAccount(
       walletId: bankAccountModelAsJSON['walletId'],
       accountId: bankAccountModelAsJSON['accountId'],
@@ -43,7 +42,8 @@ void main() {
 
   group('Add', () {
     test('Success', () async {
-      const Either<Failure, void> addBankAccountMonad = Right<Failure, void>('');
+      const Either<Failure, void> addBankAccountMonad =
+          Right<Failure, void>('');
 
       when(mockBankAccountRepository.add(bankAccount))
           .thenAnswer((_) => Future.value(addBankAccountMonad));

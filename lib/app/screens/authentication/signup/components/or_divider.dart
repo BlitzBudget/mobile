@@ -3,9 +3,8 @@ import '../../../../constants/constants.dart';
 
 class OrDivider extends StatelessWidget {
   /// In the constructor, require a Todo.
-  const OrDivider({Key key})
-      : super(key: key);
-  
+  const OrDivider({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

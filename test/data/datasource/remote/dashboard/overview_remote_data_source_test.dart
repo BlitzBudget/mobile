@@ -23,12 +23,10 @@ void main() {
     test('Should fetch all data for overview with wallet id', () async {
       final fetchOverviewAsString =
           fixture('responses/dashboard/overview_info.json');
-      final fetchOverviewAsJSON =
-          jsonDecode(fetchOverviewAsString);
+      final fetchOverviewAsJSON = jsonDecode(fetchOverviewAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet =
-          fetchOverviewAsJSON['BankAccount'][0]['walletId'];
+      final defaultWallet = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
       String userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -58,12 +56,10 @@ void main() {
     test('Should fetch all data for overview with user Id', () async {
       final fetchOverviewAsString =
           fixture('responses/dashboard/overview_info.json');
-      final fetchOverviewAsJSON =
-          jsonDecode(fetchOverviewAsString);
+      final fetchOverviewAsJSON = jsonDecode(fetchOverviewAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final userId =
-          fetchOverviewAsJSON['BankAccount'][0]['walletId'];
+      final userId = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
       String defaultWallet;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,

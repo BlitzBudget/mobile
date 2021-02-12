@@ -47,8 +47,7 @@ void main() {
       categoryName: recurringTransactionModelAsJSON['category_name'],
       category: recurringTransactionModelAsJSON['category'],
       tags: tags,
-      nextScheduled:
-          recurringTransactionModelAsJSON['next_scheduled'],
+      nextScheduled: recurringTransactionModelAsJSON['next_scheduled'],
       creationDate: recurringTransactionModelAsJSON['creation_date']);
 
   setUp(() {
@@ -94,8 +93,7 @@ void main() {
   group('UpdateAmount', () {
     final recurringTransactionModel = RecurringTransaction(
         walletId: recurringTransactionModelAsJSON['walletId'],
-        recurringTransactionId:
-            recurringTransactionModelAsJSON['accountId'],
+        recurringTransactionId: recurringTransactionModelAsJSON['accountId'],
         amount:
             parseDynamicAsDouble(recurringTransactionModelAsJSON['amount']));
 
@@ -174,8 +172,7 @@ void main() {
   group('UpdateDescription', () {
     final recurringTransactionModel = RecurringTransaction(
         walletId: recurringTransactionModelAsJSON['walletId'],
-        recurringTransactionId:
-            recurringTransactionModelAsJSON['accountId'],
+        recurringTransactionId: recurringTransactionModelAsJSON['accountId'],
         description: recurringTransactionModelAsJSON['description']);
 
     test('Success', () async {
@@ -253,8 +250,7 @@ void main() {
   group('UpdateAccountId', () {
     final recurringTransactionModel = RecurringTransaction(
         walletId: recurringTransactionModelAsJSON['walletId'],
-        recurringTransactionId:
-            recurringTransactionModelAsJSON['accountId'],
+        recurringTransactionId: recurringTransactionModelAsJSON['accountId'],
         accountId: recurringTransactionModelAsJSON['account']);
 
     test('Success', () async {
@@ -332,8 +328,7 @@ void main() {
   group('UpdateCategoryId', () {
     final recurringTransactionModel = RecurringTransaction(
         walletId: recurringTransactionModelAsJSON['walletId'],
-        recurringTransactionId:
-            recurringTransactionModelAsJSON['accountId'],
+        recurringTransactionId: recurringTransactionModelAsJSON['accountId'],
         category: recurringTransactionModelAsJSON['category']);
 
     test('Success', () async {
@@ -411,8 +406,7 @@ void main() {
   group('UpdateRecurrence', () {
     final recurringTransactionModel = RecurringTransaction(
         walletId: recurringTransactionModelAsJSON['walletId'],
-        recurringTransactionId:
-            recurringTransactionModelAsJSON['accountId'],
+        recurringTransactionId: recurringTransactionModelAsJSON['accountId'],
         recurrence: parseDynamicAsRecurrence(
             recurringTransactionModelAsJSON['recurrence']));
 
@@ -491,8 +485,7 @@ void main() {
   group('UpdateTags', () {
     final recurringTransactionModel = RecurringTransaction(
         walletId: recurringTransactionModelAsJSON['walletId'],
-        recurringTransactionId:
-            recurringTransactionModelAsJSON['accountId'],
+        recurringTransactionId: recurringTransactionModelAsJSON['accountId'],
         tags: tags);
 
     test('Success', () async {

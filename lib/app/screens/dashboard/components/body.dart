@@ -131,8 +131,10 @@ class _AndroidDrawer extends StatelessWidget {
           GestureDetector(
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push<void>(context,
-                    MaterialPageRoute(builder: (context) => const ProfileDialog()));
+                Navigator.push<void>(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileDialog()));
               },
               child: DrawerHeader(
                 decoration: const BoxDecoration(color: Colors.green),
@@ -175,8 +177,8 @@ class _AndroidDrawer extends StatelessWidget {
             title: const Text(GoalTab.title),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(
-                  context, MaterialPageRoute(builder: (context) => const GoalTab()));
+              Navigator.push<void>(context,
+                  MaterialPageRoute(builder: (context) => const GoalTab()));
             },
           ),
 
@@ -190,8 +192,10 @@ class _AndroidDrawer extends StatelessWidget {
             title: const Text(SettingsDialog.title),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => const SettingsDialog()));
+              Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsDialog()));
             },
           ),
         ],

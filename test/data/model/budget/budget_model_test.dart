@@ -9,8 +9,7 @@ import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
-  final budgetModelAsJSON =
-      jsonDecode(budgetModelAsString);
+  final budgetModelAsJSON = jsonDecode(budgetModelAsString);
   final budgetModel = BudgetModel(
       walletId: budgetModelAsJSON['walletId'],
       budgetId: budgetModelAsJSON['budgetId'],
@@ -39,8 +38,7 @@ void main() {
     test('Should return a JSON map containing the proper data', () async {
       final addBudgetModelAsString =
           fixture('models/add/budget/budget_model.json');
-      final addBudgetModelAsJSON =
-          jsonDecode(addBudgetModelAsString);
+      final addBudgetModelAsJSON = jsonDecode(addBudgetModelAsString);
       expect(budgetModel.toJSON(), equals(addBudgetModelAsJSON));
     });
   });

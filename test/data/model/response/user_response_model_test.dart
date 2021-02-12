@@ -12,16 +12,11 @@ void main() {
   final userModelAsString = fixture('responses/authentication/login_info.json');
   final userModelAsJSON = jsonDecode(userModelAsString);
   final userModel = UserResponseModel(
-      accessToken:
-          userModelAsJSON['AuthenticationResult']['AccessToken'],
-      authenticationToken:
-          userModelAsJSON['AuthenticationResult']['IdToken'],
-      refreshToken:
-          userModelAsJSON['AuthenticationResult']['RefreshToken'],
-      user: UserModel.fromJSON(
-          userModelAsJSON['UserAttributes']),
-      wallet: WalletModel.fromJSON(
-          userModelAsJSON['Wallet'][0]));
+      accessToken: userModelAsJSON['AuthenticationResult']['AccessToken'],
+      authenticationToken: userModelAsJSON['AuthenticationResult']['IdToken'],
+      refreshToken: userModelAsJSON['AuthenticationResult']['RefreshToken'],
+      user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
+      wallet: WalletModel.fromJSON(userModelAsJSON['Wallet'][0]));
   test(
     'Should be a subclass of UserModel entity',
     () async {
@@ -47,14 +42,11 @@ void main() {
       final userModelWithEmtpyWalletConverted =
           UserResponseModel.fromJSON(userModelWithEmtpyWalletAsJSON);
       final userModelWithEmptyWallet = UserResponseModel(
-          accessToken:
-              userModelAsJSON['AuthenticationResult']['AccessToken'],
-          authenticationToken:
-              userModelAsJSON['AuthenticationResult']['IdToken'],
-          refreshToken:
-              userModelAsJSON['AuthenticationResult']['RefreshToken'],
-          user: UserModel.fromJSON(
-              userModelAsJSON['UserAttributes']),
+          accessToken: userModelAsJSON['AuthenticationResult']['AccessToken'],
+          authenticationToken: userModelAsJSON['AuthenticationResult']
+              ['IdToken'],
+          refreshToken: userModelAsJSON['AuthenticationResult']['RefreshToken'],
+          user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
           wallet: WalletModel.fromJSON(const {}));
       expect(
           userModelWithEmtpyWalletConverted, equals(userModelWithEmptyWallet));

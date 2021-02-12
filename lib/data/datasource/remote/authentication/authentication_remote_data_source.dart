@@ -74,14 +74,12 @@ class AuthenticationRemoteDataSourceImpl
           /// Navigate user to signup screen
           throw UserNotFoundException();
         } else if (includesStr(
-                array: res['errorMessage'],
-                value: _userNotConfirmedException)
+                array: res['errorMessage'], value: _userNotConfirmedException)
             .getOrElse(() => false)) {
           /// Navigate to the verification screen
           throw UserNotConfirmedException();
         } else if (includesStr(
-                array: res['errorMessage'],
-                value: _notAuthorizedException)
+                array: res['errorMessage'], value: _notAuthorizedException)
             .getOrElse(() => false)) {
           /// Exception to handle invalid credentials
           throw NotAuthorizedException();

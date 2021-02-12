@@ -102,8 +102,8 @@ class _OverviewTabState extends State<OverviewTab> {
         title: const Text(OverviewTab.title),
       ),
       body: ListView.builder(
-          itemBuilder: _listBuilder,
-        ),
+        itemBuilder: _listBuilder,
+      ),
     );
   }
 
