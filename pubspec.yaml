@@ -8,7 +8,6 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.0
   dartz: ^0.9.2
-  # Swap the connectivity package for this
   data_connection_checker: ^0.3.4
   email_validator: ^2.0.1
   english_words: ^4.0.0
@@ -21,7 +20,6 @@ dependencies:
   http: ^0.13.3
   intl: ^0.17.0
   mdi: ^4.0.0
-  # Mocktio
   mockito: ^5.0.7
   shared_preferences: ^2.0.5
 
@@ -31,7 +29,7 @@ dev_dependencies:
     sdk: flutter
   pedantic: ^1.9.0
 
-  # For information on the generic Dart part of this file, see the
+# For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
