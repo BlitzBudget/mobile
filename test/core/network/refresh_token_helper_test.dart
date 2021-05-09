@@ -98,7 +98,7 @@ void main() {
       final refreshTokenResponseString =
           fixture('responses/authentication/refresh_token_info.json');
 
-      when(mockHttpClient.post(refreshTokenURL,
+      when(mockHttpClient.post(Uri.parse(refreshTokenURL),
               body: jsonEncode(
                   {'refreshToken': refreshTokenMonad.getOrElse(null)}),
               headers: headers))
@@ -148,7 +148,7 @@ void main() {
       final refreshTokenResponseString =
           fixture('responses/authentication/refresh_token_info.json');
 
-      when(mockHttpClient.post(refreshTokenURL,
+      when(mockHttpClient.post(Uri.parse(refreshTokenURL),
               body: jsonEncode(
                   {'refreshToken': refreshTokenMonad.getOrElse(null)}),
               headers: headers))
@@ -167,7 +167,7 @@ void main() {
       await refreshTokenHelper.refreshAuthToken(constants.headers, null);
 
       verify(mockRefreshTokenRepository.readRefreshToken());
-      verify(mockHttpClient.post(refreshTokenURL,
+      verify(mockHttpClient.post(Uri.parse(refreshTokenURL),
           body: jsonEncode({'refreshToken': refreshTokenMonad.getOrElse(null)}),
           headers: headers));
       verify(mockAuthTokenRepository.writeAuthToken(userModel));

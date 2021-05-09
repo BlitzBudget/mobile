@@ -49,7 +49,7 @@ void main() {
       await networkHelper.post(constants.budgetURL,
           body: jsonEncode(''), headers: constants.headers);
 
-      verify(mockHttpClient.post(constants.budgetURL,
+      verify(mockHttpClient.post(Uri.parse(constants.budgetURL),
           body: jsonEncode(''), headers: constants.headers));
     });
   });
@@ -62,7 +62,7 @@ void main() {
       await networkHelper.patch(constants.budgetURL,
           body: jsonEncode(''), headers: constants.headers);
 
-      verify(mockHttpClient.patch(constants.budgetURL,
+      verify(mockHttpClient.patch(Uri.parse(constants.budgetURL),
           body: jsonEncode(''), headers: constants.headers));
     });
   });
@@ -75,7 +75,7 @@ void main() {
       await networkHelper.put(constants.budgetURL,
           body: jsonEncode(''), headers: constants.headers);
 
-      verify(mockHttpClient.put(constants.budgetURL,
+      verify(mockHttpClient.put(Uri.parse(constants.budgetURL),
           body: jsonEncode(''), headers: constants.headers));
     });
   });

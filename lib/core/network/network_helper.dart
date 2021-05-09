@@ -19,7 +19,7 @@ class NetworkHelper {
   Future<http.Response> post(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     if (await networkInfo.isConnected) {
-      return httpClient.post(url,
+      return httpClient.post(Uri.parse(url),
           body: body, headers: headers, encoding: encoding);
     } else {
       throw NoNetworkConnectionException();
@@ -30,7 +30,7 @@ class NetworkHelper {
   Future<http.Response> put(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     if (await networkInfo.isConnected) {
-      return httpClient.put(url,
+      return httpClient.put(Uri.parse(url),
           body: body, headers: headers, encoding: encoding);
     } else {
       throw NoNetworkConnectionException();
@@ -41,7 +41,7 @@ class NetworkHelper {
   Future<http.Response> patch(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     if (await networkInfo.isConnected) {
-      return httpClient.patch(url,
+      return httpClient.patch(Uri.parse(url),
           body: body, headers: headers, encoding: encoding);
     } else {
       throw NoNetworkConnectionException();

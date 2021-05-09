@@ -181,13 +181,13 @@ class LogOutButton extends StatelessWidget {
               title: const Text(logoutConfirmation),
               content: _logoutMessage,
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () => () async {
                     await _logoutAndRedirect(context);
                   },
                   child: const Text(logoutButton),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text(logoutCancel),
                 ),
