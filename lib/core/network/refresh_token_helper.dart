@@ -47,7 +47,7 @@ class RefreshTokenHelper {
     }
 
     return httpClient
-        .post(refreshTokenURL,
+        .post(Uri.parse(refreshTokenURL),
             body: jsonEncode({'refreshToken': refreshToken.getOrElse(null)}),
             headers: headers,
             encoding: encoding)
