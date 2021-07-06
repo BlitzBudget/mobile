@@ -38,7 +38,8 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   @override
   Future<void> writeUserAttributes(UserResponse userResponse) async {
     /// Encode the User Model as String
-    final userJSONEncoded = jsonEncode(userResponse.user);
+    final UserModel encodedUser = userResponse.user;
+    final userJSONEncoded = jsonEncode(encodedUser.toJSON());
 
     return userAttributesLocalDataSource.writeUserAttributes(userJSONEncoded);
   }

@@ -117,7 +117,7 @@ flutter upgrade
 
 * Flutter Coverage Test
 flutter test --coverage
-genhtml coverage/lcov.info -o coverage/html
+genhtml coverage/lcov.info -o coverage/
 open coverage/index.html
 
 ### Dart Analyser
