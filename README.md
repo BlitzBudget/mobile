@@ -115,6 +115,10 @@ flutter format .
 * Upgrade Flutter Package
 flutter upgrade
 
+* Flutter Coverage Test
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+open coverage/index.html
 
 ### Dart Analyser
 dart analyze
