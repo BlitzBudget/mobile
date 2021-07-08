@@ -32,6 +32,5 @@
       "total_debt_balance": 0,
       "wallet_balance": 200,
       "total_asset_balance": 200
-    },
-    "BankAccount": []
+    }
   }

@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 import '../../../widgets/dashboard_widget.dart';
 
@@ -29,8 +28,8 @@ class _GoalTabState extends State<GoalTab> {
 
   @override
   void initState() {
-    colors = getRandomColors(_itemsLength);
-    titles = List.generate(_itemsLength, (index) => generateRandomHeadline());
+    titles =
+        List.generate(_itemsLength, (index) => 'generateRandomHeadline())');
     contents =
         List.generate(_itemsLength, (index) => lorem(paragraphs: 1, words: 24));
     super.initState();
@@ -60,7 +59,7 @@ class _GoalTabState extends State<GoalTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundColor: colors[index],
+                  backgroundColor: Colors.black,
                   child: Text(
                     titles[index].substring(0, 1),
                     style: const TextStyle(color: Colors.white),
