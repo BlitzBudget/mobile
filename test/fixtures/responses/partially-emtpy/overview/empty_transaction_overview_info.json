@@ -6,7 +6,6 @@
       "wallet_balance": -2,
       "total_asset_balance": -2
     },
-    "Transaction": [],
     "BankAccount": [
       {
         "account_balance": -2,

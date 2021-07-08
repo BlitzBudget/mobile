@@ -9,10 +9,8 @@ class ForgotPassword extends UseCase {
 
   final AuthenticationRepository authenticationRepository;
 
-  Future<Either<Failure, void>> forgotPassword(
-      {@required String email, @required String password}) async {
-    return authenticationRepository.forgotPassword(
-        email: email, password: password);
+  Future<Either<Failure, void>> forgotPassword({@required String email}) async {
+    return authenticationRepository.forgotPassword(email: email);
   }
 }
 /*

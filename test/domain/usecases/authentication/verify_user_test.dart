@@ -67,4 +67,16 @@ void main() {
           useVerifyURL: true));
     });
   });
+
+  group('Success: resendVerificationCode', () {
+    test('Should receive a successful response', () async {
+      const eitherUserResponseMonad = Right<Failure, void>('');
+      when(mockAuthenticationRepository.resendVerificationCode(email))
+          .thenAnswer((_) => Future.value(eitherUserResponseMonad));
+      final verifyUserResponse =
+          await verifyUser.resendVerificationCode(email: email);
+      expect(verifyUserResponse.isRight(), true);
+      verify(mockAuthenticationRepository.resendVerificationCode(email));
+    });
+  });
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 import '../../../widgets/dashboard_widget.dart';
 import '../full-screen-dialog/wallet_dialog.dart';
@@ -24,9 +23,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
   static const _itemsLength = 50;
 
   final _androidRefreshKey = GlobalKey<RefreshIndicatorState>();
-
-  List<MaterialColor> colors;
-  List<String> transactionNames;
+  String transactionNames;
 
   @override
   void initState() {
@@ -35,8 +32,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
   }
 
   void _setData() {
-    colors = getRandomColors(_itemsLength);
-    transactionNames = getRandomNames(_itemsLength);
+    transactionNames = 'getRandomNames(_itemsLength)';
   }
 
   Future<void> _refreshData() {
@@ -55,8 +51,8 @@ class _TransactionsTabState extends State<TransactionsTab> {
     /// Show a slightly different color palette. Show poppy-ier colors on iOS
     /// due to lighter contrasting bars and tone it down on Android.
     final color = defaultTargetPlatform == TargetPlatform.iOS
-        ? colors[index]
-        : colors[index].shade400;
+        ? Colors.black
+        : Colors.black;
 
     return SafeArea(
       top: false,
