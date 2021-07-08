@@ -18,6 +18,5 @@ abstract class AuthenticationRepository {
 
   Future<Either<Failure, void>> resendVerificationCode(String email);
 
-  Future<Either<Failure, void>> forgotPassword(
-      {@required String email, @required String password});
+  Future<Either<Failure, void>> forgotPassword({@required String email});
 }

@@ -92,7 +92,7 @@ void main() {
   });
 
   group('Update User Attributes', () {
-    test('Should return Fetch Data Failure', () async {
+    test('Should return Success', () async {
       const userModel = UserModel();
       when(mockUserAttributesRemoteDataSource.updateUserAttributes(userModel))
           .thenThrow(EmptyAuthorizationTokenException());
@@ -106,6 +106,17 @@ void main() {
           mockUserAttributesRemoteDataSource.updateUserAttributes(userModel));
       expect(userAttributesReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
+    });
+
+    test('Should return Fetch Data Failure', () async {
+      const userModel = UserModel();
+      final userAttributesReceived =
+          await userAttributesRepositoryImpl.updateUserAttributes(userModel);
+
+      /// Expect an exception to be thrown
+      verify(
+          mockUserAttributesRemoteDataSource.updateUserAttributes(userModel));
+      expect(userAttributesReceived.isRight(), equals(true));
     });
   });
 

@@ -24,34 +24,28 @@ void main() {
   group('Success: ForgotPassword', () {
     test('Should receive a successful response', () async {
       const userEmail = 'nagarjun_nagesh@outlook.com';
-      const userPassword = 'password';
       const Either<Failure, String> authenticationMonad =
           Right<Failure, String>(authenticationToken);
-      when(mockAuthenticationRepository.forgotPassword(
-              email: userEmail, password: userPassword))
+      when(mockAuthenticationRepository.forgotPassword(email: userEmail))
           .thenAnswer((_) => Future.value(authenticationMonad));
-      final forgotPasswordResponse = await forgotPassword.forgotPassword(
-          email: userEmail, password: userPassword);
+      final forgotPasswordResponse =
+          await forgotPassword.forgotPassword(email: userEmail);
       expect(forgotPasswordResponse.isRight(), equals(true));
-      verify(mockAuthenticationRepository.forgotPassword(
-          email: userEmail, password: userPassword));
+      verify(mockAuthenticationRepository.forgotPassword(email: userEmail));
     });
   });
 
   group('Error: ForgotPassword', () {
     test('Should receive a failure response', () async {
       const userEmail = 'nagarjun_nagesh@outlook.com';
-      const userPassword = 'password';
       final Either<Failure, String> authenticationMonad =
           Left<Failure, String>(EmptyResponseFailure());
-      when(mockAuthenticationRepository.forgotPassword(
-              email: userEmail, password: userPassword))
+      when(mockAuthenticationRepository.forgotPassword(email: userEmail))
           .thenAnswer((_) => Future.value(authenticationMonad));
-      final forgotPasswordResponse = await forgotPassword.forgotPassword(
-          email: userEmail, password: userPassword);
+      final forgotPasswordResponse =
+          await forgotPassword.forgotPassword(email: userEmail);
       expect(forgotPasswordResponse.isLeft(), equals(true));
-      verify(mockAuthenticationRepository.forgotPassword(
-          email: userEmail, password: userPassword));
+      verify(mockAuthenticationRepository.forgotPassword(email: userEmail));
     });
   });
 }
