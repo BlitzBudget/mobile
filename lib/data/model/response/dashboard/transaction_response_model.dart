@@ -45,8 +45,10 @@ class TransactionResponseModel extends TransactionResponse {
     /// Convert transactions from the response JSON to List<Transaction>
     /// If Empty then return an empty object list
     final responseTransactions = transactionResponseModel['Transaction'];
-    final convertedTransactions = List<Transaction>.from(responseTransactions
-        ?.map<dynamic>((dynamic model) => TransactionModel.fromJSON(model)));
+    final convertedTransactions = List<Transaction>.from(
+        responseTransactions?.map<dynamic>(
+                (dynamic model) => TransactionModel.fromJSON(model)) ??
+            <Transaction>[]);
 
     /// Convert recurring transactions from the response JSON to List<RecurringTransaction>
     /// If Empty then return an empty object list

@@ -51,15 +51,14 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
   @override
   Future<void> delete({@required String walletId, @required String account}) {
     // JSON for Get wallet [_jsonForGetWallet]
-    final _jsonForDeleteCategory = <String, dynamic>{
+    final _jsonForDeleteAccount = <String, dynamic>{
       'walletId': walletId,
       'account': account
     };
 
     return httpClient
         .post(constants.deleteBankAccountURL,
-            body: jsonEncode(_jsonForDeleteCategory),
-            headers: constants.headers)
+            body: jsonEncode(_jsonForDeleteAccount), headers: constants.headers)
         .then((dynamic res) {
       debugPrint('The response from the delete bankAccount is $res');
     });

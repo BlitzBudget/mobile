@@ -510,4 +510,76 @@ void main() {
       verifyNever(mockTransactionRepository.update(transactionModel));
     });
   });
+
+  group('UpdateDateMeantFor', () {
+    final transactionModel = Transaction(
+        walletId: transactionModelAsJSON['walletId'],
+        transactionId: transactionModelAsJSON['accountId'],
+        dateMeantFor: transactionModelAsJSON['date_meant_for']);
+
+    test('Success', () async {
+      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(transactionModel.walletId);
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockTransactionRepository.update(transactionModel))
+          .thenAnswer((_) => Future.value(updateBudgetMonad));
+
+      final transactionResponse =
+          await updateTransactionUseCase.updateDateMeantFor(
+              transactionId: transactionModel.transactionId,
+              dateMeantFor: transactionModel.dateMeantFor);
+
+      expect(transactionResponse.isRight(), true);
+      verify(mockTransactionRepository.update(transactionModel));
+    });
+
+    test('Failure Response: Failure', () async {
+      final Either<Failure, void> updateBudgetMonad =
+          Left<Failure, void>(FetchDataFailure());
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(transactionModel.walletId);
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockTransactionRepository.update(transactionModel))
+          .thenAnswer((_) => Future.value(updateBudgetMonad));
+
+      final transactionResponse =
+          await updateTransactionUseCase.updateDateMeantFor(
+              transactionId: transactionModel.transactionId,
+              dateMeantFor: transactionModel.dateMeantFor);
+      final f = transactionResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
+      expect(f, equals(FetchDataFailure()));
+      expect(transactionResponse.isLeft(), true);
+      verify(mockTransactionRepository.update(transactionModel));
+    });
+
+    test('Read Wallet Id Failure: Failure', () async {
+      final Either<Failure, void> updateBudgetMonad =
+          Left<Failure, void>(FetchDataFailure());
+      final Either<Failure, String> dateStringMonad =
+          Left<Failure, String>(FetchDataFailure());
+
+      when(mockDefaultWalletRepository.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
+      when(mockTransactionRepository.update(transactionModel))
+          .thenAnswer((_) => Future.value(updateBudgetMonad));
+
+      final transactionResponse =
+          await updateTransactionUseCase.updateDateMeantFor(
+              transactionId: transactionModel.transactionId,
+              dateMeantFor: transactionModel.dateMeantFor);
+      final f = transactionResponse.fold(
+          (failure) => failure, (_) => GenericFailure());
+
+      expect(f, equals(EmptyResponseFailure()));
+      expect(transactionResponse.isLeft(), true);
+      verifyNever(mockTransactionRepository.update(transactionModel));
+    });
+  });
 }

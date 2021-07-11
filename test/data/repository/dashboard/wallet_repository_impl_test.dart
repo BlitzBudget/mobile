@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/wallet_remote_data_source.dart';
+import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/wallet_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../../fixtures/fixture_reader.dart';
 
 class MockWalletRemoteDataSource extends Mock
     implements WalletRemoteDataSource {}
@@ -73,6 +78,24 @@ void main() {
       /// Expect an exception to be thrown
       final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(mockWalletRemoteDataSource.delete(userId: '', walletId: ''));
+      expect(walletReceived.isLeft(), equals(true));
+      expect(f, equals(FetchDataFailure()));
+    });
+  });
+
+  group('Update Wallet', () {
+    test('Should return FetchDataFailure ', () async {
+      final userModelAsString =
+          fixture('responses/authentication/login_info.json');
+      final userModelAsJSON = jsonDecode(userModelAsString);
+      final walletModel = WalletModel.fromJSON(userModelAsJSON['Wallet'][0]);
+      when(mockWalletRemoteDataSource.update(walletModel))
+          .thenThrow(EmptyAuthorizationTokenException());
+      final walletReceived = await walletRepositoryImpl.update(walletModel);
+
+      /// Expect an exception to be thrown
+      final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      verify(mockWalletRemoteDataSource.update(walletModel));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

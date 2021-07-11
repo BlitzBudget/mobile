@@ -12,6 +12,7 @@ class MockDefaultWalletLocalDataSourceImpl extends Mock
 void main() {
   MockDefaultWalletLocalDataSourceImpl mockDefaultWalletLocalDataSourceImpl;
   DefaultWalletRepositoryImpl defaultWalletRepositoryImpl;
+  const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
 
   setUp(() {
     mockDefaultWalletLocalDataSourceImpl =
@@ -37,6 +38,13 @@ void main() {
       final f =
           defaultWallet.fold((failure) => failure, (_) => GenericFailure());
       expect(f, equals(EmptyResponseFailure()));
+    });
+  });
+
+  group('Write Default Wallet', () {
+    test('Throw a Failure when no value is found', () async {
+      await defaultWalletRepositoryImpl.writeDefaultWallet(walletId);
+      verify(mockDefaultWalletLocalDataSourceImpl.writeDefaultWallet(walletId));
     });
   });
 }

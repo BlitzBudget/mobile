@@ -168,6 +168,44 @@ void main() {
       expect(transactionResponseModelWithEmptyTransactionFromJSON,
           equals(transactionResponseModelWithEmptyTransactionConverted));
     });
+
+    test(
+        'Should return a valid model when the JSON is parsed with wallet list data',
+        () async {
+      final transactionResponseModelWithWalletAsList = fixture(
+          'responses/dashboard/transaction/with-wallet-data/wallet_as_list.json');
+      final transactionResponseModelWithWalletAsListJSON =
+          jsonDecode(transactionResponseModelWithWalletAsList);
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithWalletAsListConverted =
+          convertToResponseModel(transactionResponseModelWithWalletAsListJSON);
+      final transactionResponseModelWithWalletAsListFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithWalletAsListJSON);
+      expect(transactionResponseModelWithWalletAsListFromJSON,
+          equals(transactionResponseModelWithWalletAsListConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with wallet map data',
+        () async {
+      final transactionResponseModelWithWalletAsMap = fixture(
+          'responses/dashboard/transaction/with-wallet-data/wallet_as_map.json');
+      final transactionResponseModelWithWalletAsMapJSON =
+          jsonDecode(transactionResponseModelWithWalletAsMap);
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final transactionResponseModelWithWalletAsMapConverted =
+          convertToResponseModel(transactionResponseModelWithWalletAsMapJSON);
+      final transactionResponseModelWithWalletAsMapFromJSON =
+          TransactionResponseModel.fromJSON(
+              transactionResponseModelWithWalletAsMapJSON);
+      expect(transactionResponseModelWithWalletAsMapFromJSON,
+          equals(transactionResponseModelWithWalletAsMapConverted));
+    });
   });
 }
 
@@ -177,7 +215,8 @@ TransactionResponseModel convertToResponseModel(
   /// If Empty then return an empty object list
   final responseTransactions = transactionResponseModelAsJSON['Transaction'];
   final convertedTransactions = List<Transaction>.from(responseTransactions
-      ?.map<dynamic>((dynamic model) => TransactionModel.fromJSON(model)));
+          ?.map<dynamic>((dynamic model) => TransactionModel.fromJSON(model)) ??
+      <Transaction>[]);
 
   /// Convert recurring transactions from the response JSON to List<RecurringTransaction>
   /// If Empty then return an empty object list
