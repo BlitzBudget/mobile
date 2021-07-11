@@ -66,4 +66,21 @@ void main() {
       expect(f, equals(FetchDataFailure()));
     });
   });
+
+  group('Add Transactions', () {
+    test('Should return FetchDataFailure ', () async {
+      const transactionModel = TransactionModel();
+      when(mockTransactionRemoteDataSource.update(transactionModel))
+          .thenThrow(EmptyAuthorizationTokenException());
+      final transactionReceived =
+          await transactionRepositoryImpl.add(transactionModel);
+
+      /// Expect an exception to be thrown
+      final f =
+          transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
+      verify(mockTransactionRemoteDataSource.update(transactionModel));
+      expect(transactionReceived.isLeft(), equals(true));
+      expect(f, equals(FetchDataFailure()));
+    });
+  });
 }

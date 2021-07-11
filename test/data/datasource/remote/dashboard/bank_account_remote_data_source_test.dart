@@ -107,4 +107,29 @@ void main() {
       },
     );
   });
+
+  group('Attempt to delete a bankAccounts item', () {
+    final deleteAccountInfoResponseAsString = fixture(
+        'responses/dashboard/bank-account/delete_bank_account_info.json');
+    final deleteAccountResponseAsJSON =
+        jsonDecode(deleteAccountInfoResponseAsString);
+    const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
+    const account = 'BankAccount#2021-01-04T15:20:36.079Z';
+    test(
+      'Should delete the appropriate wallet item when invoked',
+      () async {
+        // arrange
+        when(mockHTTPClientImpl.post(constants.deleteBankAccountURL,
+                body: jsonEncode({'walletId': walletId, 'account': account}),
+                headers: constants.headers))
+            .thenAnswer((_) async => deleteAccountResponseAsJSON);
+        // act
+        await dataSource.delete(walletId: walletId, account: account);
+        // assert
+        verify(mockHTTPClientImpl.post(constants.deleteBankAccountURL,
+            body: jsonEncode({'walletId': walletId, 'account': account}),
+            headers: constants.headers));
+      },
+    );
+  });
 }

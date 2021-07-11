@@ -111,6 +111,42 @@ void main() {
       expect(goalResponseModelWithEmptyWalletFromJSON,
           equals(goalResponseModelWithEmptyWalletConverted));
     });
+
+    test(
+        'Should return a valid model when the JSON is parsed with wallet list data',
+        () async {
+      final goalResponseModelWithWalletAsList = fixture(
+          'responses/dashboard/goal/with-wallet-data/wallet_as_list.json');
+      final goalResponseModelWithWalletAsListJSON =
+          jsonDecode(goalResponseModelWithWalletAsList);
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final goalResponseModelWithWalletAsListConverted =
+          convertToResponseModel(goalResponseModelWithWalletAsListJSON);
+      final goalResponseModelWithWalletAsListFromJSON =
+          GoalResponseModel.fromJSON(goalResponseModelWithWalletAsListJSON);
+      expect(goalResponseModelWithWalletAsListFromJSON,
+          equals(goalResponseModelWithWalletAsListConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with wallet list data',
+        () async {
+      final goalResponseModelWithWalletAsMap = fixture(
+          'responses/dashboard/goal/with-wallet-data/wallet_as_map.json');
+      final goalResponseModelWithWalletAsMapJSON =
+          jsonDecode(goalResponseModelWithWalletAsMap);
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final goalResponseModelWithWalletAsMapConverted =
+          convertToResponseModel(goalResponseModelWithWalletAsMapJSON);
+      final goalResponseModelWithWalletAsMapFromJSON =
+          GoalResponseModel.fromJSON(goalResponseModelWithWalletAsMapJSON);
+      expect(goalResponseModelWithWalletAsMapFromJSON,
+          equals(goalResponseModelWithWalletAsMapConverted));
+    });
   });
 }
 

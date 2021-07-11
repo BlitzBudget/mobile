@@ -115,6 +115,42 @@ void main() {
       expect(budgetResponseModelWithEmptyDateFromJSON,
           equals(budgetResponseModelWithEmptyDateConverted));
     });
+
+    test(
+        'Should return a valid model when the JSON is parsed with wallet list data',
+        () async {
+      final budgetResponseModelWithEmptyDateAsString = fixture(
+          'responses/dashboard/budget/with-wallet-data/wallet_as_list.json');
+      final budgetResponseModelWithEmptyDateAsJSON =
+          jsonDecode(budgetResponseModelWithEmptyDateAsString);
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final budgetResponseModelWithEmptyDateConverted =
+          convertToResponseModel(budgetResponseModelWithEmptyDateAsJSON);
+      final budgetResponseModelWithEmptyDateFromJSON =
+          BudgetResponseModel.fromJSON(budgetResponseModelWithEmptyDateAsJSON);
+      expect(budgetResponseModelWithEmptyDateFromJSON,
+          equals(budgetResponseModelWithEmptyDateConverted));
+    });
+
+    test(
+        'Should return a valid model when the JSON is parsed with wallet list data',
+        () async {
+      final budgetResponseModelWithEmptyDateAsString = fixture(
+          'responses/dashboard/budget/with-wallet-data/wallet_as_map.json');
+      final budgetResponseModelWithEmptyDateAsJSON =
+          jsonDecode(budgetResponseModelWithEmptyDateAsString);
+
+      /// Convert budgets from the response JSON to List<Budget>
+      /// If Empty then return an empty object list
+      final budgetResponseModelWithEmptyDateConverted =
+          convertToResponseModel(budgetResponseModelWithEmptyDateAsJSON);
+      final budgetResponseModelWithEmptyDateFromJSON =
+          BudgetResponseModel.fromJSON(budgetResponseModelWithEmptyDateAsJSON);
+      expect(budgetResponseModelWithEmptyDateFromJSON,
+          equals(budgetResponseModelWithEmptyDateConverted));
+    });
   });
 }
 
