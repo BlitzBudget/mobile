@@ -14,9 +14,13 @@ dependencies:
   equatable: ^2.0.0
   flutter:
     sdk: flutter
+  # Bloc Architecture
+  flutter_bloc: ^7.0.1
   flutter_lorem: ^2.0.0
   flutter_secure_storage: ^4.2.0
   flutter_svg: ^0.22.0
+  # service locator
+  get_it: ^7.1.0
   http: ^0.13.3
   intl: ^0.17.0
   mdi: ^4.0.0

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'app/constants/constants.dart';
 import 'app/routes.dart';
-import 'domain/repositories/authentication/auth_token_repository.dart';
+import 'injection_container.dart' as dependency_injection;
 
 /// Global Navigation Key
 ///
@@ -12,11 +12,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AuthTokenRepository authTokenRepository;
-
-  /// Read value
-  final token = await authTokenRepository.readAuthToken();
-  final homeRoute = token.isLeft() ? initialRoute : dashboardRoute;
+  await dependency_injection.init();
+  final homeRoute = initialRoute;
   runApp(BlitzBudgetApp(
     homeRoute: homeRoute,
   ));

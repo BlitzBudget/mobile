@@ -151,6 +151,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
   @override
   Widget build(context) {
+    debugPrint('The Settings dialog has been clicked');
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,

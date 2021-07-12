@@ -23,3 +23,5 @@ const String logoutTitle = 'Log out';
 const String logoutConfirmation = 'Log out?';
 const String logoutButton = 'Logout';
 const String logoutCancel = 'Cancel';
+
+const String INVALID_INPUT_FAILURE_MESSAGE = 'Email or Password is incorrect.';

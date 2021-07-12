@@ -234,6 +234,8 @@ class LogOutButton extends StatelessWidget {
 
   @override
   Widget build(context) {
+    debugPrint('The Profile dialog has been clicked');
+
     return PlatformWidget(
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
