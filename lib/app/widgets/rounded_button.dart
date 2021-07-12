@@ -7,7 +7,7 @@ class RoundedButton extends StatelessWidget {
     this.text,
     this.press,
     this.color = primaryColor,
-    this.textColor = Colors.white,
+    this.textColor = Colors.black,
     this.enabled = true,
     this.disabledColor = primaryDisabledColor,
   }) : super(key: key);
@@ -25,8 +25,8 @@ class RoundedButton extends StatelessWidget {
       width: size.width * 0.8,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(29),
-        child: TextButton(
-          onPressed: () => enabled ? press : null,
+        child: ElevatedButton(
+          onPressed: press,
           child: Text(
             text,
             style: TextStyle(color: textColor),
