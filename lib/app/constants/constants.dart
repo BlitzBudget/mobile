@@ -24,5 +24,4 @@ const String logoutConfirmation = 'Log out?';
 const String logoutButton = 'Logout';
 const String logoutCancel = 'Cancel';
 
-const String INVALID_INPUT_FAILURE_MESSAGE =
-    'Invalid Input - The number must be a positive integer or zero.';
+const String INVALID_INPUT_FAILURE_MESSAGE = 'Email or Password is incorrect.';

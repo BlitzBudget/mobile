@@ -14,13 +14,13 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(this._loginUser, this._forgotPassword)
-      : assert(_loginUser != null),
-        assert(_forgotPassword != null),
+  LoginBloc({@required this.loginUser, @required this.forgotPassword})
+      : assert(loginUser != null),
+        assert(forgotPassword != null),
         super(Empty());
 
-  final login_usecase.LoginUser _loginUser;
-  final forgot_password_usecase.ForgotPassword _forgotPassword;
+  final login_usecase.LoginUser loginUser;
+  final forgot_password_usecase.ForgotPassword forgotPassword;
 
   @override
   Stream<LoginState> mapEventToState(
@@ -29,11 +29,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginUser) {
       yield Loading();
 
-      final userResponse = await _loginUser.loginUser(
+      debugPrint('Bloc Login executed for the user ${event.username} ');
+
+      final userResponse = await loginUser.loginUser(
           email: event.username, password: event.password);
 
       yield userResponse.fold(
         (failure) =>
+            // TODO Convert Failure to generic messages
             const Error(message: constants.INVALID_INPUT_FAILURE_MESSAGE),
         (_) => Success(),
       );
@@ -41,7 +44,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield Loading();
 
       final forgotPasswordResponse =
-          await _forgotPassword.forgotPassword(email: event.username);
+          await forgotPassword.forgotPassword(email: event.username);
 
       yield forgotPasswordResponse.fold(
         (failure) =>
