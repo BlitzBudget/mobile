@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_blitzbudget/app/ploc/signup/signup_bloc.dart';
-import 'package:mobile_blitzbudget/app/screens/authentication/login/login_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/verify/verify_screen.dart';
 
 import '../../../../constants/constants.dart';

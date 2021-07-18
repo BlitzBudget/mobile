@@ -11,7 +11,6 @@ import '../../components/already_have_an_account_check.dart';
 import '../../components/password_constraint_container.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_field.dart';
-import '../../forgot-password/forgot_password_screen.dart';
 import 'background.dart';
 
 // Public exposed class
