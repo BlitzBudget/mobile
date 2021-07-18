@@ -49,7 +49,7 @@ class AuthenticationRemoteDataSourceImpl
     try {
       /// Convert email to lowercase and trim
       email = email.toLowerCase().trim();
-      return httpClient
+      return await httpClient
           .post(constants.loginURL,
               body: jsonEncode({
                 'username': email,
@@ -65,7 +65,8 @@ class AuthenticationRemoteDataSourceImpl
             : const None();
       });
     } on APIException catch (e) {
-      final res = e.res;
+      final response = e.res;
+      final res = jsonDecode(response.body);
       if (res['errorType'] != null) {
         /// Conditionally process error messages
         if (includesStr(
@@ -101,7 +102,7 @@ class AuthenticationRemoteDataSourceImpl
       final headers = constants.headers;
 
       /// Start signup process
-      return httpClient.post(constants.signupURL,
+      return await httpClient.post(constants.signupURL,
           body: jsonEncode({
             'username': email,
             'password': password,

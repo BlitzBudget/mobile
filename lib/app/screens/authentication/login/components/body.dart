@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_blitzbudget/app/constants/constants.dart';
 import 'package:mobile_blitzbudget/app/ploc/login/login_bloc.dart';
+import 'package:mobile_blitzbudget/app/screens/authentication/signup/signup_screen.dart';
+import 'package:mobile_blitzbudget/app/screens/authentication/verify/verify_screen.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../components/already_have_an_account_check.dart';
@@ -36,11 +38,28 @@ class _BodyState extends State<Body> {
     final size = MediaQuery.of(context).size;
     return BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
       debugPrint('The Login listener has been called');
-      if (state is Success) {
-        /// Navigate to the second screen using a named route.
+      if (state is RedirectToDashboard) {
         Navigator.pushNamed(context, dashboardRoute);
       } else if (state is Error) {
         debugPrint('The Login encountered an error');
+      } else if (state is RedirectToSignup) {
+        /// Navigate to the second screen using a named route.
+        Navigator.push(
+          context,
+          MaterialPageRoute<SignUpScreen>(
+            builder: (context) =>
+                SignUpScreen(email: username, password: password),
+          ),
+        );
+      } else if (state is RedirectToVerification) {
+        /// Navigate to the second screen using a named route.
+        Navigator.push(
+          context,
+          MaterialPageRoute<VerifyScreen>(
+            builder: (context) =>
+                VerifyScreen(email: username, password: password),
+          ),
+        );
       }
     }, builder: (context, state) {
       return Background(
@@ -85,7 +104,7 @@ class _BodyState extends State<Body> {
                     continueButton = 'Loading';
                     _btnEnabled = false;
                   });
-                  dispatchLoginUser();
+                  _dispatchLoginUser();
                   setState(() {
                     continueButton = 'CONTINUE';
                     _btnEnabled = true;
@@ -96,14 +115,7 @@ class _BodyState extends State<Body> {
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
                 press: () {
-                  /// Navigate to the second screen using a named route.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<ForgotPasswordScreen>(
-                      builder: (context) => ForgotPasswordScreen(
-                          email: username, password: password),
-                    ),
-                  );
+                  _dispatchForgotPasswordUser();
                 },
               ),
             ],
@@ -113,7 +125,11 @@ class _BodyState extends State<Body> {
     });
   }
 
-  void dispatchLoginUser() {
+  void _dispatchForgotPasswordUser() {
+    BlocProvider.of<LoginBloc>(context).add(ForgotPassword(username, password));
+  }
+
+  void _dispatchLoginUser() {
     BlocProvider.of<LoginBloc>(context).add(LoginUser(username, password));
   }
 }
