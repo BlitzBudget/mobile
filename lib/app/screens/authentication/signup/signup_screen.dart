@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/signup/signup_bloc.dart';
+import '../../../../injection_container.dart';
 import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -10,9 +13,11 @@ class SignUpScreen extends StatelessWidget {
   final String password;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Body(email: email, password: password),
-    );
+  BlocProvider<SignupBloc> build(BuildContext context) {
+    return BlocProvider(
+        create: (_) => SignupBloc(signupUser: getIt()),
+        child: Scaffold(
+          body: Body(email: email, password: password),
+        ));
   }
 }

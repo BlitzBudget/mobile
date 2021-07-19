@@ -32,3 +32,6 @@ class NotAuthorizedException extends AuthenticationException {}
 
 /// Executed when the user credentials are invalid when trying to login
 class UserAlreadyExistsException extends AuthenticationException {}
+
+/// Executed when the authorization fails for some other reason
+class GenericAuthorizationException extends AuthenticationException {}

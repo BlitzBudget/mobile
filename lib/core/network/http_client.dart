@@ -66,13 +66,13 @@ class HTTPClientImpl implements HTTPClient {
         return jsonDecode(response.body);
       }
     } else if (statusCode == 401) {
-      throw TokenExpiredException(response);
+      throw TokenExpiredException(jsonDecode(response.body));
     } else if (statusCode >= 400 && statusCode < 500) {
-      throw ClientErrorException(response);
+      throw ClientErrorException(jsonDecode(response.body));
     } else if (statusCode >= 500 && statusCode < 600) {
-      throw ServerErrorException(response);
+      throw ServerErrorException(jsonDecode(response.body));
     } else {
-      throw UnknownException(response);
+      throw UnknownException(jsonDecode(response.body));
     }
   }
 

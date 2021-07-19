@@ -49,7 +49,7 @@ class AuthenticationRemoteDataSourceImpl
     try {
       /// Convert email to lowercase and trim
       email = email.toLowerCase().trim();
-      return httpClient
+      return await httpClient
           .post(constants.loginURL,
               body: jsonEncode({
                 'username': email,
@@ -84,6 +84,8 @@ class AuthenticationRemoteDataSourceImpl
           /// Exception to handle invalid credentials
           throw NotAuthorizedException();
         }
+
+        throw GenericAuthorizationException();
       }
     }
     return const None();
@@ -101,7 +103,7 @@ class AuthenticationRemoteDataSourceImpl
       final headers = constants.headers;
 
       /// Start signup process
-      return httpClient.post(constants.signupURL,
+      return await httpClient.post(constants.signupURL,
           body: jsonEncode({
             'username': email,
             'password': password,
@@ -120,6 +122,8 @@ class AuthenticationRemoteDataSourceImpl
               .getOrElse(() => false)) {
         throw UserAlreadyExistsException();
       }
+
+      throw GenericAuthorizationException();
     }
   }
 

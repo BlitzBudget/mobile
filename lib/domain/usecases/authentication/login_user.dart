@@ -55,23 +55,3 @@ class LoginUser extends UseCase {
     return response;
   }
 }
-
-/*
-/// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-if (isEmpty(email)) {
-      displayDialog(context, 'Empty Email', 'The email cannot be empty');
-      return null;
-    } else if (!EmailValidator.validate(email.trim())) {
-      displayDialog(context, 'Invalid Email', 'The email is not valid');
-      return null;
-    } else if (isEmpty(password)) {
-      displayDialog(context, 'Empty Password', 'The password cannot be empty');
-      return null;
-    } else if (!passwordExp.hasMatch(password)) {
-      displayDialog(context, 'Invalid Password', 'The password is not valid');
-      return null;
-    }*/
-
-/// Navigate to the second screen using a named route.
-/*Navigator.pushNamed(context, constants.dashboardRoute);*/

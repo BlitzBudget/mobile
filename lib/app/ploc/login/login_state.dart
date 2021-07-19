@@ -9,7 +9,11 @@ abstract class LoginState extends Equatable {
 
 class Empty extends LoginState {}
 
-class Success extends LoginState {}
+class RedirectToSignup extends LoginState {}
+
+class RedirectToVerification extends LoginState {}
+
+class RedirectToDashboard extends LoginState {}
 
 class Loading extends LoginState {}
 

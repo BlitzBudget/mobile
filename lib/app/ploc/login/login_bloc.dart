@@ -1,14 +1,17 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
 import '../../../domain/usecases/authentication/forgot_password.dart'
     as forgot_password_usecase;
 import '../../../domain/usecases/authentication/login_user.dart'
     as login_usecase;
-import '../../constants/constants.dart' as constants;
+import './login_constants.dart' as constants;
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -29,17 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginUser) {
       yield Loading();
 
-      debugPrint('Bloc Login executed for the user ${event.username} ');
-
-      final userResponse = await loginUser.loginUser(
-          email: event.username, password: event.password);
-
-      yield userResponse.fold(
-        (failure) =>
-            // TODO Convert Failure to generic messages
-            const Error(message: constants.INVALID_INPUT_FAILURE_MESSAGE),
-        (_) => Success(),
-      );
+      yield* processLogin(event);
     } else if (event is ForgotPassword) {
       yield Loading();
 
@@ -48,9 +41,42 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       yield forgotPasswordResponse.fold(
         (failure) =>
-            const Error(message: constants.INVALID_INPUT_FAILURE_MESSAGE),
-        (_) => Success(),
+            const Error(message: constants.INVALID_INPUT_LOGIN_FAILURE_MESSAGE),
+        (_) => RedirectToVerification(),
       );
     }
+  }
+
+  Stream<LoginState> processLogin(LoginUser event) async* {
+    debugPrint('Bloc Login executed for the user ${event.username} ');
+
+    final email = event.username.toLowerCase().trim();
+    if (!EmailValidator.validate(email)) {
+      yield const Error(message: constants.EMAIL_INVALID);
+    } else if (event.password == null && event.password.isEmpty) {
+      yield const Error(message: constants.PASSWORD_EMPTY);
+    } else {
+      final userResponse =
+          await loginUser.loginUser(email: email, password: event.password);
+
+      yield userResponse.fold(
+        _convertToMessage,
+        (_) => RedirectToDashboard(),
+      );
+    }
+  }
+
+  LoginState _convertToMessage(Failure failure) {
+    debugPrint('Converting login failure to message ${failure.toString()} ');
+    if (failure is RedirectToSignupDueToFailure) {
+      return RedirectToSignup();
+    } else if (failure is RedirectToVerificationDueToFailure) {
+      return RedirectToVerification();
+    } else if (failure is InvalidCredentialsFailure) {
+      return const Error(
+          message: constants.INVALID_INPUT_LOGIN_FAILURE_MESSAGE);
+    }
+
+    return const Error(message: constants.GENERIC_LOGIN_FAILURE_MESSAGE);
   }
 }

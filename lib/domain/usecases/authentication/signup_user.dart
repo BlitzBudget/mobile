@@ -15,21 +15,3 @@ class SignupUser extends UseCase {
         email: email, password: password);
   }
 }
-
-// TODO
-/*
-/// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-if (isEmpty(confirmPassword)) {
-      displayDialog(
-          context, 'Empty Password', 'The confirm password cannot be empty');
-      return;
-    } else if (!passwordExp.hasMatch(confirmPassword)) {
-      displayDialog(
-          context, 'Invalid Password', 'The confirm password is not valid');
-      return;
-    } else if (confirmPassword != password) {
-      displayDialog(context, 'Password Mismatch',
-          'The confirm password and the password do not match');
-      return;
-    }*/

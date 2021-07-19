@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_blitzbudget/app/constants/constants.dart';
+import 'package:mobile_blitzbudget/app/ploc/verify/verify_bloc.dart';
 
 import '../../../../widgets/linear_loading_indicator.dart';
 import '../../../../widgets/rounded_button.dart';
@@ -32,7 +35,7 @@ class _BodyState extends State<Body> {
   _BodyState();
 
   /// States
-  final bool _btnEnabled = true;
+  bool _btnEnabled = true;
 
   String verificationCode;
   final String verifyEmail = 'Verify Email';
@@ -42,86 +45,89 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Background(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ///  Linear Progress indicator for loading
-            /// Show text only when the button is enabled
-            Visibility(
-                visible: _btnEnabled,
-                replacement: const LinearLoadingIndicator(),
-                child: Text(
-                  verifyEmail,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                )),
-            SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              'assets/icons/signup.svg',
-              height: size.height * 0.35,
-            ),
-            RoundedInputField(
-                hintText: verificationCodeText,
-                onChanged: (value) async {
-                  verificationCode = value;
-                  // TODO
-                  /* /// If the length of the string is == 6 then submit the code for verification
-                  if (isNotEmpty(verificationCode) &&
-                      verificationCode.length >= 6) {
-                    await _verifyEmailAndSetState(context, email, password,
-                        verificationCode, useVerifyURL);
-                  }*/
-                },
-                autofocus: true),
-            RoundedButton(
-              text: verifyButton,
-              press: () async {
-                //TODO
-                /* _verifyEmailAndSetState(
-                    context, email, password, verificationCode, useVerifyURL);*/
-              },
-              enabled: _btnEnabled,
-            ),
-            SizedBox(height: size.height * 0.03),
-
-            /// Show text only when the showResendVerificationCode is enabled
-            Visibility(
-              visible: widget.showResendVerificationCode,
-              child: ResendVerification(email: widget.email),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /* /// Verify Email And set state of the widget
-  void _verifyEmailAndSetState(
-      BuildContext context,
-      final String email,
-      final String password,
-      final String verificationCode,
-      final bool useVerifyURL) async {
-    _loadingState();
-    await _AuthenticationRemoteDataSource.verifyEmail(
-        context, email, password, verificationCode, useVerifyURL);
-    _defaultState();
-  }
-
-  /// Set the state of the verification widget to loading
-  void _loadingState() {
-    setState(() {
-      verifyButton = "Loading";
-      _btnEnabled = false;
-    });
-  }
-
-  /// Set the state of the verification widget back to default
-  void _defaultState() {
-    setState(() {
-      verifyButton = "VERIFY";
+    return BlocConsumer<VerifyBloc, VerifyState>(listener: (context, state) {
+      debugPrint('The Verify Bloc listener has been called');
+      verifyButton = 'VERIFY';
       _btnEnabled = true;
+
+      if (state is Loading) {
+        verifyButton = 'Loading';
+        _btnEnabled = false;
+      } else if (state is RedirectToLogin || state is RedirectToSignup) {
+        /// Navigate to the login screen using a named route.
+        Navigator.pushNamed(context, loginRoute);
+      } else if (state is Error) {
+        debugPrint('The Verify Bloc has an error state ${state.message}');
+      } else if (state is RedirectToDashboard) {
+        Navigator.pushNamed(context, dashboardRoute);
+      } else if (state is ResendVerificationCodeSuccessful) {
+        debugPrint(
+            'The Verify Bloc has successfully sent the resend verification ${state.stringify}');
+      }
+    }, builder: (context, state) {
+      return Background(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ///  Linear Progress indicator for loading
+              /// Show text only when the button is enabled
+              Visibility(
+                  visible: _btnEnabled,
+                  replacement: const LinearLoadingIndicator(),
+                  child: Text(
+                    verifyEmail,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )),
+              SizedBox(height: size.height * 0.03),
+              SvgPicture.asset(
+                'assets/icons/signup.svg',
+                height: size.height * 0.35,
+              ),
+              RoundedInputField(
+                  hintText: verificationCodeText,
+                  onChanged: (value) async {
+                    verificationCode = value;
+
+                    /// If the length of the string is == 6 then submit the code for verification
+                    if (verificationCode != null &&
+                        verificationCode.length >= 6) {
+                      _dispatchVerifyEmail(
+                          email: widget.email,
+                          password: widget.password,
+                          verificationCode: verificationCode);
+                    }
+                  },
+                  autofocus: true),
+              RoundedButton(
+                text: verifyButton,
+                press: () async {
+                  _dispatchVerifyEmail(
+                      email: widget.email,
+                      password: widget.password,
+                      verificationCode: verificationCode);
+                },
+                enabled: _btnEnabled,
+              ),
+              SizedBox(height: size.height * 0.03),
+
+              /// Show text only when the showResendVerificationCode is enabled
+              Visibility(
+                visible: widget.showResendVerificationCode,
+                child: ResendVerification(email: widget.email),
+              ),
+            ],
+          ),
+        ),
+      );
     });
-  }*/
+  }
+
+  void _dispatchVerifyEmail(
+      {@required String email,
+      @required String password,
+      @required String verificationCode}) {
+    BlocProvider.of<VerifyBloc>(context).add(VerifyUser(
+        email: email, password: password, verificationCode: verificationCode));
+  }
 }
