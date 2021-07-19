@@ -150,7 +150,8 @@ void main() {
         /// Throw 401 Error
         when(mockNetworkHelper.post(constants.budgetURL,
                 headers: constants.headers))
-            .thenAnswer((_) async => Future.value(http.Response('', 401)));
+            .thenAnswer(
+                (_) async => Future.value(http.Response('{ "body": ""}', 401)));
 
         // assert
         expect(
@@ -168,7 +169,8 @@ void main() {
         /// Throw 400 Error
         when(mockNetworkHelper.post(constants.budgetURL,
                 headers: constants.headers))
-            .thenAnswer((_) async => Future.value(http.Response('', 400)));
+            .thenAnswer(
+                (_) async => Future.value(http.Response('{ "body": ""}', 400)));
 
         // assert
         expect(
@@ -186,7 +188,8 @@ void main() {
         /// Throw 500 Error
         when(mockNetworkHelper.post(constants.budgetURL,
                 headers: constants.headers))
-            .thenAnswer((_) async => Future.value(http.Response('', 500)));
+            .thenAnswer(
+                (_) async => Future.value(http.Response('{ "body": ""}', 500)));
 
         // assert
         expect(
@@ -204,7 +207,8 @@ void main() {
         /// Throw unknown Error
         when(mockNetworkHelper.post(constants.budgetURL,
                 headers: constants.headers))
-            .thenAnswer((_) async => Future.value(http.Response('', 601)));
+            .thenAnswer(
+                (_) async => Future.value(http.Response('{ "body": ""}', 601)));
 
         // assert
         expect(
@@ -225,8 +229,8 @@ void main() {
       when(mockNetworkHelper.post(constants.budgetURL,
               headers: constants.headers))
           .thenAnswer((_) async => [
-                Future.value(http.Response('', 401)),
-                Future.value(http.Response('', 200))
+                Future.value(http.Response('{ "body": ""}', 401)),
+                Future.value(http.Response('{ "body": ""}', 200))
               ][callCount++]);
 
       // assert
@@ -250,8 +254,8 @@ void main() {
       when(mockNetworkHelper.put(constants.budgetURL,
               headers: constants.headers))
           .thenAnswer((_) async => [
-                Future.value(http.Response('', 401)),
-                Future.value(http.Response('', 200))
+                Future.value(http.Response('{ "body": ""}', 401)),
+                Future.value(http.Response('{ "body": ""}', 200))
               ][callCount++]);
 
       // assert
@@ -274,8 +278,8 @@ void main() {
       when(mockNetworkHelper.patch(constants.budgetURL,
               headers: constants.headers))
           .thenAnswer((_) async => [
-                Future.value(http.Response('', 401)),
-                Future.value(http.Response('', 200))
+                Future.value(http.Response('{ "body": ""}', 401)),
+                Future.value(http.Response('{ "body": ""}', 200))
               ][callCount++]);
 
       // assert
