@@ -29,8 +29,19 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     } else if (event is SignupUser) {
       yield Loading();
 
+      yield* processSignup(event);
+    }
+  }
+
+  Stream<SignupState> processSignup(SignupUser event) async* {
+    if (event.confirmPassword == null && event.confirmPassword.isEmpty) {
+      yield const Error(message: constants.CONFIRM_PASSWORD_EMPTY);
+    } else if (event.confirmPassword != event.password) {
+      yield const Error(message: constants.PASSWORD_MISMATCH);
+    } else {
+      final email = event.username.toLowerCase().trim();
       final signupUserResponse = await signupUser.signupUser(
-          email: event.username, password: event.password);
+          email: email, password: event.confirmPassword);
 
       yield signupUserResponse.fold(
         _convertToMessage,
@@ -41,8 +52,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   SignupState _convertToMessage(Failure failure) {
     debugPrint('Converting signup failure to message ${failure.toString()} ');
-    if (failure is RedirectToLoginDueToFailure) {
+    if (failure is RedirectToLoginDueToFailure ||
+        failure is RedirectToLoginDueToFailure) {
       return RedirectToLogin();
+    } else if (failure is RedirectToSignupDueToFailure) {
+      return RedirectToSignup();
+    } else if (failure is RedirectToVerificationDueToFailure) {
+      return RedirectToVerification();
     }
 
     return const Error(message: constants.GENERIC_FAILURE_MESSAGE);

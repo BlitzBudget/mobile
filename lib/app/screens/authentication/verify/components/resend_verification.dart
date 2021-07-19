@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/verify/verify_bloc.dart';
 
 import '../../../../constants/constants.dart';
 
@@ -44,9 +46,7 @@ class _ResendVerificationState extends State<ResendVerification> {
         GestureDetector(
           onTap: () async {
             _toggleTextState(false);
-            // TODO
-            /*await _AuthenticationRemoteDataSource.resendVerificationCode(
-                context, email);*/
+            _dispatchResendVerificationCode(email: widget.email);
             // Show the text again after a period in time
             startTimeoutThenShowText();
           },
@@ -64,6 +64,11 @@ class _ResendVerificationState extends State<ResendVerification> {
         )
       ],
     );
+  }
+
+  void _dispatchResendVerificationCode({@required String email}) {
+    BlocProvider.of<VerifyBloc>(context)
+        .add(ResendVerificatonCode(email: email));
   }
 
   /// Toggle the text state

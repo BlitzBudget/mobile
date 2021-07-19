@@ -15,6 +15,7 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_to
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/forgot_password.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/login_user.dart';
+import 'package:mobile_blitzbudget/domain/usecases/authentication/verify_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/network/http_client.dart';
@@ -32,6 +33,7 @@ import 'data/repositories/authentication/auth_token_repository_impl.dart';
 import 'data/repositories/authentication/refresh_token_repository_impl.dart';
 import 'domain/repositories/authentication/auth_token_repository.dart';
 import 'domain/repositories/dashboard/common/clear_all_storage_repository.dart';
+import 'domain/usecases/authentication/signup_user.dart';
 
 final getIt = GetIt.instance;
 
@@ -45,7 +47,13 @@ Future<void> init() async {
       authTokenRepository: getIt()));
   // ignore: cascade_invocations
   getIt.registerLazySingleton(
+      () => SignupUser(authenticationRepository: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton(
       () => ForgotPassword(authenticationRepository: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton(
+      () => VerifyUser(authenticationRepository: getIt()));
 
   // Repository
   // ignore: cascade_invocations

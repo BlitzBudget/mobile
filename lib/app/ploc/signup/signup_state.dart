@@ -11,6 +11,8 @@ class Empty extends SignupState {}
 
 class RedirectToVerification extends SignupState {}
 
+class RedirectToSignup extends SignupState {}
+
 class RedirectToLogin extends SignupState {}
 
 class Loading extends SignupState {}

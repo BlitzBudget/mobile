@@ -37,12 +37,15 @@ class _BodyState extends State<Body> {
     final size = MediaQuery.of(context).size;
     return BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
       debugPrint('The Login listener has been called');
+      continueButton = 'CONTINUE';
+      _btnEnabled = true;
+
       if (state is RedirectToDashboard) {
         Navigator.pushNamed(context, dashboardRoute);
       } else if (state is Error) {
-        debugPrint('The Login encountered an error');
+        debugPrint('The Login encountered an error ${state.message}');
       } else if (state is RedirectToSignup) {
-        /// Navigate to the second screen using a named route.
+        /// Navigate to the Signup screen using a named route.
         Navigator.push(
           context,
           MaterialPageRoute<SignUpScreen>(
@@ -51,7 +54,7 @@ class _BodyState extends State<Body> {
           ),
         );
       } else if (state is RedirectToVerification) {
-        /// Navigate to the second screen using a named route.
+        /// Navigate to the Verify screen using a named route.
         Navigator.push(
           context,
           MaterialPageRoute<VerifyScreen>(
@@ -59,6 +62,9 @@ class _BodyState extends State<Body> {
                 VerifyScreen(email: username, password: password),
           ),
         );
+      } else if (state is Loading) {
+        continueButton = 'Loading';
+        _btnEnabled = false;
       }
     }, builder: (context, state) {
       return Background(
@@ -99,15 +105,7 @@ class _BodyState extends State<Body> {
 
                 /// Disable press if button is disabled
                 press: () async {
-                  setState(() {
-                    continueButton = 'Loading';
-                    _btnEnabled = false;
-                  });
                   _dispatchLoginUser();
-                  setState(() {
-                    continueButton = 'CONTINUE';
-                    _btnEnabled = true;
-                  });
                 },
                 enabled: _btnEnabled,
               ),

@@ -65,8 +65,7 @@ class AuthenticationRemoteDataSourceImpl
             : const None();
       });
     } on APIException catch (e) {
-      final response = e.res;
-      final res = jsonDecode(response.body);
+      final res = e.res;
       if (res['errorType'] != null) {
         /// Conditionally process error messages
         if (includesStr(
@@ -85,6 +84,8 @@ class AuthenticationRemoteDataSourceImpl
           /// Exception to handle invalid credentials
           throw NotAuthorizedException();
         }
+
+        throw GenericAuthorizationException();
       }
     }
     return const None();
@@ -121,6 +122,8 @@ class AuthenticationRemoteDataSourceImpl
               .getOrElse(() => false)) {
         throw UserAlreadyExistsException();
       }
+
+      throw GenericAuthorizationException();
     }
   }
 

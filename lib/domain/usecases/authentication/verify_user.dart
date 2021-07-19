@@ -26,10 +26,3 @@ class VerifyUser extends UseCase {
     return authenticationRepository.resendVerificationCode(email);
   }
 }
-
-// TODO
-/*
-/// Change all the email to lower case and trim the string
-    email = email.toLowerCase().trim();
-/// Attempt to login after completing verification
-      await attemptLogin(context, email, password);*/

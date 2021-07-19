@@ -43,6 +43,9 @@ class _BodyState extends State<Body> {
     final size = MediaQuery.of(context).size;
     return BlocConsumer<SignupBloc, SignupState>(listener: (context, state) {
       debugPrint('The Signup Bloc listener has been called');
+      signupButton = 'SIGNUP';
+      _btnEnabled = true;
+
       if (state is RedirectToVerification) {
         /// Navigate to the verification screen using a named route.
         Navigator.push(
@@ -52,9 +55,14 @@ class _BodyState extends State<Body> {
                 VerifyScreen(email: widget.email, password: widget.password),
           ),
         );
-      } else if (state is RedirectToLogin) {
+      } else if (state is RedirectToLogin || state is RedirectToSignup) {
         /// Navigate to the login screen using a named route.
         Navigator.pushNamed(context, loginRoute);
+      } else if (state is Error) {
+        debugPrint('The Signup Bloc has an error state ${state.message}');
+      } else if (state is Loading) {
+        signupButton = 'Loading';
+        _btnEnabled = false;
       }
     }, builder: (context, state) {
       return Background(
