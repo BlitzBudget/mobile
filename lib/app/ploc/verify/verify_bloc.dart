@@ -25,7 +25,9 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
     VerifyEvent event,
   ) async* {
     if (event is ResendVerificatonCode) {
-      yield RedirectToLogin();
+      yield Loading();
+
+      yield* processResendVerificationCode(event);
     } else if (event is VerifyUser) {
       yield Loading();
 
@@ -33,7 +35,8 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
     }
   }
 
-  Stream<VerifyState> processResendVerificationCode(VerifyUser event) async* {
+  Stream<VerifyState> processResendVerificationCode(
+      ResendVerificatonCode event) async* {
     final email = event.email.toLowerCase().trim();
     final resendVerificationResponse =
         await verifyUser.resendVerificationCode(email: email);
@@ -55,7 +58,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
       final verifyUserResponse = await verifyUser.verifyUser(
           email: email,
           password: event.password,
-          useVerifyURL: true,
+          useVerifyURL: event.useVerifyURL,
           verificationCode: event.verificationCode);
 
       yield verifyUserResponse.fold(

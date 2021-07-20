@@ -1,7 +1,10 @@
 part of 'signup_bloc.dart';
 
 abstract class SignupEvent extends Equatable {
-  const SignupEvent(this.username, this.password, this.confirmPassword);
+  const SignupEvent(
+      {@required this.username,
+      @required this.password,
+      @required this.confirmPassword});
 
   final String username;
   final String password;
@@ -13,9 +16,12 @@ abstract class SignupEvent extends Equatable {
 
 class SignupUser extends SignupEvent {
   const SignupUser(String username, String password, String confirmPassword)
-      : super(username, password, confirmPassword);
+      : super(
+            username: username,
+            password: password,
+            confirmPassword: confirmPassword);
 }
 
 class LoginUser extends SignupEvent {
-  const LoginUser() : super('', '', '');
+  const LoginUser() : super(username: '', password: '', confirmPassword: '');
 }

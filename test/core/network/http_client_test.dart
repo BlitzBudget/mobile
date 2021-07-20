@@ -122,6 +122,27 @@ void main() {
         verify(mockAuthTokenRepository.readAuthToken());
       },
     );
+
+    test(
+      'Valid POST call with skip authorization check',
+      () async {
+        // arrange
+        when(mockNetworkHelper.post(constants.budgetURL,
+                body: jsonEncode(budget.toJSON()), headers: constants.headers))
+            .thenAnswer((_) async =>
+                Future.value(http.Response(addBudgetAsString, 200)));
+        // act
+        await httpClientImpl.post(constants.budgetURL,
+            headers: constants.headers,
+            body: jsonEncode(budget.toJSON()),
+            skipAuthCheck: true);
+        // assert
+        verify(mockNetworkHelper.post(constants.budgetURL,
+            body: jsonEncode(budget.toJSON()), headers: constants.headers));
+        // Verify Auth token called
+        verifyNever(mockAuthTokenRepository.readAuthToken());
+      },
+    );
   });
 
   group('All possible exceptions', () {

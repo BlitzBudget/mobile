@@ -95,7 +95,8 @@ class _BodyState extends State<Body> {
                       _dispatchVerifyEmail(
                           email: widget.email,
                           password: widget.password,
-                          verificationCode: verificationCode);
+                          verificationCode: verificationCode,
+                          useVerifyURL: widget.useVerifyURL);
                     }
                   },
                   autofocus: true),
@@ -105,7 +106,8 @@ class _BodyState extends State<Body> {
                   _dispatchVerifyEmail(
                       email: widget.email,
                       password: widget.password,
-                      verificationCode: verificationCode);
+                      verificationCode: verificationCode,
+                      useVerifyURL: widget.useVerifyURL);
                 },
                 enabled: _btnEnabled,
               ),
@@ -126,8 +128,12 @@ class _BodyState extends State<Body> {
   void _dispatchVerifyEmail(
       {@required String email,
       @required String password,
-      @required String verificationCode}) {
+      @required String verificationCode,
+      @required bool useVerifyURL}) {
     BlocProvider.of<VerifyBloc>(context).add(VerifyUser(
-        email: email, password: password, verificationCode: verificationCode));
+        email: email,
+        password: password,
+        verificationCode: verificationCode,
+        useVerifyURL: useVerifyURL));
   }
 }

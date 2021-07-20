@@ -15,7 +15,10 @@ enum HTTPAPICalls { post, put, patch }
 
 abstract class HTTPClient {
   Future<dynamic> post(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding});
+      {Map<String, String> headers,
+      dynamic body,
+      Encoding encoding,
+      bool skipAuthCheck});
   Future<dynamic> put(String url,
       {Map<String, String> headers, dynamic body, Encoding encoding});
   Future<dynamic> patch(String url,
@@ -36,9 +39,16 @@ class HTTPClientImpl implements HTTPClient {
 
   @override
   Future<dynamic> post(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    return processAPICallAndRefreshTokenIfNeeded(
-        url, body, headers, encoding, HTTPAPICalls.post);
+      {Map<String, String> headers,
+      dynamic body,
+      Encoding encoding,
+      bool skipAuthCheck = false}) async {
+    if (skipAuthCheck) {
+      return postWithoutAuthorizationCheck(url, body, headers);
+    } else {
+      return processAPICallAndRefreshTokenIfNeeded(
+          url, body, headers, encoding, HTTPAPICalls.post);
+    }
   }
 
   @override
@@ -129,5 +139,16 @@ class HTTPClientImpl implements HTTPClient {
       default:
     }
     return _response(response);
+  }
+
+  /// POST call without authorization check
+  Future<dynamic> postWithoutAuthorizationCheck(
+      String url, dynamic body, Map<String, String> headers) async {
+    try {
+      return await makeAppropriateAPICall(
+          url, body, headers, HTTPAPICalls.post);
+    } on SocketException catch (e) {
+      throw ConnectionException(e);
+    }
   }
 }

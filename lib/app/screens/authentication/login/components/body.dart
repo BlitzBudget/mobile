@@ -58,8 +58,11 @@ class _BodyState extends State<Body> {
         Navigator.push(
           context,
           MaterialPageRoute<VerifyScreen>(
-            builder: (context) =>
-                VerifyScreen(email: username, password: password),
+            builder: (context) => VerifyScreen(
+                email: username,
+                password: password,
+                useVerifyURL: false,
+                showResendVerificationCode: false),
           ),
         );
       } else if (state is Loading) {

@@ -56,7 +56,8 @@ class AuthenticationRemoteDataSourceImpl
                 'password': password,
                 'checkPassword': _checkPassword
               }),
-              headers: constants.headers)
+              headers: constants.headers,
+              skipAuthCheck: true)
           .then<Option<UserResponseModel>>((dynamic res) {
         developer.log('User Attributes  ${res['UserAttributes']}');
 
@@ -66,7 +67,7 @@ class AuthenticationRemoteDataSourceImpl
       });
     } on APIException catch (e) {
       final res = e.res;
-      if (res['errorType'] != null) {
+      if (res != null && res['errorType'] != null) {
         /// Conditionally process error messages
         if (includesStr(
                 array: res['errorMessage'], value: _userNotFoundException)
@@ -84,11 +85,10 @@ class AuthenticationRemoteDataSourceImpl
           /// Exception to handle invalid credentials
           throw NotAuthorizedException();
         }
-
-        throw GenericAuthorizationException();
       }
+
+      throw GenericAuthorizationException();
     }
-    return const None();
   }
 
   /// SIGNUP module
@@ -109,16 +109,18 @@ class AuthenticationRemoteDataSourceImpl
             'password': password,
             'checkPassword': _checkPassword
           }),
-          headers: headers);
+          headers: headers,
+          skipAuthCheck: true);
     } on APIException catch (e) {
       /// Fetch response from the exception
       final dynamic res = e.res;
 
       /// Error Type for signup
       /// UsernameExistsException is excluded from showing error message
-      final errorMessage = res['errorMessage'];
-      if (isNotEmpty(res['errorType']) &&
-          includesStr(array: errorMessage, value: 'UsernameExistsException')
+      if (res != null &&
+          isNotEmpty(res['errorType']) &&
+          includesStr(
+                  array: res['errorMessage'], value: 'UsernameExistsException')
               .getOrElse(() => false)) {
         throw UserAlreadyExistsException();
       }
@@ -149,7 +151,8 @@ class AuthenticationRemoteDataSourceImpl
           'confirmationCode': verificationCode,
           'doNotCreateWallet': false
         }),
-        headers: constants.headers);
+        headers: constants.headers,
+        skipAuthCheck: true);
   }
 
   /// Resend Verification Code
@@ -157,7 +160,9 @@ class AuthenticationRemoteDataSourceImpl
   Future<void> resendVerificationCode(String email) {
     /// Start resending the verification code
     return httpClient.post(constants.resendVerificationCodeURL,
-        body: jsonEncode({'username': email}), headers: constants.headers);
+        body: jsonEncode({'username': email}),
+        headers: constants.headers,
+        skipAuthCheck: true);
   }
 
   /// Forgot Password Scenario to create a new one
@@ -166,6 +171,8 @@ class AuthenticationRemoteDataSourceImpl
   Future<void> forgotPassword(String email) {
     /// Start resending the verification code
     return httpClient.post(constants.forgotPasswordURL,
-        body: jsonEncode({'username': email}), headers: constants.headers);
+        body: jsonEncode({'username': email}),
+        headers: constants.headers,
+        skipAuthCheck: true);
   }
 }

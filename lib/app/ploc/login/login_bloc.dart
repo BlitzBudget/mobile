@@ -4,13 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
-import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
+import '../../../core/failure/authorization_failure.dart';
+import '../../../core/failure/failure.dart';
 import '../../../domain/usecases/authentication/forgot_password.dart'
     as forgot_password_usecase;
 import '../../../domain/usecases/authentication/login_user.dart'
     as login_usecase;
+import '../../constants/constants.dart' as app_constants;
 import './login_constants.dart' as constants;
 
 part 'login_event.dart';
@@ -50,11 +51,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> processLogin(LoginUser event) async* {
     debugPrint('Bloc Login executed for the user ${event.username} ');
 
-    final email = event.username.toLowerCase().trim();
+    final email = event.username?.toLowerCase()?.trim() ?? '';
     if (!EmailValidator.validate(email)) {
       yield const Error(message: constants.EMAIL_INVALID);
     } else if (event.password == null && event.password.isEmpty) {
       yield const Error(message: constants.PASSWORD_EMPTY);
+    } else if (!app_constants.passwordExp.hasMatch(event.password)) {
+      yield const Error(message: constants.PASSWORD_INVALID);
     } else {
       final userResponse =
           await loginUser.loginUser(email: email, password: event.password);

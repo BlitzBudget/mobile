@@ -8,6 +8,7 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
 import '../../../domain/usecases/authentication/signup_user.dart'
     as signup_usecase;
+import '../../constants/constants.dart' as app_constants;
 import './signup_constants.dart' as constants;
 
 part 'signup_event.dart';
@@ -38,6 +39,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       yield const Error(message: constants.CONFIRM_PASSWORD_EMPTY);
     } else if (event.confirmPassword != event.password) {
       yield const Error(message: constants.PASSWORD_MISMATCH);
+    } else if (!app_constants.passwordExp.hasMatch(event.password)) {
+      yield const Error(message: constants.PASSWORD_INVALID);
     } else {
       final email = event.username.toLowerCase().trim();
       final signupUserResponse = await signupUser.signupUser(

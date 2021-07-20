@@ -39,7 +39,8 @@ void main() {
                   'password': mockPassword,
                   'checkPassword': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenAnswer((_) async => loginResponseAsJSON);
         // act
         final loginResult = await dataSource.attemptLogin(
@@ -51,7 +52,8 @@ void main() {
               'password': mockPassword,
               'checkPassword': false
             }),
-            headers: constants.headers));
+            headers: constants.headers,
+            skipAuthCheck: true));
 
         // Option to user response
         final loginResp = loginResult.getOrElse(null);
@@ -78,7 +80,8 @@ void main() {
                   'password': mockPassword,
                   'checkPassword': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenThrow(ServerErrorException(notAuthorizedResponseAsJSON));
 
         // assert
@@ -103,7 +106,8 @@ void main() {
                   'password': mockPassword,
                   'checkPassword': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenThrow(ServerErrorException(userNotFoundExceptionAsJSON));
 
         // assert
@@ -128,7 +132,8 @@ void main() {
                   'password': mockPassword,
                   'checkPassword': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenThrow(ServerErrorException(userNotConfirmedExceptionAsJSON));
 
         // assert
@@ -136,6 +141,28 @@ void main() {
             () => dataSource.attemptLogin(
                 email: mockEmail, password: mockPassword),
             throwsA(const TypeMatcher<UserNotConfirmedException>()));
+      },
+    );
+
+    test(
+      'Should return empty authorization token exceptions is rethrown',
+      () async {
+        // arrange
+        when(mockHTTPClientImpl.post(constants.loginURL,
+                body: jsonEncode({
+                  'username': mockEmail,
+                  'password': mockPassword,
+                  'checkPassword': false
+                }),
+                headers: constants.headers,
+                skipAuthCheck: true))
+            .thenThrow(EmptyAuthorizationTokenException());
+
+        // assert
+        expect(
+            () => dataSource.attemptLogin(
+                email: mockEmail, password: mockPassword),
+            throwsA(const TypeMatcher<GenericAuthorizationException>()));
       },
     );
   });
@@ -156,7 +183,8 @@ void main() {
                   'password': mockPassword,
                   'checkPassword': false
                 }),
-                headers: headers))
+                headers: headers,
+                skipAuthCheck: true))
             .thenAnswer((_) async =>
                 signupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
@@ -168,7 +196,8 @@ void main() {
               'password': mockPassword,
               'checkPassword': false
             }),
-            headers: headers));
+            headers: headers,
+            skipAuthCheck: true));
       },
     );
 
@@ -186,7 +215,8 @@ void main() {
                   'password': mockPassword,
                   'checkPassword': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenThrow(ServerErrorException(userNameExistsExceptionAsJSON));
 
         // assert
@@ -194,6 +224,28 @@ void main() {
             () =>
                 dataSource.signupUser(email: mockEmail, password: mockPassword),
             throwsA(const TypeMatcher<UserAlreadyExistsException>()));
+      },
+    );
+
+    test(
+      'Should return empty authorization token exceptions is rethrown',
+      () async {
+        // arrange
+        when(mockHTTPClientImpl.post(constants.signupURL,
+                body: jsonEncode({
+                  'username': mockEmail,
+                  'password': mockPassword,
+                  'checkPassword': false
+                }),
+                headers: constants.headers,
+                skipAuthCheck: true))
+            .thenThrow(EmptyAuthorizationTokenException());
+
+        // assert
+        expect(
+            () =>
+                dataSource.signupUser(email: mockEmail, password: mockPassword),
+            throwsA(const TypeMatcher<GenericAuthorizationException>()));
       },
     );
   });
@@ -215,7 +267,8 @@ void main() {
                   'confirmationCode': mockVerificationCode,
                   'doNotCreateWallet': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenAnswer((_) async =>
                 confirmSignupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
@@ -232,7 +285,8 @@ void main() {
               'confirmationCode': mockVerificationCode,
               'doNotCreateWallet': false
             }),
-            headers: constants.headers));
+            headers: constants.headers,
+            skipAuthCheck: true));
       },
     );
 
@@ -247,7 +301,8 @@ void main() {
                   'confirmationCode': mockVerificationCode,
                   'doNotCreateWallet': false
                 }),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenAnswer((_) async =>
                 confirmSignupResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
@@ -264,7 +319,8 @@ void main() {
               'confirmationCode': mockVerificationCode,
               'doNotCreateWallet': false
             }),
-            headers: constants.headers));
+            headers: constants.headers,
+            skipAuthCheck: true));
       },
     );
   });
@@ -280,7 +336,8 @@ void main() {
         // arrange
         when(mockHTTPClientImpl.post(constants.resendVerificationCodeURL,
                 body: jsonEncode({'username': mockEmail}),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenAnswer((_) async =>
                 resendVerificationCodeResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
@@ -288,7 +345,8 @@ void main() {
         // assert
         verify(mockHTTPClientImpl.post(constants.resendVerificationCodeURL,
             body: jsonEncode({'username': mockEmail}),
-            headers: constants.headers));
+            headers: constants.headers,
+            skipAuthCheck: true));
       },
     );
   });
@@ -304,7 +362,8 @@ void main() {
         // arrange
         when(mockHTTPClientImpl.post(constants.forgotPasswordURL,
                 body: jsonEncode({'username': mockEmail}),
-                headers: constants.headers))
+                headers: constants.headers,
+                skipAuthCheck: true))
             .thenAnswer((_) async =>
                 forgotPasswordResponseAsJSON); // Function with a fake parameter is called asynchronously to return a response
         // act
@@ -312,7 +371,8 @@ void main() {
         // assert
         verify(mockHTTPClientImpl.post(constants.forgotPasswordURL,
             body: jsonEncode({'username': mockEmail}),
-            headers: constants.headers));
+            headers: constants.headers,
+            skipAuthCheck: true));
       },
     );
   });
