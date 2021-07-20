@@ -19,9 +19,7 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({@required this.loginUser, @required this.forgotPassword})
-      : assert(loginUser != null),
-        assert(forgotPassword != null),
-        super(Empty());
+      : super(Empty());
 
   final login_usecase.LoginUser loginUser;
   final forgot_password_usecase.ForgotPassword forgotPassword;
@@ -54,7 +52,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final email = event.username?.toLowerCase()?.trim() ?? '';
     if (!EmailValidator.validate(email)) {
       yield const Error(message: constants.EMAIL_INVALID);
-    } else if (event.password == null && event.password.isEmpty) {
+    } else if (event.password == null || event.password.isEmpty) {
       yield const Error(message: constants.PASSWORD_EMPTY);
     } else if (!app_constants.passwordExp.hasMatch(event.password)) {
       yield const Error(message: constants.PASSWORD_INVALID);

@@ -35,7 +35,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   }
 
   Stream<SignupState> processSignup(SignupUser event) async* {
-    if (event.confirmPassword == null && event.confirmPassword.isEmpty) {
+    if (event.confirmPassword == null || event.confirmPassword.isEmpty) {
       yield const Error(message: constants.CONFIRM_PASSWORD_EMPTY);
     } else if (event.confirmPassword != event.password) {
       yield const Error(message: constants.PASSWORD_MISMATCH);
