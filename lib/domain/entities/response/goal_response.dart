@@ -7,11 +7,11 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 class GoalResponse extends Equatable {
   const GoalResponse({this.goals, this.bankAccounts, this.dates, this.wallet});
 
-  final List<Goal> goals;
-  final List<BankAccount> bankAccounts;
-  final List<Date> dates;
-  final Wallet wallet;
+  final List<Goal>? goals;
+  final List<BankAccount>? bankAccounts;
+  final List<Date>? dates;
+  final Wallet? wallet;
 
   @override
-  List<Object> get props => [goals, bankAccounts, dates, wallet];
+  List<Object?> get props => [goals, bankAccounts, dates, wallet];
 }

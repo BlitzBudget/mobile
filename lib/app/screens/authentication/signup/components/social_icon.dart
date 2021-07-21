@@ -5,13 +5,13 @@ import '../../../../constants/constants.dart';
 
 class SocalIcon extends StatelessWidget {
   const SocalIcon({
-    Key key,
+    Key? key,
     this.iconSrc,
     this.press,
   }) : super(key: key);
 
-  final String iconSrc;
-  final Function press;
+  final String? iconSrc;
+  final Function? press;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SocalIcon extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: SvgPicture.asset(
-          iconSrc,
+          iconSrc!,
           height: 20,
           width: 20,
         ),

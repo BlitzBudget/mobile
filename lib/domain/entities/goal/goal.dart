@@ -15,17 +15,17 @@ class Goal extends Equatable {
       this.targetDate,
       this.targetId});
 
-  final String walletId;
-  final String goalId;
-  final GoalType goalType;
-  final TargetType targetType;
-  final double monthlyContribution;
-  final double targetAmount;
-  final String targetDate;
-  final String targetId;
+  final String? walletId;
+  final String? goalId;
+  final GoalType? goalType;
+  final TargetType? targetType;
+  final double? monthlyContribution;
+  final double? targetAmount;
+  final String? targetDate;
+  final String? targetId;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         walletId,
         goalId,
         goalType,

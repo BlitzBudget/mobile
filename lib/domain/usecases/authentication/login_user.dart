@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
@@ -12,44 +11,44 @@ import 'package:mobile_blitzbudget/domain/usecases/use_case.dart';
 
 class LoginUser extends UseCase {
   LoginUser(
-      {@required this.authenticationRepository,
-      @required this.userAttributesRepository,
-      @required this.refreshTokenRepository,
-      @required this.accessTokenRepository,
-      @required this.authTokenRepository});
+      {required this.authenticationRepository,
+      required this.userAttributesRepository,
+      required this.refreshTokenRepository,
+      required this.accessTokenRepository,
+      required this.authTokenRepository});
 
-  final AuthenticationRepository authenticationRepository;
-  final UserAttributesRepository userAttributesRepository;
-  final RefreshTokenRepository refreshTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final AuthTokenRepository authTokenRepository;
+  final AuthenticationRepository? authenticationRepository;
+  final UserAttributesRepository? userAttributesRepository;
+  final RefreshTokenRepository? refreshTokenRepository;
+  final AccessTokenRepository? accessTokenRepository;
+  final AuthTokenRepository? authTokenRepository;
 
   Future<Either<Failure, Option<UserResponse>>> loginUser(
-      {@required String email, @required String password}) async {
-    final response = await authenticationRepository.loginUser(
+      {required String email, required String? password}) async {
+    final response = await authenticationRepository!.loginUser(
         email: email, password: password); // Either<Failure, UserResponse>
 
     if (response.isRight()) {
-      final userResponse = response.getOrElse(null);
+      final userResponse = response.getOrElse(() => const None());
 
       /// If the user information is empty then
       if (userResponse.isNone()) {
         return Left(EmptyResponseFailure());
       }
 
-      final user = userResponse.getOrElse(null);
+      final user = userResponse.getOrElse(() => const UserResponse());
 
       /// Store User Attributes
-      await userAttributesRepository.writeUserAttributes(user);
+      await userAttributesRepository!.writeUserAttributes(user);
 
       /// Store Refresh Token
-      await refreshTokenRepository.writeRefreshToken(user);
+      await refreshTokenRepository!.writeRefreshToken(user);
 
       /// Store Access Token
-      await accessTokenRepository.writeAccessToken(user);
+      await accessTokenRepository!.writeAccessToken(user);
 
       /// Store Auth Token
-      await authTokenRepository.writeAuthToken(user);
+      await authTokenRepository!.writeAuthToken(user);
     }
 
     return response;

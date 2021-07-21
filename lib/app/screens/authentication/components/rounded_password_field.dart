@@ -7,8 +7,8 @@ import 'text_field_container.dart';
 class RoundedPassword extends StatefulWidget {
   /// Constructor that accepts the onchanged variable
   const RoundedPassword(
-      {Key key,
-      @required this.onChanged,
+      {Key? key,
+      required this.onChanged,
       this.autofocus = false,
       this.hintText = 'Password',
       this.initialValue = ''})
@@ -16,7 +16,7 @@ class RoundedPassword extends StatefulWidget {
 
   final ValueChanged<String> onChanged;
   final bool autofocus;
-  final String hintText, initialValue;
+  final String? hintText, initialValue;
 
   @override
   _RoundedPasswordField createState() => _RoundedPasswordField();
@@ -28,8 +28,8 @@ class _RoundedPasswordField extends State<RoundedPassword> {
   _RoundedPasswordField();
 
   /// Initially password is obscure
-  bool _obscureText;
-  bool isPasswordVisible;
+  late bool _obscureText;
+  late bool isPasswordVisible;
 
   @override
   void initState() {

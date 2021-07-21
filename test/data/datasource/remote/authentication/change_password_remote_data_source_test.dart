@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/authentication/change_password_remote_data_source.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  ChangePasswordRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late ChangePasswordRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -30,7 +30,7 @@ void main() {
         };
         final contentBody = jsonEncode(changePasswordContent);
         // arrange
-        when(mockHTTPClientImpl.post(constants.changePasswordURL,
+        when(() => mockHTTPClientImpl!.post(constants.changePasswordURL,
                 body: contentBody, headers: constants.headers))
             .thenAnswer((_) async => <String, dynamic>{});
         // act
@@ -39,7 +39,7 @@ void main() {
             oldPassword: changePasswordContent['previousPassword'],
             newPassword: changePasswordContent['newPassword']);
         // assert
-        verify(mockHTTPClientImpl.post(constants.changePasswordURL,
+        verify(() => mockHTTPClientImpl!.post(constants.changePasswordURL,
             body: contentBody, headers: constants.headers));
       },
     );

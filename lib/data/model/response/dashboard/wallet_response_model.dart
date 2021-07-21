@@ -4,7 +4,7 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 class WalletResponseModel extends WalletResponse {
   const WalletResponseModel({
-    List<Wallet> wallets,
+    List<Wallet>? wallets,
   }) : super(wallets: wallets);
 
   factory WalletResponseModel.fromJSON(

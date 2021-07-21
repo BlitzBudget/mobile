@@ -8,12 +8,12 @@ import '../../../widgets/dashboard_widget.dart';
 /// On Android, this page sits at the top of your app. On iOS, this page is on
 /// top of the transactions tab's content but is below the tab bar itself.
 class TransactionDetailTab extends StatelessWidget {
-  const TransactionDetailTab({Key key, this.id, this.transaction, this.color})
+  const TransactionDetailTab({Key? key, this.id, this.transaction, this.color})
       : super(key: key);
 
-  final int id;
-  final String transaction;
-  final Color color;
+  final int? id;
+  final String? transaction;
+  final Color? color;
 
   Widget _buildBody() {
     return SafeArea(
@@ -24,7 +24,7 @@ class TransactionDetailTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Hero(
-            tag: id,
+            tag: id!,
 
             /// This app uses a flightShuttleBuilder to specify the exact widget
             /// to build while the hero transition is mid-flight.
@@ -81,7 +81,7 @@ class TransactionDetailTab extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(transaction)),
+      appBar: AppBar(title: Text(transaction!)),
       body: _buildBody(),
     );
   }
@@ -89,7 +89,7 @@ class TransactionDetailTab extends StatelessWidget {
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text(transaction),
+        middle: Text(transaction!),
         previousPageTitle: 'Transactions',
       ),
       child: _buildBody(),

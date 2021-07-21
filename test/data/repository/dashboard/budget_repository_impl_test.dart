@@ -7,14 +7,14 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/budget_remot
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/budget_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/budget_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockBudgetRemoteDataSource extends Mock
     implements BudgetRemoteDataSource {}
 
 void main() {
-  MockBudgetRemoteDataSource mockBudgetRemoteDataSource;
-  BudgetRepositoryImpl budgetRepositoryImpl;
+  MockBudgetRemoteDataSource? mockBudgetRemoteDataSource;
+  BudgetRepositoryImpl? budgetRepositoryImpl;
 
   setUp(() {
     mockBudgetRemoteDataSource = MockBudgetRemoteDataSource();
@@ -32,13 +32,13 @@ void main() {
   group('Update Budgets', () {
     test('Should return FetchDataFailure ', () async {
       const budgetModel = BudgetModel();
-      when(mockBudgetRemoteDataSource.update(budgetModel))
+      when(() => mockBudgetRemoteDataSource!.update(budgetModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      final budgetReceived = await budgetRepositoryImpl.update(budgetModel);
+      final budgetReceived = await budgetRepositoryImpl!.update(budgetModel);
 
       /// Expect an exception to be thrown
       final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockBudgetRemoteDataSource.update(budgetModel));
+      verify(() => mockBudgetRemoteDataSource!.update(budgetModel));
       expect(budgetReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -46,18 +46,17 @@ void main() {
 
   group('Fetch Budgets', () {
     test('Should return FetchDataFailure ', () async {
-      when(mockBudgetRemoteDataSource.fetch(
-              defaultWallet: '',
-              endsWithDate: '',
-              startsWithDate: '',
-              userId: ''))
-          .thenThrow(EmptyAuthorizationTokenException());
-      final budgetReceived = await budgetRepositoryImpl.fetch(
+      when(() => mockBudgetRemoteDataSource!.fetch(
+          defaultWallet: '',
+          endsWithDate: '',
+          startsWithDate: '',
+          userId: '')).thenThrow(EmptyAuthorizationTokenException());
+      final budgetReceived = await budgetRepositoryImpl!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
       final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockBudgetRemoteDataSource.fetch(
+      verify(() => mockBudgetRemoteDataSource!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(budgetReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
@@ -67,13 +66,13 @@ void main() {
   group('Add Budget', () {
     test('Should return FetchDataFailure ', () async {
       const addBudgetModel = BudgetModel();
-      when(mockBudgetRemoteDataSource.add(addBudgetModel))
+      when(() => mockBudgetRemoteDataSource!.add(addBudgetModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      final budgetReceived = await budgetRepositoryImpl.add(addBudgetModel);
+      final budgetReceived = await budgetRepositoryImpl!.add(addBudgetModel);
 
       /// Expect an exception to be thrown
       final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockBudgetRemoteDataSource.add(addBudgetModel));
+      verify(() => mockBudgetRemoteDataSource!.add(addBudgetModel));
       expect(budgetReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

@@ -10,7 +10,7 @@ import 'wallet/add_new_wallet.dart';
 
 class WalletDialog extends StatelessWidget {
   const WalletDialog({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const title = 'Wallets';
@@ -111,7 +111,7 @@ class WalletDialog extends StatelessWidget {
 
 class AddNewWalletButton extends StatelessWidget {
   const AddNewWalletButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const addNewWallet = 'Add new wallet';

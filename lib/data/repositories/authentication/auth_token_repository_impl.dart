@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart' show required;
 import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
@@ -9,22 +8,22 @@ import '../../datasource/local/authentication/auth_token_local_data_source.dart'
     show AuthTokenLocalDataSource;
 
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
-  AuthTokenRepositoryImpl({@required this.authTokenLocalDataSource});
+  AuthTokenRepositoryImpl({required this.authTokenLocalDataSource});
 
-  final AuthTokenLocalDataSource authTokenLocalDataSource;
+  final AuthTokenLocalDataSource? authTokenLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readAuthToken() async {
     try {
-      return Right(await authTokenLocalDataSource.readAuthToken());
+      return Right(await authTokenLocalDataSource!.readAuthToken());
     } on Exception catch (e) {
       return Left(GenericException.convertExceptionToFailure(e));
     }
   }
 
   @override
-  Future<void> writeAuthToken(UserResponse userResponse) async {
-    return authTokenLocalDataSource
-        .writeAuthToken(userResponse.authenticationToken);
+  Future<void> writeAuthToken(UserResponse? userResponse) async {
+    return authTokenLocalDataSource!
+        .writeAuthToken(userResponse!.authenticationToken);
   }
 }

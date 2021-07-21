@@ -18,7 +18,7 @@ class RedirectToDashboard extends LoginState {}
 class Loading extends LoginState {}
 
 class Error extends LoginState {
-  const Error({@required this.message});
+  const Error({required this.message});
 
   final String message;
 

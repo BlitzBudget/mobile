@@ -18,11 +18,11 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({@required this.loginUser, @required this.forgotPassword})
+  LoginBloc({required this.loginUser, required this.forgotPassword})
       : super(Empty());
 
-  final login_usecase.LoginUser loginUser;
-  final forgot_password_usecase.ForgotPassword forgotPassword;
+  final login_usecase.LoginUser? loginUser;
+  final forgot_password_usecase.ForgotPassword? forgotPassword;
 
   @override
   Stream<LoginState> mapEventToState(
@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield Loading();
 
       final forgotPasswordResponse =
-          await forgotPassword.forgotPassword(email: event.username);
+          await forgotPassword!.forgotPassword(email: event.username);
 
       yield forgotPasswordResponse.fold(
         (failure) =>
@@ -49,16 +49,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> processLogin(LoginUser event) async* {
     debugPrint('Bloc Login executed for the user ${event.username} ');
 
-    final email = event.username?.toLowerCase()?.trim() ?? '';
+    final email = event.username?.toLowerCase().trim() ?? '';
     if (!EmailValidator.validate(email)) {
       yield const Error(message: constants.EMAIL_INVALID);
-    } else if (event.password == null || event.password.isEmpty) {
+    } else if (event.password == null || event.password!.isEmpty) {
       yield const Error(message: constants.PASSWORD_EMPTY);
-    } else if (!app_constants.passwordExp.hasMatch(event.password)) {
+    } else if (!app_constants.passwordExp.hasMatch(event.password!)) {
       yield const Error(message: constants.PASSWORD_INVALID);
     } else {
       final userResponse =
-          await loginUser.loginUser(email: email, password: event.password);
+          await loginUser!.loginUser(email: email, password: event.password);
 
       yield userResponse.fold(
         _convertToMessage,

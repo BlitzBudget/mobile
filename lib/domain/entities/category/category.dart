@@ -9,13 +9,13 @@ class Category extends Equatable {
       this.categoryTotal,
       this.categoryType});
 
-  final String categoryId;
-  final String walletId;
-  final String categoryName;
-  final double categoryTotal;
-  final CategoryType categoryType;
+  final String? categoryId;
+  final String? walletId;
+  final String? categoryName;
+  final double? categoryTotal;
+  final CategoryType? categoryType;
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [categoryId, walletId, categoryName, categoryTotal, categoryType];
 }

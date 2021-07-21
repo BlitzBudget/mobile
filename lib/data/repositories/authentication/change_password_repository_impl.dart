@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/authentication_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -6,14 +5,14 @@ import 'package:mobile_blitzbudget/data/datasource/remote/authentication/change_
 import 'package:mobile_blitzbudget/domain/repositories/authentication/change_password_repository.dart';
 
 class ChangePasswordRepositoryImpl implements ChangePasswordRepository {
-  ChangePasswordRepositoryImpl({@required this.changePasswordRemoteDataSource});
+  ChangePasswordRepositoryImpl({required this.changePasswordRemoteDataSource});
 
-  final ChangePasswordRemoteDataSource changePasswordRemoteDataSource;
+  final ChangePasswordRemoteDataSource? changePasswordRemoteDataSource;
   @override
   Future<Either<Failure, void>> changePassword(
-      {String accessToken, String newPassword, String oldPassword}) async {
+      {String? accessToken, String? newPassword, String? oldPassword}) async {
     try {
-      return Right(await changePasswordRemoteDataSource.changePassword(
+      return Right(await changePasswordRemoteDataSource!.changePassword(
           accessToken: accessToken,
           newPassword: newPassword,
           oldPassword: oldPassword));

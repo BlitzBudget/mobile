@@ -14,9 +14,7 @@ part 'verify_event.dart';
 part 'verify_state.dart';
 
 class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
-  VerifyBloc({@required this.verifyUser})
-      : assert(verifyUser != null),
-        super(Empty());
+  VerifyBloc({required this.verifyUser}) : super(Empty());
 
   final verify_usecase.VerifyUser verifyUser;
 
@@ -37,7 +35,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
 
   Stream<VerifyState> processResendVerificationCode(
       ResendVerificatonCode event) async* {
-    final email = event.email.toLowerCase().trim();
+    final email = event.email!.toLowerCase().trim();
     final resendVerificationResponse =
         await verifyUser.resendVerificationCode(email: email);
     yield resendVerificationResponse.fold(
@@ -47,14 +45,14 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
   }
 
   Stream<VerifyState> processVerify(VerifyUser event) async* {
-    if (event.verificationCode == null && event.verificationCode.isEmpty) {
+    if (event.verificationCode == null && event.verificationCode!.isEmpty) {
       yield const Error(message: constants.VERIFICATION_CODE_EMPTY);
-    } else if (event.verificationCode.length != 6) {
+    } else if (event.verificationCode!.length != 6) {
       yield const Error(message: constants.VERIFICATION_CODE_LENGTH_MISMATCH);
     } else {
       yield Loading();
 
-      final email = event.email.toLowerCase().trim();
+      final email = event.email!.toLowerCase().trim();
       final verifyUserResponse = await verifyUser.verifyUser(
           email: email,
           password: event.password,

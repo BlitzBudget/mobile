@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
@@ -15,54 +14,54 @@ enum HTTPAPICalls { post, put, patch }
 
 abstract class HTTPClient {
   Future<dynamic> post(String url,
-      {Map<String, String> headers,
+      {Map<String, String?>? headers,
       dynamic body,
-      Encoding encoding,
-      bool skipAuthCheck});
+      Encoding? encoding,
+      bool? skipAuthCheck});
   Future<dynamic> put(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding});
+      {Map<String, String?>? headers, dynamic body, Encoding? encoding});
   Future<dynamic> patch(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding});
+      {Map<String, String?>? headers, dynamic body, Encoding? encoding});
 }
 
 class HTTPClientImpl implements HTTPClient {
   HTTPClientImpl(
-      {@required this.authTokenRepository,
-      @required this.accessTokenRepository,
-      @required this.refreshTokenHelper,
-      @required this.networkHelper});
+      {required this.authTokenRepository,
+      required this.accessTokenRepository,
+      required this.refreshTokenHelper,
+      required this.networkHelper});
 
-  final AuthTokenRepository authTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper;
-  final RefreshTokenHelper refreshTokenHelper;
+  final AuthTokenRepository? authTokenRepository;
+  final AccessTokenRepository? accessTokenRepository;
+  final NetworkHelper? networkHelper;
+  final RefreshTokenHelper? refreshTokenHelper;
 
   @override
   Future<dynamic> post(String url,
-      {Map<String, String> headers,
+      {Map<String, String?>? headers,
       dynamic body,
-      Encoding encoding,
-      bool skipAuthCheck = false}) async {
-    if (skipAuthCheck) {
+      Encoding? encoding,
+      bool? skipAuthCheck = false}) async {
+    if (skipAuthCheck!) {
       return postWithoutAuthorizationCheck(url, body, headers);
     } else {
       return processAPICallAndRefreshTokenIfNeeded(
-          url, body, headers, encoding, HTTPAPICalls.post);
+          url, body, headers!, encoding, HTTPAPICalls.post);
     }
   }
 
   @override
   Future<dynamic> put(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+      {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
     return processAPICallAndRefreshTokenIfNeeded(
-        url, body, headers, encoding, HTTPAPICalls.put);
+        url, body, headers!, encoding, HTTPAPICalls.put);
   }
 
   @override
   Future<dynamic> patch(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+      {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
     return processAPICallAndRefreshTokenIfNeeded(
-        url, body, headers, encoding, HTTPAPICalls.patch);
+        url, body, headers!, encoding, HTTPAPICalls.patch);
   }
 
   /// Convert Relevant JSON types
@@ -87,8 +86,8 @@ class HTTPClientImpl implements HTTPClient {
   }
 
   /// Populate Authorization Header
-  Future<dynamic> populateAuthHeader(Map<String, String> headers) async {
-    final authToken = await authTokenRepository.readAuthToken();
+  Future<dynamic> populateAuthHeader(Map<String, String?> headers) async {
+    final authToken = await authTokenRepository!.readAuthToken();
 
     /// Check if authorization is empty
     if (authToken.isLeft()) {
@@ -102,8 +101,8 @@ class HTTPClientImpl implements HTTPClient {
   Future<dynamic> processAPICallAndRefreshTokenIfNeeded(
       String url,
       dynamic body,
-      Map<String, String> headers,
-      Encoding encoding,
+      Map<String, String?> headers,
+      Encoding? encoding,
       HTTPAPICalls httpapiCalls) async {
     dynamic res;
     // Process Authorization Header
@@ -114,7 +113,7 @@ class HTTPClientImpl implements HTTPClient {
     } on SocketException catch (e) {
       throw ConnectionException(e);
     } on TokenExpiredException {
-      await refreshTokenHelper.refreshAuthToken(headers, encoding);
+      await refreshTokenHelper!.refreshAuthToken(headers, encoding);
 
       /// Try to fetch the content after refreshing the token
       res = await makeAppropriateAPICall(url, body, headers, httpapiCalls);
@@ -124,17 +123,18 @@ class HTTPClientImpl implements HTTPClient {
 
   // Make the relevant API Calls
   Future<dynamic> makeAppropriateAPICall(String url, dynamic body,
-      Map<String, String> headers, HTTPAPICalls httpapiCalls) async {
-    Response response;
+      Map<String, String?>? headers, HTTPAPICalls httpapiCalls) async {
+    late Response response;
     switch (httpapiCalls) {
       case HTTPAPICalls.post:
-        response = await networkHelper.post(url, body: body, headers: headers);
+        response = await networkHelper!.post(url, body: body, headers: headers);
         break;
       case HTTPAPICalls.put:
-        response = await networkHelper.put(url, body: body, headers: headers);
+        response = await networkHelper!.put(url, body: body, headers: headers);
         break;
       case HTTPAPICalls.patch:
-        response = await networkHelper.patch(url, body: body, headers: headers);
+        response =
+            await networkHelper!.patch(url, body: body, headers: headers);
         break;
       default:
     }
@@ -143,7 +143,7 @@ class HTTPClientImpl implements HTTPClient {
 
   /// POST call without authorization check
   Future<dynamic> postWithoutAuthorizationCheck(
-      String url, dynamic body, Map<String, String> headers) async {
+      String url, dynamic body, Map<String, String?>? headers) async {
     try {
       return await makeAppropriateAPICall(
           url, body, headers, HTTPAPICalls.post);

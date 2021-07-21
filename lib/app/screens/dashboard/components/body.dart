@@ -12,7 +12,7 @@ import '../tab/transactions_tab.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class Body extends StatelessWidget {
 // depending on the app and content.
 class PlatformAdaptingHomePage extends StatefulWidget {
   /// In the constructor
-  const PlatformAdaptingHomePage({Key key}) : super(key: key);
+  const PlatformAdaptingHomePage({Key? key}) : super(key: key);
 
   @override
   _PlatformAdaptingHomePageState createState() =>
@@ -106,7 +106,10 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
             );
           default:
             assert(false, 'Unexpected tab');
-            return null;
+            return CupertinoTabView(
+              defaultTitle: TransactionsTab.title,
+              builder: (context) => TransactionsTab(key: transactionsTabKey),
+            );
         }
       },
     );

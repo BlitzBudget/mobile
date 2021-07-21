@@ -16,14 +16,14 @@ class OverviewResponse extends Equatable {
       this.dates,
       this.wallet});
 
-  final List<Transaction> transactions;
-  final List<Budget> budgets;
-  final List<Category> categories;
-  final List<BankAccount> bankAccounts;
-  final List<Date> dates;
-  final Wallet wallet;
+  final List<Transaction>? transactions;
+  final List<Budget>? budgets;
+  final List<Category>? categories;
+  final List<BankAccount>? bankAccounts;
+  final List<Date>? dates;
+  final Wallet? wallet;
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [transactions, budgets, categories, bankAccounts, dates, wallet];
 }

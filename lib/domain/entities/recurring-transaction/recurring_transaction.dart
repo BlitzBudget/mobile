@@ -19,21 +19,21 @@ class RecurringTransaction extends Equatable {
       this.nextScheduled,
       this.creationDate});
 
-  final String recurringTransactionId;
-  final String walletId;
-  final double amount;
-  final String description;
-  final String accountId;
-  final Recurrence recurrence;
-  final CategoryType categoryType;
-  final String categoryName;
-  final String category;
-  final List<String> tags;
-  final String nextScheduled;
-  final String creationDate;
+  final String? recurringTransactionId;
+  final String? walletId;
+  final double? amount;
+  final String? description;
+  final String? accountId;
+  final Recurrence? recurrence;
+  final CategoryType? categoryType;
+  final String? categoryName;
+  final String? category;
+  final List<String>? tags;
+  final String? nextScheduled;
+  final String? creationDate;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         recurringTransactionId,
         walletId,
         amount,

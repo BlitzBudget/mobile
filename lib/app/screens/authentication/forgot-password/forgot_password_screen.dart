@@ -3,7 +3,7 @@ import 'components/body.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   /// In the constructor, require a Todo.
-  const ForgotPasswordScreen({Key key, this.email = '', this.password = ''})
+  const ForgotPasswordScreen({Key? key, this.email = '', this.password = ''})
       : super(key: key);
 
   final String email, password;

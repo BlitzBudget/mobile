@@ -25,7 +25,7 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_wit
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/overview_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/overview/fetch_overview_use_case.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -44,12 +44,12 @@ class MockUserAttributesRepository extends Mock
     implements UserAttributesRepository {}
 
 void main() {
-  FetchOverviewUseCase fetchOverviewUseCase;
-  MockOverviewRepository mockOverviewRepository;
-  MockDefaultWalletRepository mockDefaultWalletRepository;
-  MockEndsWithDateRepository mockEndsWithDateRepository;
-  MockStartsWithDateRepository mockStartsWithDateRepository;
-  MockUserAttributesRepository mockUserAttributesRepository;
+  late FetchOverviewUseCase fetchOverviewUseCase;
+  MockOverviewRepository? mockOverviewRepository;
+  MockDefaultWalletRepository? mockDefaultWalletRepository;
+  MockEndsWithDateRepository? mockEndsWithDateRepository;
+  MockStartsWithDateRepository? mockStartsWithDateRepository;
+  MockUserAttributesRepository? mockUserAttributesRepository;
 
   final overviewResponseModelAsString =
       fixture('responses/dashboard/overview_info.json');
@@ -83,26 +83,25 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockEndsWithDateRepository.readEndsWithDate())
+      when(() => mockEndsWithDateRepository!.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockStartsWithDateRepository.readStartsWithDate())
+      when(() => mockStartsWithDateRepository!.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
       final Either<Failure, OverviewResponse> fetchOverviewMonad =
           Right<Failure, OverviewResponse>(overviewResponseModel);
 
-      when(mockOverviewRepository.fetch(
-              startsWithDate: dateString,
-              endsWithDate: dateString,
-              defaultWallet: dateString,
-              userId: null))
-          .thenAnswer((_) => Future.value(fetchOverviewMonad));
+      when(() => mockOverviewRepository!.fetch(
+          startsWithDate: dateString,
+          endsWithDate: dateString,
+          defaultWallet: dateString,
+          userId: null)).thenAnswer((_) => Future.value(fetchOverviewMonad));
 
       final overviewResponse = await fetchOverviewUseCase.fetch();
 
       expect(overviewResponse.isRight(), true);
-      verify(mockOverviewRepository.fetch(
+      verify(() => mockOverviewRepository!.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: dateString,
@@ -115,28 +114,27 @@ void main() {
       final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(mockEndsWithDateRepository.readEndsWithDate())
+      when(() => mockEndsWithDateRepository!.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockStartsWithDateRepository.readStartsWithDate())
+      when(() => mockStartsWithDateRepository!.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockUserAttributesRepository.readUserAttributes())
+      when(() => mockUserAttributesRepository!.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
       final Either<Failure, OverviewResponse> fetchOverviewMonad =
           Right<Failure, OverviewResponse>(overviewResponseModel);
 
-      when(mockOverviewRepository.fetch(
-              startsWithDate: dateString,
-              endsWithDate: dateString,
-              defaultWallet: null,
-              userId: userId))
-          .thenAnswer((_) => Future.value(fetchOverviewMonad));
+      when(() => mockOverviewRepository!.fetch(
+          startsWithDate: dateString,
+          endsWithDate: dateString,
+          defaultWallet: null,
+          userId: userId)).thenAnswer((_) => Future.value(fetchOverviewMonad));
 
       final overviewResponse = await fetchOverviewUseCase.fetch();
 
       expect(overviewResponse.isRight(), true);
-      verify(mockOverviewRepository.fetch(
+      verify(() => mockOverviewRepository!.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -149,19 +147,19 @@ void main() {
       final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(mockEndsWithDateRepository.readEndsWithDate())
+      when(() => mockEndsWithDateRepository!.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockStartsWithDateRepository.readStartsWithDate())
+      when(() => mockStartsWithDateRepository!.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockUserAttributesRepository.readUserAttributes())
+      when(() => mockUserAttributesRepository!.readUserAttributes())
           .thenAnswer((_) => Future.value(userFailure));
 
       final overviewResponse = await fetchOverviewUseCase.fetch();
 
       expect(overviewResponse.isLeft(), true);
-      verifyNever(mockOverviewRepository.fetch(
+      verifyNever(() => mockOverviewRepository!.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -208,14 +206,15 @@ OverviewResponseModel convertToResponseModel(
       <Date>[]);
 
   final responseWallet = overviewResponseModelAsJSON['Wallet'];
-  Wallet convertedWallet;
+  Wallet? convertedWallet;
 
   /// Check if the response is a string or a list
   ///
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet = WalletModel.fromJSON(responseWallet);
+    convertedWallet =
+        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
   } else if (responseWallet is List) {
     final convertedWallets = List<Wallet>.from(responseWallet
         .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));

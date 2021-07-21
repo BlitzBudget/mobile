@@ -7,15 +7,15 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/
 import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/transaction/recurring_transaction_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/recurring_transaction_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockRecurringTransactionRemoteDataSource extends Mock
     implements RecurringTransactionRemoteDataSource {}
 
 void main() {
-  MockRecurringTransactionRemoteDataSource
+  MockRecurringTransactionRemoteDataSource?
       mockRecurringTransactionRemoteDataSource;
-  RecurringTransactionRepositoryImpl recurringTransactionRepositoryImpl;
+  RecurringTransactionRepositoryImpl? recurringTransactionRepositoryImpl;
 
   setUp(() {
     mockRecurringTransactionRemoteDataSource =
@@ -36,17 +36,17 @@ void main() {
   group('Update Recurring Transactions', () {
     test('Should return FetchDataFailure ', () async {
       const recurringTransactionModel = RecurringTransactionModel();
-      when(mockRecurringTransactionRemoteDataSource
+      when(() => mockRecurringTransactionRemoteDataSource!
               .update(recurringTransactionModel))
           .thenThrow(EmptyAuthorizationTokenException());
       final recurringTransactionReceived =
-          await recurringTransactionRepositoryImpl
+          await recurringTransactionRepositoryImpl!
               .update(recurringTransactionModel);
 
       /// Expect an exception to be thrown
       final f = recurringTransactionReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
-      verify(mockRecurringTransactionRemoteDataSource
+      verify(() => mockRecurringTransactionRemoteDataSource!
           .update(recurringTransactionModel));
       expect(recurringTransactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));

@@ -10,10 +10,10 @@ import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart
 
 abstract class TransactionRemoteDataSource {
   Future<TransactionResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId});
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId});
 
   Future<void> update(TransactionModel updateTransaction);
 
@@ -21,17 +21,17 @@ abstract class TransactionRemoteDataSource {
 }
 
 class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
-  TransactionRemoteDataSourceImpl({@required this.httpClient});
+  TransactionRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Get Transaction
   @override
   Future<TransactionResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId}) async {
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId}) async {
     final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -42,7 +42,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
     } else {
       contentBody['userId'] = userId;
     }
-    return httpClient
+    return httpClient!
         .post(constants.transactionURL,
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<TransactionResponseModel>((dynamic res) {
@@ -57,7 +57,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
     developer.log(
         'The Map for patching the transaction is  ${updateTransaction.toString()}');
 
-    return httpClient
+    return httpClient!
         .patch(constants.transactionURL,
             body: jsonEncode(updateTransaction.toJSON()),
             headers: constants.headers)
@@ -69,7 +69,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
   /// Add Transaction
   @override
   Future<void> add(TransactionModel addTransaction) {
-    return httpClient
+    return httpClient!
         .put(constants.transactionURL,
             body: jsonEncode(addTransaction.toJSON()),
             headers: constants.headers)

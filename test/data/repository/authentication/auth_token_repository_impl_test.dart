@@ -8,7 +8,7 @@ import 'package:mobile_blitzbudget/data/datasource/local/authentication/auth_tok
 import 'package:mobile_blitzbudget/data/repositories/authentication/auth_token_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -16,8 +16,8 @@ class MockAuthTokenLocalDataSource extends Mock
     implements AuthTokenLocalDataSource {}
 
 void main() {
-  MockAuthTokenLocalDataSource mockAuthTokenLocalDataSource;
-  AuthTokenRepositoryImpl authTokenRepositoryImpl;
+  MockAuthTokenLocalDataSource? mockAuthTokenLocalDataSource;
+  AuthTokenRepositoryImpl? authTokenRepositoryImpl;
 
   setUp(() {
     mockAuthTokenLocalDataSource = MockAuthTokenLocalDataSource();
@@ -34,14 +34,14 @@ void main() {
 
   group('Read Auth Token', () {
     test('Should return No Value in Cache Exception', () async {
-      when(mockAuthTokenLocalDataSource.readAuthToken())
+      when(() => mockAuthTokenLocalDataSource!.readAuthToken())
           .thenThrow(NoValueInCacheException());
-      final authTokenReceived = await authTokenRepositoryImpl.readAuthToken();
+      final authTokenReceived = await authTokenRepositoryImpl!.readAuthToken();
 
       /// Expect an exception to be thrown
       final f =
           authTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockAuthTokenLocalDataSource.readAuthToken());
+      verify(() => mockAuthTokenLocalDataSource!.readAuthToken());
       expect(authTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });
@@ -54,9 +54,9 @@ void main() {
       final userModelAsJSON = jsonDecode(userModelAsString);
       final authToken = userModelAsJSON['AuthenticationResult']['IdToken'];
       final userModel = UserResponse(authenticationToken: authToken);
-      await authTokenRepositoryImpl.writeAuthToken(userModel);
+      await authTokenRepositoryImpl!.writeAuthToken(userModel);
 
-      verify(mockAuthTokenLocalDataSource.writeAuthToken(authToken));
+      verify(() => mockAuthTokenLocalDataSource!.writeAuthToken(authToken));
     });
   });
 }

@@ -9,9 +9,9 @@ enum AccountSubType {
   liability
 }
 
-extension AccountSubTypeExtension on AccountSubType {
+extension AccountSubTypeExtension on AccountSubType? {
   /// Account Sub Type conversion to String name
-  String get name {
+  String? get name {
     switch (this) {
       case AccountSubType.savingsAccount:
         return 'Savings Account';
@@ -31,7 +31,7 @@ extension AccountSubTypeExtension on AccountSubType {
   }
 
   /// Account Sub Type conversion to Account Type
-  String get accountType {
+  String? get accountType {
     switch (this) {
       case AccountSubType.savingsAccount:
         return AccountType.asset.name;

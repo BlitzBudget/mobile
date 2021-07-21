@@ -30,7 +30,7 @@ const String recurringTransactionURL = '$baseURL/recurring-transaction';
 const String deleteItemURL = '$baseURL/delete-item';
 
 /// Header for API calls
-Map<String, String> headers = {
+Map<String, String?> headers = {
   'Content-type': 'application/json;charset=UTF-8',
   'Accept': 'application/json'
 };

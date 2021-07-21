@@ -10,7 +10,7 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/authentica
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/login_user.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -26,12 +26,12 @@ class MockUserAttributesRepository extends Mock
     implements UserAttributesRepository {}
 
 void main() {
-  MockAuthenticationRepository mockAuthenticationRepository;
-  MockAccessTokenRepository mockAccessTokenRepository;
-  MockAuthTokenRepository mockAuthTokenRepository;
-  MockRefreshTokenRepository mockRefreshTokenRepository;
-  MockUserAttributesRepository mockUserAttributesRepository;
-  LoginUser loginUser;
+  MockAuthenticationRepository? mockAuthenticationRepository;
+  MockAccessTokenRepository? mockAccessTokenRepository;
+  MockAuthTokenRepository? mockAuthTokenRepository;
+  MockRefreshTokenRepository? mockRefreshTokenRepository;
+  MockUserAttributesRepository? mockUserAttributesRepository;
+  late LoginUser loginUser;
 
   setUp(() {
     mockAuthenticationRepository = MockAuthenticationRepository();
@@ -54,21 +54,21 @@ void main() {
       const optionResponse = Some(UserResponse());
       const eitherUserResponseMonad =
           Right<Failure, Option<UserResponse>>(optionResponse);
-      when(mockAuthenticationRepository.loginUser(
-              email: userEmail, password: userPassword))
+      when(() => mockAuthenticationRepository!
+              .loginUser(email: userEmail, password: userPassword))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
 
       await loginUser.loginUser(email: userEmail, password: userPassword);
-      verify(mockAuthenticationRepository.loginUser(
-          email: userEmail, password: userPassword));
-      verify(mockUserAttributesRepository
-          .writeUserAttributes(optionResponse.getOrElse(null)));
-      verify(mockRefreshTokenRepository
-          .writeRefreshToken(optionResponse.getOrElse(null)));
-      verify(mockAuthTokenRepository
-          .writeAuthToken(optionResponse.getOrElse(null)));
-      verify(mockAccessTokenRepository
-          .writeAccessToken(optionResponse.getOrElse(null)));
+      verify(() => mockAuthenticationRepository!
+          .loginUser(email: userEmail, password: userPassword));
+      verify(() => mockUserAttributesRepository!.writeUserAttributes(
+          optionResponse.getOrElse(() => const UserResponse())));
+      verify(() => mockRefreshTokenRepository!.writeRefreshToken(
+          optionResponse.getOrElse(() => const UserResponse())));
+      verify(() => mockAuthTokenRepository!.writeAuthToken(
+          optionResponse.getOrElse(() => const UserResponse())));
+      verify(() => mockAccessTokenRepository!.writeAccessToken(
+          optionResponse.getOrElse(() => const UserResponse())));
     });
   });
 
@@ -79,8 +79,8 @@ void main() {
       const optionResponse = None<UserResponse>();
       const eitherUserResponseMonad =
           Right<Failure, Option<UserResponse>>(optionResponse);
-      when(mockAuthenticationRepository.loginUser(
-              email: userEmail, password: userPassword))
+      when(() => mockAuthenticationRepository!
+              .loginUser(email: userEmail, password: userPassword))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
 
       final userResponse =
@@ -89,12 +89,13 @@ void main() {
           userResponse.fold((failure) => failure, (_) => GenericFailure());
       expect(userResponse.isLeft(), equals(true));
       expect(failureResponse, equals(EmptyResponseFailure()));
-      verify(mockAuthenticationRepository.loginUser(
-          email: userEmail, password: userPassword));
-      verifyNever(mockUserAttributesRepository.writeUserAttributes(null));
-      verifyNever(mockRefreshTokenRepository.writeRefreshToken(null));
-      verifyNever(mockAuthTokenRepository.writeAuthToken(null));
-      verifyNever(mockAccessTokenRepository.writeAccessToken(null));
+      verify(() => mockAuthenticationRepository!
+          .loginUser(email: userEmail, password: userPassword));
+      verifyNever(
+          () => mockUserAttributesRepository!.writeUserAttributes(null));
+      verifyNever(() => mockRefreshTokenRepository!.writeRefreshToken(null));
+      verifyNever(() => mockAuthTokenRepository!.writeAuthToken(null));
+      verifyNever(() => mockAccessTokenRepository!.writeAccessToken(null));
     });
 
     test('Response Failure: Should receive a failure response', () async {
@@ -102,8 +103,8 @@ void main() {
       const userPassword = 'password';
       final eitherUserResponseMonad =
           Left<Failure, Option<UserResponse>>(RedirectToSignupDueToFailure());
-      when(mockAuthenticationRepository.loginUser(
-              email: userEmail, password: userPassword))
+      when(() => mockAuthenticationRepository!
+              .loginUser(email: userEmail, password: userPassword))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
 
       final userResponse =
@@ -112,12 +113,13 @@ void main() {
           userResponse.fold((failure) => failure, (_) => GenericFailure());
       expect(userResponse.isLeft(), equals(true));
       expect(failureResponse, equals(RedirectToSignupDueToFailure()));
-      verify(mockAuthenticationRepository.loginUser(
-          email: userEmail, password: userPassword));
-      verifyNever(mockUserAttributesRepository.writeUserAttributes(null));
-      verifyNever(mockRefreshTokenRepository.writeRefreshToken(null));
-      verifyNever(mockAuthTokenRepository.writeAuthToken(null));
-      verifyNever(mockAccessTokenRepository.writeAccessToken(null));
+      verify(() => mockAuthenticationRepository!
+          .loginUser(email: userEmail, password: userPassword));
+      verifyNever(
+          () => mockUserAttributesRepository!.writeUserAttributes(null));
+      verifyNever(() => mockRefreshTokenRepository!.writeRefreshToken(null));
+      verifyNever(() => mockAuthTokenRepository!.writeAuthToken(null));
+      verifyNever(() => mockAccessTokenRepository!.writeAccessToken(null));
     });
   });
 }

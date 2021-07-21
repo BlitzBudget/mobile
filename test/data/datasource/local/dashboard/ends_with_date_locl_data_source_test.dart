@@ -2,14 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/persistence/key_value_store_impl.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:matcher/matcher.dart';
 
 class MockKeyValueStoreImpl extends Mock implements KeyValueStoreImpl {}
 
 void main() {
-  EndsWithDateLocalDataSourceImpl dataSource;
-  KeyValueStoreImpl mockKeyValueStoreImpl;
+  late EndsWithDateLocalDataSourceImpl dataSource;
+  KeyValueStoreImpl? mockKeyValueStoreImpl;
   const endsWithDateCacheName = 'ends_with_date';
 
   setUp(() {
@@ -26,12 +26,13 @@ void main() {
       'Should return Ends With Date from KeyValueStore when there is one in the SharedPreferences',
       () async {
         // arrange
-        when(mockKeyValueStoreImpl.getString(key: endsWithDateCacheName))
+        when(() => mockKeyValueStoreImpl!.getString(key: endsWithDateCacheName))
             .thenAnswer((_) => Future.value(endsWithDateModel));
         // act
         final endsWithDateResult = await dataSource.readEndsWithDate();
         // assert
-        verify(mockKeyValueStoreImpl.getString(key: endsWithDateCacheName));
+        verify(
+            () => mockKeyValueStoreImpl!.getString(key: endsWithDateCacheName));
         expect(endsWithDateResult, equals(endsWithDateModel));
       },
     );
@@ -40,7 +41,7 @@ void main() {
       'Should throw a NoValueInCacheException when there is no value',
       () async {
         // arrange
-        when(mockKeyValueStoreImpl.getString(key: endsWithDateCacheName))
+        when(() => mockKeyValueStoreImpl!.getString(key: endsWithDateCacheName))
             .thenThrow(NoValueInCacheException());
         // assert
         expect(() => dataSource.readEndsWithDate(),
@@ -59,8 +60,8 @@ void main() {
         // act
         await dataSource.writeEndsWithDate(endsWithDateModel);
         // assert
-        verify(mockKeyValueStoreImpl.setString(
-            key: endsWithDateCacheName, value: endsWithDateModel));
+        verify(() => mockKeyValueStoreImpl!
+            .setString(key: endsWithDateCacheName, value: endsWithDateModel));
       },
     );
   });

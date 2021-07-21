@@ -18,20 +18,20 @@ class Transaction extends Equatable {
       this.categoryName,
       this.tags});
 
-  final String transactionId;
-  final String walletId;
-  final double amount;
-  final String description;
-  final String accountId;
-  final String dateMeantFor;
-  final String categoryId;
-  final Recurrence recurrence;
-  final CategoryType categoryType;
-  final String categoryName;
-  final List<String> tags;
+  final String? transactionId;
+  final String? walletId;
+  final double? amount;
+  final String? description;
+  final String? accountId;
+  final String? dateMeantFor;
+  final String? categoryId;
+  final Recurrence? recurrence;
+  final CategoryType? categoryType;
+  final String? categoryName;
+  final List<String>? tags;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         transactionId,
         walletId,
         amount,

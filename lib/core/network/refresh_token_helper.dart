@@ -15,41 +15,42 @@ import 'network_helper.dart';
 
 class RefreshTokenHelper {
   RefreshTokenHelper(
-      {@required this.refreshTokenRepository,
-      @required this.authTokenRepository,
-      @required this.accessTokenRepository,
-      @required this.networkHelper,
-      @required this.clearAllStorageRepository,
-      @required this.httpClient});
+      {required this.refreshTokenRepository,
+      required this.authTokenRepository,
+      required this.accessTokenRepository,
+      required this.networkHelper,
+      required this.clearAllStorageRepository,
+      required this.httpClient});
 
-  final RefreshTokenRepository refreshTokenRepository;
-  final AuthTokenRepository authTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper;
-  final ClearAllStorageRepository clearAllStorageRepository;
-  final http.Client httpClient;
+  final RefreshTokenRepository? refreshTokenRepository;
+  final AuthTokenRepository? authTokenRepository;
+  final AccessTokenRepository? accessTokenRepository;
+  final NetworkHelper? networkHelper;
+  final ClearAllStorageRepository? clearAllStorageRepository;
+  final http.Client? httpClient;
 
   /// Refresh authorization token
   ///
   /// If successful call the API again
   /// If unsuccessful then logout
   Future<void> refreshAuthToken(
-      Map<String, String> headers, Encoding encoding) async {
+      Map<String, String?> headers, Encoding? encoding) async {
     debugPrint(
         ' The authorization token has expired, Trying to refresh the token.');
 
     /// Store Access token and Authentication Token
-    final refreshToken = await refreshTokenRepository.readRefreshToken();
+    final refreshToken = await refreshTokenRepository!.readRefreshToken();
 
     /// If the refresh token is empty then throw exception
     if (refreshToken.isLeft()) {
       await clearStoreAndThrowException();
     }
 
-    return httpClient
+    return httpClient!
         .post(Uri.parse(refreshTokenURL),
-            body: jsonEncode({'refreshToken': refreshToken.getOrElse(null)}),
-            headers: headers,
+            body:
+                jsonEncode({'refreshToken': refreshToken.getOrElse(() => '')}),
+            headers: headers as Map<String, String>?,
             encoding: encoding)
         .then((response) async {
       debugPrint(' The authorization token has been refreshed successfully.');
@@ -78,10 +79,10 @@ class RefreshTokenHelper {
         final user = UserResponseModel.fromJSON(res);
 
         /// Store Auth Token
-        await authTokenRepository.writeAuthToken(user);
+        await authTokenRepository!.writeAuthToken(user);
 
         /// Store Access Token
-        await accessTokenRepository.writeAccessToken(user);
+        await accessTokenRepository!.writeAccessToken(user);
 
         return res;
       }
@@ -93,7 +94,7 @@ class RefreshTokenHelper {
 
   /// Clear all Storage (keyValue and SecureKeyValue)
   Future<void> clearStoreAndThrowException() async {
-    await clearAllStorageRepository.clearAllStorage();
+    await clearAllStorageRepository!.clearAllStorage();
     throw UnableToRefreshTokenException();
   }
 }

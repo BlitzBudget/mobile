@@ -20,7 +20,7 @@ class ResendVerificationCodeSuccessful extends VerifyState {}
 class Loading extends VerifyState {}
 
 class Error extends VerifyState {
-  const Error({@required this.message});
+  const Error({required this.message});
 
   final String message;
 

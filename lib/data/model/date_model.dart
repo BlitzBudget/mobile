@@ -3,11 +3,11 @@ import 'package:mobile_blitzbudget/domain/entities/date.dart';
 
 class DateModel extends Date {
   const DateModel(
-      {final String walletId,
-      final String dateId,
-      final double incomeTotal,
-      final double expenseTotal,
-      final double balance})
+      {final String? walletId,
+      final String? dateId,
+      final double? incomeTotal,
+      final double? expenseTotal,
+      final double? balance})
       : super(
             walletId: walletId,
             dateId: dateId,

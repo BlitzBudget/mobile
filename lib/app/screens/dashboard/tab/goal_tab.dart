@@ -8,7 +8,7 @@ import '../../../widgets/dashboard_widget.dart';
 
 class GoalTab extends StatefulWidget {
   const GoalTab({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const title = 'Goal';
@@ -22,9 +22,9 @@ class GoalTab extends StatefulWidget {
 class _GoalTabState extends State<GoalTab> {
   static const _itemsLength = 20;
 
-  List<Color> colors;
-  List<String> titles;
-  List<String> contents;
+  List<Color>? colors;
+  late List<String> titles;
+  late List<String> contents;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _GoalTabState extends State<GoalTab> {
     super.initState();
   }
 
-  Widget _listBuilder(BuildContext context, int index) {
+  Widget? _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
       return null;
     }
@@ -102,7 +102,7 @@ class _GoalTabState extends State<GoalTab> {
         title: const Text(GoalTab.title),
       ),
       body: ListView.builder(
-        itemBuilder: _listBuilder,
+        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
       ),
     );
   }
@@ -111,7 +111,7 @@ class _GoalTabState extends State<GoalTab> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
-        itemBuilder: _listBuilder,
+        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
       ),
     );
   }

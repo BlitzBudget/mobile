@@ -21,19 +21,19 @@ class TransactionResponse extends Equatable {
       this.expenseTotal,
       this.balance});
 
-  final List<Transaction> transactions;
-  final List<Budget> budgets;
-  final List<Category> categories;
-  final List<BankAccount> bankAccounts;
-  final List<RecurringTransaction> recurringTransactions;
-  final List<Date> dates;
-  final Wallet wallet;
-  final double incomeTotal;
-  final double expenseTotal;
-  final double balance;
+  final List<Transaction>? transactions;
+  final List<Budget>? budgets;
+  final List<Category>? categories;
+  final List<BankAccount>? bankAccounts;
+  final List<RecurringTransaction>? recurringTransactions;
+  final List<Date>? dates;
+  final Wallet? wallet;
+  final double? incomeTotal;
+  final double? expenseTotal;
+  final double? balance;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         transactions,
         budgets,
         categories,

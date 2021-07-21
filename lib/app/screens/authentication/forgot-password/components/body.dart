@@ -12,9 +12,9 @@ import 'background.dart';
 // Public exposed class
 class Body extends StatefulWidget {
   /// In the constructor, require a Todo.
-  const Body({Key key, this.email, this.password}) : super(key: key);
+  const Body({Key? key, this.email, this.password}) : super(key: key);
 
-  final String email, password;
+  final String? email, password;
 
   @override
   _BodyState createState() => _BodyState();

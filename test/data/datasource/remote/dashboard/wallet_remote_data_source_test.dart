@@ -5,15 +5,15 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/wallet_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  WalletRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late WalletRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -28,14 +28,14 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchWalletAsJSON['Wallet'][0]['walletId'];
-      String userId;
+      String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
         'walletId': defaultWallet
       };
       // arrange
-      when(mockHTTPClientImpl.post(constants.walletURL,
+      when(() => mockHTTPClientImpl!.post(constants.walletURL,
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchWalletAsJSON);
       // act
@@ -45,10 +45,10 @@ void main() {
           defaultWallet: defaultWallet,
           userId: userId);
       // assert
-      verify(mockHTTPClientImpl.post(constants.walletURL,
+      verify(() => mockHTTPClientImpl!.post(constants.walletURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(wallet.wallets.first.walletId,
+      expect(wallet.wallets!.first.walletId,
           equals(fetchWalletAsJSON['Wallet'][0]['walletId']));
     });
   });
@@ -67,13 +67,13 @@ void main() {
           'currency': currency,
         };
         // arrange
-        when(mockHTTPClientImpl.put(constants.walletURL,
+        when(() => mockHTTPClientImpl!.put(constants.walletURL,
                 body: jsonEncode(contentBody), headers: constants.headers))
             .thenAnswer((_) async => addWalletAsJSON);
         // act
         await dataSource.add(userId: userId, currency: currency);
         // assert
-        verify(mockHTTPClientImpl.put(constants.walletURL,
+        verify(() => mockHTTPClientImpl!.put(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers));
       },
     );
@@ -92,13 +92,13 @@ void main() {
             userId: updateWalletCurrencyAsJSON['body-json']['walletId'],
             currency: updateWalletCurrencyAsJSON['body-json']['currency']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.walletURL,
+        when(() => mockHTTPClientImpl!.patch(constants.walletURL,
                 body: jsonEncode(wallet.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateWalletCurrencyAsJSON);
         // act
         await dataSource.update(wallet);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.walletURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.walletURL,
             body: jsonEncode(wallet.toJSON()), headers: constants.headers));
       },
     );
@@ -114,13 +114,13 @@ void main() {
             userId: updateWalletNameAsJSON['body-json']['walletId'],
             walletName: updateWalletNameAsJSON['body-json']['name']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.walletURL,
+        when(() => mockHTTPClientImpl!.patch(constants.walletURL,
                 body: jsonEncode(wallet.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateWalletNameAsJSON);
         // act
         await dataSource.update(wallet);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.walletURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.walletURL,
             body: jsonEncode(wallet.toJSON()), headers: constants.headers));
       },
     );
@@ -136,7 +136,7 @@ void main() {
       'Should delete the appropriate wallet item when invoked',
       () async {
         // arrange
-        when(mockHTTPClientImpl.post(constants.walletURL,
+        when(() => mockHTTPClientImpl!.post(constants.walletURL,
                 body: jsonEncode({
                   'walletId': walletId,
                   'deleteAccount': false,
@@ -147,7 +147,7 @@ void main() {
         // act
         await dataSource.delete(walletId: walletId, userId: userId);
         // assert
-        verify(mockHTTPClientImpl.post(constants.walletURL,
+        verify(() => mockHTTPClientImpl!.post(constants.walletURL,
             body: jsonEncode({
               'walletId': walletId,
               'deleteAccount': false,

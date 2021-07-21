@@ -13,7 +13,7 @@ import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/authentication/user_attributes_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -24,9 +24,9 @@ class MockUserAttributesRemoteDataSource extends Mock
     implements UserAttributesRemoteDataSource {}
 
 void main() {
-  MockUserAttributesLocalDataSource mockUserAttributesLocalDataSource;
-  MockUserAttributesRemoteDataSource mockUserAttributesRemoteDataSource;
-  UserAttributesRepositoryImpl userAttributesRepositoryImpl;
+  MockUserAttributesLocalDataSource? mockUserAttributesLocalDataSource;
+  MockUserAttributesRemoteDataSource? mockUserAttributesRemoteDataSource;
+  UserAttributesRepositoryImpl? userAttributesRepositoryImpl;
 
   setUp(() {
     mockUserAttributesRemoteDataSource = MockUserAttributesRemoteDataSource();
@@ -64,46 +64,47 @@ void main() {
         userId: userId);
 
     test('Should return Empty Response Failure', () async {
-      when(mockUserAttributesLocalDataSource.readUserAttributes())
+      when(() => mockUserAttributesLocalDataSource!.readUserAttributes())
           .thenThrow(NoValueInCacheException());
       final userAttributesReceived =
-          await userAttributesRepositoryImpl.readUserAttributes();
+          await userAttributesRepositoryImpl!.readUserAttributes();
 
       /// Expect an exception to be thrown
       final f = userAttributesReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
       expect(userAttributesReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
-      verify(mockUserAttributesLocalDataSource.readUserAttributes());
+      verify(() => mockUserAttributesLocalDataSource!.readUserAttributes());
     });
 
     test('Should return Valid Response', () async {
-      when(mockUserAttributesLocalDataSource.readUserAttributes())
+      when(() => mockUserAttributesLocalDataSource!.readUserAttributes())
           .thenAnswer((_) => Future.value(userAttributeAsString));
       final userAttributesReceived =
-          await userAttributesRepositoryImpl.readUserAttributes();
+          await userAttributesRepositoryImpl!.readUserAttributes();
 
       /// Expect an exception to be thrown
       expect(userAttributesReceived.isRight(), equals(true));
       expect(
           userAttributesReceived.getOrElse(() => null), equals(userAttributes));
-      verify(mockUserAttributesLocalDataSource.readUserAttributes());
+      verify(() => mockUserAttributesLocalDataSource!.readUserAttributes());
     });
   });
 
   group('Update User Attributes', () {
     test('Should return Success', () async {
       const userModel = UserModel();
-      when(mockUserAttributesRemoteDataSource.updateUserAttributes(userModel))
+      when(() => mockUserAttributesRemoteDataSource!
+              .updateUserAttributes(userModel))
           .thenThrow(EmptyAuthorizationTokenException());
       final userAttributesReceived =
-          await userAttributesRepositoryImpl.updateUserAttributes(userModel);
+          await userAttributesRepositoryImpl!.updateUserAttributes(userModel);
 
       /// Expect an exception to be thrown
       final f = userAttributesReceived.fold<Failure>(
           (f) => f, (_) => GenericFailure());
-      verify(
-          mockUserAttributesRemoteDataSource.updateUserAttributes(userModel));
+      verify(() =>
+          mockUserAttributesRemoteDataSource!.updateUserAttributes(userModel));
       expect(userAttributesReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -111,11 +112,11 @@ void main() {
     test('Should return Fetch Data Failure', () async {
       const userModel = UserModel();
       final userAttributesReceived =
-          await userAttributesRepositoryImpl.updateUserAttributes(userModel);
+          await userAttributesRepositoryImpl!.updateUserAttributes(userModel);
 
       /// Expect an exception to be thrown
-      verify(
-          mockUserAttributesRemoteDataSource.updateUserAttributes(userModel));
+      verify(() =>
+          mockUserAttributesRemoteDataSource!.updateUserAttributes(userModel));
       expect(userAttributesReceived.isRight(), equals(true));
     });
   });
@@ -130,12 +131,12 @@ void main() {
         refreshToken: userModelAsJSON['AuthenticationResult']['RefreshToken'],
         user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
         wallet: WalletModel.fromJSON(userModelAsJSON['Wallet'][0]));
-    final UserModel encodedUser = userResponse.user;
+    final encodedUser = userResponse.user as UserModel;
     final encodedUserString = jsonEncode(encodedUser.toJSON());
 
     test('Should write user attributes', () async {
-      await userAttributesRepositoryImpl.writeUserAttributes(userResponse);
-      verify(mockUserAttributesLocalDataSource
+      await userAttributesRepositoryImpl!.writeUserAttributes(userResponse);
+      verify(() => mockUserAttributesLocalDataSource!
           .writeUserAttributes(encodedUserString));
     });
   });

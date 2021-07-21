@@ -9,9 +9,9 @@ import '../../../../constants/constants.dart';
 // Public exposed class
 class ResendVerification extends StatefulWidget {
   /// In the constructor, require an email.
-  const ResendVerification({Key key, @required this.email}) : super(key: key);
+  const ResendVerification({Key? key, required this.email}) : super(key: key);
 
-  final String email;
+  final String? email;
 
   @override
   _ResendVerificationState createState() => _ResendVerificationState();
@@ -22,7 +22,7 @@ class _ResendVerificationState extends State<ResendVerification> {
 
   /// States
   bool _btnEnabled = true;
-  Timer _timer;
+  late Timer _timer;
   final timeout = const Duration(seconds: 60);
 
   @override
@@ -66,7 +66,7 @@ class _ResendVerificationState extends State<ResendVerification> {
     );
   }
 
-  void _dispatchResendVerificationCode({@required String email}) {
+  void _dispatchResendVerificationCode({required String? email}) {
     BlocProvider.of<VerifyBloc>(context)
         .add(ResendVerificatonCode(email: email));
   }

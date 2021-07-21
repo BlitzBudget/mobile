@@ -7,14 +7,14 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/bank_account
 import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/bank_account_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/bank_account_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockBankAccountRemoteDataSource extends Mock
     implements BankAccountRemoteDataSource {}
 
 void main() {
-  MockBankAccountRemoteDataSource mockBankAccountRemoteDataSource;
-  BankAccountRepositoryImpl bankAccountRepositoryImpl;
+  MockBankAccountRemoteDataSource? mockBankAccountRemoteDataSource;
+  BankAccountRepositoryImpl? bankAccountRepositoryImpl;
 
   setUp(() {
     mockBankAccountRemoteDataSource = MockBankAccountRemoteDataSource();
@@ -32,15 +32,15 @@ void main() {
   group('Update BankAccounts', () {
     test('Should return FetchDataFailure ', () async {
       const bankAccountModel = BankAccountModel();
-      when(mockBankAccountRemoteDataSource.update(bankAccountModel))
+      when(() => mockBankAccountRemoteDataSource!.update(bankAccountModel))
           .thenThrow(EmptyAuthorizationTokenException());
       final bankAccountReceived =
-          await bankAccountRepositoryImpl.update(bankAccountModel);
+          await bankAccountRepositoryImpl!.update(bankAccountModel);
 
       /// Expect an exception to be thrown
       final f =
           bankAccountReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockBankAccountRemoteDataSource.update(bankAccountModel));
+      verify(() => mockBankAccountRemoteDataSource!.update(bankAccountModel));
       expect(bankAccountReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -48,15 +48,17 @@ void main() {
 
   group('Delete Bank Account', () {
     test('Should return FetchDataFailure ', () async {
-      when(mockBankAccountRemoteDataSource.delete(account: '', walletId: ''))
-          .thenThrow(EmptyAuthorizationTokenException());
+      when(() => mockBankAccountRemoteDataSource!.delete(
+          account: '',
+          walletId: '')).thenThrow(EmptyAuthorizationTokenException());
       final bankAccountReceived =
-          await bankAccountRepositoryImpl.delete(account: '', walletId: '');
+          await bankAccountRepositoryImpl!.delete(account: '', walletId: '');
 
       /// Expect an exception to be thrown
       final f =
           bankAccountReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockBankAccountRemoteDataSource.delete(account: '', walletId: ''));
+      verify(() =>
+          mockBankAccountRemoteDataSource!.delete(account: '', walletId: ''));
       expect(bankAccountReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -65,15 +67,15 @@ void main() {
   group('Add Bank Account', () {
     test('Should return FetchDataFailure ', () async {
       const addBankAccountModel = BankAccountModel();
-      when(mockBankAccountRemoteDataSource.add(addBankAccountModel))
+      when(() => mockBankAccountRemoteDataSource!.add(addBankAccountModel))
           .thenThrow(EmptyAuthorizationTokenException());
       final bankAccountReceived =
-          await bankAccountRepositoryImpl.add(addBankAccountModel);
+          await bankAccountRepositoryImpl!.add(addBankAccountModel);
 
       /// Expect an exception to be thrown
       final f =
           bankAccountReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockBankAccountRemoteDataSource.add(addBankAccountModel));
+      verify(() => mockBankAccountRemoteDataSource!.add(addBankAccountModel));
       expect(bankAccountReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

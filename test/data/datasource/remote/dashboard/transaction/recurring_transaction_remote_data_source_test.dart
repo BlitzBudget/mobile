@@ -6,15 +6,15 @@ import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/recurring_transaction_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  RecurringTransactionRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late RecurringTransactionRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -36,14 +36,15 @@ void main() {
             amount: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['amount']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.recurringTransactionURL,
                 body: jsonEncode(recurTransaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateAmountAsJSON);
         // act
         await dataSource.update(recurTransaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
+        verify(() => mockHTTPClientImpl!.patch(
+            constants.recurringTransactionURL,
             body: jsonEncode(recurTransaction.toJSON()),
             headers: constants.headers));
       },
@@ -61,14 +62,15 @@ void main() {
                 ['recurringTransactionId'],
             description: updateDescriptionAsJSON['body-json']['description']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.recurringTransactionURL,
                 body: jsonEncode(recurTransaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateDescriptionAsJSON);
         // act
         await dataSource.update(recurTransaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
+        verify(() => mockHTTPClientImpl!.patch(
+            constants.recurringTransactionURL,
             body: jsonEncode(recurTransaction.toJSON()),
             headers: constants.headers));
       },
@@ -89,14 +91,15 @@ void main() {
                 ['recurringTransactionId'],
             tags: tags);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.recurringTransactionURL,
                 body: jsonEncode(recurTransaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateTagsAsJSON);
         // act
         await dataSource.update(recurTransaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.recurringTransactionURL,
+        verify(() => mockHTTPClientImpl!.patch(
+            constants.recurringTransactionURL,
             body: jsonEncode(recurTransaction.toJSON()),
             headers: constants.headers));
       },

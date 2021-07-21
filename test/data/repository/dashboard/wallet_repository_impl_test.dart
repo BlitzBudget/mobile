@@ -9,7 +9,7 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/wallet_remot
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/wallet_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -17,8 +17,8 @@ class MockWalletRemoteDataSource extends Mock
     implements WalletRemoteDataSource {}
 
 void main() {
-  MockWalletRemoteDataSource mockWalletRemoteDataSource;
-  WalletRepositoryImpl walletRepositoryImpl;
+  MockWalletRemoteDataSource? mockWalletRemoteDataSource;
+  WalletRepositoryImpl? walletRepositoryImpl;
 
   setUp(() {
     mockWalletRemoteDataSource = MockWalletRemoteDataSource();
@@ -35,18 +35,17 @@ void main() {
 
   group('Fetch Wallets', () {
     test('Should return FetchDataFailure ', () async {
-      when(mockWalletRemoteDataSource.fetch(
-              defaultWallet: '',
-              endsWithDate: '',
-              startsWithDate: '',
-              userId: ''))
-          .thenThrow(EmptyAuthorizationTokenException());
-      final walletReceived = await walletRepositoryImpl.fetch(
+      when(() => mockWalletRemoteDataSource!.fetch(
+          defaultWallet: '',
+          endsWithDate: '',
+          startsWithDate: '',
+          userId: '')).thenThrow(EmptyAuthorizationTokenException());
+      final walletReceived = await walletRepositoryImpl!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
       final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockWalletRemoteDataSource.fetch(
+      verify(() => mockWalletRemoteDataSource!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
@@ -55,14 +54,14 @@ void main() {
 
   group('Add Wallet', () {
     test('Should return FetchDataFailure ', () async {
-      when(mockWalletRemoteDataSource.add(currency: '', userId: ''))
+      when(() => mockWalletRemoteDataSource!.add(currency: '', userId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
       final walletReceived =
-          await walletRepositoryImpl.add(currency: '', userId: '');
+          await walletRepositoryImpl!.add(currency: '', userId: '');
 
       /// Expect an exception to be thrown
       final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockWalletRemoteDataSource.add(currency: '', userId: ''));
+      verify(() => mockWalletRemoteDataSource!.add(currency: '', userId: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -70,14 +69,15 @@ void main() {
 
   group('Delete Wallet', () {
     test('Should return FetchDataFailure ', () async {
-      when(mockWalletRemoteDataSource.delete(userId: '', walletId: ''))
+      when(() => mockWalletRemoteDataSource!.delete(userId: '', walletId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
       final walletReceived =
-          await walletRepositoryImpl.delete(userId: '', walletId: '');
+          await walletRepositoryImpl!.delete(userId: '', walletId: '');
 
       /// Expect an exception to be thrown
       final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockWalletRemoteDataSource.delete(userId: '', walletId: ''));
+      verify(
+          () => mockWalletRemoteDataSource!.delete(userId: '', walletId: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -89,13 +89,13 @@ void main() {
           fixture('responses/authentication/login_info.json');
       final userModelAsJSON = jsonDecode(userModelAsString);
       final walletModel = WalletModel.fromJSON(userModelAsJSON['Wallet'][0]);
-      when(mockWalletRemoteDataSource.update(walletModel))
+      when(() => mockWalletRemoteDataSource!.update(walletModel))
           .thenThrow(EmptyAuthorizationTokenException());
-      final walletReceived = await walletRepositoryImpl.update(walletModel);
+      final walletReceived = await walletRepositoryImpl!.update(walletModel);
 
       /// Expect an exception to be thrown
       final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockWalletRemoteDataSource.update(walletModel));
+      verify(() => mockWalletRemoteDataSource!.update(walletModel));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

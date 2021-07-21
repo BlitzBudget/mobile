@@ -10,10 +10,10 @@ import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_m
 
 abstract class GoalRemoteDataSource {
   Future<GoalResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId});
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId});
 
   Future<void> update(GoalModel updateGoal);
 
@@ -21,17 +21,17 @@ abstract class GoalRemoteDataSource {
 }
 
 class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
-  GoalRemoteDataSourceImpl({@required this.httpClient});
+  GoalRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Get Goals
   @override
   Future<GoalResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId}) async {
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId}) async {
     final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -42,7 +42,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
     } else {
       contentBody['userId'] = userId;
     }
-    return httpClient
+    return httpClient!
         .post(constants.goalURL,
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<GoalResponseModel>((dynamic res) {
@@ -56,7 +56,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
   Future<void> update(GoalModel updateGoal) {
     developer.log('The Map for patching the goal is  ${updateGoal.toString()}');
 
-    return httpClient
+    return httpClient!
         .patch(constants.goalURL,
             body: jsonEncode(updateGoal.toJSON()), headers: constants.headers)
         .then((dynamic res) {
@@ -67,7 +67,7 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
   /// Add Goal
   @override
   Future<void> add(GoalModel addGoal) {
-    return httpClient
+    return httpClient!
         .put(constants.goalURL,
             body: jsonEncode(addGoal.toJSON()), headers: constants.headers)
         .then((dynamic res) {

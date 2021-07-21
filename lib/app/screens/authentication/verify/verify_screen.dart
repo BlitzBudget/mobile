@@ -9,15 +9,15 @@ import 'components/body.dart';
 class VerifyScreen extends StatelessWidget {
   /// In the constructor, require a Todo.
   const VerifyScreen(
-      {Key key,
-      @required this.email,
-      @required this.password,
+      {Key? key,
+      required this.email,
+      required this.password,
       this.useVerifyURL = true,
       this.showResendVerificationCode = true})
       : super(key: key);
 
   static const title = 'Verify email';
-  final String email, password;
+  final String? email, password;
   final bool useVerifyURL;
   final bool showResendVerificationCode;
 

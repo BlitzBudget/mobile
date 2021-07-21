@@ -3,7 +3,7 @@ import '../constants/constants.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
-    Key key,
+    Key? key,
     this.text,
     this.press,
     this.color = primaryColor,
@@ -12,8 +12,8 @@ class RoundedButton extends StatelessWidget {
     this.disabledColor = primaryDisabledColor,
   }) : super(key: key);
 
-  final String text;
-  final Function press;
+  final String? text;
+  final Function? press;
   final Color color, textColor, disabledColor;
   final bool enabled;
 
@@ -26,9 +26,9 @@ class RoundedButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(29),
         child: ElevatedButton(
-          onPressed: enabled ? press : null,
+          onPressed: enabled ? press as void Function()? : null,
           child: Text(
-            text,
+            text!,
             style: TextStyle(color: textColor),
           ),
         ),

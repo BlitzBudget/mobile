@@ -16,7 +16,7 @@ import 'background.dart';
 // Public exposed class
 class Body extends StatefulWidget {
   /// In the constructor
-  const Body({Key key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -26,8 +26,8 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  TextEditingController controller;
-  String username, password;
+  TextEditingController? controller;
+  String? username, password;
   final login = 'LOGIN';
   final yourEmail = 'Your Email';
   String continueButton = 'CONTINUE';

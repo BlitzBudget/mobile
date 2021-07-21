@@ -5,7 +5,7 @@ import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/network/network_helper.dart';
 import 'package:mobile_blitzbudget/core/network/network_info.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:http/http.dart' as http;
 
 import '../../fixtures/fixture_reader.dart';
@@ -15,9 +15,9 @@ class MockHttpClient extends Mock implements http.Client {}
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
 void main() {
-  MockHttpClient mockHttpClient;
-  NetworkHelper networkHelper;
-  MockNetworkInfo mockNetworkInfo;
+  MockHttpClient? mockHttpClient;
+  late NetworkHelper networkHelper;
+  MockNetworkInfo? mockNetworkInfo;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -29,17 +29,21 @@ void main() {
   void setUpMockHttpClientSuccess200() {
     final addBudgetAsString =
         fixture('responses/dashboard/budget/add_budget_info.json');
-    when(mockHttpClient.post(any,
-            body: jsonEncode(''), headers: constants.headers))
+    when(() => mockHttpClient!.post(Uri.parse(constants.budgetURL),
+            body: jsonEncode(''),
+            headers: constants.headers as Map<String, String>?))
         .thenAnswer((_) async => http.Response(addBudgetAsString, 200));
-    when(mockHttpClient.patch(any,
-            body: jsonEncode(''), headers: constants.headers))
+    when(() => mockHttpClient!.patch(Uri.parse(constants.budgetURL),
+            body: jsonEncode(''),
+            headers: constants.headers as Map<String, String>?))
         .thenAnswer((_) async => http.Response(addBudgetAsString, 200));
-    when(mockHttpClient.put(any,
-            body: jsonEncode(''), headers: constants.headers))
+    when(() => mockHttpClient!.put(Uri.parse(constants.budgetURL),
+            body: jsonEncode(''),
+            headers: constants.headers as Map<String, String>?))
         .thenAnswer((_) async => http.Response(addBudgetAsString, 200));
     // MOck Network Call then return
-    when(mockNetworkInfo.isConnected).thenAnswer((_) => Future.value(true));
+    when(() => mockNetworkInfo!.isConnected)
+        .thenAnswer((_) => Future.value(true));
   }
 
   group('Validate HTTP POST', () {
@@ -50,8 +54,9 @@ void main() {
       await networkHelper.post(constants.budgetURL,
           body: jsonEncode(''), headers: constants.headers);
 
-      verify(mockHttpClient.post(Uri.parse(constants.budgetURL),
-          body: jsonEncode(''), headers: constants.headers));
+      verify(() => mockHttpClient!.post(Uri.parse(constants.budgetURL),
+          body: jsonEncode(''),
+          headers: constants.headers as Map<String, String>?));
     });
 
     test(
@@ -61,7 +66,7 @@ void main() {
         setUpMockHttpClientSuccess200();
 
         /// Throw 401 Error
-        when(mockNetworkInfo.isConnected)
+        when(() => mockNetworkInfo!.isConnected)
             .thenAnswer((_) async => Future.value(false));
 
         // assert
@@ -70,10 +75,10 @@ void main() {
                 body: jsonEncode(''), headers: constants.headers),
             throwsA(const TypeMatcher<NoNetworkConnectionException>()));
         // Verify network info is connected
-        verify(mockNetworkInfo.isConnected);
+        verify(() => mockNetworkInfo!.isConnected);
         // Verify network helper was not called
-        verifyNever(mockHttpClient.post(Uri.parse(constants.budgetURL),
-            headers: constants.headers, encoding: null));
+        verifyNever(() => mockHttpClient!.post(Uri.parse(constants.budgetURL),
+            headers: constants.headers as Map<String, String>?));
       },
     );
   });
@@ -86,8 +91,9 @@ void main() {
       await networkHelper.patch(constants.budgetURL,
           body: jsonEncode(''), headers: constants.headers);
 
-      verify(mockHttpClient.patch(Uri.parse(constants.budgetURL),
-          body: jsonEncode(''), headers: constants.headers));
+      verify(() => mockHttpClient!.patch(Uri.parse(constants.budgetURL),
+          body: jsonEncode(''),
+          headers: constants.headers as Map<String, String>?));
     });
 
     test(
@@ -97,7 +103,7 @@ void main() {
         setUpMockHttpClientSuccess200();
 
         /// Throw 401 Error
-        when(mockNetworkInfo.isConnected)
+        when(() => mockNetworkInfo!.isConnected)
             .thenAnswer((_) async => Future.value(false));
 
         // assert
@@ -106,10 +112,10 @@ void main() {
                 body: jsonEncode(''), headers: constants.headers),
             throwsA(const TypeMatcher<NoNetworkConnectionException>()));
         // Verify network info is connected
-        verify(mockNetworkInfo.isConnected);
+        verify(() => mockNetworkInfo!.isConnected);
         // Verify network helper was not called
-        verifyNever(mockHttpClient.patch(Uri.parse(constants.budgetURL),
-            headers: constants.headers, encoding: null));
+        verifyNever(() => mockHttpClient!.patch(Uri.parse(constants.budgetURL),
+            headers: constants.headers as Map<String, String>?));
       },
     );
   });
@@ -122,8 +128,9 @@ void main() {
       await networkHelper.put(constants.budgetURL,
           body: jsonEncode(''), headers: constants.headers);
 
-      verify(mockHttpClient.put(Uri.parse(constants.budgetURL),
-          body: jsonEncode(''), headers: constants.headers));
+      verify(() => mockHttpClient!.put(Uri.parse(constants.budgetURL),
+          body: jsonEncode(''),
+          headers: constants.headers as Map<String, String>?));
     });
 
     test(
@@ -133,7 +140,7 @@ void main() {
         setUpMockHttpClientSuccess200();
 
         /// Throw 401 Error
-        when(mockNetworkInfo.isConnected)
+        when(() => mockNetworkInfo!.isConnected)
             .thenAnswer((_) async => Future.value(false));
 
         // assert
@@ -142,10 +149,10 @@ void main() {
                 body: jsonEncode(''), headers: constants.headers),
             throwsA(const TypeMatcher<NoNetworkConnectionException>()));
         // Verify network info is connected
-        verify(mockNetworkInfo.isConnected);
+        verify(() => mockNetworkInfo!.isConnected);
         // Verify network helper was not called
-        verifyNever(mockHttpClient.put(Uri.parse(constants.budgetURL),
-            headers: constants.headers, encoding: null));
+        verifyNever(() => mockHttpClient!.put(Uri.parse(constants.budgetURL),
+            headers: constants.headers as Map<String, String>?));
       },
     );
   });

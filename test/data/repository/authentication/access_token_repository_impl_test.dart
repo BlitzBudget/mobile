@@ -8,7 +8,7 @@ import 'package:mobile_blitzbudget/data/datasource/local/authentication/access_t
 import 'package:mobile_blitzbudget/data/repositories/authentication/access_token_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -16,8 +16,8 @@ class MockAccessTokenLocalDataSource extends Mock
     implements AccessTokenLocalDataSource {}
 
 void main() {
-  MockAccessTokenLocalDataSource mockAccessTokenLocalDataSource;
-  AccessTokenRepositoryImpl accessTokenRepositoryImpl;
+  MockAccessTokenLocalDataSource? mockAccessTokenLocalDataSource;
+  AccessTokenRepositoryImpl? accessTokenRepositoryImpl;
 
   setUp(() {
     mockAccessTokenLocalDataSource = MockAccessTokenLocalDataSource();
@@ -34,15 +34,15 @@ void main() {
 
   group('Read Access Token', () {
     test('Should return No Value in Cache Exception', () async {
-      when(mockAccessTokenLocalDataSource.readAccessToken())
+      when(() => mockAccessTokenLocalDataSource!.readAccessToken())
           .thenThrow(NoValueInCacheException());
       final accessTokenReceived =
-          await accessTokenRepositoryImpl.readAccessToken();
+          await accessTokenRepositoryImpl!.readAccessToken();
 
       /// Expect an exception to be thrown
       final f =
           accessTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockAccessTokenLocalDataSource.readAccessToken());
+      verify(() => mockAccessTokenLocalDataSource!.readAccessToken());
       expect(accessTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });
@@ -57,9 +57,10 @@ void main() {
           userModelAsJSON['AuthenticationResult']['AccessToken'];
       final userModel = UserResponse(
           accessToken: userModelAsJSON['AuthenticationResult']['AccessToken']);
-      await accessTokenRepositoryImpl.writeAccessToken(userModel);
+      await accessTokenRepositoryImpl!.writeAccessToken(userModel);
 
-      verify(mockAccessTokenLocalDataSource.writeAccessToken(accessToken));
+      verify(
+          () => mockAccessTokenLocalDataSource!.writeAccessToken(accessToken));
     });
   });
 }

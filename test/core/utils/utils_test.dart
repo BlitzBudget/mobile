@@ -8,7 +8,7 @@ void main() {
     test('Should return first letter capitalized', () async {
       final capitalizedWord = utils.capitalize('return');
       expect(capitalizedWord.isSome(), equals(true));
-      expect(capitalizedWord.getOrElse(null), equals('Return'));
+      expect(capitalizedWord.getOrElse(() => ''), equals('Return'));
     });
 
     test('Should return None()', () async {
@@ -22,7 +22,7 @@ void main() {
       final wordPair = WordPair('first', 'second');
       final capitalizedWord = utils.capitalizePair(wordPair);
       expect(capitalizedWord.isSome(), equals(true));
-      expect(capitalizedWord.getOrElse(null), equals('FirstSecond'));
+      expect(capitalizedWord.getOrElse(() => ''), equals('FirstSecond'));
     });
 
     test('Should return None()', () async {
@@ -36,7 +36,7 @@ void main() {
       final arr = <dynamic>['first', 'second', 'last'];
       final lastEl = utils.lastElement(arr);
       expect(lastEl.isSome(), equals(true));
-      expect(lastEl.getOrElse(null), equals(arr.last));
+      expect(lastEl.getOrElse(() => ''), equals(arr.last));
     });
 
     test('Empty Array: Should return None()', () async {

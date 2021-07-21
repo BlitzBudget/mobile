@@ -8,7 +8,7 @@ import '../../../widgets/dashboard_widget.dart';
 
 class OverviewTab extends StatefulWidget {
   const OverviewTab({
-    Key key,
+    Key? key,
   }) : super(key: key);
   static const title = 'Overview';
   static const androidIcon = Icon(Mdi.chartArc);
@@ -21,8 +21,8 @@ class OverviewTab extends StatefulWidget {
 class _OverviewTabState extends State<OverviewTab> {
   static const _itemsLength = 20;
 
-  List<String> titles;
-  List<String> contents;
+  late List<String> titles;
+  late List<String> contents;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _OverviewTabState extends State<OverviewTab> {
     super.initState();
   }
 
-  Widget _listBuilder(BuildContext context, int index) {
+  Widget? _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
       return null;
     }
@@ -99,7 +99,7 @@ class _OverviewTabState extends State<OverviewTab> {
         title: const Text(OverviewTab.title),
       ),
       body: ListView.builder(
-        itemBuilder: _listBuilder,
+        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
       ),
     );
   }
@@ -108,7 +108,7 @@ class _OverviewTabState extends State<OverviewTab> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
-        itemBuilder: _listBuilder,
+        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
       ),
     );
   }

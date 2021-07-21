@@ -1,7 +1,7 @@
 enum Recurrence { weekly, biMonthly, monthly, never }
 
-extension RecurrenceExtension on Recurrence {
-  String get name {
+extension RecurrenceExtension on Recurrence? {
+  String? get name {
     switch (this) {
       case Recurrence.weekly:
         return 'WEEKLY';

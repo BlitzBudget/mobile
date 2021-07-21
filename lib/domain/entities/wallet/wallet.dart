@@ -11,16 +11,16 @@ class Wallet extends Equatable {
       this.walletBalance,
       this.totalAssetBalance});
 
-  final String walletId;
-  final String userId;
-  final String walletName;
-  final String currency;
-  final double totalDebtBalance;
-  final double walletBalance;
-  final double totalAssetBalance;
+  final String? walletId;
+  final String? userId;
+  final String? walletName;
+  final String? currency;
+  final double? totalDebtBalance;
+  final double? walletBalance;
+  final double? totalAssetBalance;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         walletId,
         userId,
         walletName,

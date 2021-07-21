@@ -5,15 +5,15 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/authentication/user_attributes_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/user_model.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  UserAttributesRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late UserAttributesRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -33,14 +33,14 @@ void main() {
             name: updateUserNameAsJSON['body-json']['name'],
             familyName: updateUserNameAsJSON['body-json']['family_name']);
         // arrange
-        when(mockHTTPClientImpl.post(constants.userAttributesURL,
+        when(() => mockHTTPClientImpl!.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateUserNameAsJSON);
         // act
         await dataSource.updateUserAttributes(userAttributes);
         // assert
-        verify(mockHTTPClientImpl.post(constants.userAttributesURL,
+        verify(() => mockHTTPClientImpl!.post(constants.userAttributesURL,
             body: jsonEncode(userAttributes.toJSON()),
             headers: constants.headers));
       },
@@ -56,14 +56,14 @@ void main() {
             email: updateUserNameAsJSON['body-json']['username'],
             locale: updateUserNameAsJSON['body-json']['locale']);
         // arrange
-        when(mockHTTPClientImpl.post(constants.userAttributesURL,
+        when(() => mockHTTPClientImpl!.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateUserNameAsJSON);
         // act
         await dataSource.updateUserAttributes(userAttributes);
         // assert
-        verify(mockHTTPClientImpl.post(constants.userAttributesURL,
+        verify(() => mockHTTPClientImpl!.post(constants.userAttributesURL,
             body: jsonEncode(userAttributes.toJSON()),
             headers: constants.headers));
       },
@@ -79,14 +79,14 @@ void main() {
             email: updateUserNameAsJSON['body-json']['username'],
             locale: updateUserNameAsJSON['body-json']['exportFileFormat']);
         // arrange
-        when(mockHTTPClientImpl.post(constants.userAttributesURL,
+        when(() => mockHTTPClientImpl!.post(constants.userAttributesURL,
                 body: jsonEncode(userAttributes.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateUserNameAsJSON);
         // act
         await dataSource.updateUserAttributes(userAttributes);
         // assert
-        verify(mockHTTPClientImpl.post(constants.userAttributesURL,
+        verify(() => mockHTTPClientImpl!.post(constants.userAttributesURL,
             body: jsonEncode(userAttributes.toJSON()),
             headers: constants.headers));
       },

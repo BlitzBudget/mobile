@@ -5,14 +5,14 @@ import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dar
 
 class BankAccountModel extends BankAccount {
   const BankAccountModel(
-      {String walletId,
-      double accountBalance,
-      String accountId,
-      bool linked,
-      bool selectedAccount,
-      AccountType accountType,
-      AccountSubType accountSubType,
-      String bankAccountName})
+      {String? walletId,
+      double? accountBalance,
+      String? accountId,
+      bool? linked,
+      bool? selectedAccount,
+      AccountType? accountType,
+      AccountSubType? accountSubType,
+      String? bankAccountName})
       : super(
             walletId: walletId,
             accountBalance: accountBalance,

@@ -3,7 +3,7 @@ import '../../../constants/constants.dart';
 
 class PasswordConstraint extends StatelessWidget {
   /// In the constructor,
-  const PasswordConstraint({Key key}) : super(key: key);
+  const PasswordConstraint({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
