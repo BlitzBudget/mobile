@@ -33,7 +33,8 @@ void main() {
       final signupUserResponse =
           await signupUser.signupUser(email: email, password: password);
       expect(signupUserResponse.isRight(), true);
-      verify(() => signupUser.signupUser(email: email, password: password));
+      verify(() => mockAuthenticationRepository!
+          .signupUser(email: email, password: password));
     });
   });
 
@@ -46,7 +47,8 @@ void main() {
       final signupUserResponse =
           await signupUser.signupUser(email: email, password: password);
       expect(signupUserResponse.isLeft(), true);
-      verify(() => signupUser.signupUser(email: email, password: password));
+      verify(() => mockAuthenticationRepository!
+          .signupUser(email: email, password: password));
     });
   });
 }

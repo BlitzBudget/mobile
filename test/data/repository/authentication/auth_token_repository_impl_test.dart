@@ -54,6 +54,10 @@ void main() {
       final userModelAsJSON = jsonDecode(userModelAsString);
       final authToken = userModelAsJSON['AuthenticationResult']['IdToken'];
       final userModel = UserResponse(authenticationToken: authToken);
+
+      when(() => mockAuthTokenLocalDataSource!.writeAuthToken(authToken))
+          .thenAnswer((_) => Future.value());
+
       await authTokenRepositoryImpl!.writeAuthToken(userModel);
 
       verify(() => mockAuthTokenLocalDataSource!.writeAuthToken(authToken));

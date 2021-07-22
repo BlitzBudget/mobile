@@ -14,13 +14,13 @@ CategoryType? parseDynamicAsCategoryType(dynamic obj) {
   return (obj is String) ? stringToEnum(obj, CategoryType.values) : null;
 }
 
-String? parseDynamicAsString(dynamic obj) {
+String parseDynamicAsString(dynamic obj) {
   if (obj is String) {
     return obj;
   } else if (obj is int) {
     return obj.toString();
   }
-  return null;
+  return '';
 }
 
 bool? parseDynamicAsBool(dynamic obj) {

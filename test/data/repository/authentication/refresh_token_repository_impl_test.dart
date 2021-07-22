@@ -67,6 +67,9 @@ void main() {
 
   group('Write Refresh Token', () {
     test('Should write Refresh token', () async {
+      when(() =>
+              mockRefreshTokenLocalDataSource!.writeRefreshToken(refreshToken))
+          .thenAnswer((_) => Future.value());
       await refreshTokenRepositoryImpl!.writeRefreshToken(userModel);
       verify(() =>
           mockRefreshTokenLocalDataSource!.writeRefreshToken(refreshToken));

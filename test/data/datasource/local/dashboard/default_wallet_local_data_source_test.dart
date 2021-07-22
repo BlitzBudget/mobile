@@ -59,6 +59,10 @@ void main() {
     test(
       'Should call KeyValueStore to store the data',
       () async {
+        // assert
+        when(() => mockKeyValueStoreImpl!.setString(
+            key: defaultWalletCacheName,
+            value: defaultWalletModel)).thenAnswer((_) => Future.value());
         // act
         await dataSource.writeDefaultWallet(defaultWalletModel);
         // assert

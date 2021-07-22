@@ -56,6 +56,10 @@ void main() {
     test(
       'Should call SecureKeyValueStore to store the data',
       () async {
+        // when
+        when(() => mockSecureKeyValueStoreImpl!.setString(
+            key: authTokenCacheName,
+            value: authTokenValue)).thenAnswer((_) => Future.value());
         // act
         await dataSource.writeAuthToken(authTokenValue);
         // assert

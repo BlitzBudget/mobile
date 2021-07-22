@@ -48,6 +48,9 @@ void main() {
         // assert
         expect(() => dataSource.readStartsWithDate(),
             throwsA(const TypeMatcher<NoValueInCacheException>()));
+        // Verify
+        verify(() =>
+            mockKeyValueStoreImpl!.getString(key: startsWithDateCacheName));
       },
     );
   });
@@ -59,6 +62,10 @@ void main() {
     test(
       'Should call KeyValueStore to store the data',
       () async {
+        // when
+        when(() => mockKeyValueStoreImpl!.setString(
+            key: startsWithDateCacheName,
+            value: startsWithDateModel)).thenAnswer((_) => Future.value());
         // act
         await dataSource.writeStartsWithDate(startsWithDateModel);
         // assert

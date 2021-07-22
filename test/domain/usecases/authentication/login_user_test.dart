@@ -57,6 +57,18 @@ void main() {
       when(() => mockAuthenticationRepository!
               .loginUser(email: userEmail, password: userPassword))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
+      when(() => mockUserAttributesRepository!.writeUserAttributes(
+              optionResponse.getOrElse(() => const UserResponse())))
+          .thenAnswer((_) => Future.value());
+      when(() => mockRefreshTokenRepository!.writeRefreshToken(
+              optionResponse.getOrElse(() => const UserResponse())))
+          .thenAnswer((_) => Future.value());
+      when(() => mockAuthTokenRepository!.writeAuthToken(
+              optionResponse.getOrElse(() => const UserResponse())))
+          .thenAnswer((_) => Future.value());
+      when(() => mockAccessTokenRepository!.writeAccessToken(
+              optionResponse.getOrElse(() => const UserResponse())))
+          .thenAnswer((_) => Future.value());
 
       await loginUser.loginUser(email: userEmail, password: userPassword);
       verify(() => mockAuthenticationRepository!

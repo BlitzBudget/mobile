@@ -103,12 +103,11 @@ void main() {
 
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -127,12 +126,11 @@ void main() {
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -186,12 +184,11 @@ void main() {
 
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -210,12 +207,11 @@ void main() {
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -269,12 +265,11 @@ void main() {
 
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -293,12 +288,11 @@ void main() {
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -352,12 +346,11 @@ void main() {
 
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -376,12 +369,11 @@ void main() {
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -436,12 +428,11 @@ void main() {
 
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -460,12 +451,11 @@ void main() {
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -519,12 +509,11 @@ void main() {
 
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -543,12 +532,11 @@ void main() {
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
-      final Either<Failure, String?> dateStringMonad =
-          Right<Failure, String?>(recurringTransactionModel.walletId);
+      final Either<Failure, String> dateStringMonad =
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(
-              dateStringMonad as Future<Either<Failure, String>>?));
+          (_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));

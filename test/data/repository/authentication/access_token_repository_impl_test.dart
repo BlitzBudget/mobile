@@ -57,6 +57,10 @@ void main() {
           userModelAsJSON['AuthenticationResult']['AccessToken'];
       final userModel = UserResponse(
           accessToken: userModelAsJSON['AuthenticationResult']['AccessToken']);
+
+      when(() => mockAccessTokenLocalDataSource!.writeAccessToken(accessToken))
+          .thenAnswer((_) => Future.value());
+
       await accessTokenRepositoryImpl!.writeAccessToken(userModel);
 
       verify(

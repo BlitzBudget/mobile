@@ -57,6 +57,10 @@ void main() {
     test(
       'Should call KeyValueStore to store the data',
       () async {
+        // when
+        when(() => mockKeyValueStoreImpl!.setString(
+            key: endsWithDateCacheName,
+            value: endsWithDateModel)).thenAnswer((_) => Future.value());
         // act
         await dataSource.writeEndsWithDate(endsWithDateModel);
         // assert

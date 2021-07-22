@@ -62,6 +62,10 @@ void main() {
     test(
       'Should call SecureKeyValueStore to store the data',
       () async {
+        // when
+        when(() => mockSecureKeyValueStoreImpl!.setString(
+            key: userAttributesCacheName,
+            value: userAttributeAsString)).thenAnswer((_) => Future.value());
         // act
         await dataSource.writeUserAttributes(userAttributeAsString);
         // assert

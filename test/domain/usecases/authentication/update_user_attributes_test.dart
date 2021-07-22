@@ -35,7 +35,7 @@ void main() {
       final userAttributeResponse =
           await updateUserAttributes.updateUserAttributes(user);
       expect(userAttributeResponse.isRight(), true);
-      verify(() => updateUserAttributes.updateUserAttributes(user));
+      verify(() => mockUserAttributesRepository!.updateUserAttributes(user));
     });
   });
 

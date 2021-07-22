@@ -37,7 +37,7 @@ void main() {
           verificationCode: verificationCode,
           useVerifyURL: true);
       expect(verifyUserResponse.isRight(), true);
-      verify(() => verifyUser.verifyUser(
+      verify(() => mockAuthenticationRepository!.verifyEmail(
           email: email,
           password: password,
           verificationCode: verificationCode,
@@ -60,7 +60,7 @@ void main() {
           verificationCode: verificationCode,
           useVerifyURL: true);
       expect(verifyUserResponse.isLeft(), true);
-      verify(() => verifyUser.verifyUser(
+      verify(() => mockAuthenticationRepository!.verifyEmail(
           email: email,
           password: password,
           verificationCode: verificationCode,

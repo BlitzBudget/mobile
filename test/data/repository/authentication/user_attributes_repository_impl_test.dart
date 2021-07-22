@@ -111,6 +111,9 @@ void main() {
 
     test('Should return Fetch Data Failure', () async {
       const userModel = UserModel();
+      when(() => mockUserAttributesRemoteDataSource!
+          .updateUserAttributes(userModel)).thenAnswer((_) => Future.value());
+
       final userAttributesReceived =
           await userAttributesRepositoryImpl!.updateUserAttributes(userModel);
 
@@ -135,6 +138,9 @@ void main() {
     final encodedUserString = jsonEncode(encodedUser.toJSON());
 
     test('Should write user attributes', () async {
+      when(() => mockUserAttributesLocalDataSource!
+              .writeUserAttributes(encodedUserString))
+          .thenAnswer((_) => Future.value());
       await userAttributesRepositoryImpl!.writeUserAttributes(userResponse);
       verify(() => mockUserAttributesLocalDataSource!
           .writeUserAttributes(encodedUserString));
