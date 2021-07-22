@@ -22,12 +22,12 @@ class RefreshTokenHelper {
       required this.clearAllStorageRepository,
       required this.httpClient});
 
-  final RefreshTokenRepository? refreshTokenRepository;
-  final AuthTokenRepository? authTokenRepository;
-  final AccessTokenRepository? accessTokenRepository;
-  final NetworkHelper? networkHelper;
-  final ClearAllStorageRepository? clearAllStorageRepository;
-  final http.Client? httpClient;
+  late final RefreshTokenRepository refreshTokenRepository;
+  late final AuthTokenRepository authTokenRepository;
+  late final AccessTokenRepository accessTokenRepository;
+  late final NetworkHelper networkHelper;
+  late final ClearAllStorageRepository clearAllStorageRepository;
+  late final http.Client httpClient;
 
   /// Refresh authorization token
   ///
@@ -39,14 +39,14 @@ class RefreshTokenHelper {
         ' The authorization token has expired, Trying to refresh the token.');
 
     /// Store Access token and Authentication Token
-    final refreshToken = await refreshTokenRepository!.readRefreshToken();
+    final refreshToken = await refreshTokenRepository.readRefreshToken();
 
     /// If the refresh token is empty then throw exception
     if (refreshToken.isLeft()) {
       await clearStoreAndThrowException();
     }
 
-    return httpClient!
+    return httpClient
         .post(Uri.parse(refreshTokenURL),
             body:
                 jsonEncode({'refreshToken': refreshToken.getOrElse(() => '')}),
@@ -79,10 +79,10 @@ class RefreshTokenHelper {
         final user = UserResponseModel.fromJSON(res);
 
         /// Store Auth Token
-        await authTokenRepository!.writeAuthToken(user);
+        await authTokenRepository.writeAuthToken(user);
 
         /// Store Access Token
-        await accessTokenRepository!.writeAccessToken(user);
+        await accessTokenRepository.writeAccessToken(user);
 
         return res;
       }
@@ -94,7 +94,7 @@ class RefreshTokenHelper {
 
   /// Clear all Storage (keyValue and SecureKeyValue)
   Future<void> clearStoreAndThrowException() async {
-    await clearAllStorageRepository!.clearAllStorage();
+    await clearAllStorageRepository.clearAllStorage();
     throw UnableToRefreshTokenException();
   }
 }

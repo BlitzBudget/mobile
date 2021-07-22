@@ -11,17 +11,15 @@ class NetworkHelper {
     required this.httpClient,
   });
 
-  final NetworkInfo? networkInfo;
-  final http.Client? httpClient;
+  late final NetworkInfo networkInfo;
+  late final http.Client httpClient;
 
   /// Generic POST api call
   Future<http.Response> post(String url,
-      {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
-    if (await networkInfo!.isConnected) {
-      return httpClient!.post(Uri.parse(url),
-          body: body,
-          headers: headers as Map<String, String>?,
-          encoding: encoding);
+      {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
+    if (await networkInfo.isConnected) {
+      return httpClient.post(Uri.parse(url),
+          body: body, headers: headers, encoding: encoding);
     } else {
       throw NoNetworkConnectionException();
     }
@@ -30,8 +28,8 @@ class NetworkHelper {
   /// Generic PUT api call
   Future<http.Response> put(String url,
       {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
-    if (await networkInfo!.isConnected) {
-      return httpClient!.put(Uri.parse(url),
+    if (await networkInfo.isConnected) {
+      return httpClient.put(Uri.parse(url),
           body: body,
           headers: headers as Map<String, String>?,
           encoding: encoding);
@@ -43,8 +41,8 @@ class NetworkHelper {
   /// Generic PATCH api call
   Future<http.Response> patch(String url,
       {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
-    if (await networkInfo!.isConnected) {
-      return httpClient!.patch(Uri.parse(url),
+    if (await networkInfo.isConnected) {
+      return httpClient.patch(Uri.parse(url),
           body: body,
           headers: headers as Map<String, String>?,
           encoding: encoding);

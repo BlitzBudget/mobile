@@ -79,10 +79,10 @@ void main() {
         await httpClientImpl.post(constants.budgetURL,
             headers: constants.headers, body: jsonEncode(budget.toJSON()));
         // assert
-        verify(() => () => mockNetworkHelper!.post(constants.budgetURL,
+        verify(() => mockNetworkHelper!.post(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
         // Verify Auth token called
-        verify(() => () => mockAuthTokenRepository!.readAuthToken());
+        verify(() => mockAuthTokenRepository!.readAuthToken());
       },
     );
 
@@ -144,7 +144,7 @@ void main() {
         verify(() => mockNetworkHelper!.post(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
         // Verify Auth token called
-        verifyNever(() => () => mockAuthTokenRepository!.readAuthToken());
+        verifyNever(() => mockAuthTokenRepository!.readAuthToken());
       },
     );
   });
@@ -177,6 +177,8 @@ void main() {
                 .post(constants.budgetURL, headers: constants.headers))
             .thenAnswer(
                 (_) async => Future.value(http.Response('{ "body": ""}', 401)));
+        when(() => mockRefreshTokenHelper!.refreshAuthToken(
+            constants.headers, null)).thenAnswer((_) => Future.value());
 
         // assert
         expect(
@@ -247,6 +249,7 @@ void main() {
   });
 
   group('Attempt to invoke refresh token', () {
+    const authTokenMonad = Right<Failure, String>(authTokenString);
     test('POST: Invoking Refresh Token Success Scenario', () async {
       /// Throw 401 Error
       var callCount = 0;
@@ -257,6 +260,11 @@ void main() {
                 Future.value(http.Response('{ "body": ""}', 401)),
                 Future.value(http.Response('{ "body": ""}', 200))
               ][callCount++]);
+      when(() =>
+              mockRefreshTokenHelper!.refreshAuthToken(constants.headers, null))
+          .thenAnswer((_) => Future.value());
+      when(() => mockAuthTokenRepository!.readAuthToken())
+          .thenAnswer((invocation) => Future.value(authTokenMonad));
 
       // assert
       await httpClientImpl.post(constants.budgetURL,
@@ -268,7 +276,7 @@ void main() {
       // Verify Auth token called
       verify(() => mockAuthTokenRepository!.readAuthToken());
       // Verify Refresh Token
-      verify(() => () =>
+      verify(() =>
           mockRefreshTokenHelper!.refreshAuthToken(constants.headers, null));
     });
 
@@ -282,6 +290,11 @@ void main() {
                 Future.value(http.Response('{ "body": ""}', 401)),
                 Future.value(http.Response('{ "body": ""}', 200))
               ][callCount++]);
+      when(() =>
+              mockRefreshTokenHelper!.refreshAuthToken(constants.headers, null))
+          .thenAnswer((_) => Future.value());
+      when(() => mockAuthTokenRepository!.readAuthToken())
+          .thenAnswer((invocation) => Future.value(authTokenMonad));
 
       // assert
       await httpClientImpl.put(constants.budgetURL, headers: constants.headers);
@@ -292,7 +305,7 @@ void main() {
       // Verify Auth token called
       verify(() => mockAuthTokenRepository!.readAuthToken());
       // Verify Refresh Token
-      verify(() => () =>
+      verify(() =>
           mockRefreshTokenHelper!.refreshAuthToken(constants.headers, null));
     });
 
@@ -306,6 +319,11 @@ void main() {
                 Future.value(http.Response('{ "body": ""}', 401)),
                 Future.value(http.Response('{ "body": ""}', 200))
               ][callCount++]);
+      when(() =>
+              mockRefreshTokenHelper!.refreshAuthToken(constants.headers, null))
+          .thenAnswer((_) => Future.value());
+      when(() => mockAuthTokenRepository!.readAuthToken())
+          .thenAnswer((invocation) => Future.value(authTokenMonad));
 
       // assert
       await httpClientImpl.patch(constants.budgetURL,
@@ -317,7 +335,7 @@ void main() {
       // Verify Auth token called
       verify(() => mockAuthTokenRepository!.readAuthToken());
       // Verify Refresh Token
-      verify(() => () =>
+      verify(() =>
           mockRefreshTokenHelper!.refreshAuthToken(constants.headers, null));
     });
   });

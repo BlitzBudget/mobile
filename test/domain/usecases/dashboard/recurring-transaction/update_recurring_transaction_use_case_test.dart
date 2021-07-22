@@ -106,8 +106,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -129,8 +129,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -187,8 +187,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -210,8 +210,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -268,8 +268,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -291,8 +291,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -349,8 +349,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -372,8 +372,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -431,8 +431,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -454,8 +454,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -512,8 +512,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
@@ -535,8 +535,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockRecurringTransactionRepository!
               .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));

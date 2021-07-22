@@ -14,14 +14,14 @@ enum HTTPAPICalls { post, put, patch }
 
 abstract class HTTPClient {
   Future<dynamic> post(String url,
-      {Map<String, String?>? headers,
+      {Map<String, String>? headers,
       dynamic body,
       Encoding? encoding,
       bool? skipAuthCheck});
   Future<dynamic> put(String url,
-      {Map<String, String?>? headers, dynamic body, Encoding? encoding});
+      {Map<String, String>? headers, dynamic body, Encoding? encoding});
   Future<dynamic> patch(String url,
-      {Map<String, String?>? headers, dynamic body, Encoding? encoding});
+      {Map<String, String>? headers, dynamic body, Encoding? encoding});
 }
 
 class HTTPClientImpl implements HTTPClient {
@@ -38,7 +38,7 @@ class HTTPClientImpl implements HTTPClient {
 
   @override
   Future<dynamic> post(String url,
-      {Map<String, String?>? headers,
+      {Map<String, String>? headers,
       dynamic body,
       Encoding? encoding,
       bool? skipAuthCheck = false}) async {
@@ -52,14 +52,14 @@ class HTTPClientImpl implements HTTPClient {
 
   @override
   Future<dynamic> put(String url,
-      {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
+      {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
     return processAPICallAndRefreshTokenIfNeeded(
         url, body, headers!, encoding, HTTPAPICalls.put);
   }
 
   @override
   Future<dynamic> patch(String url,
-      {Map<String, String?>? headers, dynamic body, Encoding? encoding}) async {
+      {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
     return processAPICallAndRefreshTokenIfNeeded(
         url, body, headers!, encoding, HTTPAPICalls.patch);
   }
@@ -101,7 +101,7 @@ class HTTPClientImpl implements HTTPClient {
   Future<dynamic> processAPICallAndRefreshTokenIfNeeded(
       String url,
       dynamic body,
-      Map<String, String?> headers,
+      Map<String, String> headers,
       Encoding? encoding,
       HTTPAPICalls httpapiCalls) async {
     dynamic res;
@@ -123,7 +123,7 @@ class HTTPClientImpl implements HTTPClient {
 
   // Make the relevant API Calls
   Future<dynamic> makeAppropriateAPICall(String url, dynamic body,
-      Map<String, String?>? headers, HTTPAPICalls httpapiCalls) async {
+      Map<String, String>? headers, HTTPAPICalls httpapiCalls) async {
     late Response response;
     switch (httpapiCalls) {
       case HTTPAPICalls.post:
@@ -143,7 +143,7 @@ class HTTPClientImpl implements HTTPClient {
 
   /// POST call without authorization check
   Future<dynamic> postWithoutAuthorizationCheck(
-      String url, dynamic body, Map<String, String?>? headers) async {
+      String url, dynamic body, Map<String, String>? headers) async {
     try {
       return await makeAppropriateAPICall(
           url, body, headers, HTTPAPICalls.post);

@@ -83,8 +83,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockBudgetRepository!.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
@@ -101,8 +101,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockBudgetRepository!.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
@@ -149,8 +149,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockBudgetRepository!.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
@@ -168,8 +168,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockBudgetRepository!.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
@@ -219,8 +219,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockBudgetRepository!.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
@@ -237,8 +237,8 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet()).thenAnswer(
-          (_) => Future.value(dateStringMonad));
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+          .thenAnswer((_) => Future.value(dateStringMonad));
       when(() => mockBudgetRepository!.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 

@@ -37,13 +37,13 @@ class MockRefreshTokenRepository extends Mock
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
-  MockAccessTokenRepository? mockAccessTokenRepository;
+  late MockAccessTokenRepository mockAccessTokenRepository;
   late RefreshTokenHelper refreshTokenHelper;
-  MockAuthTokenRepository? mockAuthTokenRepository;
-  MockClearAllStorageRepository mockClearAllStorageRepository;
+  late MockAuthTokenRepository mockAuthTokenRepository;
+  late MockClearAllStorageRepository mockClearAllStorageRepository;
   MockNetworkHelper mockNetworkHelper;
-  MockRefreshTokenRepository? mockRefreshTokenRepository;
-  MockHttpClient? mockHttpClient;
+  late MockRefreshTokenRepository mockRefreshTokenRepository;
+  late MockHttpClient mockHttpClient;
 
   setUp(() {
     mockAccessTokenRepository = MockAccessTokenRepository();
@@ -69,13 +69,15 @@ void main() {
       // If refresh token is empty
       final Either<Failure, String> refreshTokenMonad =
           Left<Failure, String>(EmptyResponseFailure());
-      when(() => mockRefreshTokenRepository!.readRefreshToken())
+      when(() => mockRefreshTokenRepository.readRefreshToken())
           .thenAnswer((_) => Future.value(refreshTokenMonad));
+      when(() => mockClearAllStorageRepository.clearAllStorage())
+          .thenAnswer((_) => Future.value());
       // assert
       expect(() => refreshTokenHelper.refreshAuthToken(constants.headers, null),
           throwsA(const TypeMatcher<UnableToRefreshTokenException>()));
 
-      verify(() => mockRefreshTokenRepository!.readRefreshToken());
+      verify(() => mockRefreshTokenRepository.readRefreshToken());
     });
 
     void setUpMockHttpClientError500() {
@@ -92,16 +94,18 @@ void main() {
       refreshTokenMonad = Right<Failure, String?>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
-      when(() => mockRefreshTokenRepository!.readRefreshToken())
+      when(() => mockRefreshTokenRepository.readRefreshToken())
           .thenAnswer((_) => refreshTokenFuture);
+      when(() => mockClearAllStorageRepository.clearAllStorage())
+          .thenAnswer((_) => Future.value());
 
       final refreshTokenResponseString =
           fixture('responses/authentication/refresh_token_info.json');
 
-      when(() => mockHttpClient!.post(Uri.parse(refreshTokenURL),
+      when(() => mockHttpClient.post(Uri.parse(refreshTokenURL),
               body: jsonEncode(
                   {'refreshToken': refreshTokenMonad.getOrElse(() => '')}),
-              headers: headers as Map<String, String>?))
+              headers: headers))
           .thenAnswer(
               (_) async => http.Response(refreshTokenResponseString, 500));
     }
@@ -119,14 +123,14 @@ void main() {
       expect(() => refreshTokenHelper.refreshAuthToken(constants.headers, null),
           throwsA(const TypeMatcher<UnableToRefreshTokenException>()));
 
-      verify(() => mockRefreshTokenRepository!.readRefreshToken());
-      verifyNever(() => mockAuthTokenRepository!.writeAuthToken(userModel));
-      verifyNever(() => mockAccessTokenRepository!.writeAccessToken(userModel));
+      verify(() => mockRefreshTokenRepository.readRefreshToken());
+      verifyNever(() => mockAuthTokenRepository.writeAuthToken(userModel));
+      verifyNever(() => mockAccessTokenRepository.writeAccessToken(userModel));
     });
   });
 
   group('Refresh Token Success Scenarios', () {
-    Either<Failure, String?>? refreshTokenMonad;
+    late Either<Failure, String?> refreshTokenMonad;
 
     void setUpMockHttpClientSuccess200() {
       final userModelAsString =
@@ -142,16 +146,18 @@ void main() {
       refreshTokenMonad = Right<Failure, String?>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
-      when(() => mockRefreshTokenRepository!.readRefreshToken())
+      when(() => mockRefreshTokenRepository.readRefreshToken())
           .thenAnswer((_) => refreshTokenFuture);
+      when(() => mockClearAllStorageRepository.clearAllStorage())
+          .thenAnswer((_) => Future.value());
 
       final refreshTokenResponseString =
           fixture('responses/authentication/refresh_token_info.json');
 
-      when(() => mockHttpClient!.post(Uri.parse(refreshTokenURL),
+      when(() => mockHttpClient.post(Uri.parse(refreshTokenURL),
               body: jsonEncode(
-                  {'refreshToken': refreshTokenMonad!.getOrElse(() => '')}),
-              headers: headers as Map<String, String>?))
+                  {'refreshToken': refreshTokenMonad.getOrElse(() => '')}),
+              headers: headers))
           .thenAnswer(
               (_) async => http.Response(refreshTokenResponseString, 200));
     }
@@ -163,16 +169,23 @@ void main() {
           fixture('responses/authentication/refresh_token_info.json');
       final userModelAsJSON = jsonDecode(userModelAsString);
       final userModel = UserResponseModel.fromJSON(userModelAsJSON);
+      when(() => mockClearAllStorageRepository.clearAllStorage())
+          .thenAnswer((_) => Future.value());
+      when(() => mockAuthTokenRepository.writeAuthToken(userModel))
+          .thenAnswer((_) => Future.value());
+      when(() => mockAccessTokenRepository.writeAccessToken(userModel))
+          .thenAnswer((_) => Future.value());
+
       // assert
       await refreshTokenHelper.refreshAuthToken(constants.headers, null);
 
-      verify(() => mockRefreshTokenRepository!.readRefreshToken());
-      verify(() => mockHttpClient!.post(Uri.parse(refreshTokenURL),
+      verify(() => mockRefreshTokenRepository.readRefreshToken());
+      verify(() => mockHttpClient.post(Uri.parse(refreshTokenURL),
           body: jsonEncode(
-              {'refreshToken': refreshTokenMonad!.getOrElse(() => '')}),
-          headers: headers as Map<String, String>?));
-      verify(() => mockAuthTokenRepository!.writeAuthToken(userModel));
-      verify(() => mockAccessTokenRepository!.writeAccessToken(userModel));
+              {'refreshToken': refreshTokenMonad.getOrElse(() => '')}),
+          headers: headers));
+      verify(() => mockAuthTokenRepository.writeAuthToken(userModel));
+      verify(() => mockAccessTokenRepository.writeAccessToken(userModel));
       expect(constants.headers['Authorization'],
           equals(userModel.authenticationToken));
     });
