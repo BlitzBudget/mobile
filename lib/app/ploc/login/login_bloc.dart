@@ -21,32 +21,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required this.loginUser, required this.forgotPassword})
       : super(Empty());
 
-  final login_usecase.LoginUser? loginUser;
-  final forgot_password_usecase.ForgotPassword? forgotPassword;
+  late final login_usecase.LoginUser loginUser;
+  late final forgot_password_usecase.ForgotPassword forgotPassword;
 
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if (event is LoginUser) {
-      yield Loading();
+    yield Loading();
 
-      yield* processLogin(event);
-    } else if (event is ForgotPassword) {
-      yield Loading();
-
-      final forgotPasswordResponse =
-          await forgotPassword!.forgotPassword(email: event.username);
-
-      yield forgotPasswordResponse.fold(
-        (failure) =>
-            const Error(message: constants.INVALID_INPUT_LOGIN_FAILURE_MESSAGE),
-        (_) => RedirectToVerification(),
-      );
-    }
+    yield* processLoginOrFotgotPassword(event);
   }
 
-  Stream<LoginState> processLogin(LoginUser event) async* {
+  Stream<LoginState> processLoginOrFotgotPassword(LoginEvent event) async* {
     debugPrint('Bloc Login executed for the user ${event.username} ');
 
     final email = event.username?.toLowerCase().trim() ?? '';
@@ -57,12 +44,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (!app_constants.passwordExp.hasMatch(event.password!)) {
       yield const Error(message: constants.PASSWORD_INVALID);
     } else {
+      yield* _processAPICall(event, email);
+    }
+  }
+
+  Stream<LoginState> _processAPICall(LoginEvent event, String email) async* {
+    if (event is LoginUser) {
       final userResponse =
-          await loginUser!.loginUser(email: email, password: event.password);
+          await loginUser.loginUser(email: email, password: event.password);
 
       yield userResponse.fold(
         _convertToMessage,
         (_) => RedirectToDashboard(),
+      );
+    } else if (event is ForgotPassword) {
+      final forgotPasswordResponse =
+          await forgotPassword.forgotPassword(email: event.username);
+
+      yield forgotPasswordResponse.fold(
+        _convertToMessage,
+        (_) => RedirectToVerification(),
       );
     }
   }
