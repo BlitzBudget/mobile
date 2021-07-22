@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dartz/dartz.dart';
 import 'package:english_words/english_words.dart';
 
@@ -9,11 +10,11 @@ Option<String> capitalize(String word) {
       : Some('${word[0].toUpperCase()}${word.substring(1).toLowerCase()}');
 }
 
-Option<String> capitalizePair(WordPair pair) {
+Option<String> capitalizePair(WordPair? pair) {
   return (pair == null) ? const None() : Some(pair.asPascalCase);
 }
 
-Option<dynamic> lastElement(List<dynamic> arr) {
+Option<dynamic> lastElement(List<dynamic>? arr) {
   if (arr == null || arr.isEmpty) {
     return const None<dynamic>();
   } else if (arr.isNotEmpty) {
@@ -22,13 +23,13 @@ Option<dynamic> lastElement(List<dynamic> arr) {
   return const None<dynamic>();
 }
 
-Option<List<String>> splitElement({String stringToSplit, String character}) {
+Option<List<String>> splitElement({String? stringToSplit, String? character}) {
   if (includesStr(value: character, array: stringToSplit)
       .getOrElse(() => false)) {
     if (isEmpty(stringToSplit) || isEmpty(character)) {
       return const None();
     } else {
-      return Some(stringToSplit.split(character));
+      return Some(stringToSplit!.split(character!));
     }
   }
 
@@ -47,7 +48,7 @@ Option<bool> includesStr({dynamic array, dynamic value}) {
   return const None();
 }
 
-bool isEmpty(String obj) {
+bool isEmpty(String? obj) {
   /// Check if objext is a number or a boolean
   if (['', null, false, 0].contains(obj)) {
     return true;
@@ -65,11 +66,10 @@ bool isNotEmpty(dynamic obj) {
 /// Convert all Enum to String
 /// Convert both string and enum to lower case
 /// Replace all white space with empty string for the String
-T stringToEnum<T>(String str, Iterable<T> values) {
-  return values.firstWhere(
+T? stringToEnum<T>(String str, Iterable<T> values) {
+  return values.firstWhereOrNull(
     (value) =>
         value.toString().split('.')[1].toLowerCase() ==
-        str?.replaceAll(findWhiteSpace, '')?.toLowerCase(),
-    orElse: () => null,
+        str.replaceAll(findWhiteSpace, '').toLowerCase(),
   );
 }

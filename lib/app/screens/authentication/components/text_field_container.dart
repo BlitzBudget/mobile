@@ -3,11 +3,11 @@ import '../../../constants/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   const TextFieldContainer({
-    Key key,
+    Key? key,
     this.child,
   }) : super(key: key);
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

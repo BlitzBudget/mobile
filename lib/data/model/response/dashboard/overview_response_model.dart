@@ -15,12 +15,12 @@ import '../../date_model.dart';
 
 class OverviewResponseModel extends OverviewResponse {
   const OverviewResponseModel(
-      {List<Transaction> transactions,
-      List<Budget> budgets,
-      List<Category> categories,
-      List<BankAccount> bankAccounts,
-      List<Date> dates,
-      Wallet wallet})
+      {List<Transaction>? transactions,
+      List<Budget>? budgets,
+      List<Category>? categories,
+      List<BankAccount>? bankAccounts,
+      List<Date>? dates,
+      Wallet? wallet})
       : super(
             transactions: transactions,
             budgets: budgets,
@@ -69,14 +69,15 @@ class OverviewResponseModel extends OverviewResponse {
         <Date>[]);
 
     final responseWallet = overviewResponseModel['Wallet'];
-    Wallet convertedWallet;
+    Wallet? convertedWallet;
 
     /// Check if the response is a string or a list
     ///
     /// If string then convert them into a wallet
     /// If List then convert them into list of wallets and take the first wallet.
     if (responseWallet is Map) {
-      convertedWallet = WalletModel.fromJSON(responseWallet);
+      convertedWallet =
+          WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
     } else if (responseWallet is List) {
       final convertedWallets = List<Wallet>.from(responseWallet
           .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));

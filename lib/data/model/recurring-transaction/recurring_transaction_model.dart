@@ -6,18 +6,18 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 class RecurringTransactionModel extends RecurringTransaction {
   /// Optional Recurring Transactions id, description, recurrence, category type, category name and tags
   const RecurringTransactionModel(
-      {String recurringTransactionId,
-      String walletId,
-      double amount,
-      String description,
-      String accountId,
-      Recurrence recurrence,
-      CategoryType categoryType,
-      String categoryName,
-      String category,
-      List<String> tags,
-      String nextScheduled,
-      String creationDate})
+      {String? recurringTransactionId,
+      String? walletId,
+      double? amount,
+      String? description,
+      String? accountId,
+      Recurrence? recurrence,
+      CategoryType? categoryType,
+      String? categoryName,
+      String? category,
+      List<String>? tags,
+      String? nextScheduled,
+      String? creationDate})
       : super(
             walletId: walletId,
             amount: amount,

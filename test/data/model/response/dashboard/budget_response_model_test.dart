@@ -185,14 +185,15 @@ BudgetResponseModel convertToResponseModel(
       <Date>[]);
 
   final responseWallet = budgetResponseModelAsJSON['Wallet'];
-  Wallet convertedWallet;
+  Wallet? convertedWallet;
 
   /// Check if the response is a string or a list
   ///
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet = WalletModel.fromJSON(responseWallet);
+    convertedWallet =
+        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
   } else if (responseWallet is List) {
     final convertedWallets = List<Wallet>.from(responseWallet
         .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));

@@ -13,17 +13,16 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dependency_injection.init();
-  final homeRoute = initialRoute;
-  runApp(BlitzBudgetApp(
-    homeRoute: homeRoute,
+  runApp(const BlitzBudgetApp(
+    homeRoute: initialRoute,
   ));
 }
 
 class BlitzBudgetApp extends StatelessWidget {
   /// Constructor
-  const BlitzBudgetApp({Key key, this.homeRoute}) : super(key: key);
+  const BlitzBudgetApp({Key? key, this.homeRoute}) : super(key: key);
 
-  final String homeRoute;
+  final String? homeRoute;
   static const appName = 'BlitzBudget';
 
   @override

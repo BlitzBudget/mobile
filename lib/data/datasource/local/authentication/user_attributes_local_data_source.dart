@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/persistence/secure_key_value_store.dart';
 
 abstract class UserAttributesLocalDataSource {
@@ -9,9 +8,9 @@ abstract class UserAttributesLocalDataSource {
 
 class UserAttributesLocalDataSourceImpl
     implements UserAttributesLocalDataSource {
-  UserAttributesLocalDataSourceImpl({@required this.secureKeyValueStore});
+  UserAttributesLocalDataSourceImpl({required this.secureKeyValueStore});
 
-  final SecureKeyValueStore secureKeyValueStore;
+  final SecureKeyValueStore? secureKeyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -23,7 +22,7 @@ class UserAttributesLocalDataSourceImpl
   /// ------------------------------------------------------------
   @override
   Future<String> readUserAttributes() async {
-    return secureKeyValueStore.getString(key: _userAttributes);
+    return secureKeyValueStore!.getString(key: _userAttributes);
   }
 
   /// ----------------------------------------------------------
@@ -31,6 +30,6 @@ class UserAttributesLocalDataSourceImpl
   /// ----------------------------------------------------------
   @override
   Future<void> writeUserAttributes(String value) async {
-    await secureKeyValueStore.setString(key: _userAttributes, value: value);
+    await secureKeyValueStore!.setString(key: _userAttributes, value: value);
   }
 }

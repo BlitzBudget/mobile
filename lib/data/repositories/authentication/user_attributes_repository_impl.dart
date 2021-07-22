@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
@@ -15,17 +14,17 @@ import '../../datasource/local/authentication/user_attributes_local_data_source.
 
 class UserAttributesRepositoryImpl implements UserAttributesRepository {
   UserAttributesRepositoryImpl(
-      {@required this.userAttributesLocalDataSource,
-      @required this.userAttributesRemoteDataSource});
+      {required this.userAttributesLocalDataSource,
+      required this.userAttributesRemoteDataSource});
 
-  final UserAttributesLocalDataSource userAttributesLocalDataSource;
-  final UserAttributesRemoteDataSource userAttributesRemoteDataSource;
+  final UserAttributesLocalDataSource? userAttributesLocalDataSource;
+  final UserAttributesRemoteDataSource? userAttributesRemoteDataSource;
 
   @override
-  Future<Either<Failure, User>> readUserAttributes() async {
+  Future<Either<Failure, User?>> readUserAttributes() async {
     try {
       final userJSONEncoded =
-          await userAttributesLocalDataSource.readUserAttributes();
+          await userAttributesLocalDataSource!.readUserAttributes();
 
       /// Convert String to JSON and then Convert them back to User entity
       final user = UserModel.fromJSON(jsonDecode(userJSONEncoded));
@@ -36,19 +35,19 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   }
 
   @override
-  Future<void> writeUserAttributes(UserResponse userResponse) async {
+  Future<void> writeUserAttributes(UserResponse? userResponse) async {
     /// Encode the User Model as String
-    final UserModel encodedUser = userResponse.user;
+    final encodedUser = userResponse!.user as UserModel;
     final userJSONEncoded = jsonEncode(encodedUser.toJSON());
 
-    return userAttributesLocalDataSource.writeUserAttributes(userJSONEncoded);
+    return userAttributesLocalDataSource!.writeUserAttributes(userJSONEncoded);
   }
 
   @override
   Future<Either<Failure, void>> updateUserAttributes(User user) async {
     try {
-      return Right(
-          await userAttributesRemoteDataSource.updateUserAttributes(user));
+      return Right(await userAttributesRemoteDataSource!
+          .updateUserAttributes(user as UserModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

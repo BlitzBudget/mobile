@@ -11,10 +11,10 @@ import 'package:mobile_blitzbudget/data/model/response/dashboard/budget_response
 
 abstract class BudgetRemoteDataSource {
   Future<BudgetResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId});
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId});
 
   Future<void> update(BudgetModel updateBudget);
 
@@ -22,17 +22,17 @@ abstract class BudgetRemoteDataSource {
 }
 
 class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
-  BudgetRemoteDataSourceImpl({@required this.httpClient});
+  BudgetRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Get Budgets
   @override
   Future<BudgetResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId}) async {
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId}) async {
     final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -44,7 +44,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
       contentBody['userId'] = userId;
     }
 
-    return httpClient
+    return httpClient!
         .post(constants.budgetURL,
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<BudgetResponseModel>((dynamic res) {
@@ -59,7 +59,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
     developer
         .log('The Map for patching the budget is  ${updateBudget.toString()}');
 
-    return httpClient
+    return httpClient!
         .patch(constants.budgetURL,
             body: jsonEncode(updateBudget.toJSON()), headers: constants.headers)
         .then((dynamic res) {
@@ -70,7 +70,7 @@ class BudgetRemoteDataSourceImpl implements BudgetRemoteDataSource {
   /// Add Budget
   @override
   Future<void> add(BudgetModel addBudget) {
-    return httpClient
+    return httpClient!
         .put(constants.budgetURL,
             body: jsonEncode(addBudget.toJSON()), headers: constants.headers)
         .then((dynamic res) {

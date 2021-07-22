@@ -17,10 +17,10 @@ import 'social_icon.dart';
 // Public exposed class
 class Body extends StatefulWidget {
   /// In the constructor, require a Todo.
-  const Body({Key key, @required this.email, @required this.password})
+  const Body({Key? key, required this.email, required this.password})
       : super(key: key);
 
-  final String email, password;
+  final String? email, password;
 
   @override
   _BodyState createState() => _BodyState();
@@ -33,7 +33,7 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  String confirmPassword;
+  String? confirmPassword;
   final signupText = 'SIGNUP';
   final yourEmail = 'Your Email';
   String signupButton = 'SIGNUP';
@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
                 height: size.height * 0.35,
               ),
               Text(
-                widget.email,
+                widget.email!,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               RoundedPassword(
@@ -150,9 +150,9 @@ class _BodyState extends State<Body> {
   }
 
   void _dispatchSignupUser(
-      {@required String email,
-      @required String password,
-      @required String confirmPassword}) {
+      {required String? email,
+      required String? password,
+      required String? confirmPassword}) {
     BlocProvider.of<SignupBloc>(context)
         .add(SignupUser(email, password, confirmPassword));
   }

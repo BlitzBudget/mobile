@@ -12,13 +12,13 @@ abstract class BankAccountRemoteDataSource {
 
   Future<void> add(BankAccountModel addBankAccount);
 
-  Future<void> delete({@required String walletId, @required String account});
+  Future<void> delete({required String walletId, required String account});
 }
 
 class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
-  BankAccountRemoteDataSourceImpl({@required this.httpClient});
+  BankAccountRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Update BankAccount
   @override
@@ -26,7 +26,7 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
     developer.log(
         'The Map for patching the bankAccount is  ${updateBankAccount.toString()}');
 
-    return httpClient
+    return httpClient!
         .patch(constants.bankAccountURL,
             body: jsonEncode(updateBankAccount.toJSON()),
             headers: constants.headers)
@@ -38,7 +38,7 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
   /// Add BankAccount
   @override
   Future<void> add(BankAccountModel addBankAccount) {
-    return httpClient
+    return httpClient!
         .put(constants.bankAccountURL,
             body: jsonEncode(addBankAccount.toJSON()),
             headers: constants.headers)
@@ -49,14 +49,14 @@ class BankAccountRemoteDataSourceImpl implements BankAccountRemoteDataSource {
 
   /// Delete Wallet
   @override
-  Future<void> delete({@required String walletId, @required String account}) {
+  Future<void> delete({required String walletId, required String account}) {
     // JSON for Get wallet [_jsonForGetWallet]
     final _jsonForDeleteAccount = <String, dynamic>{
       'walletId': walletId,
       'account': account
     };
 
-    return httpClient
+    return httpClient!
         .post(constants.deleteBankAccountURL,
             body: jsonEncode(_jsonForDeleteAccount), headers: constants.headers)
         .then((dynamic res) {

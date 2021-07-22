@@ -11,8 +11,8 @@ enum GoalType {
   university
 }
 
-extension GoalTypeExtension on GoalType {
-  String get name {
+extension GoalTypeExtension on GoalType? {
+  String? get name {
     switch (this) {
       case GoalType.emergencyFund:
         return 'EmergencyFund';

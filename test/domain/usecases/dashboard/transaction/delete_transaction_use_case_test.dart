@@ -6,7 +6,7 @@ import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/delete_item_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/transaction/delete_transaction_use_case.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockDeleteItemRepository extends Mock implements DeleteItemRepository {}
 
@@ -14,9 +14,9 @@ class MockDefaultWalletRepository extends Mock
     implements DefaultWalletRepository {}
 
 void main() {
-  DeleteTransactionUseCase deleteTransactionUseCase;
-  MockDeleteItemRepository mockDeleteItemRepository;
-  MockDefaultWalletRepository mockDefaultWalletRepository;
+  late DeleteTransactionUseCase deleteTransactionUseCase;
+  MockDeleteItemRepository? mockDeleteItemRepository;
+  MockDefaultWalletRepository? mockDefaultWalletRepository;
 
   setUp(() {
     mockDeleteItemRepository = MockDeleteItemRepository();
@@ -37,18 +37,18 @@ void main() {
       const Either<Failure, String> defaultWalletMonad =
           Right<Failure, String>(walletId);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
-      when(mockDeleteItemRepository.delete(
-              walletId: walletId, itemId: transactionId))
+      when(() => mockDeleteItemRepository!
+              .delete(walletId: walletId, itemId: transactionId))
           .thenAnswer((_) => Future.value(addTransactionMonad));
 
       final transactionResponse =
           await deleteTransactionUseCase.delete(itemId: transactionId);
 
       expect(transactionResponse.isRight(), true);
-      verify(mockDeleteItemRepository.delete(
-          itemId: transactionId, walletId: walletId));
+      verify(() => mockDeleteItemRepository!
+          .delete(itemId: transactionId, walletId: walletId));
     });
 
     test('Failure', () async {
@@ -57,25 +57,25 @@ void main() {
       final Either<Failure, void> deleteTransactionMonad =
           Left<Failure, void>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
-      when(mockDeleteItemRepository.delete(
-              walletId: walletId, itemId: transactionId))
+      when(() => mockDeleteItemRepository!
+              .delete(walletId: walletId, itemId: transactionId))
           .thenAnswer((_) => Future.value(deleteTransactionMonad));
 
       final transactionResponse =
           await deleteTransactionUseCase.delete(itemId: transactionId);
 
       expect(transactionResponse.isLeft(), true);
-      verify(mockDeleteItemRepository.delete(
-          itemId: transactionId, walletId: walletId));
+      verify(() => mockDeleteItemRepository!
+          .delete(itemId: transactionId, walletId: walletId));
     });
 
     test('ReadDefaultWallet: Failure', () async {
       final Either<Failure, String> defaultWalletMonad =
           Left<Failure, String>(EmptyResponseFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
 
       final transactionResponse =
@@ -86,8 +86,8 @@ void main() {
 
       expect(f, EmptyResponseFailure());
       expect(transactionResponse.isLeft(), true);
-      verifyNever(mockDeleteItemRepository.delete(
-          itemId: transactionId, walletId: walletId));
+      verifyNever(() => mockDeleteItemRepository!
+          .delete(itemId: transactionId, walletId: walletId));
     });
   });
 }

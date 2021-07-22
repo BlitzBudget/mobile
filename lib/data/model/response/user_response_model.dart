@@ -7,11 +7,11 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 class UserResponseModel extends UserResponse {
   const UserResponseModel(
-      {String refreshToken,
-      String authenticationToken,
-      String accessToken,
-      User user,
-      Wallet wallet})
+      {String? refreshToken,
+      String? authenticationToken,
+      String? accessToken,
+      User? user,
+      Wallet? wallet})
       : super(
             refreshToken: refreshToken,
             authenticationToken: authenticationToken,

@@ -78,7 +78,7 @@ void main() {
         dynamic emptyData;
         final recurrence = parseDynamicAsString(emptyData);
         // assert
-        expect(recurrence, equals(null));
+        expect(recurrence, equals(''));
       },
     );
   });

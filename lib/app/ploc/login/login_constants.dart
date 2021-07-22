@@ -5,3 +5,5 @@ const String GENERIC_LOGIN_FAILURE_MESSAGE =
     'An error occured while logging in. Please try again later!';
 const String EMAIL_INVALID = 'Email entered is invalid.';
 const String PASSWORD_EMPTY = 'Password entered is empty.';
+const String PASSWORD_INVALID =
+    'Password should contain atleast an uppercase, lowercase, numbers and special characters.';

@@ -6,12 +6,12 @@ import 'package:mobile_blitzbudget/core/utils/utils.dart';
 
 class UserModel extends User {
   const UserModel(
-      {String userId,
-      String email,
-      String name,
-      String fileFormat,
-      String locale,
-      String familyName})
+      {String? userId,
+      String? email,
+      String? name,
+      String? fileFormat,
+      String? locale,
+      String? familyName})
       : super(
             userId: userId,
             email: email,

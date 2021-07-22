@@ -5,7 +5,7 @@ import '../../../widgets/dashboard_widget.dart';
 
 class SettingsDialog extends StatefulWidget {
   const SettingsDialog({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const title = 'Settings';

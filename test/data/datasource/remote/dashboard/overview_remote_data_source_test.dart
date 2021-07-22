@@ -4,15 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/overview_remote_data_source.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  OverviewRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late OverviewRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -27,14 +27,14 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
-      String userId;
+      String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
         'walletId': defaultWallet
       };
       // arrange
-      when(mockHTTPClientImpl.post(constants.overviewURL,
+      when(() => mockHTTPClientImpl!.post(constants.overviewURL,
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchOverviewAsJSON);
       // act
@@ -44,12 +44,12 @@ void main() {
           defaultWallet: defaultWallet,
           userId: userId);
       // assert
-      verify(mockHTTPClientImpl.post(constants.overviewURL,
+      verify(() => mockHTTPClientImpl!.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(overviewResponse.dates.last.dateId,
+      expect(overviewResponse.dates!.last.dateId,
           equals(fetchOverviewAsJSON['Date'][0]['dateId']));
-      expect(overviewResponse.bankAccounts.last.accountId,
+      expect(overviewResponse.bankAccounts!.last.accountId,
           equals(fetchOverviewAsJSON['BankAccount'][0]['accountId']));
     });
 
@@ -60,14 +60,14 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final userId = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
-      String defaultWallet;
+      String? defaultWallet;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
         'userId': userId
       };
       // arrange
-      when(mockHTTPClientImpl.post(constants.overviewURL,
+      when(() => mockHTTPClientImpl!.post(constants.overviewURL,
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchOverviewAsJSON);
       // act
@@ -77,12 +77,12 @@ void main() {
           defaultWallet: defaultWallet,
           userId: userId);
       // assert
-      verify(mockHTTPClientImpl.post(constants.overviewURL,
+      verify(() => mockHTTPClientImpl!.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(overviewResponse.dates.last.dateId,
+      expect(overviewResponse.dates!.last.dateId,
           equals(fetchOverviewAsJSON['Date'][0]['dateId']));
-      expect(overviewResponse.bankAccounts.last.accountId,
+      expect(overviewResponse.bankAccounts!.last.accountId,
           equals(fetchOverviewAsJSON['BankAccount'][0]['accountId']));
     });
   });

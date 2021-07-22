@@ -7,13 +7,13 @@ import '../full-screen-dialog/wallet_dialog.dart';
 import 'transaction_detail_tab.dart';
 
 class TransactionsTab extends StatefulWidget {
-  const TransactionsTab({Key key, this.androidDrawer}) : super(key: key);
+  const TransactionsTab({Key? key, this.androidDrawer}) : super(key: key);
 
   static const title = 'Transactions';
   static const androidIcon = Icon(CupertinoIcons.news_solid);
   static const iosIcon = Icon(CupertinoIcons.news_solid);
 
-  final Widget androidDrawer;
+  final Widget? androidDrawer;
 
   @override
   _TransactionsTabState createState() => _TransactionsTabState();
@@ -23,7 +23,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
   static const _itemsLength = 50;
 
   final _androidRefreshKey = GlobalKey<RefreshIndicatorState>();
-  String transactionNames;
+  late String transactionNames;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
     );
   }
 
-  Widget _listBuilder(BuildContext context, int index) {
+  Widget? _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
       return null;
     }
@@ -92,7 +92,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
     /// done in a real app but it's done here since this app
     /// unrealistically toggles the current platform for demonstration
     /// purposes.
-    WidgetsBinding.instance.reassembleApplication();
+    WidgetsBinding.instance!.reassembleApplication();
   }
 
   /// ===========================================================================
@@ -113,7 +113,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () async => _androidRefreshKey.currentState.show(),
+            onPressed: () async => _androidRefreshKey.currentState!.show(),
           ),
           IconButton(
             icon: const Icon(Icons.shuffle),
@@ -127,7 +127,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
         onRefresh: _refreshData,
         child: ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          itemBuilder: _listBuilder,
+          itemBuilder: _listBuilder as Widget Function(BuildContext, int),
         ),
       ),
     );

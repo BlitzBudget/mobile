@@ -1,7 +1,7 @@
 enum AccountType { asset, debt }
 
-extension AccountTypeExtension on AccountType {
-  String get name {
+extension AccountTypeExtension on AccountType? {
+  String? get name {
     switch (this) {
       case AccountType.asset:
         return 'ASSET';

@@ -10,30 +10,30 @@ import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 
 abstract class WalletRemoteDataSource {
   Future<WalletResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId});
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId});
 
   Future<void> update(WalletModel updateWallet);
 
-  Future<void> delete({@required String walletId, @required String userId});
+  Future<void> delete({required String walletId, required String? userId});
 
-  Future<void> add({@required String userId, @required String currency});
+  Future<void> add({required String? userId, required String? currency});
 }
 
 class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
-  WalletRemoteDataSourceImpl({@required this.httpClient});
+  WalletRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Get Wallet
   @override
   Future<WalletResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId}) async {
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId}) async {
     final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -44,7 +44,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
     } else {
       contentBody['userId'] = userId;
     }
-    return httpClient
+    return httpClient!
         .post(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<WalletResponseModel>((dynamic res) {
@@ -59,7 +59,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
     developer
         .log('The Map for patching the budget is  ${updateWallet.toString()}');
 
-    return httpClient
+    return httpClient!
         .patch(constants.walletURL,
             body: jsonEncode(updateWallet.toJSON()), headers: constants.headers)
         .then((dynamic res) {
@@ -69,7 +69,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Delete Wallet
   @override
-  Future<void> delete({@required String walletId, @required String userId}) {
+  Future<void> delete({required String walletId, required String? userId}) {
     // JSON for Get wallet [_jsonForGetWallet]
     final _jsonForDeleteWallet = <String, dynamic>{
       'walletId': walletId,
@@ -77,7 +77,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
       'referenceNumber': userId
     };
 
-    return httpClient
+    return httpClient!
         .post(constants.walletURL,
             body: jsonEncode(_jsonForDeleteWallet), headers: constants.headers)
         .then((dynamic res) {
@@ -87,14 +87,14 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Add Wallet
   @override
-  Future<void> add({@required String userId, @required String currency}) {
+  Future<void> add({required String? userId, required String? currency}) {
     // JSON for Get budget [_jsonForAddWallet]
     final _jsonForAddWallet = <String, dynamic>{
       'userId': userId,
       'currency': currency,
     };
 
-    return httpClient
+    return httpClient!
         .put(constants.walletURL,
             body: jsonEncode(_jsonForAddWallet), headers: constants.headers)
         .then((dynamic res) {

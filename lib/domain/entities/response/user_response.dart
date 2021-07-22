@@ -11,13 +11,13 @@ class UserResponse extends Equatable {
       this.user,
       this.wallet});
 
-  final String refreshToken;
-  final String authenticationToken;
-  final String accessToken;
-  final User user;
-  final Wallet wallet;
+  final String? refreshToken;
+  final String? authenticationToken;
+  final String? accessToken;
+  final User? user;
+  final Wallet? wallet;
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [refreshToken, authenticationToken, accessToken, user, wallet];
 }

@@ -7,7 +7,7 @@ import 'package:mdi/mdi.dart';
 import '../../../widgets/dashboard_widget.dart';
 
 class BudgetTab extends StatefulWidget {
-  const BudgetTab({Key key}) : super(key: key);
+  const BudgetTab({Key? key}) : super(key: key);
 
   static const title = 'Budget';
   static const androidIcon = Icon(Mdi.sack);
@@ -21,9 +21,9 @@ class _BudgetTabState extends State<BudgetTab> {
   /// States
   static const _itemsLength = 20;
 
-  List<Color> colors;
-  List<String> titles;
-  List<String> contents;
+  List<Color>? colors;
+  late List<String> titles;
+  late List<String> contents;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _BudgetTabState extends State<BudgetTab> {
     super.initState();
   }
 
-  Widget _listBuilder(BuildContext context, int index) {
+  Widget? _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
       return null;
     }
@@ -100,7 +100,7 @@ class _BudgetTabState extends State<BudgetTab> {
         title: const Text(BudgetTab.title),
       ),
       body: ListView.builder(
-        itemBuilder: _listBuilder,
+        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
       ),
     );
   }
@@ -109,7 +109,7 @@ class _BudgetTabState extends State<BudgetTab> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
-        itemBuilder: _listBuilder,
+        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/persistence/key_value_store.dart';
 
 abstract class DefaultWalletLocalDataSource {
@@ -8,9 +7,9 @@ abstract class DefaultWalletLocalDataSource {
 }
 
 class DefaultWalletLocalDataSourceImpl implements DefaultWalletLocalDataSource {
-  DefaultWalletLocalDataSourceImpl({@required this.keyValueStore});
+  DefaultWalletLocalDataSourceImpl({required this.keyValueStore});
 
-  final KeyValueStore keyValueStore;
+  final KeyValueStore? keyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -22,7 +21,7 @@ class DefaultWalletLocalDataSourceImpl implements DefaultWalletLocalDataSource {
   /// ------------------------------------------------------------
   @override
   Future<String> readDefaultWallet() async {
-    return keyValueStore.getString(key: _defaultWallet);
+    return keyValueStore!.getString(key: _defaultWallet);
   }
 
   /// ----------------------------------------------------------
@@ -30,6 +29,6 @@ class DefaultWalletLocalDataSourceImpl implements DefaultWalletLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeDefaultWallet(String value) async {
-    await keyValueStore.setString(key: _defaultWallet, value: value);
+    await keyValueStore!.setString(key: _defaultWallet, value: value);
   }
 }

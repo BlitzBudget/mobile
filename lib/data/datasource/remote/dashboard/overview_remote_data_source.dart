@@ -9,24 +9,24 @@ import 'package:mobile_blitzbudget/domain/entities/response/overview_response.da
 
 mixin OverviewRemoteDataSource {
   Future<OverviewResponse> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId});
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId});
 }
 
 class OverviewRemoteDataSourceImpl with OverviewRemoteDataSource {
-  OverviewRemoteDataSourceImpl({@required this.httpClient});
+  OverviewRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Get Wallet
   @override
   Future<OverviewResponseModel> fetch(
-      {@required String startsWithDate,
-      @required String endsWithDate,
-      @required String defaultWallet,
-      @required String userId}) async {
+      {required String startsWithDate,
+      required String endsWithDate,
+      required String? defaultWallet,
+      required String? userId}) async {
     final contentBody = <String, dynamic>{
       'startsWithDate': startsWithDate,
       'endsWithDate': endsWithDate
@@ -38,7 +38,7 @@ class OverviewRemoteDataSourceImpl with OverviewRemoteDataSource {
       contentBody['userId'] = userId;
     }
 
-    return httpClient
+    return httpClient!
         .post(constants.overviewURL,
             body: jsonEncode(contentBody), headers: constants.headers)
         .then<OverviewResponseModel>((dynamic res) {

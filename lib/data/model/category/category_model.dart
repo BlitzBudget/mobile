@@ -4,11 +4,11 @@ import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
 class CategoryModel extends Category {
   const CategoryModel(
-      {final String categoryId,
-      final String walletId,
-      final String categoryName,
-      final double categoryTotal,
-      final CategoryType categoryType})
+      {final String? categoryId,
+      final String? walletId,
+      final String? categoryName,
+      final double? categoryTotal,
+      final CategoryType? categoryType})
       : super(
             categoryId: categoryId,
             walletId: walletId,

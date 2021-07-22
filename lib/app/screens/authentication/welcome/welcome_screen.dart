@@ -3,7 +3,7 @@ import 'components/body.dart';
 
 class WelcomeScreen extends StatelessWidget {
   /// In the constructor
-  const WelcomeScreen({Key key}) : super(key: key);
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

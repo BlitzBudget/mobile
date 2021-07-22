@@ -6,15 +6,15 @@ import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/transaction_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  TransactionRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late TransactionRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -31,14 +31,14 @@ void main() {
       final endsWithDate = startsWithDate;
       final defaultWallet =
           fetchTransactionAsJSON['Transaction'][0]['transactionId'];
-      String userId;
+      String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
         'walletId': defaultWallet
       };
       // arrange
-      when(mockHTTPClientImpl.post(constants.transactionURL,
+      when(() => mockHTTPClientImpl!.post(constants.transactionURL,
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchTransactionAsJSON);
       // act
@@ -48,10 +48,10 @@ void main() {
           defaultWallet: defaultWallet,
           userId: userId);
       // assert
-      verify(mockHTTPClientImpl.post(constants.transactionURL,
+      verify(() => mockHTTPClientImpl!.post(constants.transactionURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(transactions.categories.last.categoryId,
+      expect(transactions.categories!.last.categoryId,
           equals(fetchTransactionAsJSON['Category'][0]['categoryId']));
     });
   });
@@ -80,14 +80,14 @@ void main() {
             accountId: addTransactionAsJSON['body-json']['account'],
             tags: tags);
         // arrange
-        when(mockHTTPClientImpl.put(constants.transactionURL,
+        when(() => mockHTTPClientImpl!.put(constants.transactionURL,
                 body: jsonEncode(transaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => addTransactionAsJSON);
         // act
         await dataSource.add(transaction);
         // assert
-        verify(mockHTTPClientImpl.put(constants.transactionURL,
+        verify(() => mockHTTPClientImpl!.put(constants.transactionURL,
             body: jsonEncode(transaction.toJSON()),
             headers: constants.headers));
       },
@@ -107,14 +107,14 @@ void main() {
             amount: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['amount']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.transactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.transactionURL,
                 body: jsonEncode(transaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateAmountAsJSON);
         // act
         await dataSource.update(transaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.transactionURL,
             body: jsonEncode(transaction.toJSON()),
             headers: constants.headers));
       },
@@ -132,14 +132,14 @@ void main() {
                 ['transactionId'],
             description: updateDescriptionAsJSON['body-json']['description']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.transactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.transactionURL,
                 body: jsonEncode(transaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateDescriptionAsJSON);
         // act
         await dataSource.update(transaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.transactionURL,
             body: jsonEncode(transaction.toJSON()),
             headers: constants.headers));
       },
@@ -159,14 +159,14 @@ void main() {
             transactionId: updateTagsAsJSON['body-json']['transactionId'],
             tags: tags);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.transactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.transactionURL,
                 body: jsonEncode(transaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateTagsAsJSON);
         // act
         await dataSource.update(transaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.transactionURL,
             body: jsonEncode(transaction.toJSON()),
             headers: constants.headers));
       },
@@ -183,14 +183,14 @@ void main() {
             transactionId: updateCategoryAsJSON['body-json']['transactionId'],
             categoryId: updateCategoryAsJSON['body-json']['category']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.transactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.transactionURL,
                 body: jsonEncode(transaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateCategoryAsJSON);
         // act
         await dataSource.update(transaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.transactionURL,
             body: jsonEncode(transaction.toJSON()),
             headers: constants.headers));
       },
@@ -207,14 +207,14 @@ void main() {
             transactionId: updateAccountAsJSON['body-json']['transactionId'],
             categoryId: updateAccountAsJSON['body-json']['category']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.transactionURL,
+        when(() => mockHTTPClientImpl!.patch(constants.transactionURL,
                 body: jsonEncode(transaction.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateAccountAsJSON);
         // act
         await dataSource.update(transaction);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.transactionURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.transactionURL,
             body: jsonEncode(transaction.toJSON()),
             headers: constants.headers));
       },

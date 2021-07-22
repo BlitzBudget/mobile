@@ -18,7 +18,7 @@ class RedirectToLogin extends SignupState {}
 class Loading extends SignupState {}
 
 class Error extends SignupState {
-  const Error({@required this.message});
+  const Error({required this.message});
 
   final String message;
 

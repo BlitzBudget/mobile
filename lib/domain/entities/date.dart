@@ -8,13 +8,13 @@ class Date extends Equatable {
       this.expenseTotal,
       this.balance});
 
-  final String walletId;
-  final String dateId;
-  final double incomeTotal;
-  final double expenseTotal;
-  final double balance;
+  final String? walletId;
+  final String? dateId;
+  final double? incomeTotal;
+  final double? expenseTotal;
+  final double? balance;
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [walletId, dateId, incomeTotal, expenseTotal, balance];
 }

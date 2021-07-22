@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
@@ -6,15 +5,16 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_w
 import '../../../constants/constants.dart' as constants;
 
 class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
-  StartsWithDateRepositoryImpl({@required this.startsWithDateLocalDataSource});
+  StartsWithDateRepositoryImpl({required this.startsWithDateLocalDataSource});
 
-  final StartsWithDateLocalDataSource startsWithDateLocalDataSource;
+  final StartsWithDateLocalDataSource? startsWithDateLocalDataSource;
 
   @override
   Future<String> readStartsWithDate() async {
     String startsWithDate;
     try {
-      startsWithDate = await startsWithDateLocalDataSource.readStartsWithDate();
+      startsWithDate =
+          await startsWithDateLocalDataSource!.readStartsWithDate();
     } on Exception {
       // Calculate the start date from now
       // Format the calculated date to string
@@ -30,6 +30,6 @@ class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
 
   @override
   Future<void> writeStartsWithDate(String value) async {
-    return startsWithDateLocalDataSource.writeStartsWithDate(value);
+    return startsWithDateLocalDataSource!.writeStartsWithDate(value);
   }
 }

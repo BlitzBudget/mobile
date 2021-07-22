@@ -8,15 +8,15 @@ import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/goal_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/add_goal_use_case.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockGoalRepository extends Mock implements GoalRepository {}
 
 void main() {
-  AddGoalUseCase addGoalUseCase;
-  MockGoalRepository mockGoalRepository;
+  late AddGoalUseCase addGoalUseCase;
+  MockGoalRepository? mockGoalRepository;
 
   final goalModelAsString =
       fixture('models/get/goal/emergency_fund_model.json');
@@ -41,26 +41,26 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> addGoalMonad = Right<Failure, void>('');
 
-      when(mockGoalRepository.add(goal))
+      when(() => mockGoalRepository!.add(goal))
           .thenAnswer((_) => Future.value(addGoalMonad));
 
       final goalResponse = await addGoalUseCase.add(addGoal: goal);
 
       expect(goalResponse.isRight(), true);
-      verify(mockGoalRepository.add(goal));
+      verify(() => mockGoalRepository!.add(goal));
     });
 
     test('Failure', () async {
       final Either<Failure, void> addGoalMonad =
           Left<Failure, void>(FetchDataFailure());
 
-      when(mockGoalRepository.add(goal))
+      when(() => mockGoalRepository!.add(goal))
           .thenAnswer((_) => Future.value(addGoalMonad));
 
       final goalResponse = await addGoalUseCase.add(addGoal: goal);
 
       expect(goalResponse.isLeft(), true);
-      verify(mockGoalRepository.add(goal));
+      verify(() => mockGoalRepository!.add(goal));
     });
   });
 }

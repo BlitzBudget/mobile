@@ -8,15 +8,14 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
 import '../../../domain/usecases/authentication/signup_user.dart'
     as signup_usecase;
+import '../../constants/constants.dart' as app_constants;
 import './signup_constants.dart' as constants;
 
 part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  SignupBloc({@required this.signupUser})
-      : assert(signupUser != null),
-        super(Empty());
+  SignupBloc({required this.signupUser}) : super(Empty());
 
   final signup_usecase.SignupUser signupUser;
 
@@ -34,12 +33,14 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   }
 
   Stream<SignupState> processSignup(SignupUser event) async* {
-    if (event.confirmPassword == null && event.confirmPassword.isEmpty) {
+    if (event.confirmPassword == null || event.confirmPassword!.isEmpty) {
       yield const Error(message: constants.CONFIRM_PASSWORD_EMPTY);
     } else if (event.confirmPassword != event.password) {
       yield const Error(message: constants.PASSWORD_MISMATCH);
+    } else if (!app_constants.passwordExp.hasMatch(event.password!)) {
+      yield const Error(message: constants.PASSWORD_INVALID);
     } else {
-      final email = event.username.toLowerCase().trim();
+      final email = event.username!.toLowerCase().trim();
       final signupUserResponse = await signupUser.signupUser(
           email: email, password: event.confirmPassword);
 

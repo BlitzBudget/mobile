@@ -8,7 +8,7 @@ import '../../../widgets/dashboard_widget.dart';
 
 class ProfileDialog extends StatelessWidget {
   const ProfileDialog({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const title = 'Profile';
@@ -96,12 +96,12 @@ class ProfileDialog extends StatelessWidget {
 
 class PreferenceCard extends StatelessWidget {
   const PreferenceCard(
-      {Key key, this.header, this.content, this.preferenceChoices})
+      {Key? key, this.header, this.content, this.preferenceChoices})
       : super(key: key);
 
-  final String header;
-  final String content;
-  final List<String> preferenceChoices;
+  final String? header;
+  final String? content;
+  final List<String>? preferenceChoices;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class PreferenceCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 40),
               child: Center(
                 child: Text(
-                  content,
+                  content!,
                   style: const TextStyle(fontSize: 48),
                 ),
               ),
@@ -136,7 +136,7 @@ class PreferenceCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,
               child: Text(
-                header,
+                header!,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -153,7 +153,7 @@ class PreferenceCard extends StatelessWidget {
 
 class LogOutButton extends StatelessWidget {
   const LogOutButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const _logoutMessage = Text(logoutDescription);

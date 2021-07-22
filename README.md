@@ -122,3 +122,6 @@ open coverage/index.html
 
 ### Dart Analyser
 dart analyze
+
+### Activate Pre commit hook
+chmod +x .githooks/pre-commit

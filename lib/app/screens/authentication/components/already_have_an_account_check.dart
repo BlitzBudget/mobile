@@ -3,13 +3,13 @@ import '../../../constants/constants.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   const AlreadyHaveAnAccountCheck({
-    Key key,
+    Key? key,
     this.login = true,
     this.press,
   }) : super(key: key);
 
   final bool login;
-  final Function press;
+  final Function? press;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
           style: const TextStyle(color: primaryColor),
         ),
         GestureDetector(
-          onTap: press,
+          onTap: press as void Function()?,
           child: Text(
             login ? 'Forgot password' : 'Login',
             style: const TextStyle(

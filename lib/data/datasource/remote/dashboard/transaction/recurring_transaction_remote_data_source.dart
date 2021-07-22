@@ -12,9 +12,9 @@ mixin RecurringTransactionRemoteDataSource {
 
 class RecurringTransactionRemoteDataSourceImpl
     implements RecurringTransactionRemoteDataSource {
-  RecurringTransactionRemoteDataSourceImpl({@required this.httpClient});
+  RecurringTransactionRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Update Transaction
   @override
@@ -22,7 +22,7 @@ class RecurringTransactionRemoteDataSourceImpl
     developer.log(
         'The Map for patching the recurring transactions is  ${updateRecurringTransaction.toString()}');
 
-    return httpClient
+    return httpClient!
         .patch(constants.recurringTransactionURL,
             body: jsonEncode(updateRecurringTransaction.toJSON()),
             headers: constants.headers)

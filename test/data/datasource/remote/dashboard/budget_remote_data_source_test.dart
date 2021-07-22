@@ -8,15 +8,15 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/budget_remot
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  BudgetRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late BudgetRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -31,14 +31,14 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchBudgetAsJSON['Budget'][0]['walletId'];
-      String userId;
+      String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
         'walletId': defaultWallet
       };
       // arrange
-      when(mockHTTPClientImpl.post(constants.budgetURL,
+      when(() => mockHTTPClientImpl!.post(constants.budgetURL,
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchBudgetAsJSON);
       // act
@@ -48,10 +48,10 @@ void main() {
           defaultWallet: defaultWallet,
           userId: userId);
       // assert
-      verify(mockHTTPClientImpl.post(constants.budgetURL,
+      verify(() => mockHTTPClientImpl!.post(constants.budgetURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(budget.budgets.first.budgetId,
+      expect(budget.budgets!.first.budgetId,
           equals(fetchBudgetAsJSON['Budget'][0]['budgetId']));
     });
   });
@@ -72,13 +72,13 @@ void main() {
                 parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
             dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor']);
         // arrange
-        when(mockHTTPClientImpl.put(constants.budgetURL,
+        when(() => mockHTTPClientImpl!.put(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => addBudgetAsJSON);
         // act
         await dataSource.add(budget);
         // assert
-        verify(mockHTTPClientImpl.put(constants.budgetURL,
+        verify(() => mockHTTPClientImpl!.put(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
       },
     );
@@ -97,13 +97,13 @@ void main() {
             planned: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['planned']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.budgetURL,
+        when(() => mockHTTPClientImpl!.patch(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateAmountAsJSON);
         // act
         await dataSource.update(budget);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.budgetURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
       },
     );
@@ -119,13 +119,13 @@ void main() {
             budgetId: updateDescriptionAsJSON['body-json']['budgetId'],
             category: updateDescriptionAsJSON['body-json']['category']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.budgetURL,
+        when(() => mockHTTPClientImpl!.patch(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateDescriptionAsJSON);
         // act
         await dataSource.update(budget);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.budgetURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.budgetURL,
             body: jsonEncode(budget.toJSON()), headers: constants.headers));
       },
     );

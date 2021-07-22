@@ -6,17 +6,17 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart'
 class TransactionModel extends Transaction {
   /// Optional Transactions id, description, recurrence, category type, category name and tags
   const TransactionModel(
-      {String transactionId,
-      String walletId,
-      double amount,
-      String description,
-      String accountId,
-      String dateMeantFor,
-      String categoryId,
-      Recurrence recurrence,
-      CategoryType categoryType,
-      String categoryName,
-      List<String> tags})
+      {String? transactionId,
+      String? walletId,
+      double? amount,
+      String? description,
+      String? accountId,
+      String? dateMeantFor,
+      String? categoryId,
+      Recurrence? recurrence,
+      CategoryType? categoryType,
+      String? categoryName,
+      List<String>? tags})
       : super(
             walletId: walletId,
             amount: amount,

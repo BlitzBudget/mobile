@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/persistence/key_value_store.dart';
 
 abstract class EndsWithDateLocalDataSource {
@@ -8,9 +7,9 @@ abstract class EndsWithDateLocalDataSource {
 }
 
 class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
-  EndsWithDateLocalDataSourceImpl({@required this.keyValueStore});
+  EndsWithDateLocalDataSourceImpl({required this.keyValueStore});
 
-  final KeyValueStore keyValueStore;
+  final KeyValueStore? keyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -22,7 +21,7 @@ class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
   /// ------------------------------------------------------------
   @override
   Future<String> readEndsWithDate() async {
-    return keyValueStore.getString(key: _endsWithDate);
+    return keyValueStore!.getString(key: _endsWithDate);
   }
 
   /// ----------------------------------------------------------
@@ -30,6 +29,6 @@ class EndsWithDateLocalDataSourceImpl implements EndsWithDateLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeEndsWithDate(String value) async {
-    await keyValueStore.setString(key: _endsWithDate, value: value);
+    await keyValueStore!.setString(key: _endsWithDate, value: value);
   }
 }

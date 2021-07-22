@@ -6,11 +6,11 @@ import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
   /// In the constructor, require a Todo.
-  const SignUpScreen({Key key, @required this.email, @required this.password})
+  const SignUpScreen({Key? key, required this.email, required this.password})
       : super(key: key);
 
-  final String email;
-  final String password;
+  final String? email;
+  final String? password;
 
   @override
   BlocProvider<SignupBloc> build(BuildContext context) {

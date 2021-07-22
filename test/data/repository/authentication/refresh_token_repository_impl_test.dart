@@ -9,7 +9,7 @@ import 'package:mobile_blitzbudget/data/repositories/authentication/refresh_toke
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -17,8 +17,8 @@ class MockRefreshTokenLocalDataSource extends Mock
     implements RefreshTokenLocalDataSource {}
 
 void main() {
-  MockRefreshTokenLocalDataSource mockRefreshTokenLocalDataSource;
-  RefreshTokenRepositoryImpl refreshTokenRepositoryImpl;
+  MockRefreshTokenLocalDataSource? mockRefreshTokenLocalDataSource;
+  RefreshTokenRepositoryImpl? refreshTokenRepositoryImpl;
 
   final userModelAsString = fixture('responses/authentication/login_info.json');
   final userModelAsJSON = jsonDecode(userModelAsString);
@@ -40,26 +40,26 @@ void main() {
 
   group('Read Refresh Token', () {
     test('Should return No Value in Cache Exception', () async {
-      when(mockRefreshTokenLocalDataSource.readRefreshToken())
+      when(() => mockRefreshTokenLocalDataSource!.readRefreshToken())
           .thenThrow(NoValueInCacheException());
       final refreshTokenReceived =
-          await refreshTokenRepositoryImpl.readRefreshToken();
+          await refreshTokenRepositoryImpl!.readRefreshToken();
 
       /// Expect an exception to be thrown
       final f =
           refreshTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockRefreshTokenLocalDataSource.readRefreshToken());
+      verify(() => mockRefreshTokenLocalDataSource!.readRefreshToken());
       expect(refreshTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });
 
     test('Should read Refresh token', () async {
-      when(mockRefreshTokenLocalDataSource.readRefreshToken())
+      when(() => mockRefreshTokenLocalDataSource!.readRefreshToken())
           .thenAnswer((_) => Future.value(refreshToken));
       final refreshTokenRead =
-          await refreshTokenRepositoryImpl.readRefreshToken();
+          await refreshTokenRepositoryImpl!.readRefreshToken();
 
-      verify(mockRefreshTokenLocalDataSource.readRefreshToken());
+      verify(() => mockRefreshTokenLocalDataSource!.readRefreshToken());
       expect(refreshTokenRead.getOrElse(() => null), equals(refreshToken));
       expect(refreshTokenRead.isRight(), equals(true));
     });
@@ -67,8 +67,12 @@ void main() {
 
   group('Write Refresh Token', () {
     test('Should write Refresh token', () async {
-      await refreshTokenRepositoryImpl.writeRefreshToken(userModel);
-      verify(mockRefreshTokenLocalDataSource.writeRefreshToken(refreshToken));
+      when(() =>
+              mockRefreshTokenLocalDataSource!.writeRefreshToken(refreshToken))
+          .thenAnswer((_) => Future.value());
+      await refreshTokenRepositoryImpl!.writeRefreshToken(userModel);
+      verify(() =>
+          mockRefreshTokenLocalDataSource!.writeRefreshToken(refreshToken));
     });
   });
 }

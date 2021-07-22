@@ -7,14 +7,14 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/transaction/transaction_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockTransactionRemoteDataSource extends Mock
     implements TransactionRemoteDataSource {}
 
 void main() {
-  MockTransactionRemoteDataSource mockTransactionRemoteDataSource;
-  TransactionRepositoryImpl transactionRepositoryImpl;
+  MockTransactionRemoteDataSource? mockTransactionRemoteDataSource;
+  TransactionRepositoryImpl? transactionRepositoryImpl;
 
   setUp(() {
     mockTransactionRemoteDataSource = MockTransactionRemoteDataSource();
@@ -32,15 +32,15 @@ void main() {
   group('Update Transactions', () {
     test('Should return FetchDataFailure ', () async {
       const transactionModel = TransactionModel();
-      when(mockTransactionRemoteDataSource.update(transactionModel))
+      when(() => mockTransactionRemoteDataSource!.update(transactionModel))
           .thenThrow(EmptyAuthorizationTokenException());
       final transactionReceived =
-          await transactionRepositoryImpl.update(transactionModel);
+          await transactionRepositoryImpl!.update(transactionModel);
 
       /// Expect an exception to be thrown
       final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockTransactionRemoteDataSource.update(transactionModel));
+      verify(() => mockTransactionRemoteDataSource!.update(transactionModel));
       expect(transactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
@@ -48,19 +48,18 @@ void main() {
 
   group('Fetch Transactions', () {
     test('Should return FetchDataFailure ', () async {
-      when(mockTransactionRemoteDataSource.fetch(
-              defaultWallet: '',
-              endsWithDate: '',
-              startsWithDate: '',
-              userId: ''))
-          .thenThrow(EmptyAuthorizationTokenException());
-      final transactionReceived = await transactionRepositoryImpl.fetch(
+      when(() => mockTransactionRemoteDataSource!.fetch(
+          defaultWallet: '',
+          endsWithDate: '',
+          startsWithDate: '',
+          userId: '')).thenThrow(EmptyAuthorizationTokenException());
+      final transactionReceived = await transactionRepositoryImpl!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
       final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockTransactionRemoteDataSource.fetch(
+      verify(() => mockTransactionRemoteDataSource!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
       expect(transactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
@@ -70,15 +69,15 @@ void main() {
   group('Add Transactions', () {
     test('Should return FetchDataFailure ', () async {
       const transactionModel = TransactionModel();
-      when(mockTransactionRemoteDataSource.update(transactionModel))
+      when(() => mockTransactionRemoteDataSource!.update(transactionModel))
           .thenThrow(EmptyAuthorizationTokenException());
       final transactionReceived =
-          await transactionRepositoryImpl.add(transactionModel);
+          await transactionRepositoryImpl!.add(transactionModel);
 
       /// Expect an exception to be thrown
       final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(mockTransactionRemoteDataSource.update(transactionModel));
+      verify(() => mockTransactionRemoteDataSource!.update(transactionModel));
       expect(transactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

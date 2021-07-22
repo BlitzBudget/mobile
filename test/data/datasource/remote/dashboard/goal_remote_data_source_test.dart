@@ -8,15 +8,15 @@ import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/goal_remote_
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  GoalRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late GoalRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -31,14 +31,14 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchWalletAsJSON['Goal'][0]['walletId'];
-      String userId;
+      String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
         'walletId': defaultWallet
       };
       // arrange
-      when(mockHTTPClientImpl.post(constants.goalURL,
+      when(() => mockHTTPClientImpl!.post(constants.goalURL,
               body: jsonEncode(contentBody), headers: constants.headers))
           .thenAnswer((_) async => fetchWalletAsJSON);
       // act
@@ -48,10 +48,10 @@ void main() {
           defaultWallet: defaultWallet,
           userId: userId);
       // assert
-      verify(mockHTTPClientImpl.post(constants.goalURL,
+      verify(() => mockHTTPClientImpl!.post(constants.goalURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(goals.goals.last.goalId,
+      expect(goals.goals!.last.goalId,
           equals(fetchWalletAsJSON['Goal'][0]['goalId']));
     });
   });
@@ -79,13 +79,13 @@ void main() {
                 addGoalAsJSON['body-json']['targetType']));
 
         // arrange
-        when(mockHTTPClientImpl.put(constants.goalURL,
-                body: jsonEncode(goal.toJSON()), headers: constants.headers))
-            .thenAnswer((_) async => addGoalAsJSON);
+        when(() => mockHTTPClientImpl!.put(constants.goalURL,
+            body: jsonEncode(goal.toJSON()),
+            headers: constants.headers)).thenAnswer((_) async => addGoalAsJSON);
         // act
         await dataSource.add(goal);
         // assert
-        verify(mockHTTPClientImpl.put(constants.goalURL,
+        verify(() => mockHTTPClientImpl!.put(constants.goalURL,
             body: jsonEncode(goal.toJSON()), headers: constants.headers));
       },
     );
@@ -104,13 +104,13 @@ void main() {
             targetAmount: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['targetAmount']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.goalURL,
+        when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateAmountAsJSON);
         // act
         await dataSource.update(goal);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.goalURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.goalURL,
             body: jsonEncode(goal.toJSON()), headers: constants.headers));
       },
     );
@@ -126,13 +126,13 @@ void main() {
             goalId: updateTargetDateAsJSON['body-json']['goalId'],
             targetDate: updateTargetDateAsJSON['body-json']['targetDate']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.goalURL,
+        when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateTargetDateAsJSON);
         // act
         await dataSource.update(goal);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.goalURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.goalURL,
             body: jsonEncode(goal.toJSON()), headers: constants.headers));
       },
     );
@@ -148,13 +148,13 @@ void main() {
             goalId: updateTargetIdAsJSON['body-json']['goalId'],
             targetId: updateTargetIdAsJSON['body-json']['targetId']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.goalURL,
+        when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateTargetIdAsJSON);
         // act
         await dataSource.update(goal);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.goalURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.goalURL,
             body: jsonEncode(goal.toJSON()), headers: constants.headers));
       },
     );
@@ -171,13 +171,13 @@ void main() {
             targetType: parseDynamicAsTargetType(
                 updateTargetIdAsJSON['body-json']['targetType']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.goalURL,
+        when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateTargetIdAsJSON);
         // act
         await dataSource.update(goal);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.goalURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.goalURL,
             body: jsonEncode(goal.toJSON()), headers: constants.headers));
       },
     );
@@ -196,13 +196,13 @@ void main() {
                 updateMonthlyContributionAsJSON['body-json']
                     ['monthlyContribution']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.goalURL,
+        when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateMonthlyContributionAsJSON);
         // act
         await dataSource.update(goal);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.goalURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.goalURL,
             body: jsonEncode(goal.toJSON()), headers: constants.headers));
       },
     );

@@ -1,19 +1,18 @@
 import 'package:intl/intl.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_with_date_repository.dart';
 import '../../../constants/constants.dart' as constants;
 
 class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
-  EndsWithDateRepositoryImpl({@required this.endsWithDateLocalDataSource});
+  EndsWithDateRepositoryImpl({required this.endsWithDateLocalDataSource});
 
-  final EndsWithDateLocalDataSource endsWithDateLocalDataSource;
+  final EndsWithDateLocalDataSource? endsWithDateLocalDataSource;
 
   @override
   Future<String> readEndsWithDate() async {
     String endsWithDate;
     try {
-      endsWithDate = await endsWithDateLocalDataSource.readEndsWithDate();
+      endsWithDate = await endsWithDateLocalDataSource!.readEndsWithDate();
     } on Exception {
       // Caculate the end date from now
       final _nowDate = DateTime.now();
@@ -30,6 +29,6 @@ class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
 
   @override
   Future<void> writeEndsWithDate(String value) async {
-    return endsWithDateLocalDataSource.writeEndsWithDate(value);
+    return endsWithDateLocalDataSource!.writeEndsWithDate(value);
   }
 }

@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../failure/api_failure.dart';
 import '../failure/failure.dart';
 
@@ -8,7 +6,7 @@ import '../failure/failure.dart';
 ///
 class APIException implements Exception {
   // Constructor to set response
-  APIException({@required this.res});
+  APIException({this.res});
 
   dynamic res;
 

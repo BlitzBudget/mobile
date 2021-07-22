@@ -5,24 +5,24 @@ import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
 mixin CategoryRemoteDataSource {
-  Future<void> delete({@required String walletId, @required String category});
+  Future<void> delete({required String walletId, required String category});
 }
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
-  CategoryRemoteDataSourceImpl({@required this.httpClient});
+  CategoryRemoteDataSourceImpl({required this.httpClient});
 
-  final HTTPClient httpClient;
+  final HTTPClient? httpClient;
 
   /// Delete Wallet
   @override
-  Future<void> delete({@required String walletId, @required String category}) {
+  Future<void> delete({required String walletId, required String category}) {
     // JSON for Get wallet [_jsonForGetWallet]
     final _jsonForDeleteCategory = <String, dynamic>{
       'walletId': walletId,
       'category': category
     };
 
-    return httpClient
+    return httpClient!
         .post(constants.deleteCategoryURL,
             body: jsonEncode(_jsonForDeleteCategory),
             headers: constants.headers)

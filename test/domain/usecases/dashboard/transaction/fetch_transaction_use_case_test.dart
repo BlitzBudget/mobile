@@ -28,7 +28,7 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_wit
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/starts_with_date_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/transaction/fetch_transaction_use_case.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -47,12 +47,12 @@ class MockUserAttributesRepository extends Mock
     implements UserAttributesRepository {}
 
 void main() {
-  FetchTransactionUseCase fetchTransactionUseCase;
-  MockTransactionRepository mockTransactionRepository;
-  MockDefaultWalletRepository mockDefaultWalletRepository;
-  MockEndsWithDateRepository mockEndsWithDateRepository;
-  MockStartsWithDateRepository mockStartsWithDateRepository;
-  MockUserAttributesRepository mockUserAttributesRepository;
+  late FetchTransactionUseCase fetchTransactionUseCase;
+  MockTransactionRepository? mockTransactionRepository;
+  MockDefaultWalletRepository? mockDefaultWalletRepository;
+  MockEndsWithDateRepository? mockEndsWithDateRepository;
+  MockStartsWithDateRepository? mockStartsWithDateRepository;
+  MockUserAttributesRepository? mockUserAttributesRepository;
 
   final transactionModelAsString =
       fixture('models/get/transaction/transaction_model.json');
@@ -110,28 +110,27 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
-      when(mockTransactionRepository.add(transaction))
+      when(() => mockTransactionRepository!.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockEndsWithDateRepository.readEndsWithDate())
+      when(() => mockEndsWithDateRepository!.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockStartsWithDateRepository.readStartsWithDate())
+      when(() => mockStartsWithDateRepository!.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
       final Either<Failure, TransactionResponse> fetchTransactionMonad =
           Right<Failure, TransactionResponse>(transactionResponseModelAsJSON);
 
-      when(mockTransactionRepository.fetch(
-              startsWithDate: dateString,
-              endsWithDate: dateString,
-              defaultWallet: dateString,
-              userId: null))
-          .thenAnswer((_) => Future.value(fetchTransactionMonad));
+      when(() => mockTransactionRepository!.fetch(
+          startsWithDate: dateString,
+          endsWithDate: dateString,
+          defaultWallet: dateString,
+          userId: null)).thenAnswer((_) => Future.value(fetchTransactionMonad));
 
       final transactionResponse = await fetchTransactionUseCase.fetch();
 
       expect(transactionResponse.isRight(), true);
-      verify(mockTransactionRepository.fetch(
+      verify(() => mockTransactionRepository!.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: dateString,
@@ -146,20 +145,20 @@ void main() {
       final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockTransactionRepository.add(transaction))
+      when(() => mockTransactionRepository!.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(mockEndsWithDateRepository.readEndsWithDate())
+      when(() => mockEndsWithDateRepository!.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockStartsWithDateRepository.readStartsWithDate())
+      when(() => mockStartsWithDateRepository!.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockUserAttributesRepository.readUserAttributes())
+      when(() => mockUserAttributesRepository!.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
       final Either<Failure, TransactionResponse> fetchTransactionMonad =
           Right<Failure, TransactionResponse>(transactionResponseModelAsJSON);
 
-      when(mockTransactionRepository.fetch(
+      when(() => mockTransactionRepository!.fetch(
               startsWithDate: dateString,
               endsWithDate: dateString,
               defaultWallet: null,
@@ -169,7 +168,7 @@ void main() {
       final transactionResponse = await fetchTransactionUseCase.fetch();
 
       expect(transactionResponse.isRight(), true);
-      verify(mockTransactionRepository.fetch(
+      verify(() => mockTransactionRepository!.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -184,21 +183,21 @@ void main() {
       final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
-      when(mockTransactionRepository.add(transaction))
+      when(() => mockTransactionRepository!.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(mockEndsWithDateRepository.readEndsWithDate())
+      when(() => mockEndsWithDateRepository!.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockStartsWithDateRepository.readStartsWithDate())
+      when(() => mockStartsWithDateRepository!.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(mockUserAttributesRepository.readUserAttributes())
+      when(() => mockUserAttributesRepository!.readUserAttributes())
           .thenAnswer((_) => Future.value(userFailure));
 
       final transactionResponse = await fetchTransactionUseCase.fetch();
 
       expect(transactionResponse.isLeft(), true);
-      verifyNever(mockTransactionRepository.fetch(
+      verifyNever(() => mockTransactionRepository!.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -253,14 +252,15 @@ TransactionResponseModel convertToResponseModel(
       <Date>[]);
 
   final responseWallet = transactionResponseModelAsJSON['Wallet'];
-  Wallet convertedWallet;
+  Wallet? convertedWallet;
 
   /// Check if the response is a string or a list
   ///
   /// If string then convert them into a wallet
   /// If List then convert them into list of wallets and take the first wallet.
   if (responseWallet is Map) {
-    convertedWallet = WalletModel.fromJSON(responseWallet);
+    convertedWallet =
+        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
   } else if (responseWallet is List) {
     final convertedWallets = List<Wallet>.from(responseWallet
         .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));

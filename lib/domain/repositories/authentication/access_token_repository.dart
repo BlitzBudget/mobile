@@ -5,5 +5,5 @@ import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 abstract class AccessTokenRepository {
   Future<Either<Failure, String>> readAccessToken();
 
-  Future<void> writeAccessToken(UserResponse userResponse);
+  Future<void> writeAccessToken(UserResponse? userResponse);
 }

@@ -3,7 +3,7 @@ import '../constants/constants.dart';
 
 class LinearLoadingIndicator extends StatelessWidget {
   const LinearLoadingIndicator({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

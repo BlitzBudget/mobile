@@ -5,7 +5,7 @@ import 'package:matcher/matcher.dart';
 import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/persistence/secure_key_value_store_impl.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/authentication/user_attributes_local_data_source.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -13,8 +13,8 @@ class MockSecureKeyValueStoreImpl extends Mock
     implements SecureKeyValueStoreImpl {}
 
 void main() {
-  UserAttributesLocalDataSourceImpl dataSource;
-  SecureKeyValueStoreImpl mockSecureKeyValueStoreImpl;
+  late UserAttributesLocalDataSourceImpl dataSource;
+  SecureKeyValueStoreImpl? mockSecureKeyValueStoreImpl;
   const userAttributesCacheName = 'user_attributes';
   final loginResponseAsString =
       fixture('responses/authentication/login_info.json');
@@ -33,14 +33,14 @@ void main() {
       'Should return UserAttributes from SecureKeyValueStore when there is one in the SharedPreferences',
       () async {
         // arrange
-        when(mockSecureKeyValueStoreImpl.getString(
-                key: userAttributesCacheName))
+        when(() => mockSecureKeyValueStoreImpl!
+                .getString(key: userAttributesCacheName))
             .thenAnswer((_) => Future.value(userAttributeAsString));
         // act
         final userAttributesResult = await dataSource.readUserAttributes();
         // assert
-        verify(mockSecureKeyValueStoreImpl.getString(
-            key: userAttributesCacheName));
+        verify(() => mockSecureKeyValueStoreImpl!
+            .getString(key: userAttributesCacheName));
         expect(userAttributesResult, equals(userAttributeAsString));
       },
     );
@@ -49,9 +49,8 @@ void main() {
       'Should throw a NoValueInCacheException when there is no value',
       () async {
         // arrange
-        when(mockSecureKeyValueStoreImpl.getString(
-                key: userAttributesCacheName))
-            .thenThrow(NoValueInCacheException());
+        when(() => mockSecureKeyValueStoreImpl!.getString(
+            key: userAttributesCacheName)).thenThrow(NoValueInCacheException());
         // assert
         expect(() => dataSource.readUserAttributes(),
             throwsA(const TypeMatcher<NoValueInCacheException>()));
@@ -63,10 +62,14 @@ void main() {
     test(
       'Should call SecureKeyValueStore to store the data',
       () async {
+        // when
+        when(() => mockSecureKeyValueStoreImpl!.setString(
+            key: userAttributesCacheName,
+            value: userAttributeAsString)).thenAnswer((_) => Future.value());
         // act
         await dataSource.writeUserAttributes(userAttributeAsString);
         // assert
-        verify(mockSecureKeyValueStoreImpl.setString(
+        verify(() => mockSecureKeyValueStoreImpl!.setString(
             key: userAttributesCacheName, value: userAttributeAsString));
       },
     );

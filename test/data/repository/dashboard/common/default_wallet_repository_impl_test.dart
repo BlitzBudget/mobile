@@ -4,14 +4,14 @@ import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/default_wallet_local_data_source.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/common/default_wallet_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockDefaultWalletLocalDataSourceImpl extends Mock
     implements DefaultWalletLocalDataSourceImpl {}
 
 void main() {
-  MockDefaultWalletLocalDataSourceImpl mockDefaultWalletLocalDataSourceImpl;
-  DefaultWalletRepositoryImpl defaultWalletRepositoryImpl;
+  MockDefaultWalletLocalDataSourceImpl? mockDefaultWalletLocalDataSourceImpl;
+  DefaultWalletRepositoryImpl? defaultWalletRepositoryImpl;
   const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
 
   setUp(() {
@@ -30,11 +30,11 @@ void main() {
 
   group('Read Default Wallet', () {
     test('Throw a Failure when no value is found', () async {
-      when(mockDefaultWalletLocalDataSourceImpl.readDefaultWallet())
+      when(() => mockDefaultWalletLocalDataSourceImpl!.readDefaultWallet())
           .thenThrow(NoValueInCacheException());
       final defaultWallet =
-          await defaultWalletRepositoryImpl.readDefaultWallet();
-      verify(mockDefaultWalletLocalDataSourceImpl.readDefaultWallet());
+          await defaultWalletRepositoryImpl!.readDefaultWallet();
+      verify(() => mockDefaultWalletLocalDataSourceImpl!.readDefaultWallet());
       final f =
           defaultWallet.fold((failure) => failure, (_) => GenericFailure());
       expect(f, equals(EmptyResponseFailure()));
@@ -43,8 +43,11 @@ void main() {
 
   group('Write Default Wallet', () {
     test('Throw a Failure when no value is found', () async {
-      await defaultWalletRepositoryImpl.writeDefaultWallet(walletId);
-      verify(mockDefaultWalletLocalDataSourceImpl.writeDefaultWallet(walletId));
+      when(() => mockDefaultWalletLocalDataSourceImpl!
+          .writeDefaultWallet(walletId)).thenAnswer((_) => Future.value());
+      await defaultWalletRepositoryImpl!.writeDefaultWallet(walletId);
+      verify(() =>
+          mockDefaultWalletLocalDataSourceImpl!.writeDefaultWallet(walletId));
     });
   });
 }

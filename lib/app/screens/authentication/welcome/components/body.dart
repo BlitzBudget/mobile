@@ -7,7 +7,7 @@ import 'background.dart';
 
 class Body extends StatelessWidget {
   /// In the constructor
-  const Body({Key key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

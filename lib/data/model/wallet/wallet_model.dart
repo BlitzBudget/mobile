@@ -4,13 +4,13 @@ import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 class WalletModel extends Wallet {
   /// Optional field: wallet id, wallet name, total debt balance, wallet balance, total asset balance
   const WalletModel({
-    String walletId,
-    String userId,
-    String walletName,
-    String currency,
-    double totalDebtBalance,
-    double walletBalance,
-    double totalAssetBalance,
+    String? walletId,
+    String? userId,
+    String? walletName,
+    String? currency,
+    double? totalDebtBalance,
+    double? walletBalance,
+    double? totalAssetBalance,
   }) : super(
             userId: userId,
             currency: currency,

@@ -15,17 +15,17 @@ class BankAccount extends Equatable {
       this.accountSubType,
       this.bankAccountName});
 
-  final String accountId;
-  final String walletId;
-  final double accountBalance;
-  final bool linked;
-  final bool selectedAccount;
-  final AccountType accountType;
-  final AccountSubType accountSubType;
-  final String bankAccountName;
+  final String? accountId;
+  final String? walletId;
+  final double? accountBalance;
+  final bool? linked;
+  final bool? selectedAccount;
+  final AccountType? accountType;
+  final AccountSubType? accountSubType;
+  final String? bankAccountName;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         accountId,
         walletId,
         accountBalance,

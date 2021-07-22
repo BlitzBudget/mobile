@@ -6,7 +6,7 @@ import 'components/body.dart';
 
 class LoginScreen extends StatelessWidget {
   /// In the constructor, require a Todo.
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
   @override
   BlocProvider<LoginBloc> build(BuildContext context) {
     return BlocProvider(

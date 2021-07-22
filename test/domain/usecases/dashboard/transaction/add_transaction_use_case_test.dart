@@ -8,15 +8,15 @@ import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/transaction/add_transaction_use_case.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockTransactionRepository extends Mock implements TransactionRepository {}
 
 void main() {
-  AddTransactionUseCase addTransactionUseCase;
-  MockTransactionRepository mockTransactionRepository;
+  late AddTransactionUseCase addTransactionUseCase;
+  MockTransactionRepository? mockTransactionRepository;
 
   final transactionModelAsString =
       fixture('models/get/transaction/transaction_model.json');
@@ -50,28 +50,28 @@ void main() {
       const Either<Failure, void> addTransactionMonad =
           Right<Failure, void>('');
 
-      when(mockTransactionRepository.add(transaction))
+      when(() => mockTransactionRepository!.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
 
       final transactionResponse =
           await addTransactionUseCase.add(addTransaction: transaction);
 
       expect(transactionResponse.isRight(), true);
-      verify(mockTransactionRepository.add(transaction));
+      verify(() => mockTransactionRepository!.add(transaction));
     });
 
     test('Failure', () async {
       final Either<Failure, void> addTransactionMonad =
           Left<Failure, void>(FetchDataFailure());
 
-      when(mockTransactionRepository.add(transaction))
+      when(() => mockTransactionRepository!.add(transaction))
           .thenAnswer((_) => Future.value(addTransactionMonad));
 
       final transactionResponse =
           await addTransactionUseCase.add(addTransaction: transaction);
 
       expect(transactionResponse.isLeft(), true);
-      verify(mockTransactionRepository.add(transaction));
+      verify(() => mockTransactionRepository!.add(transaction));
     });
   });
 }

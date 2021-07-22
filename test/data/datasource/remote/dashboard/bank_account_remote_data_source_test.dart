@@ -6,15 +6,15 @@ import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/bank_account_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  BankAccountRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late BankAccountRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -42,14 +42,14 @@ void main() {
             bankAccountName: addBankAccountAsJSON['body-json']
                 ['bankAccountName']);
         // arrange
-        when(mockHTTPClientImpl.put(constants.bankAccountURL,
+        when(() => mockHTTPClientImpl!.put(constants.bankAccountURL,
                 body: jsonEncode(bankAccount.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => addBankAccountAsJSON);
         // act
         await dataSource.add(bankAccount);
         // assert
-        verify(mockHTTPClientImpl.put(constants.bankAccountURL,
+        verify(() => mockHTTPClientImpl!.put(constants.bankAccountURL,
             body: jsonEncode(bankAccount.toJSON()),
             headers: constants.headers));
       },
@@ -69,14 +69,14 @@ void main() {
             accountBalance: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['accountBalance']));
         // arrange
-        when(mockHTTPClientImpl.patch(constants.bankAccountURL,
+        when(() => mockHTTPClientImpl!.patch(constants.bankAccountURL,
                 body: jsonEncode(bankAccount.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateAmountAsJSON);
         // act
         await dataSource.update(bankAccount);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.bankAccountURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.bankAccountURL,
             body: jsonEncode(bankAccount.toJSON()),
             headers: constants.headers));
       },
@@ -94,14 +94,14 @@ void main() {
             selectedAccount: updateDescriptionAsJSON['body-json']
                 ['selectedAccount']);
         // arrange
-        when(mockHTTPClientImpl.patch(constants.bankAccountURL,
+        when(() => mockHTTPClientImpl!.patch(constants.bankAccountURL,
                 body: jsonEncode(bankAccount.toJSON()),
                 headers: constants.headers))
             .thenAnswer((_) async => updateDescriptionAsJSON);
         // act
         await dataSource.update(bankAccount);
         // assert
-        verify(mockHTTPClientImpl.patch(constants.bankAccountURL,
+        verify(() => mockHTTPClientImpl!.patch(constants.bankAccountURL,
             body: jsonEncode(bankAccount.toJSON()),
             headers: constants.headers));
       },
@@ -119,14 +119,14 @@ void main() {
       'Should delete the appropriate wallet item when invoked',
       () async {
         // arrange
-        when(mockHTTPClientImpl.post(constants.deleteBankAccountURL,
+        when(() => mockHTTPClientImpl!.post(constants.deleteBankAccountURL,
                 body: jsonEncode({'walletId': walletId, 'account': account}),
                 headers: constants.headers))
             .thenAnswer((_) async => deleteAccountResponseAsJSON);
         // act
         await dataSource.delete(walletId: walletId, account: account);
         // assert
-        verify(mockHTTPClientImpl.post(constants.deleteBankAccountURL,
+        verify(() => mockHTTPClientImpl!.post(constants.deleteBankAccountURL,
             body: jsonEncode({'walletId': walletId, 'account': account}),
             headers: constants.headers));
       },

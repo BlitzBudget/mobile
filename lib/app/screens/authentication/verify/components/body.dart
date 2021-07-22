@@ -15,16 +15,16 @@ class Body extends StatefulWidget {
   /// In the constructor, require a Todo.
   /// The verify URL is true by default
   const Body(
-      {Key key,
-      @required this.email,
-      @required this.password,
+      {Key? key,
+      required this.email,
+      required this.password,
       this.useVerifyURL,
       this.showResendVerificationCode})
       : super(key: key);
 
-  final String email, password;
-  final bool useVerifyURL;
-  final bool showResendVerificationCode;
+  final String? email, password;
+  final bool? useVerifyURL;
+  final bool? showResendVerificationCode;
 
   @override
   _BodyState createState() => _BodyState();
@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
   /// States
   bool _btnEnabled = true;
 
-  String verificationCode;
+  String? verificationCode;
   final String verifyEmail = 'Verify Email';
   final String verificationCodeText = 'Your verification code';
   String verifyButton = 'VERIFY';
@@ -91,11 +91,12 @@ class _BodyState extends State<Body> {
 
                     /// If the length of the string is == 6 then submit the code for verification
                     if (verificationCode != null &&
-                        verificationCode.length >= 6) {
+                        verificationCode!.length >= 6) {
                       _dispatchVerifyEmail(
                           email: widget.email,
                           password: widget.password,
-                          verificationCode: verificationCode);
+                          verificationCode: verificationCode,
+                          useVerifyURL: widget.useVerifyURL);
                     }
                   },
                   autofocus: true),
@@ -105,7 +106,8 @@ class _BodyState extends State<Body> {
                   _dispatchVerifyEmail(
                       email: widget.email,
                       password: widget.password,
-                      verificationCode: verificationCode);
+                      verificationCode: verificationCode,
+                      useVerifyURL: widget.useVerifyURL);
                 },
                 enabled: _btnEnabled,
               ),
@@ -113,7 +115,7 @@ class _BodyState extends State<Body> {
 
               /// Show text only when the showResendVerificationCode is enabled
               Visibility(
-                visible: widget.showResendVerificationCode,
+                visible: widget.showResendVerificationCode!,
                 child: ResendVerification(email: widget.email),
               ),
             ],
@@ -124,10 +126,14 @@ class _BodyState extends State<Body> {
   }
 
   void _dispatchVerifyEmail(
-      {@required String email,
-      @required String password,
-      @required String verificationCode}) {
+      {required String? email,
+      required String? password,
+      required String? verificationCode,
+      required bool? useVerifyURL}) {
     BlocProvider.of<VerifyBloc>(context).add(VerifyUser(
-        email: email, password: password, verificationCode: verificationCode));
+        email: email,
+        password: password,
+        verificationCode: verificationCode,
+        useVerifyURL: useVerifyURL));
   }
 }

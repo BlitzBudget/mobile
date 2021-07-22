@@ -11,7 +11,7 @@ import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurri
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/recurring_transaction_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/recurring-transaction/update_recurring_transaction_use_case.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -22,9 +22,9 @@ class MockDefaultWalletRepository extends Mock
     implements DefaultWalletRepository {}
 
 void main() {
-  UpdateRecurringTransactionUseCase updateRecurringTransactionUseCase;
-  MockRecurringTransactionRepository mockRecurringTransactionRepository;
-  MockDefaultWalletRepository mockDefaultWalletRepository;
+  late UpdateRecurringTransactionUseCase updateRecurringTransactionUseCase;
+  MockRecurringTransactionRepository? mockRecurringTransactionRepository;
+  MockDefaultWalletRepository? mockDefaultWalletRepository;
 
   final recurringTransactionModelAsString = fixture(
       'models/get/recurring-transaction/recurring_transaction_model.json');
@@ -63,7 +63,8 @@ void main() {
       const Either<Failure, void> updateRecurringTransactionMonad =
           Right<Failure, void>('');
 
-      when(mockRecurringTransactionRepository.update(recurringTransaction))
+      when(() =>
+              mockRecurringTransactionRepository!.update(recurringTransaction))
           .thenAnswer((_) => Future.value(updateRecurringTransactionMonad));
 
       final recurringTransactionResponse =
@@ -71,14 +72,16 @@ void main() {
               updateRecurringTransaction: recurringTransaction);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(mockRecurringTransactionRepository.update(recurringTransaction));
+      verify(() =>
+          mockRecurringTransactionRepository!.update(recurringTransaction));
     });
 
     test('Failure', () async {
       final Either<Failure, void> updateRecurringTransactionMonad =
           Left<Failure, void>(FetchDataFailure());
 
-      when(mockRecurringTransactionRepository.update(recurringTransaction))
+      when(() =>
+              mockRecurringTransactionRepository!.update(recurringTransaction))
           .thenAnswer((_) => Future.value(updateRecurringTransactionMonad));
 
       final recurringTransactionResponse =
@@ -86,7 +89,8 @@ void main() {
               updateRecurringTransaction: recurringTransaction);
 
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(mockRecurringTransactionRepository.update(recurringTransaction));
+      verify(() =>
+          mockRecurringTransactionRepository!.update(recurringTransaction));
     });
   });
 
@@ -100,11 +104,12 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -114,19 +119,20 @@ void main() {
               newAmount: recurringTransactionModel.amount);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -139,8 +145,8 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -149,9 +155,10 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -164,8 +171,8 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verifyNever(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verifyNever(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
   });
 
@@ -178,11 +185,12 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -192,19 +200,20 @@ void main() {
               description: recurringTransactionModel.description);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -217,8 +226,8 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -227,9 +236,10 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -242,8 +252,8 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verifyNever(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verifyNever(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
   });
 
@@ -256,11 +266,12 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -270,19 +281,20 @@ void main() {
               accountId: recurringTransactionModel.accountId);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -295,8 +307,8 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -305,9 +317,10 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -320,8 +333,8 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verifyNever(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verifyNever(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
   });
 
@@ -334,11 +347,12 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -348,19 +362,20 @@ void main() {
               categoryId: recurringTransactionModel.category);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -373,8 +388,8 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -383,9 +398,10 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -398,8 +414,8 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verifyNever(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verifyNever(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
   });
 
@@ -413,11 +429,12 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -427,19 +444,20 @@ void main() {
               recurrence: recurringTransactionModel.recurrence);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -452,8 +470,8 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -462,9 +480,10 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -477,8 +496,8 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verifyNever(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verifyNever(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
   });
 
@@ -491,11 +510,12 @@ void main() {
     test('Success', () async {
       const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -505,19 +525,20 @@ void main() {
               tags: recurringTransactionModel.tags);
 
       expect(recurringTransactionResponse.isRight(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Failure Response: Failure', () async {
       final Either<Failure, void> updateBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
       final Either<Failure, String> dateStringMonad =
-          Right<Failure, String>(recurringTransactionModel.walletId);
+          Right<Failure, String>(recurringTransactionModel.walletId!);
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -530,8 +551,8 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verify(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verify(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -540,9 +561,10 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(mockDefaultWalletRepository.readDefaultWallet())
+      when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(mockRecurringTransactionRepository.update(recurringTransactionModel))
+      when(() => mockRecurringTransactionRepository!
+              .update(recurringTransactionModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final recurringTransactionResponse =
@@ -555,8 +577,8 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(recurringTransactionResponse.isLeft(), true);
-      verifyNever(
-          mockRecurringTransactionRepository.update(recurringTransactionModel));
+      verifyNever(() => mockRecurringTransactionRepository!
+          .update(recurringTransactionModel));
     });
   });
 }

@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 /// A simple widget that builds different things on different platforms.
 class PlatformWidget extends StatelessWidget {
   const PlatformWidget({
-    Key key,
-    @required this.androidBuilder,
-    @required this.iosBuilder,
-  })  : assert(androidBuilder != null),
-        assert(iosBuilder != null),
-        super(key: key);
+    Key? key,
+    required this.androidBuilder,
+    required this.iosBuilder,
+  }) : super(key: key);
 
   final WidgetBuilder androidBuilder;
   final WidgetBuilder iosBuilder;
@@ -24,7 +22,7 @@ class PlatformWidget extends StatelessWidget {
         return iosBuilder(context);
       default:
         assert(false, 'Unexpected platform $defaultTargetPlatform');
-        return null;
+        return androidBuilder(context);
     }
   }
 }
@@ -35,17 +33,17 @@ class PlatformWidget extends StatelessWidget {
 /// use on both iOS and Android as part of their brand's unique design.
 class PressableCard extends StatefulWidget {
   const PressableCard({
-    Key key,
+    Key? key,
     this.onPressed,
     this.color,
     this.flattenAnimation,
     this.child,
   }) : super(key: key);
 
-  final VoidCallback onPressed;
-  final Color color;
-  final Animation<double> flattenAnimation;
-  final Widget child;
+  final VoidCallback? onPressed;
+  final Color? color;
+  final Animation<double>? flattenAnimation;
+  final Widget? child;
 
   @override
   State<StatefulWidget> createState() => _PressableCardState();
@@ -54,8 +52,8 @@ class PressableCard extends StatefulWidget {
 class _PressableCardState extends State<PressableCard>
     with SingleTickerProviderStateMixin {
   bool pressed = false;
-  AnimationController controller;
-  Animation<double> elevationAnimation;
+  late AnimationController controller;
+  Animation<double>? elevationAnimation;
 
   @override
   void initState() {
@@ -74,7 +72,7 @@ class _PressableCardState extends State<PressableCard>
     super.dispose();
   }
 
-  double get flatten => 1 - widget.flattenAnimation.value;
+  double get flatten => 1 - widget.flattenAnimation!.value;
 
   @override
   Widget build(context) {
@@ -91,7 +89,7 @@ class _PressableCardState extends State<PressableCard>
         behavior: HitTestBehavior.opaque,
         onTap: () {
           if (widget.onPressed != null) {
-            widget.onPressed();
+            widget.onPressed!();
           }
         },
 
@@ -106,17 +104,17 @@ class _PressableCardState extends State<PressableCard>
             return Transform.scale(
               /// This is just a sample. You likely want to keep the math cleaner
               /// in your own app.
-              scale: 1 - elevationAnimation.value * 0.03,
+              scale: 1 - elevationAnimation!.value * 0.03,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 16) *
                         flatten,
                 child: PhysicalModel(
                   elevation:
-                      ((1 - elevationAnimation.value) * 10 + 10) * flatten,
+                      ((1 - elevationAnimation!.value) * 10 + 10) * flatten,
                   borderRadius: BorderRadius.circular(12 * flatten),
                   clipBehavior: Clip.antiAlias,
-                  color: widget.color,
+                  color: widget.color!,
                   child: child,
                 ),
               ),
@@ -138,19 +136,19 @@ class _PressableCardState extends State<PressableCard>
 /// use on both iOS and Android as part of their brand's unique design.
 class HeroAnimatingTransactionCard extends StatelessWidget {
   const HeroAnimatingTransactionCard(
-      {Key key,
+      {Key? key,
       this.transaction,
       this.color,
       this.heroAnimation,
       this.onPressed})
       : super(key: key);
 
-  final String transaction;
-  final Color color;
-  final Animation<double> heroAnimation;
-  final VoidCallback onPressed;
+  final String? transaction;
+  final Color? color;
+  final Animation<double>? heroAnimation;
+  final VoidCallback? onPressed;
 
-  double get playButtonSize => 50 + 50 * heroAnimation.value;
+  double get playButtonSize => 50 + 50 * heroAnimation!.value;
 
   @override
   Widget build(context) {
@@ -161,10 +159,10 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
     /// Left simple in this demo because this card doesn't have any real inner
     /// content so this just rebuilds everything while animating.
     return AnimatedBuilder(
-      animation: heroAnimation,
+      animation: heroAnimation!,
       builder: (context, child) {
         return PressableCard(
-          onPressed: heroAnimation.value == 0 ? onPressed : null,
+          onPressed: heroAnimation!.value == 0 ? onPressed : null,
           color: color,
           flattenAnimation: heroAnimation,
           child: SizedBox(
@@ -174,7 +172,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
               children: [
                 /// The transaction title banner slides off in the hero animation.
                 Positioned(
-                  bottom: -80 * heroAnimation.value,
+                  bottom: -80 * heroAnimation!.value,
                   left: 0,
                   right: 0,
                   child: Container(
@@ -183,7 +181,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
-                      transaction,
+                      transaction!,
                       style: const TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.w500,
@@ -195,7 +193,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
                 /// The play button grows in the hero animation.
                 Padding(
                   padding: const EdgeInsets.only(bottom: 45) *
-                      (1 - heroAnimation.value),
+                      (1 - heroAnimation!.value),
                   child: Container(
                     height: playButtonSize,
                     width: playButtonSize,
@@ -223,7 +221,7 @@ class HeroAnimatingTransactionCard extends StatelessWidget {
 /// use on both iOS and Android as part of their brand's unique design.
 class TransactionPlaceHolderTile extends StatelessWidget {
   const TransactionPlaceHolderTile({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -235,7 +233,7 @@ class TransactionPlaceHolderTile extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              color: Theme.of(context).textTheme.bodyText2.color,
+              color: Theme.of(context).textTheme.bodyText2!.color,
               width: 130,
             ),
             const Padding(
@@ -248,27 +246,27 @@ class TransactionPlaceHolderTile extends StatelessWidget {
                   Container(
                     height: 9,
                     margin: const EdgeInsets.only(right: 60),
-                    color: Theme.of(context).textTheme.bodyText2.color,
+                    color: Theme.of(context).textTheme.bodyText2!.color,
                   ),
                   Container(
                     height: 9,
                     margin: const EdgeInsets.only(right: 20, top: 8),
-                    color: Theme.of(context).textTheme.bodyText2.color,
+                    color: Theme.of(context).textTheme.bodyText2!.color,
                   ),
                   Container(
                     height: 9,
                     margin: const EdgeInsets.only(right: 40, top: 8),
-                    color: Theme.of(context).textTheme.bodyText2.color,
+                    color: Theme.of(context).textTheme.bodyText2!.color,
                   ),
                   Container(
                     height: 9,
                     margin: const EdgeInsets.only(right: 80, top: 8),
-                    color: Theme.of(context).textTheme.bodyText2.color,
+                    color: Theme.of(context).textTheme.bodyText2!.color,
                   ),
                   Container(
                     height: 9,
                     margin: const EdgeInsets.only(right: 50, top: 8),
-                    color: Theme.of(context).textTheme.bodyText2.color,
+                    color: Theme.of(context).textTheme.bodyText2!.color,
                   ),
                 ],
               ),
@@ -290,27 +288,27 @@ class TransactionPlaceHolderTile extends StatelessWidget {
 /// This uses a platform-appropriate mechanism to show users multiple choices.
 ///
 /// On Android, it uses a dialog with radio buttons. On iOS, it uses a picker.
-void showChoices(BuildContext context, List<String> choices) {
+void showChoices(BuildContext context, List<String>? choices) {
   switch (defaultTargetPlatform) {
     case TargetPlatform.android:
       showDialog<void>(
         context: context,
         builder: (context) {
-          var selectedRadio = 1;
+          int? selectedRadio = 1;
           return AlertDialog(
             contentPadding: const EdgeInsets.only(top: 12),
             content: StatefulBuilder(
               builder: (context, setState) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: List<Widget>.generate(choices.length, (index) {
+                  children: List<Widget>.generate(choices!.length, (index) {
                     return RadioListTile(
                       title: Text(choices[index]),
                       value: index,
                       groupValue: selectedRadio,
 
                       /// ignore: avoid_types_on_closure_parameters
-                      onChanged: (int value) {
+                      onChanged: (int? value) {
                         setState(() => selectedRadio = value);
                       },
                     );
@@ -345,7 +343,7 @@ void showChoices(BuildContext context, List<String> choices) {
               itemExtent: 40,
               scrollController: FixedExtentScrollController(initialItem: 1),
               onSelectedItemChanged: (value) {},
-              children: List<Widget>.generate(choices.length, (index) {
+              children: List<Widget>.generate(choices!.length, (index) {
                 return Center(
                   child: Text(
                     choices[index],

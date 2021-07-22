@@ -4,15 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/category_remote_data_source.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 
 void main() {
-  CategoryRemoteDataSourceImpl dataSource;
-  HTTPClientImpl mockHTTPClientImpl;
+  late CategoryRemoteDataSourceImpl dataSource;
+  HTTPClientImpl? mockHTTPClientImpl;
 
   setUp(() {
     mockHTTPClientImpl = MockHTTPClientImpl();
@@ -29,7 +29,7 @@ void main() {
       'Should delete the appropriate category item when invoked',
       () async {
         // arrange
-        when(mockHTTPClientImpl.post(constants.deleteCategoryURL,
+        when(() => mockHTTPClientImpl!.post(constants.deleteCategoryURL,
                 body: jsonEncode({
                   'walletId': walletId,
                   'category': categoryId,
@@ -39,7 +39,7 @@ void main() {
         // act
         await dataSource.delete(walletId: walletId, category: categoryId);
         // assert
-        verify(mockHTTPClientImpl.post(constants.deleteCategoryURL,
+        verify(() => mockHTTPClientImpl!.post(constants.deleteCategoryURL,
             body: jsonEncode({
               'walletId': walletId,
               'category': categoryId,

@@ -1,6 +1,6 @@
 // This is our global ServiceLocator
 
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -129,7 +129,7 @@ Future<void> init() async {
   // ignore: cascade_invocations
   getIt.registerLazySingleton(() => http.Client());
   // ignore: cascade_invocations
-  getIt.registerLazySingleton(() => DataConnectionChecker());
+  getIt.registerLazySingleton(() => InternetConnectionChecker());
   // ignore: cascade_invocations
   getIt.registerLazySingleton(() => const FlutterSecureStorage());
 }

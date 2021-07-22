@@ -5,7 +5,7 @@ import '../../../../widgets/dashboard_widget.dart';
 
 class AddNewWallet extends StatelessWidget {
   const AddNewWallet({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const title = 'Add new wallet';

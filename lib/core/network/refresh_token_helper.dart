@@ -15,26 +15,26 @@ import 'network_helper.dart';
 
 class RefreshTokenHelper {
   RefreshTokenHelper(
-      {@required this.refreshTokenRepository,
-      @required this.authTokenRepository,
-      @required this.accessTokenRepository,
-      @required this.networkHelper,
-      @required this.clearAllStorageRepository,
-      @required this.httpClient});
+      {required this.refreshTokenRepository,
+      required this.authTokenRepository,
+      required this.accessTokenRepository,
+      required this.networkHelper,
+      required this.clearAllStorageRepository,
+      required this.httpClient});
 
-  final RefreshTokenRepository refreshTokenRepository;
-  final AuthTokenRepository authTokenRepository;
-  final AccessTokenRepository accessTokenRepository;
-  final NetworkHelper networkHelper;
-  final ClearAllStorageRepository clearAllStorageRepository;
-  final http.Client httpClient;
+  late final RefreshTokenRepository refreshTokenRepository;
+  late final AuthTokenRepository authTokenRepository;
+  late final AccessTokenRepository accessTokenRepository;
+  late final NetworkHelper networkHelper;
+  late final ClearAllStorageRepository clearAllStorageRepository;
+  late final http.Client httpClient;
 
   /// Refresh authorization token
   ///
   /// If successful call the API again
   /// If unsuccessful then logout
   Future<void> refreshAuthToken(
-      Map<String, String> headers, Encoding encoding) async {
+      Map<String, String?> headers, Encoding? encoding) async {
     debugPrint(
         ' The authorization token has expired, Trying to refresh the token.');
 
@@ -48,8 +48,9 @@ class RefreshTokenHelper {
 
     return httpClient
         .post(Uri.parse(refreshTokenURL),
-            body: jsonEncode({'refreshToken': refreshToken.getOrElse(null)}),
-            headers: headers,
+            body:
+                jsonEncode({'refreshToken': refreshToken.getOrElse(() => '')}),
+            headers: headers as Map<String, String>?,
             encoding: encoding)
         .then((response) async {
       debugPrint(' The authorization token has been refreshed successfully.');

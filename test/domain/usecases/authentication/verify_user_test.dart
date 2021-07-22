@@ -4,14 +4,14 @@ import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/verify_user.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
 
 void main() {
-  MockAuthenticationRepository mockAuthenticationRepository;
-  VerifyUser verifyUser;
+  MockAuthenticationRepository? mockAuthenticationRepository;
+  late VerifyUser verifyUser;
   const email = 'nagarjun_nagesh@outlook.com';
   const password = '12345678';
   const verificationCode = '1234';
@@ -25,7 +25,7 @@ void main() {
   group('Success: VerifyUser', () {
     test('Should receive a successful response', () async {
       const eitherUserResponseMonad = Right<Failure, void>('');
-      when(mockAuthenticationRepository.verifyEmail(
+      when(() => mockAuthenticationRepository!.verifyEmail(
               email: email,
               password: password,
               verificationCode: verificationCode,
@@ -37,7 +37,7 @@ void main() {
           verificationCode: verificationCode,
           useVerifyURL: true);
       expect(verifyUserResponse.isRight(), true);
-      verify(verifyUser.verifyUser(
+      verify(() => mockAuthenticationRepository!.verifyEmail(
           email: email,
           password: password,
           verificationCode: verificationCode,
@@ -48,7 +48,7 @@ void main() {
   group('ERROR: VerifyUser', () {
     test('Should receive a failure response', () async {
       final eitherUserResponseMonad = Left<Failure, void>(FetchDataFailure());
-      when(mockAuthenticationRepository.verifyEmail(
+      when(() => mockAuthenticationRepository!.verifyEmail(
               email: email,
               password: password,
               verificationCode: verificationCode,
@@ -60,7 +60,7 @@ void main() {
           verificationCode: verificationCode,
           useVerifyURL: true);
       expect(verifyUserResponse.isLeft(), true);
-      verify(verifyUser.verifyUser(
+      verify(() => mockAuthenticationRepository!.verifyEmail(
           email: email,
           password: password,
           verificationCode: verificationCode,
@@ -71,12 +71,12 @@ void main() {
   group('Success: resendVerificationCode', () {
     test('Should receive a successful response', () async {
       const eitherUserResponseMonad = Right<Failure, void>('');
-      when(mockAuthenticationRepository.resendVerificationCode(email))
+      when(() => mockAuthenticationRepository!.resendVerificationCode(email))
           .thenAnswer((_) => Future.value(eitherUserResponseMonad));
       final verifyUserResponse =
           await verifyUser.resendVerificationCode(email: email);
       expect(verifyUserResponse.isRight(), true);
-      verify(mockAuthenticationRepository.resendVerificationCode(email));
+      verify(() => mockAuthenticationRepository!.resendVerificationCode(email));
     });
   });
 }
