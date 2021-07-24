@@ -37,7 +37,8 @@ class LoginUser extends UseCase {
         return Left(EmptyResponseFailure());
       }
 
-      final user = cast<UserResponse>(userResponse.getOrElse(() => const UserResponseModel()));
+      final user = cast<UserResponse>(
+          userResponse.getOrElse(() => const UserResponseModel()));
 
       /// Store User Attributes
       await userAttributesRepository!.writeUserAttributes(user);
