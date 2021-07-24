@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
-import '../../../domain/usecases/authentication/verify_user.dart'
+import '../../../../domain/usecases/authentication/verify_user.dart'
     as verify_usecase;
 import 'verify_constants.dart' as constants;
 

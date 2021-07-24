@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_blitzbudget/app/constants/constants.dart';
-import 'package:mobile_blitzbudget/app/ploc/login/login_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/authentication/login/login_bloc.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/signup/signup_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/verify/verify_screen.dart';
 import '../../../../widgets/linear_loading_indicator.dart';

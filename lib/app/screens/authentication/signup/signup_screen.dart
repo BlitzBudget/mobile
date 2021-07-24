@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_blitzbudget/app/ploc/signup/signup_bloc.dart';
+
 import '../../../../injection_container.dart';
+import '../../../ploc/authentication/signup/signup_bloc.dart';
 import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
