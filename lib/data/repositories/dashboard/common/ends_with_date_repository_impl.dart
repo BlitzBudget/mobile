@@ -29,6 +29,6 @@ class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
 
   @override
   Future<void> writeEndsWithDate(String value) async {
-    return endsWithDateLocalDataSource!.writeEndsWithDate(value);
+    return endsWithDateLocalDataSource.writeEndsWithDate(value);
   }
 }

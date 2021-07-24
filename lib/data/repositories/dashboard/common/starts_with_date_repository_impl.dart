@@ -29,6 +29,6 @@ class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
 
   @override
   Future<void> writeStartsWithDate(String value) async {
-    return startsWithDateLocalDataSource!.writeStartsWithDate(value);
+    return startsWithDateLocalDataSource.writeStartsWithDate(value);
   }
 }
