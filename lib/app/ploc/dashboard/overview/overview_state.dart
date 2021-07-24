@@ -7,4 +7,6 @@ abstract class OverviewState extends Equatable {
   List<Object> get props => [];
 }
 
-class OverviewInitial extends OverviewState {}
+class Loading extends OverviewState {}
+
+class Empty extends OverviewState {}

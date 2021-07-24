@@ -7,12 +7,12 @@ part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  CategoryBloc() : super(CategoryInitial());
+  CategoryBloc() : super(Empty());
 
   @override
   Stream<CategoryState> mapEventToState(
     CategoryEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    yield Loading();
   }
 }

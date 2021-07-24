@@ -14,7 +14,7 @@ class DeleteTransactionUseCase extends UseCase {
   final DeleteItemRepository? deleteItemRepository;
   final DefaultWalletRepository? defaultWalletRepository;
 
-  Future<Either<Failure, void>> delete({required String itemId}) async {
+  Future<Either<Failure, void>> delete({required String itemID}) async {
     final defaultWallet = await defaultWalletRepository!.readDefaultWallet();
 
     if (defaultWallet.isLeft()) {
@@ -22,6 +22,6 @@ class DeleteTransactionUseCase extends UseCase {
     }
 
     return deleteItemRepository!
-        .delete(walletId: defaultWallet.getOrElse(() => ''), itemId: itemId);
+        .delete(walletID: defaultWallet.getOrElse(() => ''), itemID: itemID);
   }
 }

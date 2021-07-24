@@ -7,7 +7,7 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_
 class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
   DefaultWalletRepositoryImpl({required this.defaultWalletLocalDataSource});
 
-  final DefaultWalletLocalDataSource? defaultWalletLocalDataSource;
+  late final DefaultWalletLocalDataSource defaultWalletLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readDefaultWallet() async {
@@ -20,6 +20,6 @@ class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
 
   @override
   Future<void> writeDefaultWallet(String value) async {
-    return defaultWalletLocalDataSource!.writeDefaultWallet(value);
+    return defaultWalletLocalDataSource.writeDefaultWallet(value);
   }
 }

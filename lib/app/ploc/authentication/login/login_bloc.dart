@@ -30,10 +30,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     yield Loading();
 
-    yield* processLoginOrFotgotPassword(event);
+    yield* processLoginOrForgotPassword(event);
   }
 
-  Stream<LoginState> processLoginOrFotgotPassword(LoginEvent event) async* {
+  Stream<LoginState> processLoginOrForgotPassword(LoginEvent event) async* {
     debugPrint('Bloc Login executed for the user ${event.username} ');
 
     final email = event.username?.toLowerCase().trim() ?? '';

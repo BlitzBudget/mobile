@@ -28,44 +28,44 @@ void main() {
 
   group('Delete', () {
     const budgetId = 'Budget#2021-01-06T12:51:31.215Z';
-    const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
+    const walletID = 'Wallet#2020-12-21T20:35:49.295Z';
 
     test('Success', () async {
       const Either<Failure, void> addBudgetMonad = Right<Failure, void>('');
 
       const Either<Failure, String> defaultWalletMonad =
-          Right<Failure, String>(walletId);
+          Right<Failure, String>(walletID);
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
       when(() => mockDeleteItemRepository!.delete(
-          walletId: walletId,
-          itemId: budgetId)).thenAnswer((_) => Future.value(addBudgetMonad));
+          walletID: walletID,
+          itemID: budgetId)).thenAnswer((_) => Future.value(addBudgetMonad));
 
-      final budgetResponse = await deleteBudgetUseCase.delete(itemId: budgetId);
+      final budgetResponse = await deleteBudgetUseCase.delete(itemID: budgetId);
 
       expect(budgetResponse.isRight(), true);
       verify(() => mockDeleteItemRepository!
-          .delete(itemId: budgetId, walletId: walletId));
+          .delete(itemID: budgetId, walletID: walletID));
     });
 
     test('Failure', () async {
       const Either<Failure, String> defaultWalletMonad =
-          Right<Failure, String>(walletId);
+          Right<Failure, String>(walletID);
       final Either<Failure, void> deleteBudgetMonad =
           Left<Failure, void>(FetchDataFailure());
 
       when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
       when(() => mockDeleteItemRepository!.delete(
-          walletId: walletId,
-          itemId: budgetId)).thenAnswer((_) => Future.value(deleteBudgetMonad));
+          walletID: walletID,
+          itemID: budgetId)).thenAnswer((_) => Future.value(deleteBudgetMonad));
 
-      final budgetResponse = await deleteBudgetUseCase.delete(itemId: budgetId);
+      final budgetResponse = await deleteBudgetUseCase.delete(itemID: budgetId);
 
       expect(budgetResponse.isLeft(), true);
       verify(() => mockDeleteItemRepository!
-          .delete(itemId: budgetId, walletId: walletId));
+          .delete(itemID: budgetId, walletID: walletID));
     });
 
     test('ReadDefaultWallet: Failure', () async {
@@ -75,7 +75,7 @@ void main() {
       when(() => mockDefaultWalletRepository!.readDefaultWallet())
           .thenAnswer((_) => Future.value(defaultWalletMonad));
 
-      final budgetResponse = await deleteBudgetUseCase.delete(itemId: budgetId);
+      final budgetResponse = await deleteBudgetUseCase.delete(itemID: budgetId);
 
       final f =
           budgetResponse.fold((failure) => failure, (_) => GenericFailure());
@@ -83,7 +83,7 @@ void main() {
       expect(f, EmptyResponseFailure());
       expect(budgetResponse.isLeft(), true);
       verifyNever(() => mockDeleteItemRepository!
-          .delete(itemId: budgetId, walletId: walletId));
+          .delete(itemID: budgetId, walletID: walletID));
     });
   });
 }

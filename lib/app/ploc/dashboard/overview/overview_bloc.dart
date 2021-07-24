@@ -7,12 +7,12 @@ part 'overview_event.dart';
 part 'overview_state.dart';
 
 class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
-  OverviewBloc() : super(OverviewInitial());
+  OverviewBloc() : super(Empty());
 
   @override
   Stream<OverviewState> mapEventToState(
     OverviewEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    yield Loading();
   }
 }

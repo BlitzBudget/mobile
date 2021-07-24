@@ -7,4 +7,6 @@ abstract class BudgetState extends Equatable {
   List<Object> get props => [];
 }
 
-class BudgetInitial extends BudgetState {}
+class Loading extends BudgetState {}
+
+class Empty extends BudgetState {}

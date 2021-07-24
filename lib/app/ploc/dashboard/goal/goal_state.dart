@@ -7,4 +7,6 @@ abstract class GoalState extends Equatable {
   List<Object> get props => [];
 }
 
-class GoalInitial extends GoalState {}
+class Loading extends GoalState {}
+
+class Empty extends GoalState {}

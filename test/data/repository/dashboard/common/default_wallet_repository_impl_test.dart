@@ -10,8 +10,9 @@ class MockDefaultWalletLocalDataSourceImpl extends Mock
     implements DefaultWalletLocalDataSourceImpl {}
 
 void main() {
-  MockDefaultWalletLocalDataSourceImpl? mockDefaultWalletLocalDataSourceImpl;
-  DefaultWalletRepositoryImpl? defaultWalletRepositoryImpl;
+  late MockDefaultWalletLocalDataSourceImpl
+      mockDefaultWalletLocalDataSourceImpl;
+  late DefaultWalletRepositoryImpl defaultWalletRepositoryImpl;
   const walletId = 'Wallet#2020-12-21T20:35:49.295Z';
 
   setUp(() {
@@ -30,11 +31,11 @@ void main() {
 
   group('Read Default Wallet', () {
     test('Throw a Failure when no value is found', () async {
-      when(() => mockDefaultWalletLocalDataSourceImpl!.readDefaultWallet())
+      when(() => mockDefaultWalletLocalDataSourceImpl.readDefaultWallet())
           .thenThrow(NoValueInCacheException());
       final defaultWallet =
-          await defaultWalletRepositoryImpl!.readDefaultWallet();
-      verify(() => mockDefaultWalletLocalDataSourceImpl!.readDefaultWallet());
+          await defaultWalletRepositoryImpl.readDefaultWallet();
+      verify(() => mockDefaultWalletLocalDataSourceImpl.readDefaultWallet());
       final f =
           defaultWallet.fold((failure) => failure, (_) => GenericFailure());
       expect(f, equals(EmptyResponseFailure()));
@@ -43,11 +44,12 @@ void main() {
 
   group('Write Default Wallet', () {
     test('Throw a Failure when no value is found', () async {
-      when(() => mockDefaultWalletLocalDataSourceImpl!
-          .writeDefaultWallet(walletId)).thenAnswer((_) => Future.value());
-      await defaultWalletRepositoryImpl!.writeDefaultWallet(walletId);
+      when(() =>
+              mockDefaultWalletLocalDataSourceImpl.writeDefaultWallet(walletId))
+          .thenAnswer((_) => Future.value());
+      await defaultWalletRepositoryImpl.writeDefaultWallet(walletId);
       verify(() =>
-          mockDefaultWalletLocalDataSourceImpl!.writeDefaultWallet(walletId));
+          mockDefaultWalletLocalDataSourceImpl.writeDefaultWallet(walletId));
     });
   });
 }

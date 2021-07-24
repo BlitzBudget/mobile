@@ -1,3 +1,6 @@
+import 'package:dartz/dartz.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
+
 mixin ClearAllStorageRepository {
-  Future<void> clearAllStorage();
+  Future<Either<Failure, void>> clearAllStorage();
 }

@@ -9,8 +9,9 @@ class MockStartsWithDateLocalDataSourceImpl extends Mock
     implements StartsWithDateLocalDataSourceImpl {}
 
 void main() {
-  MockStartsWithDateLocalDataSourceImpl? mockStartsWithDateLocalDataSourceImpl;
-  StartsWithDateRepositoryImpl? startsWithDateRepositoryImpl;
+  late MockStartsWithDateLocalDataSourceImpl
+      mockStartsWithDateLocalDataSourceImpl;
+  late StartsWithDateRepositoryImpl startsWithDateRepositoryImpl;
 
   setUp(() {
     mockStartsWithDateLocalDataSourceImpl =
@@ -28,15 +29,15 @@ void main() {
 
   group('Read Starts With Date', () {
     test('Throw a Failure when no value is found', () async {
-      when(() => mockStartsWithDateLocalDataSourceImpl!.readStartsWithDate())
+      when(() => mockStartsWithDateLocalDataSourceImpl.readStartsWithDate())
           .thenThrow(NoValueInCacheException());
       when(() =>
-              mockStartsWithDateLocalDataSourceImpl!.writeStartsWithDate(any()))
+              mockStartsWithDateLocalDataSourceImpl.writeStartsWithDate(any()))
           .thenAnswer((_) => Future.value());
-      await startsWithDateRepositoryImpl!.readStartsWithDate();
-      verify(() => mockStartsWithDateLocalDataSourceImpl!.readStartsWithDate());
+      await startsWithDateRepositoryImpl.readStartsWithDate();
+      verify(() => mockStartsWithDateLocalDataSourceImpl.readStartsWithDate());
       verify(() =>
-          mockStartsWithDateLocalDataSourceImpl!.writeStartsWithDate(any()));
+          mockStartsWithDateLocalDataSourceImpl.writeStartsWithDate(any()));
     });
   });
 }

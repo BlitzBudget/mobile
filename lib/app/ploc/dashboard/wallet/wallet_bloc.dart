@@ -7,12 +7,12 @@ part 'wallet_event.dart';
 part 'wallet_state.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
-  WalletBloc() : super(WalletInitial());
+  WalletBloc() : super(Empty());
 
   @override
   Stream<WalletState> mapEventToState(
     WalletEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    yield Loading();
   }
 }

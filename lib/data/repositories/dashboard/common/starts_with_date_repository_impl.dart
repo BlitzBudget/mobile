@@ -7,14 +7,13 @@ import '../../../constants/constants.dart' as constants;
 class StartsWithDateRepositoryImpl implements StartsWithDateRepository {
   StartsWithDateRepositoryImpl({required this.startsWithDateLocalDataSource});
 
-  final StartsWithDateLocalDataSource? startsWithDateLocalDataSource;
+  late final StartsWithDateLocalDataSource startsWithDateLocalDataSource;
 
   @override
   Future<String> readStartsWithDate() async {
     String startsWithDate;
     try {
-      startsWithDate =
-          await startsWithDateLocalDataSource!.readStartsWithDate();
+      startsWithDate = await startsWithDateLocalDataSource.readStartsWithDate();
     } on Exception {
       // Calculate the start date from now
       // Format the calculated date to string

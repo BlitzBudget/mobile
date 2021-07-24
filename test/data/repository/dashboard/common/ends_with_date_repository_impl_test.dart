@@ -9,8 +9,8 @@ class MockEndsWithDateLocalDataSourceImpl extends Mock
     implements EndsWithDateLocalDataSourceImpl {}
 
 void main() {
-  MockEndsWithDateLocalDataSourceImpl? mockEndsWithDateLocalDataSourceImpl;
-  EndsWithDateRepositoryImpl? endsWithDateRepositoryImpl;
+  late MockEndsWithDateLocalDataSourceImpl mockEndsWithDateLocalDataSourceImpl;
+  late EndsWithDateRepositoryImpl endsWithDateRepositoryImpl;
 
   setUp(() {
     mockEndsWithDateLocalDataSourceImpl = MockEndsWithDateLocalDataSourceImpl();
@@ -27,14 +27,14 @@ void main() {
 
   group('Read Default Wallet', () {
     test('Throw a Failure when no value is found', () async {
-      when(() => mockEndsWithDateLocalDataSourceImpl!.readEndsWithDate())
+      when(() => mockEndsWithDateLocalDataSourceImpl.readEndsWithDate())
           .thenThrow(NoValueInCacheException());
-      when(() => mockEndsWithDateLocalDataSourceImpl!.writeEndsWithDate(any()))
+      when(() => mockEndsWithDateLocalDataSourceImpl.writeEndsWithDate(any()))
           .thenAnswer((_) => Future.value());
-      await endsWithDateRepositoryImpl!.readEndsWithDate();
-      verify(() => mockEndsWithDateLocalDataSourceImpl!.readEndsWithDate());
+      await endsWithDateRepositoryImpl.readEndsWithDate();
+      verify(() => mockEndsWithDateLocalDataSourceImpl.readEndsWithDate());
       verify(
-          () => mockEndsWithDateLocalDataSourceImpl!.writeEndsWithDate(any()));
+          () => mockEndsWithDateLocalDataSourceImpl.writeEndsWithDate(any()));
     });
   });
 }

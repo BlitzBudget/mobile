@@ -7,12 +7,12 @@ part 'goal_event.dart';
 part 'goal_state.dart';
 
 class GoalBloc extends Bloc<GoalEvent, GoalState> {
-  GoalBloc() : super(GoalInitial());
+  GoalBloc() : super(Empty());
 
   @override
   Stream<GoalState> mapEventToState(
     GoalEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    yield Loading();
   }
 }

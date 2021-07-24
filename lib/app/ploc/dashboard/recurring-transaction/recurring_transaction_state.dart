@@ -7,4 +7,6 @@ abstract class RecurringTransactionState extends Equatable {
   List<Object> get props => [];
 }
 
-class RecurringTransactionInitial extends RecurringTransactionState {}
+class Loading extends RecurringTransactionState {}
+
+class Empty extends RecurringTransactionState {}

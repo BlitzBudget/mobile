@@ -7,12 +7,12 @@ part 'budget_event.dart';
 part 'budget_state.dart';
 
 class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
-  BudgetBloc() : super(BudgetInitial());
+  BudgetBloc() : super(Empty());
 
   @override
   Stream<BudgetState> mapEventToState(
     BudgetEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    yield Loading();
   }
 }
