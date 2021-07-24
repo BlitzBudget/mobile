@@ -12,7 +12,7 @@ class DefaultWalletRepositoryImpl implements DefaultWalletRepository {
   @override
   Future<Either<Failure, String>> readDefaultWallet() async {
     try {
-      return Right(await defaultWalletLocalDataSource!.readDefaultWallet());
+      return Right(await defaultWalletLocalDataSource.readDefaultWallet());
     } on Exception {
       return Left(EmptyResponseFailure());
     }
