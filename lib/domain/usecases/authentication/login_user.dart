@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
+import 'package:mobile_blitzbudget/data/model/response/user_response_model.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
@@ -36,7 +37,7 @@ class LoginUser extends UseCase {
         return Left(EmptyResponseFailure());
       }
 
-      final user = userResponse.getOrElse(() => const UserResponse());
+      final user = cast<UserResponse>(userResponse.getOrElse(() => const UserResponseModel()));
 
       /// Store User Attributes
       await userAttributesRepository!.writeUserAttributes(user);
