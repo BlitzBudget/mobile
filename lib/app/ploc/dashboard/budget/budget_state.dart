@@ -10,3 +10,15 @@ abstract class BudgetState extends Equatable {
 class Loading extends BudgetState {}
 
 class Empty extends BudgetState {}
+
+class Add extends BudgetState {}
+
+class UpdateCategoryId extends BudgetState {}
+
+class UpdateDateMeantFor extends BudgetState {}
+
+class UpdatePlanned extends BudgetState {}
+
+class Update extends BudgetState {}
+
+class Delete extends BudgetState {}

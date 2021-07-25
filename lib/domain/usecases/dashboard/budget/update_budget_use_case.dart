@@ -10,18 +10,18 @@ class UpdateBudgetUseCase extends UseCase {
   UpdateBudgetUseCase(
       {required this.budgetRepository, required this.defaultWalletRepository});
 
-  final BudgetRepository? budgetRepository;
-  final DefaultWalletRepository? defaultWalletRepository;
+  late final BudgetRepository budgetRepository;
+  late final DefaultWalletRepository defaultWalletRepository;
 
   Future<Either<Failure, void>> update({required Budget updateBudget}) async {
-    return budgetRepository!.update(updateBudget);
+    return budgetRepository.update(updateBudget);
   }
 
   /// Updates the category id
   Future<Either<Failure, void>> updatePlanned(
       {required double? planned, required String? budgetId}) async {
     final defaultWalletResponse =
-        await defaultWalletRepository!.readDefaultWallet();
+        await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
       return Left(EmptyResponseFailure());
     }
@@ -35,7 +35,7 @@ class UpdateBudgetUseCase extends UseCase {
   Future<Either<Failure, void>> updateDateMeantFor(
       {required String? dateMeantFor, required String? budgetId}) async {
     final defaultWalletResponse =
-        await defaultWalletRepository!.readDefaultWallet();
+        await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
       return Left(EmptyResponseFailure());
     }
@@ -49,7 +49,7 @@ class UpdateBudgetUseCase extends UseCase {
   Future<Either<Failure, void>> updateCategoryId(
       {required String? categoryId, required String? budgetId}) async {
     final defaultWalletResponse =
-        await defaultWalletRepository!.readDefaultWallet();
+        await defaultWalletRepository.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
       return Left(EmptyResponseFailure());
     }

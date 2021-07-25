@@ -10,3 +10,9 @@ abstract class GoalState extends Equatable {
 class Loading extends GoalState {}
 
 class Empty extends GoalState {}
+
+class Add extends GoalState {}
+
+class Update extends GoalState {}
+
+class Delete extends GoalState {}

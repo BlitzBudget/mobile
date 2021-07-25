@@ -10,3 +10,5 @@ abstract class CategoryState extends Equatable {
 class Loading extends CategoryState {}
 
 class Empty extends CategoryState {}
+
+class Delete extends CategoryState {}

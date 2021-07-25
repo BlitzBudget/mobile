@@ -44,11 +44,11 @@ class MockUserAttributesRepository extends Mock
 
 void main() {
   late FetchBudgetUseCase fetchBudgetUseCase;
-  MockBudgetRepository? mockBudgetRepository;
-  MockDefaultWalletRepository? mockDefaultWalletRepository;
-  MockEndsWithDateRepository? mockEndsWithDateRepository;
-  MockStartsWithDateRepository? mockStartsWithDateRepository;
-  MockUserAttributesRepository? mockUserAttributesRepository;
+  late MockBudgetRepository mockBudgetRepository;
+  late MockDefaultWalletRepository mockDefaultWalletRepository;
+  late MockEndsWithDateRepository mockEndsWithDateRepository;
+  late MockStartsWithDateRepository mockStartsWithDateRepository;
+  late MockUserAttributesRepository mockUserAttributesRepository;
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON = jsonDecode(budgetModelAsString);
@@ -93,18 +93,18 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
-      when(() => mockBudgetRepository!.add(budget))
+      when(() => mockBudgetRepository.add(budget))
           .thenAnswer((_) => Future.value(addBudgetMonad));
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockEndsWithDateRepository!.readEndsWithDate())
+      when(() => mockEndsWithDateRepository.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockStartsWithDateRepository!.readStartsWithDate())
+      when(() => mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
       final Either<Failure, BudgetResponse> fetchBudgetMonad =
           Right<Failure, BudgetResponse>(budgetResponseModel);
 
-      when(() => mockBudgetRepository!.fetch(
+      when(() => mockBudgetRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: dateString,
@@ -113,7 +113,7 @@ void main() {
       final budgetResponse = await fetchBudgetUseCase.fetch();
 
       expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository!.fetch(
+      verify(() => mockBudgetRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: dateString,
@@ -127,20 +127,20 @@ void main() {
       final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
-      when(() => mockBudgetRepository!.add(budget))
+      when(() => mockBudgetRepository.add(budget))
           .thenAnswer((_) => Future.value(addBudgetMonad));
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(() => mockEndsWithDateRepository!.readEndsWithDate())
+      when(() => mockEndsWithDateRepository.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockStartsWithDateRepository!.readStartsWithDate())
+      when(() => mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockUserAttributesRepository!.readUserAttributes())
+      when(() => mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
       final Either<Failure, BudgetResponse> fetchBudgetMonad =
           Right<Failure, BudgetResponse>(budgetResponseModel);
 
-      when(() => mockBudgetRepository!.fetch(
+      when(() => mockBudgetRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -149,7 +149,7 @@ void main() {
       final budgetResponse = await fetchBudgetUseCase.fetch();
 
       expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository!.fetch(
+      verify(() => mockBudgetRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -163,21 +163,21 @@ void main() {
       final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
-      when(() => mockBudgetRepository!.add(budget))
+      when(() => mockBudgetRepository.add(budget))
           .thenAnswer((_) => Future.value(addBudgetMonad));
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(() => mockEndsWithDateRepository!.readEndsWithDate())
+      when(() => mockEndsWithDateRepository.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockStartsWithDateRepository!.readStartsWithDate())
+      when(() => mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockUserAttributesRepository!.readUserAttributes())
+      when(() => mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userFailure));
 
       final budgetResponse = await fetchBudgetUseCase.fetch();
 
       expect(budgetResponse.isLeft(), true);
-      verifyNever(() => mockBudgetRepository!.fetch(
+      verifyNever(() => mockBudgetRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
