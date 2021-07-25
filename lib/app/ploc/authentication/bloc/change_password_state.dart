@@ -13,6 +13,8 @@ class Loading extends ChangePasswordState {}
 
 class Success extends ChangePasswordState {}
 
+class RedirectToLogin extends ChangePasswordState {}
+
 class Error extends ChangePasswordState {
   const Error({required this.message});
 

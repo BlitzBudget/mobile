@@ -10,3 +10,13 @@ abstract class BankAccountState extends Equatable {
 class Loading extends BankAccountState {}
 
 class Empty extends BankAccountState {}
+
+class Add extends BankAccountState {}
+
+class Delete extends BankAccountState {}
+
+class UpdateAccountBalance extends BankAccountState {}
+
+class UpdateBankAccountName extends BankAccountState {}
+
+class UpdateSelectedAccount extends BankAccountState {}

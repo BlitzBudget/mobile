@@ -44,6 +44,7 @@ class ChangePasswordBloc
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is EmptyResponseFailure) {
       await clearAllStorageUseCase.delete();
+      yield RedirectToLogin();
     }
 
     yield const Error(
