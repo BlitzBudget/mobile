@@ -6,3 +6,7 @@ abstract class OverviewEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class Fetch extends OverviewEvent {
+  const Fetch() : super();
+}

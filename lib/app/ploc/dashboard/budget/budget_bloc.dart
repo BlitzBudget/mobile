@@ -9,6 +9,8 @@ import '../../../../domain/usecases/dashboard/budget/add_budget_use_case.dart'
     as add_budget_usecase;
 import '../../../../domain/usecases/dashboard/budget/delete_budget_use_case.dart'
     as delete_budget_usecase;
+import '../../../../domain/usecases/dashboard/budget/fetch_budget_use_case.dart'
+    as fetch_budget_usecase;
 import '../../../../domain/usecases/dashboard/budget/update_budget_use_case.dart'
     as update_budget_usecase;
 
@@ -17,7 +19,8 @@ part 'budget_state.dart';
 
 class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   BudgetBloc(
-      {required this.deleteBudgetUseCase,
+      {required this.fetchBudgetUseCase,
+      required this.deleteBudgetUseCase,
       required this.updateBudgetUseCase,
       required this.addBudgetUseCase})
       : super(Empty());
@@ -25,6 +28,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   final add_budget_usecase.AddBudgetUseCase addBudgetUseCase;
   final update_budget_usecase.UpdateBudgetUseCase updateBudgetUseCase;
   final delete_budget_usecase.DeleteBudgetUseCase deleteBudgetUseCase;
+  final fetch_budget_usecase.FetchBudgetUseCase fetchBudgetUseCase;
 
   @override
   Stream<BudgetState> mapEventToState(
@@ -69,6 +73,8 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           planned: event.planned, budgetId: event.budgetId);
     } else if (event is Delete) {
       await deleteBudgetUseCase.delete(itemID: event.deleteItemId!);
+    } else if (event is Fetch) {
+      await fetchBudgetUseCase.fetch();
     }
   }
 }

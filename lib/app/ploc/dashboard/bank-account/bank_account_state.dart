@@ -11,12 +11,11 @@ class Loading extends BankAccountState {}
 
 class Empty extends BankAccountState {}
 
-class Add extends BankAccountState {}
+class Error extends BankAccountState {
+  const Error({required this.message});
 
-class Delete extends BankAccountState {}
+  final String message;
 
-class UpdateAccountBalance extends BankAccountState {}
-
-class UpdateBankAccountName extends BankAccountState {}
-
-class UpdateSelectedAccount extends BankAccountState {}
+  @override
+  List<Object> get props => [message];
+}

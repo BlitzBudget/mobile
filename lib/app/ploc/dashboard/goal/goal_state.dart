@@ -11,8 +11,11 @@ class Loading extends GoalState {}
 
 class Empty extends GoalState {}
 
-class Add extends GoalState {}
+class Error extends GoalState {
+  const Error({required this.message});
 
-class Update extends GoalState {}
+  final String message;
 
-class Delete extends GoalState {}
+  @override
+  List<Object> get props => [message];
+}

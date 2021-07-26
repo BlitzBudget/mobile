@@ -19,21 +19,21 @@ class FetchGoalUseCase extends UseCase {
       required this.defaultWalletRepository,
       required this.userAttributesRepository});
 
-  final GoalRepository? goalRepository;
-  final StartsWithDateRepository? startsWithDateRepository;
-  final EndsWithDateRepository? endsWithDateRepository;
-  final DefaultWalletRepository? defaultWalletRepository;
-  final UserAttributesRepository? userAttributesRepository;
+  late final GoalRepository goalRepository;
+  late final StartsWithDateRepository startsWithDateRepository;
+  late final EndsWithDateRepository endsWithDateRepository;
+  late final DefaultWalletRepository defaultWalletRepository;
+  late final UserAttributesRepository userAttributesRepository;
 
   Future<Either<Failure, GoalResponse>> fetch() async {
-    final startsWithDate = await startsWithDateRepository!.readStartsWithDate();
-    final endsWithDate = await endsWithDateRepository!.readEndsWithDate();
-    final defaultWallet = await defaultWalletRepository!.readDefaultWallet();
+    final startsWithDate = await startsWithDateRepository.readStartsWithDate();
+    final endsWithDate = await endsWithDateRepository.readEndsWithDate();
+    final defaultWallet = await defaultWalletRepository.readDefaultWallet();
     String? userId, wallet;
 
     /// Get User id only when the default wallet is empty
     if (defaultWallet.isLeft()) {
-      final userResponse = await userAttributesRepository!.readUserAttributes();
+      final userResponse = await userAttributesRepository.readUserAttributes();
       if (userResponse.isRight()) {
         userId = userResponse.getOrElse(() => const User())!.userId;
       } else {
@@ -43,7 +43,7 @@ class FetchGoalUseCase extends UseCase {
       wallet = defaultWallet.getOrElse(() => '');
     }
 
-    return goalRepository!.fetch(
+    return goalRepository.fetch(
         startsWithDate: startsWithDate,
         endsWithDate: endsWithDate,
         defaultWallet: wallet,

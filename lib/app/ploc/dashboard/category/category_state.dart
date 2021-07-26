@@ -11,4 +11,11 @@ class Loading extends CategoryState {}
 
 class Empty extends CategoryState {}
 
-class Delete extends CategoryState {}
+class Error extends CategoryState {
+  const Error({required this.message});
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

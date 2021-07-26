@@ -8,3 +8,5 @@ abstract class CategoryEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class Delete extends CategoryEvent {}

@@ -11,14 +11,11 @@ class Loading extends BudgetState {}
 
 class Empty extends BudgetState {}
 
-class Add extends BudgetState {}
+class Error extends BudgetState {
+  const Error({required this.message});
 
-class UpdateCategoryId extends BudgetState {}
+  final String message;
 
-class UpdateDateMeantFor extends BudgetState {}
-
-class UpdatePlanned extends BudgetState {}
-
-class Update extends BudgetState {}
-
-class Delete extends BudgetState {}
+  @override
+  List<Object> get props => [message];
+}
