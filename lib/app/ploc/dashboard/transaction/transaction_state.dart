@@ -10,3 +10,12 @@ abstract class TransactionState extends Equatable {
 class Loading extends TransactionState {}
 
 class Empty extends TransactionState {}
+
+class Error extends TransactionState {
+  const Error({required this.message});
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

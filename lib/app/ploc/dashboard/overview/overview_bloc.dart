@@ -21,6 +21,6 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
 
     if (event is Fetch) {
       await fetchOverviewUseCase.fetch();
-    }   
+    }
   }
 }

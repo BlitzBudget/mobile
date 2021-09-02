@@ -10,3 +10,12 @@ abstract class WalletState extends Equatable {
 class Loading extends WalletState {}
 
 class Empty extends WalletState {}
+
+class Error extends WalletState {
+  const Error({required this.message});
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
