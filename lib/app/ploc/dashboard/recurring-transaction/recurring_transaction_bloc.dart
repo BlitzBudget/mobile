@@ -51,27 +51,28 @@ class RecurringTransactionBloc
           updateRecurringTransaction: updateRecurringTransaction);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is UpdateAccountID) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateAccountId(
-          accountId: event.accountId);
+      final updateResponse = await updateRecurringTransactionUseCase
+          .updateAccountId(accountId: event.accountId);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is UpdateAmount) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateAmount(
-          newAmount: event.amount);
+      final updateResponse = await updateRecurringTransactionUseCase
+          .updateAmount(newAmount: event.amount);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is UpdateCategoryID) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateCategoryId(
-          categoryId: event.category);
+      final updateResponse = await updateRecurringTransactionUseCase
+          .updateCategoryId(categoryId: event.category);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is UpdateDescription) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateDescription(
-          description: event.description);
+      final updateResponse = await updateRecurringTransactionUseCase
+          .updateDescription(description: event.description);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is UpdateRecurrence) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateRecurrence(
-          recurrence: event.recurrence);
+      final updateResponse = await updateRecurringTransactionUseCase
+          .updateRecurrence(recurrence: event.recurrence);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is UpdateTags) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateTags(tags: event.tags);
+      final updateResponse =
+          await updateRecurringTransactionUseCase.updateTags(tags: event.tags);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     }
   }

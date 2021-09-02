@@ -63,7 +63,8 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           categoryType: event.categoryType,
           categoryName: event.categoryName,
           tags: event.tags);
-      final addResponse = await addTransactionUseCase.add(addTransaction: addTransaction);
+      final addResponse =
+          await addTransactionUseCase.add(addTransaction: addTransaction);
       addResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is Update) {
       final updateTransaction = Transaction(
@@ -106,7 +107,8 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           tags: event.tags, transactionId: event.transactionId);
       updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     } else if (event is Delete) {
-      final deleteResponse = await deleteTransactionUseCase.delete(itemID: event.transactionId!);
+      final deleteResponse =
+          await deleteTransactionUseCase.delete(itemID: event.transactionId!);
       deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
     }
   }
