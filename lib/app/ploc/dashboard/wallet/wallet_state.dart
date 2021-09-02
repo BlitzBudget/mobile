@@ -11,6 +11,10 @@ class Loading extends WalletState {}
 
 class Empty extends WalletState {}
 
+class Success extends WalletState {}
+
+class RedirectToLogin extends WalletState {}
+
 class Error extends WalletState {
   const Error({required this.message});
 

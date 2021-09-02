@@ -11,6 +11,10 @@ class Loading extends CategoryState {}
 
 class Empty extends CategoryState {}
 
+class Success extends CategoryState {}
+
+class RedirectToLogin extends CategoryState {}
+
 class Error extends CategoryState {
   const Error({required this.message});
 

@@ -11,6 +11,10 @@ class Loading extends GoalState {}
 
 class Empty extends GoalState {}
 
+class Success extends GoalState {}
+
+class RedirectToLogin extends GoalState {}
+
 class Error extends GoalState {
   const Error({required this.message});
 

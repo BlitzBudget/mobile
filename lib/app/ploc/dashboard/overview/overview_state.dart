@@ -11,6 +11,10 @@ class Loading extends OverviewState {}
 
 class Empty extends OverviewState {}
 
+class Success extends OverviewState {}
+
+class RedirectToLogin extends OverviewState {}
+
 class Error extends OverviewState {
   const Error({required this.message});
 

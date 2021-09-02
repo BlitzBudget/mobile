@@ -11,6 +11,10 @@ class Loading extends RecurringTransactionState {}
 
 class Empty extends RecurringTransactionState {}
 
+class Success extends RecurringTransactionState {}
+
+class RedirectToLogin extends RecurringTransactionState {}
+
 class Error extends RecurringTransactionState {
   const Error({required this.message});
 

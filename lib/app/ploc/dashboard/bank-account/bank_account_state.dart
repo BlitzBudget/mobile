@@ -11,6 +11,10 @@ class Loading extends BankAccountState {}
 
 class Empty extends BankAccountState {}
 
+class Success extends BankAccountState {}
+
+class RedirectToLogin extends BankAccountState {}
+
 class Error extends BankAccountState {
   const Error({required this.message});
 

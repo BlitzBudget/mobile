@@ -11,6 +11,10 @@ class Loading extends BudgetState {}
 
 class Empty extends BudgetState {}
 
+class Success extends BudgetState {}
+
+class RedirectToLogin extends BudgetState {}
+
 class Error extends BudgetState {
   const Error({required this.message});
 

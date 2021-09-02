@@ -11,6 +11,10 @@ class Loading extends TransactionState {}
 
 class Empty extends TransactionState {}
 
+class Success extends TransactionState {}
+
+class RedirectToLogin extends TransactionState {}
+
 class Error extends TransactionState {
   const Error({required this.message});
 
