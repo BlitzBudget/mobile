@@ -130,6 +130,7 @@ class _BodyState extends State<Body> {
   }
 
   void _dispatchLoginUser() {
-    BlocProvider.of<LoginBloc>(context).add(LoginUser(username, password));
+    BlocProvider.of<LoginBloc>(context)
+        .add(LoginUser(username: username, password: password));
   }
 }

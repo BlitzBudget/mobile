@@ -15,6 +15,10 @@ class Success extends ChangePasswordState {}
 
 class RedirectToLogin extends ChangePasswordState {}
 
+class RedirectToSignup extends ChangePasswordState {}
+
+class RedirectToVerification extends ChangePasswordState {}
+
 class Error extends ChangePasswordState {
   const Error({required this.message});
 

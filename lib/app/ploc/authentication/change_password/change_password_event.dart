@@ -12,6 +12,7 @@ abstract class ChangePasswordEvent extends Equatable {
 }
 
 class ChangePassword extends ChangePasswordEvent {
-  const ChangePassword(String? oldPassword, String? newPassword)
+  const ChangePassword(
+      {required String? oldPassword, required String? newPassword})
       : super(oldPassword: oldPassword, newPassword: newPassword);
 }

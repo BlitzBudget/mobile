@@ -11,7 +11,7 @@ abstract class LoginEvent extends Equatable {
 }
 
 class LoginUser extends LoginEvent {
-  const LoginUser(String? username, String? password)
+  const LoginUser({required String? username, required String? password})
       : super(username: username, password: password);
 }
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import '../../../../domain/usecases/authentication/change_password.dart'
@@ -42,13 +43,18 @@ class ChangePasswordBloc
 
   Stream<ChangePasswordState> _convertToMessage(Failure failure) async* {
     debugPrint('Converting login failure to message ${failure.toString()} ');
-    if (failure is EmptyResponseFailure) {
+    if (failure is EmptyResponseFailure ||
+        failure is InvalidCredentialsFailure) {
       await clearAllStorageUseCase.delete();
       yield RedirectToLogin();
+    } else if (failure is RedirectToSignupDueToFailure) {
+      yield RedirectToSignup();
+    } else if (failure is RedirectToVerificationDueToFailure) {
+      yield RedirectToVerification();
+    } else {
+      yield const Error(
+          message: constants.GENERIC_CHANGE_PASSWORD_FAILURE_MESSAGE);
     }
-
-    yield const Error(
-        message: constants.GENERIC_CHANGE_PASSWORD_FAILURE_MESSAGE);
   }
 
   Stream<ChangePasswordState> successResponse(void r) async* {
