@@ -73,7 +73,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
     } else if (failure is RedirectToSignupDueToFailure) {
       return RedirectToSignup();
     } else if (failure is RedirectToVerificationDueToFailure) {
-      return RedirectToLogin();
+      return RedirectToVerification();
     }
 
     return const Error(message: constants.GENERIC_FAILURE_MESSAGE);

@@ -53,8 +53,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   SignupState _convertToMessage(Failure failure) {
     debugPrint('Converting signup failure to message ${failure.toString()} ');
-    if (failure is RedirectToLoginDueToFailure ||
-        failure is RedirectToLoginDueToFailure) {
+    if (failure is RedirectToLoginDueToFailure) {
       return RedirectToLogin();
     } else if (failure is RedirectToSignupDueToFailure) {
       return RedirectToSignup();
