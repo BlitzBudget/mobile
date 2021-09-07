@@ -16,14 +16,15 @@ class UpdateRecurringTransactionUseCase extends UseCase {
   final RecurringTransactionRepository? recurringTransactionRepository;
   final DefaultWalletRepository? defaultWalletRepository;
 
-  Future<Either<Failure, void>> update(
+  Future<Either<Failure, void>> _update(
       {required RecurringTransaction updateRecurringTransaction}) async {
     return recurringTransactionRepository!.update(updateRecurringTransaction);
   }
 
   /// Updates to New Amount
   Future<Either<Failure, void>> updateAmount(
-      {required double? newAmount, String? recurringTransactionId}) async {
+      {required double? newAmount,
+      required String? recurringTransactionId}) async {
     final defaultWalletResponse =
         await defaultWalletRepository!.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -34,12 +35,13 @@ class UpdateRecurringTransactionUseCase extends UseCase {
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
         amount: newAmount);
-    return update(updateRecurringTransaction: transaction);
+    return _update(updateRecurringTransaction: transaction);
   }
 
   /// Updates the Description
   Future<Either<Failure, void>> updateDescription(
-      {required String? description, String? recurringTransactionId}) async {
+      {required String? description,
+      required String? recurringTransactionId}) async {
     final defaultWalletResponse =
         await defaultWalletRepository!.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -50,12 +52,13 @@ class UpdateRecurringTransactionUseCase extends UseCase {
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
         description: description);
-    return update(updateRecurringTransaction: transaction);
+    return _update(updateRecurringTransaction: transaction);
   }
 
   /// Updates the account id
   Future<Either<Failure, void>> updateAccountId(
-      {required String? accountId, String? recurringTransactionId}) async {
+      {required String? accountId,
+      required String? recurringTransactionId}) async {
     final defaultWalletResponse =
         await defaultWalletRepository!.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -66,12 +69,13 @@ class UpdateRecurringTransactionUseCase extends UseCase {
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
         accountId: accountId);
-    return update(updateRecurringTransaction: transaction);
+    return _update(updateRecurringTransaction: transaction);
   }
 
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
-      {required String? categoryId, String? recurringTransactionId}) async {
+      {required String? categoryId,
+      required String? recurringTransactionId}) async {
     final defaultWalletResponse =
         await defaultWalletRepository!.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -82,12 +86,13 @@ class UpdateRecurringTransactionUseCase extends UseCase {
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
         category: categoryId);
-    return update(updateRecurringTransaction: transaction);
+    return _update(updateRecurringTransaction: transaction);
   }
 
   /// Updates the recurrence
   Future<Either<Failure, void>> updateRecurrence(
-      {required Recurrence? recurrence, String? recurringTransactionId}) async {
+      {required Recurrence? recurrence,
+      required String? recurringTransactionId}) async {
     final defaultWalletResponse =
         await defaultWalletRepository!.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -98,12 +103,13 @@ class UpdateRecurringTransactionUseCase extends UseCase {
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
         recurrence: recurrence);
-    return update(updateRecurringTransaction: transaction);
+    return _update(updateRecurringTransaction: transaction);
   }
 
   /// Updates the tags
   Future<Either<Failure, void>> updateTags(
-      {required List<String>? tags, String? recurringTransactionId}) async {
+      {required List<String>? tags,
+      required String? recurringTransactionId}) async {
     final defaultWalletResponse =
         await defaultWalletRepository!.readDefaultWallet();
     if (defaultWalletResponse.isLeft()) {
@@ -114,6 +120,6 @@ class UpdateRecurringTransactionUseCase extends UseCase {
         walletId: walletId,
         recurringTransactionId: recurringTransactionId,
         tags: tags);
-    return update(updateRecurringTransaction: transaction);
+    return _update(updateRecurringTransaction: transaction);
   }
 }

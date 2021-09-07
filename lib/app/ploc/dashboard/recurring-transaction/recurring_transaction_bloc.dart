@@ -5,7 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
+import 'package:mobile_blitzbudget/domain/usecases/dashboard/recurring-transaction/delete_recurring_transaction_use_case.dart'
+    as delete_recurring_transaction_use_case;
 
 import '../../../../domain/entities/category/category_type.dart';
 import '../../../../domain/entities/transaction/recurrence.dart';
@@ -18,11 +19,15 @@ part 'recurring_transaction_state.dart';
 
 class RecurringTransactionBloc
     extends Bloc<RecurringTransactionEvent, RecurringTransactionState> {
-  RecurringTransactionBloc({required this.updateRecurringTransactionUseCase})
+  RecurringTransactionBloc(
+      {required this.deleteRecurringTransactionUseCase,
+      required this.updateRecurringTransactionUseCase})
       : super(Empty());
 
   final update_recurring_transaction_use_case.UpdateRecurringTransactionUseCase
       updateRecurringTransactionUseCase;
+  final delete_recurring_transaction_use_case.DeleteRecurringTransactionUseCase
+      deleteRecurringTransactionUseCase;
 
   @override
   Stream<RecurringTransactionState> mapEventToState(
@@ -30,45 +35,45 @@ class RecurringTransactionBloc
   ) async* {
     yield Loading();
 
-    if (event is Update) {
-      final updateRecurringTransaction = RecurringTransaction(
-          recurringTransactionId: event.recurringTransactionId,
-          walletId: event.walletId,
-          amount: event.amount,
-          description: event.description,
-          accountId: event.accountId,
-          recurrence: event.recurrence,
-          categoryType: event.categoryType,
-          categoryName: event.categoryName,
-          category: event.category,
-          tags: event.tags);
-      final updateResponse = await updateRecurringTransactionUseCase.update(
-          updateRecurringTransaction: updateRecurringTransaction);
-      updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateAccountID) {
-      final updateResponse = await updateRecurringTransactionUseCase
-          .updateAccountId(accountId: event.accountId);
-      updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateAmount) {
-      final updateResponse = await updateRecurringTransactionUseCase
-          .updateAmount(newAmount: event.amount);
-      updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateCategoryID) {
-      final updateResponse = await updateRecurringTransactionUseCase
-          .updateCategoryId(categoryId: event.category);
-      updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateDescription) {
-      final updateResponse = await updateRecurringTransactionUseCase
-          .updateDescription(description: event.description);
-      updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateRecurrence) {
-      final updateResponse = await updateRecurringTransactionUseCase
-          .updateRecurrence(recurrence: event.recurrence);
-      updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateTags) {
+    if (event is UpdateAccountID) {
       final updateResponse =
-          await updateRecurringTransactionUseCase.updateTags(tags: event.tags);
-      updateResponse.fold(_convertToMessage, _successResponse);
+          await updateRecurringTransactionUseCase.updateAccountId(
+              accountId: event.accountId,
+              recurringTransactionId: event.recurringTransactionId);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
+    } else if (event is UpdateAmount) {
+      final updateResponse =
+          await updateRecurringTransactionUseCase.updateAmount(
+              newAmount: event.amount,
+              recurringTransactionId: event.recurringTransactionId);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
+    } else if (event is UpdateCategoryID) {
+      final updateResponse =
+          await updateRecurringTransactionUseCase.updateCategoryId(
+              categoryId: event.category,
+              recurringTransactionId: event.recurringTransactionId);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
+    } else if (event is UpdateDescription) {
+      final updateResponse =
+          await updateRecurringTransactionUseCase.updateDescription(
+              description: event.description,
+              recurringTransactionId: event.recurringTransactionId);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
+    } else if (event is UpdateRecurrence) {
+      final updateResponse =
+          await updateRecurringTransactionUseCase.updateRecurrence(
+              recurrence: event.recurrence,
+              recurringTransactionId: event.recurringTransactionId);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
+    } else if (event is UpdateTags) {
+      final updateResponse = await updateRecurringTransactionUseCase.updateTags(
+          tags: event.tags,
+          recurringTransactionId: event.recurringTransactionId);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
+    } else if (event is Delete) {
+      final deleteResponse = await deleteRecurringTransactionUseCase.delete(
+          itemID: event.recurringTransactionId!);
+      yield deleteResponse.fold(_convertToMessage, _successResponse);
     }
   }
 

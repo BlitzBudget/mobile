@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
-import 'package:mobile_blitzbudget/data/model/recurring-transaction/recurring_transaction_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurring_transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
@@ -33,22 +32,6 @@ void main() {
   final tags = (recurringTransactionModelAsJSON['tags'])
       ?.map<String>(parseDynamicAsString)
       ?.toList();
-  final recurringTransaction = RecurringTransactionModel(
-      walletId: recurringTransactionModelAsJSON['walletId'],
-      accountId: recurringTransactionModelAsJSON['account'],
-      recurringTransactionId:
-          recurringTransactionModelAsJSON['recurringTransactionsId'],
-      amount: parseDynamicAsDouble(recurringTransactionModelAsJSON['amount']),
-      description: recurringTransactionModelAsJSON['description'],
-      recurrence: parseDynamicAsRecurrence(
-          recurringTransactionModelAsJSON['recurrence']),
-      categoryType: parseDynamicAsCategoryType(
-          recurringTransactionModelAsJSON['category_type']),
-      categoryName: recurringTransactionModelAsJSON['category_name'],
-      category: recurringTransactionModelAsJSON['category'],
-      tags: tags,
-      nextScheduled: recurringTransactionModelAsJSON['next_scheduled'],
-      creationDate: recurringTransactionModelAsJSON['creation_date']);
 
   setUp(() {
     mockRecurringTransactionRepository = MockRecurringTransactionRepository();
@@ -56,42 +39,6 @@ void main() {
     updateRecurringTransactionUseCase = UpdateRecurringTransactionUseCase(
         recurringTransactionRepository: mockRecurringTransactionRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
-  });
-
-  group('Update RecurringTransaction', () {
-    test('Success', () async {
-      const Either<Failure, void> updateRecurringTransactionMonad =
-          Right<Failure, void>('');
-
-      when(() =>
-              mockRecurringTransactionRepository!.update(recurringTransaction))
-          .thenAnswer((_) => Future.value(updateRecurringTransactionMonad));
-
-      final recurringTransactionResponse =
-          await updateRecurringTransactionUseCase.update(
-              updateRecurringTransaction: recurringTransaction);
-
-      expect(recurringTransactionResponse.isRight(), true);
-      verify(() =>
-          mockRecurringTransactionRepository!.update(recurringTransaction));
-    });
-
-    test('Failure', () async {
-      final Either<Failure, void> updateRecurringTransactionMonad =
-          Left<Failure, void>(FetchDataFailure());
-
-      when(() =>
-              mockRecurringTransactionRepository!.update(recurringTransaction))
-          .thenAnswer((_) => Future.value(updateRecurringTransactionMonad));
-
-      final recurringTransactionResponse =
-          await updateRecurringTransactionUseCase.update(
-              updateRecurringTransaction: recurringTransaction);
-
-      expect(recurringTransactionResponse.isLeft(), true);
-      verify(() =>
-          mockRecurringTransactionRepository!.update(recurringTransaction));
-    });
   });
 
   group('UpdateAmount', () {
