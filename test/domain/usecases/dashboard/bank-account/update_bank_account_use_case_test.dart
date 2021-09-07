@@ -35,7 +35,7 @@ void main() {
         bankAccountRepository: mockBankAccountRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
   });
-  
+
   group('UpdateBankAccountName', () {
     final bankAccountModel = BankAccount(
         walletId: bankAccountModelAsJSON['walletId'],

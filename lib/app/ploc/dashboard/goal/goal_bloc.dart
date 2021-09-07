@@ -9,8 +9,6 @@ import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import '../../../../domain/usecases/dashboard/goal/add_goal_use_case.dart'
     as add_goal_usecase;
 import '../../../../domain/usecases/dashboard/goal/delete_goal_use_case.dart'
@@ -29,15 +27,13 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
       {required this.updateGoalUseCase,
       required this.fetchGoalUseCase,
       required this.addGoalUseCase,
-      required this.deleteGoalUseCase,
-      required this.clearAllStorageUseCase})
+      required this.deleteGoalUseCase})
       : super(Empty());
 
   final delete_goal_usecase.DeleteGoalUseCase deleteGoalUseCase;
   final add_goal_usecase.AddGoalUseCase addGoalUseCase;
   final fetch_goal_usecase.FetchGoalUseCase fetchGoalUseCase;
   final update_goal_usecase.UpdateGoalUseCase updateGoalUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<GoalState> mapEventToState(

@@ -7,8 +7,6 @@ import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import '../../../../domain/usecases/dashboard/wallet/add_wallet_use_case.dart'
     as add_wallet_use_case;
 import '../../../../domain/usecases/dashboard/wallet/delete_wallet_use_case.dart'
@@ -24,8 +22,7 @@ part 'wallet_state.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   WalletBloc(
-      {required this.clearAllStorageUseCase,
-      required this.fetchWalletUseCase,
+      {required this.fetchWalletUseCase,
       required this.updateWalletUseCase,
       required this.addWalletUseCase,
       required this.deleteWalletUseCase})
@@ -35,7 +32,6 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final update_wallet_use_case.UpdateWalletUseCase updateWalletUseCase;
   final add_wallet_use_case.AddWalletUseCase addWalletUseCase;
   final delete_wallet_use_case.DeleteWalletUseCase deleteWalletUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<WalletState> mapEventToState(

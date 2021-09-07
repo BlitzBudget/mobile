@@ -7,21 +7,15 @@ import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import '../../../../domain/usecases/dashboard/category/delete_category_use_case.dart'
     as delete_category_usecase;
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import 'category_constants.dart' as constants;
 
 part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  CategoryBloc(
-      {required this.deleteCategoryUseCase,
-      required this.clearAllStorageUseCase})
-      : super(Empty());
+  CategoryBloc({required this.deleteCategoryUseCase}) : super(Empty());
 
   final delete_category_usecase.DeleteCategoryUseCase deleteCategoryUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<CategoryState> mapEventToState(

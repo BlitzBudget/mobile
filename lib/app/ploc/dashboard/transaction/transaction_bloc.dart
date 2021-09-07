@@ -9,8 +9,6 @@ import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart'
 
 import '../../../../domain/entities/category/category_type.dart';
 import '../../../../domain/entities/transaction/recurrence.dart';
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import '../../../../domain/usecases/dashboard/transaction/add_transaction_use_case.dart'
     as add_transaction_use_case;
 import '../../../../domain/usecases/dashboard/transaction/delete_transaction_use_case.dart'
@@ -29,8 +27,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       {required this.updateTransactionUseCase,
       required this.addTransactionUseCase,
       required this.deleteTransactionUseCase,
-      required this.fetchTransactionUseCase,
-      required this.clearAllStorageUseCase})
+      required this.fetchTransactionUseCase})
       : super(Empty());
 
   final fetch_transaction_use_case.FetchTransactionUseCase
@@ -40,7 +37,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final add_transaction_use_case.AddTransactionUseCase addTransactionUseCase;
   final delete_transaction_use_case.DeleteTransactionUseCase
       deleteTransactionUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<TransactionState> mapEventToState(

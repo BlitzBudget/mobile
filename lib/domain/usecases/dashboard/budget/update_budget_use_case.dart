@@ -13,7 +13,7 @@ class UpdateBudgetUseCase extends UseCase {
   late final BudgetRepository budgetRepository;
   late final DefaultWalletRepository defaultWalletRepository;
 
-  Future<Either<Failure, void>> update({required Budget updateBudget}) async {
+  Future<Either<Failure, void>> _update({required Budget updateBudget}) async {
     return budgetRepository.update(updateBudget);
   }
 
@@ -28,7 +28,7 @@ class UpdateBudgetUseCase extends UseCase {
     final walletId = defaultWalletResponse.getOrElse(() => '');
     final budget =
         Budget(walletId: walletId, budgetId: budgetId, planned: planned);
-    return update(updateBudget: budget);
+    return _update(updateBudget: budget);
   }
 
   /// Updates the date meant for
@@ -42,7 +42,7 @@ class UpdateBudgetUseCase extends UseCase {
     final walletId = defaultWalletResponse.getOrElse(() => '');
     final budget = Budget(
         walletId: walletId, budgetId: budgetId, dateMeantFor: dateMeantFor);
-    return update(updateBudget: budget);
+    return _update(updateBudget: budget);
   }
 
   /// Updates the category id
@@ -56,6 +56,6 @@ class UpdateBudgetUseCase extends UseCase {
     final walletId = defaultWalletResponse.getOrElse(() => '');
     final budget =
         Budget(walletId: walletId, budgetId: budgetId, categoryId: categoryId);
-    return update(updateBudget: budget);
+    return _update(updateBudget: budget);
   }
 }

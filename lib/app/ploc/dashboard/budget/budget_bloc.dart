@@ -16,8 +16,6 @@ import '../../../../domain/usecases/dashboard/budget/fetch_budget_use_case.dart'
     as fetch_budget_usecase;
 import '../../../../domain/usecases/dashboard/budget/update_budget_use_case.dart'
     as update_budget_usecase;
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import 'budget_constants.dart' as constants;
 
 part 'budget_event.dart';
@@ -28,15 +26,13 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
       {required this.fetchBudgetUseCase,
       required this.deleteBudgetUseCase,
       required this.updateBudgetUseCase,
-      required this.addBudgetUseCase,
-      required this.clearAllStorageUseCase})
+      required this.addBudgetUseCase})
       : super(Empty());
 
   final add_budget_usecase.AddBudgetUseCase addBudgetUseCase;
   final update_budget_usecase.UpdateBudgetUseCase updateBudgetUseCase;
   final delete_budget_usecase.DeleteBudgetUseCase deleteBudgetUseCase;
   final fetch_budget_usecase.FetchBudgetUseCase fetchBudgetUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<BudgetState> mapEventToState(
@@ -54,27 +50,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           categoryType: event.categoryType,
           used: event.used);
       final addResponse = await addBudgetUseCase.add(addBudget: addBudget);
-      addResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Update) {
-      if (event.categoryType != null) {
-        final updateBudget = Budget(
-            walletId: event.walletId,
-            budgetId: event.budgetId,
-            categoryType: event.categoryType);
-        final updateResponse =
-            await updateBudgetUseCase.update(updateBudget: updateBudget);
-        updateResponse.fold(_convertToMessage, _successResponse);
-      }
-
-      if (event.used != null) {
-        final updateBudget = Budget(
-            walletId: event.walletId,
-            budgetId: event.budgetId,
-            used: event.used);
-        final updateResponse =
-            await updateBudgetUseCase.update(updateBudget: updateBudget);
-        yield updateResponse.fold(_convertToMessage, _successResponse);
-      }
+      yield addResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateCategoryId) {
       final updateResponse = await updateBudgetUseCase.updateCategoryId(
           categoryId: event.categoryId, budgetId: event.budgetId);

@@ -48,19 +48,17 @@ class Add extends BankAccountEvent {
 }
 
 class Delete extends BankAccountEvent {
-  const Delete({final String? deleteItemId})
+  const Delete({required final String? deleteItemId})
       : super(deleteItemId: deleteItemId);
 }
 
 class UpdateAccountBalance extends BankAccountEvent {
   const UpdateAccountBalance({
-    final double? accountBalance,
-    final String? accountId,
-    final String? walletId,
+    required final double? accountBalance,
+    required final String? accountId,
   }) : super(
           accountBalance: accountBalance,
           accountId: accountId,
-          walletId: walletId,
         );
 }
 

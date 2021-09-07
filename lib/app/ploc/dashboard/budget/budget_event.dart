@@ -46,9 +46,9 @@ class Add extends BudgetEvent {
 
 class UpdateCategoryId extends BudgetEvent {
   const UpdateCategoryId(
-      {final String? budgetId,
-      final String? walletId,
-      final String? categoryId})
+      {required final String? budgetId,
+      required final String? walletId,
+      required final String? categoryId})
       : super(
           budgetId: budgetId,
           walletId: walletId,
@@ -58,9 +58,9 @@ class UpdateCategoryId extends BudgetEvent {
 
 class UpdateDateMeantFor extends BudgetEvent {
   const UpdateDateMeantFor({
-    final String? budgetId,
-    final String? walletId,
-    final String? dateMeantFor,
+    required final String? budgetId,
+    required final String? walletId,
+    required final String? dateMeantFor,
   }) : super(
           budgetId: budgetId,
           walletId: walletId,
@@ -70,33 +70,13 @@ class UpdateDateMeantFor extends BudgetEvent {
 
 class UpdatePlanned extends BudgetEvent {
   const UpdatePlanned({
-    final String? budgetId,
-    final String? walletId,
-    final double? planned,
+    required final String? budgetId,
+    required final String? walletId,
+    required final double? planned,
   }) : super(
           budgetId: budgetId,
           walletId: walletId,
           planned: planned,
-        );
-}
-
-class Update extends BudgetEvent {
-  const Update(
-      {final String? budgetId,
-      final String? walletId,
-      final double? planned,
-      final double? used,
-      final String? dateMeantFor,
-      final String? categoryId,
-      final CategoryType? categoryType})
-      : super(
-          budgetId: budgetId,
-          walletId: walletId,
-          planned: planned,
-          used: used,
-          dateMeantFor: dateMeantFor,
-          categoryId: categoryId,
-          categoryType: categoryType,
         );
 }
 

@@ -6,8 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import '../../../../domain/usecases/dashboard/overview/fetch_overview_use_case.dart'
     as fetch_overview_usecase;
 import 'overview_constants.dart' as constants;
@@ -16,13 +14,9 @@ part 'overview_event.dart';
 part 'overview_state.dart';
 
 class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
-  OverviewBloc(
-      {required this.fetchOverviewUseCase,
-      required this.clearAllStorageUseCase})
-      : super(Empty());
+  OverviewBloc({required this.fetchOverviewUseCase}) : super(Empty());
 
   final fetch_overview_usecase.FetchOverviewUseCase fetchOverviewUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<OverviewState> mapEventToState(

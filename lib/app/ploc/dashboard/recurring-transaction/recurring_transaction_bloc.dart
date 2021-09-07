@@ -9,8 +9,6 @@ import 'package:mobile_blitzbudget/domain/entities/recurring-transaction/recurri
 
 import '../../../../domain/entities/category/category_type.dart';
 import '../../../../domain/entities/transaction/recurrence.dart';
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
 import '../../../../domain/usecases/dashboard/recurring-transaction/update_recurring_transaction_use_case.dart'
     as update_recurring_transaction_use_case;
 import 'recurring_transaction_constants.dart' as constants;
@@ -20,14 +18,11 @@ part 'recurring_transaction_state.dart';
 
 class RecurringTransactionBloc
     extends Bloc<RecurringTransactionEvent, RecurringTransactionState> {
-  RecurringTransactionBloc(
-      {required this.updateRecurringTransactionUseCase,
-      required this.clearAllStorageUseCase})
+  RecurringTransactionBloc({required this.updateRecurringTransactionUseCase})
       : super(Empty());
 
   final update_recurring_transaction_use_case.UpdateRecurringTransactionUseCase
       updateRecurringTransactionUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<RecurringTransactionState> mapEventToState(

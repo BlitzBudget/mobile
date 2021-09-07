@@ -15,8 +15,7 @@ import '../../../../domain/usecases/dashboard/bank-account/delete_bank_account_u
     as delete_bank_account_usecase;
 import '../../../../domain/usecases/dashboard/bank-account/update_bank_account_use_case.dart'
     as update_bank_account_usecase;
-import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
-    as clear_all_storage_usecase;
+
 import 'bank_account_constants.dart' as constants;
 
 part 'bank_account_event.dart';
@@ -26,8 +25,7 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
   BankAccountBloc(
       {required this.addBankAccountUseCase,
       required this.updateBankAccountUseCase,
-      required this.deleteBankAccountUseCase,
-      required this.clearAllStorageUseCase})
+      required this.deleteBankAccountUseCase})
       : super(Empty());
 
   final add_bank_account_usecase.AddBankAccountUseCase addBankAccountUseCase;
@@ -35,7 +33,6 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
       updateBankAccountUseCase;
   final delete_bank_account_usecase.DeleteBankAccountUseCase
       deleteBankAccountUseCase;
-  final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
   @override
   Stream<BankAccountState> mapEventToState(

@@ -26,14 +26,6 @@ void main() {
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON = jsonDecode(budgetModelAsString);
-  final budget = Budget(
-      walletId: budgetModelAsJSON['walletId'],
-      budgetId: budgetModelAsJSON['budgetId'],
-      planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
-      categoryId: budgetModelAsJSON['category'],
-      categoryType:
-          parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for']);
 
   setUp(() {
     mockBudgetRepository = MockBudgetRepository();
@@ -41,35 +33,6 @@ void main() {
     updateBudgetUseCase = UpdateBudgetUseCase(
         budgetRepository: mockBudgetRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
-  });
-
-  group('Update', () {
-    test('Success', () async {
-      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-
-      when(() => mockBudgetRepository.update(budget))
-          .thenAnswer((_) => Future.value(updateBudgetMonad));
-
-      final budgetResponse =
-          await updateBudgetUseCase.update(updateBudget: budget);
-
-      expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository.update(budget));
-    });
-
-    test('Failure', () async {
-      final Either<Failure, void> updateBudgetMonad =
-          Left<Failure, void>(FetchDataFailure());
-
-      when(() => mockBudgetRepository.update(budget))
-          .thenAnswer((_) => Future.value(updateBudgetMonad));
-
-      final budgetResponse =
-          await updateBudgetUseCase.update(updateBudget: budget);
-
-      expect(budgetResponse.isLeft(), true);
-      verify(() => mockBudgetRepository.update(budget));
-    });
   });
 
   group('UpdatePlanned', () {
