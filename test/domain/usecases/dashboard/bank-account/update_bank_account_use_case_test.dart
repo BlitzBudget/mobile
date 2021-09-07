@@ -27,18 +27,6 @@ void main() {
   final bankAccountModelAsString =
       fixture('models/get/bank-account/bank_account_model.json');
   final bankAccountModelAsJSON = jsonDecode(bankAccountModelAsString);
-  final bankAccount = BankAccount(
-      walletId: bankAccountModelAsJSON['walletId'],
-      accountId: bankAccountModelAsJSON['accountId'],
-      accountBalance:
-          parseDynamicAsDouble(bankAccountModelAsJSON['account_balance']),
-      bankAccountName: bankAccountModelAsJSON['bank_account_name'],
-      accountType:
-          parseDynamicAsAccountType(bankAccountModelAsJSON['account_type']),
-      accountSubType: parseDynamicAsAccountSubType(
-          bankAccountModelAsJSON['account_sub_type']),
-      selectedAccount: bankAccountModelAsJSON['selected_account'],
-      linked: bankAccountModelAsJSON['linked']);
 
   setUp(() {
     mockBankAccountRepository = MockBankAccountRepository();
@@ -47,37 +35,7 @@ void main() {
         bankAccountRepository: mockBankAccountRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
   });
-
-  group('Update', () {
-    test('Success', () async {
-      const Either<Failure, void> updateBankAccountMonad =
-          Right<Failure, void>('');
-
-      when(() => mockBankAccountRepository!.update(bankAccount))
-          .thenAnswer((_) => Future.value(updateBankAccountMonad));
-
-      final bankAccountResponse =
-          await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
-
-      expect(bankAccountResponse.isRight(), true);
-      verify(() => mockBankAccountRepository!.update(bankAccount));
-    });
-
-    test('Failure', () async {
-      final Either<Failure, void> updateBankAccountMonad =
-          Left<Failure, void>(FetchDataFailure());
-
-      when(() => mockBankAccountRepository!.update(bankAccount))
-          .thenAnswer((_) => Future.value(updateBankAccountMonad));
-
-      final bankAccountResponse =
-          await updateBankAccountUseCase.update(updateBankAccount: bankAccount);
-
-      expect(bankAccountResponse.isLeft(), true);
-      verify(() => mockBankAccountRepository!.update(bankAccount));
-    });
-  });
-
+  
   group('UpdateBankAccountName', () {
     final bankAccountModel = BankAccount(
         walletId: bankAccountModelAsJSON['walletId'],

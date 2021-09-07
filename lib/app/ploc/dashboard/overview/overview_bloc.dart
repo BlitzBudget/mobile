@@ -32,21 +32,20 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
 
     if (event is Fetch) {
       final fetchResponse = await fetchOverviewUseCase.fetch();
-      fetchResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield fetchResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<OverviewState> _successResponse(void r) async* {
-    yield Success();
+  OverviewState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<OverviewState> _convertToMessage(Failure failure) async* {
+  OverviewState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

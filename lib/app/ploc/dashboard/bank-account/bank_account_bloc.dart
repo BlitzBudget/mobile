@@ -56,42 +56,41 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
       final addResponse =
           await addBankAccountUseCase.add(addBankAccount: addBankAccount);
 
-      addResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield addResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateAccountBalance) {
       final updateResponse =
           await updateBankAccountUseCase.updateAccountBalance(
               accountBalance: event.accountBalance, accountId: event.accountId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateBankAccountName) {
       final updateResponse =
           await updateBankAccountUseCase.updateBankAccountName(
               bankAccountName: event.bankAccountName,
               accountId: event.accountId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateSelectedAccount) {
       final updateResponse =
           await updateBankAccountUseCase.updateSelectedAccount(
               selectedAccount: event.selectedAccount,
               accountId: event.accountId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Delete) {
       final deleteResponse =
           await deleteBankAccountUseCase.delete(itemId: event.deleteItemId!);
-      deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield deleteResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<BankAccountState> _successResponse(void r) async* {
-    yield Success();
+  BankAccountState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<BankAccountState> _convertToMessage(Failure failure) async* {
+  BankAccountState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

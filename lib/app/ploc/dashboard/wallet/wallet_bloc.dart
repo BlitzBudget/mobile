@@ -45,10 +45,10 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     if (event is Fetch) {
       final fetchResponse = await fetchWalletUseCase.fetch();
-      fetchResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      fetchResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Add) {
       final addResponse = await addWalletUseCase.add(currency: event.currency);
-      addResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      addResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Update) {
       final updateWallet = Wallet(
           walletId: event.walletId,
@@ -60,33 +60,32 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           totalDebtBalance: event.totalDebtBalance);
       final updateResponse =
           await updateWalletUseCase.update(updateWallet: updateWallet);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Delete) {
       final deleteResponse =
           await deleteWalletUseCase.delete(itemId: event.walletId!);
-      deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      deleteResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateWalletName) {
       final updateResponse = await updateWalletUseCase.updateWalletName(
           name: event.walletName, walletId: event.walletId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateCurrency) {
       final updateResponse = await updateWalletUseCase.updateCurrency(
           currency: event.currency, walletId: event.walletId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<WalletState> _successResponse(void r) async* {
-    yield Success();
+  WalletState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<WalletState> _convertToMessage(Failure failure) async* {
+  WalletState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

@@ -49,45 +49,44 @@ class RecurringTransactionBloc
           tags: event.tags);
       final updateResponse = await updateRecurringTransactionUseCase.update(
           updateRecurringTransaction: updateRecurringTransaction);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateAccountID) {
       final updateResponse = await updateRecurringTransactionUseCase
           .updateAccountId(accountId: event.accountId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateAmount) {
       final updateResponse = await updateRecurringTransactionUseCase
           .updateAmount(newAmount: event.amount);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateCategoryID) {
       final updateResponse = await updateRecurringTransactionUseCase
           .updateCategoryId(categoryId: event.category);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateDescription) {
       final updateResponse = await updateRecurringTransactionUseCase
           .updateDescription(description: event.description);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateRecurrence) {
       final updateResponse = await updateRecurringTransactionUseCase
           .updateRecurrence(recurrence: event.recurrence);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateTags) {
       final updateResponse =
           await updateRecurringTransactionUseCase.updateTags(tags: event.tags);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<RecurringTransactionState> _successResponse(void r) async* {
-    yield Success();
+  RecurringTransactionState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<RecurringTransactionState> _convertToMessage(Failure failure) async* {
+  RecurringTransactionState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

@@ -65,7 +65,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           tags: event.tags);
       final addResponse =
           await addTransactionUseCase.add(addTransaction: addTransaction);
-      addResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      addResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Update) {
       final updateTransaction = Transaction(
           transactionId: event.transactionId,
@@ -81,49 +81,48 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           tags: event.tags);
       final updateResponse = await updateTransactionUseCase.update(
           updateTransaction: updateTransaction);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateAccountID) {
       final updateResponse = await updateTransactionUseCase.updateAccountId(
           accountId: event.accountId, transactionId: event.transactionId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateAmount) {
       final updateResponse = await updateTransactionUseCase.updateAmount(
           newAmount: event.amount, transactionId: event.transactionId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateCategoryID) {
       final updateResponse = await updateTransactionUseCase.updateCategoryId(
           categoryId: event.categoryId, transactionId: event.transactionId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateDescription) {
       final updateResponse = await updateTransactionUseCase.updateDescription(
           description: event.description, transactionId: event.transactionId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateRecurrence) {
       final updateResponse = await updateTransactionUseCase.updateRecurrence(
           recurrence: event.recurrence, transactionId: event.transactionId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateTags) {
       final updateResponse = await updateTransactionUseCase.updateTags(
           tags: event.tags, transactionId: event.transactionId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Delete) {
       final deleteResponse =
           await deleteTransactionUseCase.delete(itemID: event.transactionId!);
-      deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      deleteResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<TransactionState> _successResponse(void r) async* {
-    yield Success();
+  TransactionState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<TransactionState> _convertToMessage(Failure failure) async* {
+  TransactionState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

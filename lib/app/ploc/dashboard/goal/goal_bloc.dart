@@ -48,7 +48,7 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
     if (event is Delete) {
       final deleteResponse =
           await deleteGoalUseCase.delete(itemID: event.deleteItemId!);
-      deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield deleteResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Update) {
       final updateGoal = Goal(
           walletId: event.walletId,
@@ -61,7 +61,7 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
           targetId: event.targetId);
       final updateResponse =
           await updateGoalUseCase.update(updateGoal: updateGoal);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Add) {
       final addGoal = Goal(
           walletId: event.walletId,
@@ -73,24 +73,23 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
           targetDate: event.targetDate,
           targetId: event.targetId);
       final addResponse = await addGoalUseCase.add(addGoal: addGoal);
-      addResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield addResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Fetch) {
       final fetchResponse = await fetchGoalUseCase.fetch();
-      fetchResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield fetchResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<GoalState> _successResponse(void r) async* {
-    yield Success();
+  GoalState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<GoalState> _convertToMessage(Failure failure) async* {
+  GoalState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

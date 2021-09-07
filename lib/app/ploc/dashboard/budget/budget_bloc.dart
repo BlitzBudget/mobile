@@ -54,7 +54,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           categoryType: event.categoryType,
           used: event.used);
       final addResponse = await addBudgetUseCase.add(addBudget: addBudget);
-      addResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      addResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Update) {
       if (event.categoryType != null) {
         final updateBudget = Budget(
@@ -63,7 +63,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
             categoryType: event.categoryType);
         final updateResponse =
             await updateBudgetUseCase.update(updateBudget: updateBudget);
-        updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+        updateResponse.fold(_convertToMessage, _successResponse);
       }
 
       if (event.used != null) {
@@ -73,41 +73,40 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
             used: event.used);
         final updateResponse =
             await updateBudgetUseCase.update(updateBudget: updateBudget);
-        updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+        yield updateResponse.fold(_convertToMessage, _successResponse);
       }
     } else if (event is UpdateCategoryId) {
       final updateResponse = await updateBudgetUseCase.updateCategoryId(
           categoryId: event.categoryId, budgetId: event.budgetId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdateDateMeantFor) {
       final updateResponse = await updateBudgetUseCase.updateDateMeantFor(
           dateMeantFor: event.dateMeantFor, budgetId: event.budgetId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is UpdatePlanned) {
       final updateResponse = await updateBudgetUseCase.updatePlanned(
           planned: event.planned, budgetId: event.budgetId);
-      updateResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield updateResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Delete) {
       final deleteResponse =
           await deleteBudgetUseCase.delete(itemID: event.deleteItemId!);
-      deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield deleteResponse.fold(_convertToMessage, _successResponse);
     } else if (event is Fetch) {
       final fetchResponse = await fetchBudgetUseCase.fetch();
-      fetchResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield fetchResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<BudgetState> _successResponse(void r) async* {
-    yield Success();
+  BudgetState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<BudgetState> _convertToMessage(Failure failure) async* {
+  BudgetState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

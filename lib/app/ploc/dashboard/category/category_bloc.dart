@@ -32,21 +32,20 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     if (event is Delete) {
       final deleteResponse =
           await deleteCategoryUseCase.delete(itemId: event.deleteItemId!);
-      deleteResponse.fold((_) => _convertToMessage, (_) => _successResponse);
+      yield deleteResponse.fold(_convertToMessage, _successResponse);
     }
   }
 
-  Stream<CategoryState> _successResponse(void r) async* {
-    yield Success();
+  CategoryState _successResponse(void r) {
+    return Success();
   }
 
-  Stream<CategoryState> _convertToMessage(Failure failure) async* {
+  CategoryState _convertToMessage(Failure failure) {
     debugPrint('Converting login failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
-      await clearAllStorageUseCase.delete();
-      yield RedirectToLogin();
+      return RedirectToLogin();
     }
 
-    yield const Error(message: constants.GENERIC_ERROR_EXCEPTION);
+    return const Error(message: constants.GENERIC_ERROR_EXCEPTION);
   }
 }

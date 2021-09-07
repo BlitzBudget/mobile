@@ -28,14 +28,14 @@ abstract class BankAccountEvent extends Equatable {
 
 class Add extends BankAccountEvent {
   const Add(
-      {final double? accountBalance,
-      final String? bankAccountName,
-      final bool? selectedAccount,
-      final String? accountId,
-      final String? walletId,
-      final bool? linked,
-      final AccountType? accountType,
-      final AccountSubType? accountSubType})
+      {required final double? accountBalance,
+      required final String? bankAccountName,
+      required final bool? selectedAccount,
+      required final String? accountId,
+      required final String? walletId,
+      required final bool? linked,
+      required final AccountType? accountType,
+      required final AccountSubType? accountSubType})
       : super(
             accountBalance: accountBalance,
             bankAccountName: bankAccountName,
@@ -66,21 +66,19 @@ class UpdateAccountBalance extends BankAccountEvent {
 
 class UpdateBankAccountName extends BankAccountEvent {
   const UpdateBankAccountName({
-    final String? bankAccountName,
-    final String? accountId,
-    final String? walletId,
+    required final String? bankAccountName,
+    required final String? accountId,
   }) : super(
           bankAccountName: bankAccountName,
           accountId: accountId,
-          walletId: walletId,
         );
 }
 
 class UpdateSelectedAccount extends BankAccountEvent {
   const UpdateSelectedAccount({
-    final bool? selectedAccount,
-    final String? accountId,
-    final String? walletId,
+    required final bool? selectedAccount,
+    required final String? accountId,
+    required final String? walletId,
   }) : super(
           selectedAccount: selectedAccount,
           accountId: accountId,
