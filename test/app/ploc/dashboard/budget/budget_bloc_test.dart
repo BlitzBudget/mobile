@@ -6,6 +6,7 @@ import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/budget_response.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/budget/add_budget_use_case.dart'
     as add_budget_usecase;
@@ -59,7 +60,7 @@ void main() {
 
   group('Success: BudgetBloc', () {
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Success] states for add bank account success',
+      'Emits [Success] states for add budget success',
       build: () {
         when(() => mockAddBudgetUsecase.add(addBudget: addBudget))
             .thenAnswer((_) => Future.value(positiveMonadResponse));
@@ -77,6 +78,23 @@ void main() {
           categoryType: CategoryType.expense,
           budgetId: BUDGET_ID,
           used: 0)),
+      expect: () => [Loading(), Success()],
+    );
+
+    blocTest<BudgetBloc, BudgetState>(
+      'Emits [Success] states for fetch budget success',
+      build: () {
+        const fetchBudgetResponse =
+            Right<Failure, BudgetResponse>(BudgetResponse());
+        when(() => mockFetchBudgetUseCase.fetch())
+            .thenAnswer((_) => Future.value(fetchBudgetResponse));
+        return BudgetBloc(
+            addBudgetUseCase: mockAddBudgetUsecase,
+            deleteBudgetUseCase: mockDeleteBudgetUseCase,
+            updateBudgetUseCase: mockUpdateBudgetUseCase,
+            fetchBudgetUseCase: mockFetchBudgetUseCase);
+      },
+      act: (bloc) => bloc.add(Fetch()),
       expect: () => [Loading(), Success()],
     );
 
@@ -98,7 +116,7 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Success] states for update bank account name success',
+      'Emits [Success] states for date meant for success',
       build: () {
         when(() => mockUpdateBudgetUseCase.updateDateMeantFor(
                 dateMeantFor: DATE_MEANT_FOR, budgetId: BUDGET_ID))
@@ -117,7 +135,24 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Success] states for delete bank account success',
+      'Emits [Success] states for planned success',
+      build: () {
+        when(() => mockUpdateBudgetUseCase.updatePlanned(
+                planned: 1, budgetId: BUDGET_ID))
+            .thenAnswer((_) => Future.value(positiveMonadResponse));
+        return BudgetBloc(
+            addBudgetUseCase: mockAddBudgetUsecase,
+            deleteBudgetUseCase: mockDeleteBudgetUseCase,
+            updateBudgetUseCase: mockUpdateBudgetUseCase,
+            fetchBudgetUseCase: mockFetchBudgetUseCase);
+      },
+      act: (bloc) => bloc.add(const UpdatePlanned(
+          budgetId: BUDGET_ID, walletId: WALLET_ID, planned: 1)),
+      expect: () => [Loading(), Success()],
+    );
+
+    blocTest<BudgetBloc, BudgetState>(
+      'Emits [Success] states for delete budget success',
       build: () {
         when(() => mockDeleteBudgetUseCase.delete(itemID: BUDGET_ID))
             .thenAnswer((_) => Future.value(positiveMonadResponse));
@@ -134,7 +169,7 @@ void main() {
 
   group('Error Generic API Failure: BudgetBloc', () {
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for add bank account success',
+      'Emits [Error] states for add budget success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
         when(() => mockAddBudgetUsecase.add(addBudget: addBudget))
@@ -153,6 +188,24 @@ void main() {
           categoryType: CategoryType.expense,
           budgetId: BUDGET_ID,
           used: 0)),
+      expect: () =>
+          [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
+    );
+
+    blocTest<BudgetBloc, BudgetState>(
+      'Emits [Error] states for fetch budget generic error',
+      build: () {
+        final fetchBudgetResponse =
+            Left<Failure, BudgetResponse>(GenericAPIFailure());
+        when(() => mockFetchBudgetUseCase.fetch())
+            .thenAnswer((_) => Future.value(fetchBudgetResponse));
+        return BudgetBloc(
+            addBudgetUseCase: mockAddBudgetUsecase,
+            deleteBudgetUseCase: mockDeleteBudgetUseCase,
+            updateBudgetUseCase: mockUpdateBudgetUseCase,
+            fetchBudgetUseCase: mockFetchBudgetUseCase);
+      },
+      act: (bloc) => bloc.add(Fetch()),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -177,7 +230,7 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for update bank account name success',
+      'Emits [Error] states for date meant for success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
         when(() => mockUpdateBudgetUseCase.updateDateMeantFor(
@@ -198,7 +251,26 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for delete bank account success',
+      'Emits [Error] states for planned success',
+      build: () {
+        final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
+        when(() => mockUpdateBudgetUseCase.updatePlanned(
+                planned: 1, budgetId: BUDGET_ID))
+            .thenAnswer((_) => Future.value(failureMonadResponse));
+        return BudgetBloc(
+            addBudgetUseCase: mockAddBudgetUsecase,
+            deleteBudgetUseCase: mockDeleteBudgetUseCase,
+            updateBudgetUseCase: mockUpdateBudgetUseCase,
+            fetchBudgetUseCase: mockFetchBudgetUseCase);
+      },
+      act: (bloc) => bloc.add(const UpdatePlanned(
+          budgetId: BUDGET_ID, walletId: WALLET_ID, planned: 1)),
+      expect: () =>
+          [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
+    );
+
+    blocTest<BudgetBloc, BudgetState>(
+      'Emits [Error] states for delete budget success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
         when(() => mockDeleteBudgetUseCase.delete(itemID: BUDGET_ID))
@@ -217,7 +289,7 @@ void main() {
 
   group('Error Fetch Data Failure: BudgetBloc', () {
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for add bank account success',
+      'Emits [Error] states for add budget success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
         when(() => mockAddBudgetUsecase.add(addBudget: addBudget))
@@ -240,6 +312,23 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
+      'Emits [Error] states for fetch budget generic error',
+      build: () {
+        final fetchBudgetResponse =
+            Left<Failure, BudgetResponse>(FetchDataFailure());
+        when(() => mockFetchBudgetUseCase.fetch())
+            .thenAnswer((_) => Future.value(fetchBudgetResponse));
+        return BudgetBloc(
+            addBudgetUseCase: mockAddBudgetUsecase,
+            deleteBudgetUseCase: mockDeleteBudgetUseCase,
+            updateBudgetUseCase: mockUpdateBudgetUseCase,
+            fetchBudgetUseCase: mockFetchBudgetUseCase);
+      },
+      act: (bloc) => bloc.add(Fetch()),
+      expect: () => [Loading(), RedirectToLogin()],
+    );
+
+    blocTest<BudgetBloc, BudgetState>(
       'Emits [Error] states for update category id success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
@@ -258,7 +347,7 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for update bank account name success',
+      'Emits [Error] states for date meant for success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
         when(() => mockUpdateBudgetUseCase.updateDateMeantFor(
@@ -278,7 +367,25 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for delete bank account success',
+      'Emits [Error] states for planned success',
+      build: () {
+        final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
+        when(() => mockUpdateBudgetUseCase.updatePlanned(
+                planned: 1, budgetId: BUDGET_ID))
+            .thenAnswer((_) => Future.value(failureMonadResponse));
+        return BudgetBloc(
+            addBudgetUseCase: mockAddBudgetUsecase,
+            deleteBudgetUseCase: mockDeleteBudgetUseCase,
+            updateBudgetUseCase: mockUpdateBudgetUseCase,
+            fetchBudgetUseCase: mockFetchBudgetUseCase);
+      },
+      act: (bloc) => bloc.add(const UpdatePlanned(
+          budgetId: BUDGET_ID, walletId: WALLET_ID, planned: 1)),
+      expect: () => [Loading(), RedirectToLogin()],
+    );
+
+    blocTest<BudgetBloc, BudgetState>(
+      'Emits [Error] states for delete budget success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
         when(() => mockDeleteBudgetUseCase.delete(itemID: BUDGET_ID))

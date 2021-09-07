@@ -9,4 +9,10 @@ abstract class CategoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class Delete extends CategoryEvent {}
+class Delete extends CategoryEvent {
+  const Delete({
+    final String? deleteItemId,
+  }) : super(
+          deleteItemId: deleteItemId,
+        );
+}
