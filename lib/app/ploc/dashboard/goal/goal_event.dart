@@ -28,14 +28,14 @@ abstract class GoalEvent extends Equatable {
 
 class Add extends GoalEvent {
   const Add(
-      {final String? walletId,
-      final String? goalId,
-      final GoalType? goalType,
-      final TargetType? targetType,
-      final double? monthlyContribution,
-      final double? targetAmount,
-      final String? targetDate,
-      final String? targetId})
+      {required final String? walletId,
+      required final String? goalId,
+      required final GoalType? goalType,
+      required final TargetType? targetType,
+      required final double? monthlyContribution,
+      required final double? targetAmount,
+      required final String? targetDate,
+      required final String? targetId})
       : super(
             walletId: walletId,
             goalId: goalId,
@@ -49,14 +49,14 @@ class Add extends GoalEvent {
 
 class Update extends GoalEvent {
   const Update(
-      {final String? walletId,
-      final String? goalId,
-      final GoalType? goalType,
-      final TargetType? targetType,
-      final double? monthlyContribution,
-      final double? targetAmount,
-      final String? targetDate,
-      final String? targetId})
+      {required final String? walletId,
+      required final String? goalId,
+      required final GoalType? goalType,
+      required final TargetType? targetType,
+      required final double? monthlyContribution,
+      required final double? targetAmount,
+      required final String? targetDate,
+      required final String? targetId})
       : super(
             walletId: walletId,
             goalId: goalId,
@@ -69,7 +69,7 @@ class Update extends GoalEvent {
 }
 
 class Delete extends GoalEvent {
-  const Delete({final String? deleteItemId})
+  const Delete({required final String? deleteItemId})
       : super(deleteItemId: deleteItemId);
 }
 
