@@ -1,21 +1,27 @@
-
+import 'package:bloc_test/bloc_test.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_blitzbudget/app/ploc/authentication/signup/signup_bloc.dart';
+import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/signup_user.dart'
     as signup_usecase;
+import 'package:mobile_blitzbudget/app/ploc/authentication/signup/signup_constants.dart'
+    as constants;
+import 'package:mocktail/mocktail.dart';
 
 class MockSignupUser extends Mock implements signup_usecase.SignupUser {}
 
 void main() {
-
   late MockSignupUser mockSignupUser;
   const VALID_EMAIL = 'n123@gmail.com';
   const VALID_PASSWORD = 'P1234gs.';
-  const INVALID_EMAIL = 'gmail';
   const INVALID_PASSWORD = 'P1234gs';
   const positiveMonadResponse = Right<Failure, void>('');
 
   setUp(() {
     mockSignupUser = MockSignupUser();
-  })
+  });
 
   group('Success: SignupBloc', () {
     blocTest<SignupBloc, SignupState>(
@@ -39,7 +45,10 @@ void main() {
           signupUser: mockSignupUser,
         );
       },
-      act: (bloc) => bloc.add(const SignupUser(username: VALID_EMAIL, password: VALID_PASSWORD, confirmPassword: VALID_PASSWORD)),
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: VALID_PASSWORD,
+          confirmPassword: VALID_PASSWORD)),
       expect: () => [Loading(), RedirectToVerification()],
     );
   });
@@ -52,8 +61,10 @@ void main() {
           signupUser: mockSignupUser,
         );
       },
-      act: (bloc) => bloc.add(
-        const SignupUser(username: VALID_EMAIL, password: INVALID_PASSWORD, confirmPassword: VALID_PASSWORD)),
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: INVALID_PASSWORD,
+          confirmPassword: INVALID_PASSWORD)),
       expect: () =>
           [Loading(), const Error(message: constants.PASSWORD_INVALID)],
     );
@@ -65,9 +76,12 @@ void main() {
           signupUser: mockSignupUser,
         );
       },
-      act: (bloc) =>
-          bloc.add(const SignupUser(username: VALID_EMAIL, password: VALID_PASSWORD, confirmPassword: '')),
-      expect: () => [Loading(), const Error(message: constants.CONFIRM_PASSWORD_EMPTY)],
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: VALID_PASSWORD,
+          confirmPassword: '')),
+      expect: () =>
+          [Loading(), const Error(message: constants.CONFIRM_PASSWORD_EMPTY)],
     );
 
     blocTest<SignupBloc, SignupState>(
@@ -77,9 +91,12 @@ void main() {
           signupUser: mockSignupUser,
         );
       },
-      act: (bloc) =>
-          bloc.add(const SignupUser(username: VALID_EMAIL, password: VALID_PASSWORD, confirmPassword: INVALID_PASSWORD)),
-      expect: () => [Loading(), const Error(message: constants.PASSWORD_MISMATCH)],
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: VALID_PASSWORD,
+          confirmPassword: INVALID_PASSWORD)),
+      expect: () =>
+          [Loading(), const Error(message: constants.PASSWORD_MISMATCH)],
     );
 
     blocTest<SignupBloc, SignupState>(
@@ -92,9 +109,12 @@ void main() {
             .thenAnswer((_) => Future.value(failureResponse));
         return SignupBloc(
           signupUser: mockSignupUser,
-        );;
+        );
       },
-      act: (bloc) => bloc.add(const SignupUser(username: VALID_EMAIL, password: VALID_PASSWORD, confirmPassword: VALID_PASSWORD)),
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: VALID_PASSWORD,
+          confirmPassword: VALID_PASSWORD)),
       expect: () => [Loading(), RedirectToLogin()],
     );
 
@@ -110,7 +130,10 @@ void main() {
           signupUser: mockSignupUser,
         );
       },
-      act: (bloc) => bloc.add(const SignupUser(username: VALID_EMAIL, password: VALID_PASSWORD, confirmPassword: VALID_PASSWORD)),
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: VALID_PASSWORD,
+          confirmPassword: VALID_PASSWORD)),
       expect: () => [Loading(), RedirectToSignup()],
     );
 
@@ -126,7 +149,10 @@ void main() {
           signupUser: mockSignupUser,
         );
       },
-      act: (bloc) => bloc.add(const SignupUser(username: VALID_EMAIL, password: VALID_PASSWORD, confirmPassword: VALID_PASSWORD)),
+      act: (bloc) => bloc.add(const SignupUser(
+          username: VALID_EMAIL,
+          password: VALID_PASSWORD,
+          confirmPassword: VALID_PASSWORD)),
       expect: () => [Loading(), RedirectToVerification()],
     );
   });

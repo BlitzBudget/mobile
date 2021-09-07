@@ -13,6 +13,8 @@ class RedirectToDashboard extends VerifyState {}
 
 class RedirectToLogin extends VerifyState {}
 
+class RedirectToVerification extends VerifyState {}
+
 class RedirectToSignup extends VerifyState {}
 
 class ResendVerificationCodeSuccessful extends VerifyState {}

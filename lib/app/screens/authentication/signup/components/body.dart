@@ -153,7 +153,7 @@ class _BodyState extends State<Body> {
       {required String? email,
       required String? password,
       required String? confirmPassword}) {
-    BlocProvider.of<SignupBloc>(context)
-        .add(SignupUser(email, password, confirmPassword));
+    BlocProvider.of<SignupBloc>(context).add(SignupUser(
+        username: email, password: password, confirmPassword: confirmPassword));
   }
 }
