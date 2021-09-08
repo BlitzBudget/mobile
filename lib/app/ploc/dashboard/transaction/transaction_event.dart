@@ -31,19 +31,19 @@ abstract class TransactionEvent extends Equatable {
 }
 
 class Add extends TransactionEvent {
-  const Add(
-    final String? transactionId,
-    final String? walletId,
-    final double? amount,
-    final String? description,
-    final String? accountId,
-    final String? dateMeantFor,
-    final String? categoryId,
-    final Recurrence? recurrence,
-    final CategoryType? categoryType,
-    final String? categoryName,
-    final List<String>? tags,
-  ) : super(
+  const Add({
+    required final String? transactionId,
+    required final String? walletId,
+    required final double? amount,
+    required final String? description,
+    required final String? accountId,
+    required final String? dateMeantFor,
+    required final String? categoryId,
+    required final Recurrence? recurrence,
+    required final CategoryType? categoryType,
+    required final String? categoryName,
+    required final List<String>? tags,
+  }) : super(
             transactionId: transactionId,
             walletId: walletId,
             amount: amount,
@@ -58,70 +58,48 @@ class Add extends TransactionEvent {
 }
 
 class Delete extends TransactionEvent {
-  const Delete(final String? transactionId)
+  const Delete({required final String? transactionId})
       : super(transactionId: transactionId);
 }
 
 class Fetch extends TransactionEvent {
-  const Fetch(final String? transactionId)
-      : super(transactionId: transactionId);
-}
-
-class Update extends TransactionEvent {
-  const Update(
-    final String? transactionId,
-    final String? walletId,
-    final double? amount,
-    final String? description,
-    final String? accountId,
-    final String? dateMeantFor,
-    final String? categoryId,
-    final Recurrence? recurrence,
-    final CategoryType? categoryType,
-    final String? categoryName,
-    final List<String>? tags,
-  ) : super(
-            transactionId: transactionId,
-            walletId: walletId,
-            amount: amount,
-            description: description,
-            accountId: accountId,
-            dateMeantFor: dateMeantFor,
-            categoryId: categoryId,
-            recurrence: recurrence,
-            categoryType: categoryType,
-            categoryName: categoryName,
-            tags: tags);
+  const Fetch() : super();
 }
 
 class UpdateAmount extends TransactionEvent {
-  const UpdateAmount(final double? amount, final String? transactionId)
+  const UpdateAmount(
+      {required final double? amount, required final String? transactionId})
       : super(amount: amount, transactionId: transactionId);
 }
 
 class UpdateDescription extends TransactionEvent {
   const UpdateDescription(
-      final String? description, final String? transactionId)
+      {required final String? description,
+      required final String? transactionId})
       : super(description: description, transactionId: transactionId);
 }
 
 class UpdateAccountID extends TransactionEvent {
-  const UpdateAccountID(final String? accountId, final String? transactionId)
+  const UpdateAccountID(
+      {required final String? accountId, required final String? transactionId})
       : super(accountId: accountId, transactionId: transactionId);
 }
 
 class UpdateCategoryID extends TransactionEvent {
-  const UpdateCategoryID(final String? categoryID, final String? transactionId)
+  const UpdateCategoryID(
+      {required final String? categoryID, required final String? transactionId})
       : super(categoryId: categoryID, transactionId: transactionId);
 }
 
 class UpdateRecurrence extends TransactionEvent {
   const UpdateRecurrence(
-      final Recurrence? recurrence, final String? transactionId)
+      {required final Recurrence? recurrence,
+      required final String? transactionId})
       : super(recurrence: recurrence, transactionId: transactionId);
 }
 
 class UpdateTags extends TransactionEvent {
-  const UpdateTags(final List<String>? tags, final String? transactionId)
+  const UpdateTags(
+      {required final List<String>? tags, required final String? transactionId})
       : super(tags: tags, transactionId: transactionId);
 }

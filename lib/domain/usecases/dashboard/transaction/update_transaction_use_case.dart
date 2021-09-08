@@ -16,7 +16,7 @@ class UpdateTransactionUseCase extends UseCase {
   final TransactionRepository? transactionRepository;
   final DefaultWalletRepository? defaultWalletRepository;
 
-  Future<Either<Failure, void>> update(
+  Future<Either<Failure, void>> _update(
       {required Transaction updateTransaction}) async {
     return transactionRepository!.update(updateTransaction);
   }
@@ -32,7 +32,7 @@ class UpdateTransactionUseCase extends UseCase {
     final walletId = defaultWalletResponse.getOrElse(() => '');
     final transaction = Transaction(
         walletId: walletId, transactionId: transactionId, amount: newAmount);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 
   /// Updates the Description
@@ -48,7 +48,7 @@ class UpdateTransactionUseCase extends UseCase {
         walletId: walletId,
         transactionId: transactionId,
         description: description);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 
   /// Updates the account id
@@ -62,7 +62,7 @@ class UpdateTransactionUseCase extends UseCase {
     final walletId = defaultWalletResponse.getOrElse(() => '');
     final transaction = Transaction(
         walletId: walletId, transactionId: transactionId, accountId: accountId);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 
   /// Updates the date meant for
@@ -78,7 +78,7 @@ class UpdateTransactionUseCase extends UseCase {
         walletId: walletId,
         transactionId: transactionId,
         dateMeantFor: dateMeantFor);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 
   /// Updates the category id
@@ -94,7 +94,7 @@ class UpdateTransactionUseCase extends UseCase {
         walletId: walletId,
         transactionId: transactionId,
         categoryId: categoryId);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 
   /// Updates the recurrence
@@ -110,7 +110,7 @@ class UpdateTransactionUseCase extends UseCase {
         walletId: walletId,
         transactionId: transactionId,
         recurrence: recurrence);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 
   /// Updates the tags
@@ -124,6 +124,6 @@ class UpdateTransactionUseCase extends UseCase {
     final walletId = defaultWalletResponse.getOrElse(() => '');
     final transaction = Transaction(
         walletId: walletId, transactionId: transactionId, tags: tags);
-    return update(updateTransaction: transaction);
+    return _update(updateTransaction: transaction);
   }
 }

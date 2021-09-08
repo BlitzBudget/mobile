@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
-import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
@@ -31,20 +30,6 @@ void main() {
   final tags = transactionModelAsJSON['tags']
       ?.map<String>(parseDynamicAsString)
       ?.toList();
-  final transaction = TransactionModel(
-      walletId: transactionModelAsJSON['walletId'],
-      accountId: transactionModelAsJSON['account'],
-      transactionId: transactionModelAsJSON['transactionId'],
-      amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
-      description: transactionModelAsJSON['description'],
-      recurrence:
-          parseDynamicAsRecurrence(transactionModelAsJSON['recurrence']),
-      categoryType:
-          parseDynamicAsCategoryType(transactionModelAsJSON['category_type']),
-      categoryName: transactionModelAsJSON['category_name'],
-      tags: tags,
-      categoryId: transactionModelAsJSON['category'],
-      dateMeantFor: transactionModelAsJSON['date_meant_for']);
 
   setUp(() {
     mockTransactionRepository = MockTransactionRepository();
@@ -52,36 +37,6 @@ void main() {
     updateTransactionUseCase = UpdateTransactionUseCase(
         transactionRepository: mockTransactionRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
-  });
-
-  group('Update Transaction', () {
-    test('Success', () async {
-      const Either<Failure, void> updateTransactionMonad =
-          Right<Failure, void>('');
-
-      when(() => mockTransactionRepository!.update(transaction))
-          .thenAnswer((_) => Future.value(updateTransactionMonad));
-
-      final transactionResponse =
-          await updateTransactionUseCase.update(updateTransaction: transaction);
-
-      expect(transactionResponse.isRight(), true);
-      verify(() => mockTransactionRepository!.update(transaction));
-    });
-
-    test('Failure', () async {
-      final Either<Failure, void> updateTransactionMonad =
-          Left<Failure, void>(FetchDataFailure());
-
-      when(() => mockTransactionRepository!.update(transaction))
-          .thenAnswer((_) => Future.value(updateTransactionMonad));
-
-      final transactionResponse =
-          await updateTransactionUseCase.update(updateTransaction: transaction);
-
-      expect(transactionResponse.isLeft(), true);
-      verify(() => mockTransactionRepository!.update(transaction));
-    });
   });
 
   group('UpdateAmount', () {
