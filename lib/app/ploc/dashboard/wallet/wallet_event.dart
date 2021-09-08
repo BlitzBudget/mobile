@@ -23,52 +23,35 @@ abstract class WalletEvent extends Equatable {
 }
 
 class Delete extends WalletEvent {
-  const Delete(final String? walletId) : super(walletId: walletId);
+  const Delete({required final String? walletId}) : super(walletId: walletId);
 }
 
 class Fetch extends WalletEvent {
-  const Fetch(final String? walletId) : super(walletId: walletId);
+  const Fetch() : super();
 }
 
 class UpdateWalletName extends WalletEvent {
-  const UpdateWalletName(final String? walletId, final String? walletName)
+  const UpdateWalletName(
+      {required final String? walletId, required final String? walletName})
       : super(walletId: walletId, walletName: walletName);
 }
 
 class UpdateCurrency extends WalletEvent {
-  const UpdateCurrency(final String? walletId, final String? currency)
+  const UpdateCurrency(
+      {required final String? walletId, required final String? currency})
       : super(walletId: walletId, currency: currency);
 }
 
-class Update extends WalletEvent {
-  const Update(
-    final String? walletId,
-    final String? userId,
-    final String? walletName,
-    final String? currency,
-    final double? totalDebtBalance,
-    final double? walletBalance,
-    final double? totalAssetBalance,
-  ) : super(
-            walletId: walletId,
-            userId: userId,
-            walletBalance: walletBalance,
-            walletName: walletName,
-            currency: currency,
-            totalAssetBalance: totalAssetBalance,
-            totalDebtBalance: totalDebtBalance);
-}
-
 class Add extends WalletEvent {
-  const Add(
-    final String? walletId,
-    final String? userId,
-    final String? walletName,
-    final String? currency,
-    final double? totalDebtBalance,
-    final double? walletBalance,
-    final double? totalAssetBalance,
-  ) : super(
+  const Add({
+    required final String? walletId,
+    required final String? userId,
+    required final String? walletName,
+    required final String? currency,
+    required final double? totalDebtBalance,
+    required final double? walletBalance,
+    required final double? totalAssetBalance,
+  }) : super(
             walletId: walletId,
             userId: userId,
             walletBalance: walletBalance,

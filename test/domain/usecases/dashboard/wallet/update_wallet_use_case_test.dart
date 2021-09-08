@@ -5,8 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
-import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/wallet_repository.dart';
@@ -26,50 +24,11 @@ void main() {
 
   final walletModelAsString = fixture('models/get/wallet/wallet_model.json');
   final walletModelAsJSON = jsonDecode(walletModelAsString);
-  final wallet = WalletModel(
-      walletId: walletModelAsJSON['walletId'],
-      userId: walletModelAsJSON['userId'],
-      currency: parseDynamicAsString(walletModelAsJSON['currency']),
-      walletName: walletModelAsJSON['wallet_name'],
-      totalAssetBalance:
-          parseDynamicAsDouble(walletModelAsJSON['total_asset_balance']),
-      totalDebtBalance:
-          parseDynamicAsDouble(walletModelAsJSON['total_debt_balance']),
-      walletBalance: parseDynamicAsDouble(walletModelAsJSON['wallet_balance']));
 
   setUp(() {
     mockWalletRepository = MockWalletRepository();
     updateWalletUseCase =
         UpdateWalletUseCase(walletRepository: mockWalletRepository);
-  });
-
-  group('Update Wallet', () {
-    test('Success', () async {
-      const Either<Failure, void> updateWalletMonad = Right<Failure, void>('');
-
-      when(() => mockWalletRepository!.update(wallet))
-          .thenAnswer((_) => Future.value(updateWalletMonad));
-
-      final walletResponse =
-          await updateWalletUseCase.update(updateWallet: wallet);
-
-      expect(walletResponse.isRight(), true);
-      verify(() => mockWalletRepository!.update(wallet));
-    });
-
-    test('Failure', () async {
-      final Either<Failure, void> updateWalletMonad =
-          Left<Failure, void>(FetchDataFailure());
-
-      when(() => mockWalletRepository!.update(wallet))
-          .thenAnswer((_) => Future.value(updateWalletMonad));
-
-      final walletResponse =
-          await updateWalletUseCase.update(updateWallet: wallet);
-
-      expect(walletResponse.isLeft(), true);
-      verify(() => mockWalletRepository!.update(wallet));
-    });
   });
 
   group('UpdateWalletName', () {
