@@ -15,6 +15,8 @@ class RedirectToVerification extends LoginState {}
 
 class RedirectToDashboard extends LoginState {}
 
+class RedirectToForgotPassword extends LoginState {}
+
 class Loading extends LoginState {}
 
 class Error extends LoginState {

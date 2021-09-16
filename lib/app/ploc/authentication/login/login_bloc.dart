@@ -63,7 +63,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       yield forgotPasswordResponse.fold(
         _convertToMessage,
-        (_) => RedirectToVerification(),
+        (_) => RedirectToForgotPassword(),
       );
     }
   }

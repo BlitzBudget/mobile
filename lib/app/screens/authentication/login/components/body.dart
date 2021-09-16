@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_blitzbudget/app/constants/constants.dart';
 import 'package:mobile_blitzbudget/app/ploc/authentication/login/login_bloc.dart';
+import 'package:mobile_blitzbudget/app/screens/authentication/forgot-password/forgot_password_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/signup/signup_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/verify/verify_screen.dart';
 import '../../../../widgets/linear_loading_indicator.dart';
@@ -43,6 +44,7 @@ class _BodyState extends State<Body> {
       if (state is RedirectToDashboard) {
         Navigator.pushNamed(context, dashboardRoute);
       } else if (state is Error) {
+        // TODO Print error
         debugPrint('The Login encountered an error ${state.message}');
       } else if (state is RedirectToSignup) {
         /// Navigate to the Signup screen using a named route.
@@ -63,6 +65,15 @@ class _BodyState extends State<Body> {
                 password: password,
                 useVerifyURL: false,
                 showResendVerificationCode: false),
+          ),
+        );
+      } else if (state is RedirectToForgotPassword) {
+        /// Navigate to the Verify screen using a named route.
+        Navigator.push(
+          context,
+          MaterialPageRoute<ForgotPasswordScreen>(
+            builder: (context) =>
+                ForgotPasswordScreen(email: username!, password: password!),
           ),
         );
       } else if (state is Loading) {
