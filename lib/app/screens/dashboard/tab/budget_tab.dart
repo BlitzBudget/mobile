@@ -33,9 +33,9 @@ class _BudgetTabState extends State<BudgetTab> {
     super.initState();
   }
 
-  Widget? _listBuilder(BuildContext context, int index) {
+  Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
-      return null;
+      return Container();
     }
 
     return SafeArea(
@@ -100,7 +100,7 @@ class _BudgetTabState extends State<BudgetTab> {
         title: const Text(BudgetTab.title),
       ),
       body: ListView.builder(
-        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+        itemBuilder: _listBuilder,
       ),
     );
   }
@@ -109,7 +109,7 @@ class _BudgetTabState extends State<BudgetTab> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
-        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+        itemBuilder: _listBuilder,
       ),
     );
   }

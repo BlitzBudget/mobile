@@ -35,9 +35,9 @@ class _GoalTabState extends State<GoalTab> {
     super.initState();
   }
 
-  Widget? _listBuilder(BuildContext context, int index) {
+  Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
-      return null;
+      return Container();
     }
 
     return SafeArea(
@@ -102,7 +102,7 @@ class _GoalTabState extends State<GoalTab> {
         title: const Text(GoalTab.title),
       ),
       body: ListView.builder(
-        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+        itemBuilder: _listBuilder,
       ),
     );
   }
@@ -111,7 +111,7 @@ class _GoalTabState extends State<GoalTab> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
-        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+        itemBuilder: _listBuilder,
       ),
     );
   }

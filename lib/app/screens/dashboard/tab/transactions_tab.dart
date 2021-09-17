@@ -43,9 +43,9 @@ class _TransactionsTabState extends State<TransactionsTab> {
     );
   }
 
-  Widget? _listBuilder(BuildContext context, int index) {
+  Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
-      return null;
+      return Container();
     }
 
     /// Show a slightly different color palette. Show poppy-ier colors on iOS
@@ -127,7 +127,7 @@ class _TransactionsTabState extends State<TransactionsTab> {
         onRefresh: _refreshData,
         child: ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+          itemBuilder: _listBuilder,
         ),
       ),
     );

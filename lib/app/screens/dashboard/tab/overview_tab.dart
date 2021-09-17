@@ -32,9 +32,9 @@ class _OverviewTabState extends State<OverviewTab> {
     super.initState();
   }
 
-  Widget? _listBuilder(BuildContext context, int index) {
+  Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) {
-      return null;
+      return Container();
     }
 
     return SafeArea(
@@ -99,7 +99,7 @@ class _OverviewTabState extends State<OverviewTab> {
         title: const Text(OverviewTab.title),
       ),
       body: ListView.builder(
-        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+        itemBuilder: _listBuilder,
       ),
     );
   }
@@ -108,7 +108,7 @@ class _OverviewTabState extends State<OverviewTab> {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: ListView.builder(
-        itemBuilder: _listBuilder as Widget Function(BuildContext, int),
+        itemBuilder: _listBuilder,
       ),
     );
   }

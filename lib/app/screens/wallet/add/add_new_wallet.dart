@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../widgets/dashboard_widget.dart';
+import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
 
 class AddNewWallet extends StatelessWidget {
   const AddNewWallet({
@@ -31,6 +30,23 @@ class AddNewWallet extends StatelessWidget {
             Expanded(
               child: Container(),
             ),
+            DropdownButton<String>(
+              value: 'One',
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              items: <String>['One', 'Two', 'Free', 'Four']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            )
           ],
         ),
       ),

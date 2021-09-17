@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_blitzbudget/app/screens/wallet/add/add_new_wallet.dart';
 
 import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
@@ -94,6 +95,10 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
               builder: (context) => const OverviewTab(),
             );
           case 2:
+            return CupertinoTabView(
+              defaultTitle: OverviewTab.title,
+              builder: (context) => const AddNewWallet(),
+            );
           case 3:
             return CupertinoTabView(
               defaultTitle: BudgetTab.title,
