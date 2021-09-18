@@ -3,8 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
-
-import '../../../widgets/dashboard_widget.dart';
+import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
 
 class BudgetTab extends StatefulWidget {
   const BudgetTab({Key? key}) : super(key: key);

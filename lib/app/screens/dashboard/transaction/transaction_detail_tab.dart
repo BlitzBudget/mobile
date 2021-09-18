@@ -15,6 +15,35 @@ class TransactionDetailTab extends StatelessWidget {
   final String? transaction;
   final Color? color;
 
+  /// ===========================================================================
+  /// Non-shared code below because we're using different scaffolds.
+  /// ===========================================================================
+
+  Widget _buildAndroid(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(transaction!)),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildIos(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(transaction!),
+        previousPageTitle: 'Transactions',
+      ),
+      child: _buildBody(),
+    );
+  }
+
+  @override
+  Widget build(context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
+    );
+  }
+
   Widget _buildBody() {
     return SafeArea(
       bottom: false,
@@ -72,35 +101,6 @@ class TransactionDetailTab extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  /// ===========================================================================
-  /// Non-shared code below because we're using different scaffolds.
-  /// ===========================================================================
-
-  Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(transaction!)),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildIos(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text(transaction!),
-        previousPageTitle: 'Transactions',
-      ),
-      child: _buildBody(),
-    );
-  }
-
-  @override
-  Widget build(context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIos,
     );
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/app/screens/wallet/add/add_new_wallet.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_new_wallet.dart';
 
-import '../../../../app/widgets/rounded_button.dart';
 import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
-import 'profile_dialog.dart';
-import 'settings_dialog.dart';
+import '../../../widgets/rounded_button.dart';
+import '../profile/profile_dialog.dart';
+import '../settings/settings_dialog.dart';
 
 class WalletDialog extends StatelessWidget {
   const WalletDialog({

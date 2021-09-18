@@ -26,14 +26,33 @@ import 'core/persistence/secure_key_value_store.dart';
 import 'data/datasource/local/authentication/access_token_local_data_source.dart';
 import 'data/datasource/local/authentication/auth_token_local_data_source.dart';
 import 'data/datasource/local/authentication/user_attributes_local_data_source.dart';
+import 'data/datasource/local/dashboard/default_wallet_local_data_source.dart';
+import 'data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
+import 'data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
 import 'data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import 'data/datasource/remote/authentication/user_attributes_remote_data_source.dart';
+import 'data/datasource/remote/dashboard/common/delete_item_remote_data_source.dart';
+import 'data/datasource/remote/dashboard/transaction/transaction_remote_data_source.dart';
 import 'data/repositories/authentication/access_token_repository_impl.dart';
 import 'data/repositories/authentication/auth_token_repository_impl.dart';
 import 'data/repositories/authentication/refresh_token_repository_impl.dart';
+import 'data/repositories/dashboard/common/default_wallet_repository_impl.dart';
+import 'data/repositories/dashboard/common/delete_item_repository_impl.dart';
+import 'data/repositories/dashboard/common/ends_with_date_repository_impl.dart';
+import 'data/repositories/dashboard/common/starts_with_date_repository_impl.dart';
+import 'data/repositories/dashboard/transaction/transaction_repository_impl.dart';
 import 'domain/repositories/authentication/auth_token_repository.dart';
 import 'domain/repositories/dashboard/common/clear_all_storage_repository.dart';
+import 'domain/repositories/dashboard/common/default_wallet_repository.dart';
+import 'domain/repositories/dashboard/common/delete_item_repository.dart';
+import 'domain/repositories/dashboard/common/ends_with_date_repository.dart';
+import 'domain/repositories/dashboard/common/starts_with_date_repository.dart';
+import 'domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'domain/usecases/authentication/signup_user.dart';
+import 'domain/usecases/dashboard/transaction/add_transaction_use_case.dart';
+import 'domain/usecases/dashboard/transaction/delete_transaction_use_case.dart';
+import 'domain/usecases/dashboard/transaction/fetch_transaction_use_case.dart';
+import 'domain/usecases/dashboard/transaction/update_transaction_use_case.dart';
 
 final getIt = GetIt.instance;
 
@@ -132,4 +151,71 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => InternetConnectionChecker());
   // ignore: cascade_invocations
   getIt.registerLazySingleton(() => const FlutterSecureStorage());
+
+  // Dashboard
+
+  // Transactions
+
+  // Use case
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton(() => UpdateTransactionUseCase(
+      transactionRepository: getIt(), defaultWalletRepository: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton(
+      () => AddTransactionUseCase(transactionRepository: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton(() => DeleteTransactionUseCase(
+      defaultWalletRepository: getIt(), deleteItemRepository: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton(() => FetchTransactionUseCase(
+      defaultWalletRepository: getIt(),
+      endsWithDateRepository: getIt(),
+      startsWithDateRepository: getIt(),
+      transactionRepository: getIt(),
+      userAttributesRepository: getIt()));
+
+  // Repository
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<TransactionRepository>(
+      () => TransactionRepositoryImpl(transactionRemoteDataSource: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<DefaultWalletRepository>(
+      () => DefaultWalletRepositoryImpl(defaultWalletLocalDataSource: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<DeleteItemRepository>(
+      () => DeleteItemRepositoryImpl(deleteItemRemoteDataSource: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<EndsWithDateRepository>(
+      () => EndsWithDateRepositoryImpl(endsWithDateLocalDataSource: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<StartsWithDateRepository>(() =>
+      StartsWithDateRepositoryImpl(startsWithDateLocalDataSource: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<UserAttributesRepository>(() =>
+      UserAttributesRepositoryImpl(
+          userAttributesLocalDataSource: getIt(),
+          userAttributesRemoteDataSource: getIt()));
+
+  // Data Source
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<TransactionRemoteDataSource>(
+      () => TransactionRemoteDataSourceImpl(httpClient: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<DefaultWalletLocalDataSource>(
+      () => DefaultWalletLocalDataSourceImpl(keyValueStore: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<DeleteItemRemoteDataSource>(
+      () => DeleteItemRemoteDataSourceImpl(httpClient: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<EndsWithDateLocalDataSource>(
+      () => EndsWithDateLocalDataSourceImpl(keyValueStore: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<StartsWithDateLocalDataSource>(
+      () => StartsWithDateLocalDataSourceImpl(keyValueStore: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<UserAttributesLocalDataSource>(
+      () => UserAttributesLocalDataSourceImpl(secureKeyValueStore: getIt()));
+  // ignore: cascade_invocations
+  getIt.registerLazySingleton<UserAttributesRemoteDataSource>(
+      () => UserAttributesRemoteDataSourceImpl(httpClient: getIt()));
 }

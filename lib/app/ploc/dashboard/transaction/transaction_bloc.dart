@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 
 import '../../../../domain/entities/category/category_type.dart';
@@ -46,7 +47,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
     if (event is Fetch) {
       final fetchResponse = await fetchTransactionUseCase.fetch();
-      yield fetchResponse.fold(_convertToMessage, _successResponse);
+      yield fetchResponse.fold(_convertToMessage, _successfulFetchResponse);
     } else if (event is Add) {
       final addTransaction = Transaction(
           transactionId: event.transactionId,
@@ -96,6 +97,11 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
   TransactionState _successResponse(void r) {
     return Success();
+  }
+
+  TransactionState _successfulFetchResponse(
+      TransactionResponse transactionModel) {
+    return TransactionsFetched(transactionModel: transactionModel);
   }
 
   TransactionState _convertToMessage(Failure failure) {

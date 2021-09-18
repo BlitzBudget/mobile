@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/app/screens/wallet/add/add_new_wallet.dart';
-
-import '../../../constants/constants.dart';
-import '../../../widgets/dashboard_widget.dart';
-import '../full-screen-dialog/profile_dialog.dart';
-import '../full-screen-dialog/settings_dialog.dart';
-import '../tab/budget_tab.dart';
-import '../tab/goal_tab.dart';
-import '../tab/overview_tab.dart';
-import '../tab/transactions_tab.dart';
+import 'package:mobile_blitzbudget/app/constants/constants.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/budget/budget_tab.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/profile/profile_dialog.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/settings/settings_dialog.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/goal/goal_tab.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/overview/overview_tab.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/transaction/fetch/transaction_screen.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_new_wallet.dart';
+import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -54,7 +53,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
   /// all 4 possible tabs. This drawer is injected into the transactions tab which is
   /// actually building the scaffold around the drawer.
   Widget _buildAndroidHomePage(BuildContext context) {
-    return TransactionsTab(
+    return TransactionScreen(
       key: transactionsTabKey,
       androidDrawer: _AndroidDrawer(),
     );
@@ -73,7 +72,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
       tabBar: CupertinoTabBar(
         items: const [
           BottomNavigationBarItem(
-              label: TransactionsTab.title, icon: TransactionsTab.iosIcon),
+              label: TransactionScreen.title, icon: TransactionScreen.iosIcon),
           BottomNavigationBarItem(
               label: OverviewTab.title, icon: OverviewTab.iosIcon),
           BottomNavigationBarItem(icon: plusIcon),
@@ -86,8 +85,8 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              defaultTitle: TransactionsTab.title,
-              builder: (context) => TransactionsTab(key: transactionsTabKey),
+              defaultTitle: TransactionScreen.title,
+              builder: (context) => TransactionScreen(key: transactionsTabKey),
             );
           case 1:
             return CupertinoTabView(
@@ -112,8 +111,8 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
           default:
             assert(false, 'Unexpected tab');
             return CupertinoTabView(
-              defaultTitle: TransactionsTab.title,
-              builder: (context) => TransactionsTab(key: transactionsTabKey),
+              defaultTitle: TransactionScreen.title,
+              builder: (context) => TransactionScreen(key: transactionsTabKey),
             );
         }
       },
@@ -156,8 +155,8 @@ class _AndroidDrawer extends StatelessWidget {
                 ),
               )),
           ListTile(
-            leading: TransactionsTab.androidIcon,
-            title: const Text(TransactionsTab.title),
+            leading: TransactionScreen.androidIcon,
+            title: const Text(TransactionScreen.title),
             onTap: () {
               Navigator.pop(context);
             },

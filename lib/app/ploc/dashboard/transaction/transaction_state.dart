@@ -13,6 +13,13 @@ class Empty extends TransactionState {}
 
 class Success extends TransactionState {}
 
+class TransactionsFetched extends TransactionState {
+  const TransactionsFetched({required this.transactionModel});
+  final TransactionResponse transactionModel;
+  @override
+  List<Object> get props => [transactionModel];
+}
+
 class RedirectToLogin extends TransactionState {}
 
 class Error extends TransactionState {

@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../../app/widgets/rounded_button.dart';
 import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
+import '../../../widgets/rounded_button.dart';
 
 class ProfileDialog extends StatelessWidget {
   const ProfileDialog({

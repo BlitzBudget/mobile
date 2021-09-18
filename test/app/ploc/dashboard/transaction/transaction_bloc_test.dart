@@ -68,11 +68,12 @@ void main() {
   });
 
   group('Success: TransactionBloc', () {
+    const transactionResponse = TransactionResponse();
     blocTest<TransactionBloc, TransactionState>(
       'Emits [Success] states for fetch transaction success',
       build: () {
         const fetchResponse =
-            Right<Failure, TransactionResponse>(TransactionResponse());
+            Right<Failure, TransactionResponse>(transactionResponse);
         when(() => mockFetchTransactionUseCase.fetch())
             .thenAnswer((_) => Future.value(fetchResponse));
         return TransactionBloc(
@@ -83,7 +84,10 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(const Fetch()),
-      expect: () => [Loading(), Success()],
+      expect: () => [
+        Loading(),
+        const TransactionsFetched(transactionModel: transactionResponse)
+      ],
     );
 
     blocTest<TransactionBloc, TransactionState>(
