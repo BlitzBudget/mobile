@@ -27,7 +27,7 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
           await userAttributesLocalDataSource!.readUserAttributes();
 
       /// Convert String to JSON and then Convert them back to User entity
-      final user = UserModel.fromJSON(jsonDecode(userJSONEncoded));
+      final user = User.fromJSON(jsonDecode(userJSONEncoded));
       return Right(user);
     } on Exception catch (e) {
       return Left(GenericException.convertExceptionToFailure(e));
@@ -38,7 +38,7 @@ class UserAttributesRepositoryImpl implements UserAttributesRepository {
   Future<void> writeUserAttributes(UserResponse? userResponse) async {
     /// Encode the User Model as String
     final encodedUser = userResponse!.user as UserModel;
-    final userJSONEncoded = jsonEncode(encodedUser.toJSON());
+    final userJSONEncoded = jsonEncode(encodedUser.toJSONForUser());
 
     return userAttributesLocalDataSource!.writeUserAttributes(userJSONEncoded);
   }

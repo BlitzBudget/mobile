@@ -9,6 +9,25 @@ class User extends Equatable {
       this.familyName,
       this.fileFormat});
 
+  factory User.fromJSON(Map<String, dynamic> userAttributes) {
+    return User(
+        userId: userAttributes['user_id'],
+        email: userAttributes['email'],
+        name: userAttributes['name'],
+        locale: userAttributes['locale'],
+        fileFormat: userAttributes['exportFileFormat'],
+        familyName: userAttributes['family_name']);
+  }
+
+  Map<String, dynamic> toJSONForUser() => <String, dynamic>{
+        'email': email,
+        'name': name,
+        'locale': locale,
+        'family_name': familyName,
+        'exportFileFormat': fileFormat,
+        'user_id': userId
+      };
+
   final String? userId;
   final String? email;
   final String? name;
