@@ -42,7 +42,8 @@ class ChangePasswordBloc
   }
 
   Stream<ChangePasswordState> _convertToMessage(Failure failure) async* {
-    debugPrint('Converting change password failure to message ${failure.toString()} ');
+    debugPrint(
+        'Converting change password failure to message ${failure.toString()} ');
     if (failure is EmptyResponseFailure ||
         failure is InvalidCredentialsFailure) {
       await clearAllStorageUseCase.delete();
