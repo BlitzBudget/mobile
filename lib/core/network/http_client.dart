@@ -31,10 +31,10 @@ class HTTPClientImpl implements HTTPClient {
       required this.refreshTokenHelper,
       required this.networkHelper});
 
-  final AuthTokenRepository? authTokenRepository;
-  final AccessTokenRepository? accessTokenRepository;
-  final NetworkHelper? networkHelper;
-  final RefreshTokenHelper? refreshTokenHelper;
+  final AuthTokenRepository authTokenRepository;
+  final AccessTokenRepository accessTokenRepository;
+  final NetworkHelper networkHelper;
+  final RefreshTokenHelper refreshTokenHelper;
 
   @override
   Future<dynamic> post(String url,
@@ -86,8 +86,8 @@ class HTTPClientImpl implements HTTPClient {
   }
 
   /// Populate Authorization Header
-  Future<dynamic> populateAuthHeader(Map<String, String?> headers) async {
-    final authToken = await authTokenRepository!.readAuthToken();
+  Future<dynamic> populateAuthHeader(Map<String, String> headers) async {
+    final authToken = await authTokenRepository.readAuthToken();
 
     /// Check if authorization is empty
     if (authToken.isLeft()) {
@@ -113,7 +113,7 @@ class HTTPClientImpl implements HTTPClient {
     } on SocketException catch (e) {
       throw ConnectionException(e);
     } on TokenExpiredException {
-      await refreshTokenHelper!.refreshAuthToken(headers, encoding);
+      await refreshTokenHelper.refreshAuthToken(headers, encoding);
 
       /// Try to fetch the content after refreshing the token
       res = await makeAppropriateAPICall(url, body, headers, httpapiCalls);
@@ -127,14 +127,13 @@ class HTTPClientImpl implements HTTPClient {
     late Response response;
     switch (httpapiCalls) {
       case HTTPAPICalls.post:
-        response = await networkHelper!.post(url, body: body, headers: headers);
+        response = await networkHelper.post(url, body: body, headers: headers);
         break;
       case HTTPAPICalls.put:
-        response = await networkHelper!.put(url, body: body, headers: headers);
+        response = await networkHelper.put(url, body: body, headers: headers);
         break;
       case HTTPAPICalls.patch:
-        response =
-            await networkHelper!.patch(url, body: body, headers: headers);
+        response = await networkHelper.patch(url, body: body, headers: headers);
         break;
       default:
     }

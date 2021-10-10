@@ -9,7 +9,7 @@ abstract class AuthTokenLocalDataSource {
 class AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
   AuthTokenLocalDataSourceImpl({required this.secureKeyValueStore});
 
-  final SecureKeyValueStore? secureKeyValueStore;
+  final SecureKeyValueStore secureKeyValueStore;
 
   ///
   /// Instantiation of the SharedPreferences library
@@ -21,7 +21,7 @@ class AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
   /// ------------------------------------------------------------
   @override
   Future<String> readAuthToken() async {
-    return secureKeyValueStore!.getString(key: _authToken);
+    return secureKeyValueStore.getString(key: _authToken);
   }
 
   /// ----------------------------------------------------------
@@ -29,6 +29,6 @@ class AuthTokenLocalDataSourceImpl implements AuthTokenLocalDataSource {
   /// ----------------------------------------------------------
   @override
   Future<void> writeAuthToken(String? value) async {
-    await secureKeyValueStore!.setString(key: _authToken, value: value);
+    await secureKeyValueStore.setString(key: _authToken, value: value);
   }
 }
