@@ -82,7 +82,7 @@ class RecurringTransactionBloc
   }
 
   RecurringTransactionState _convertToMessage(Failure failure) {
-    debugPrint('Converting login failure to message ${failure.toString()} ');
+    debugPrint('Converting transaction failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
       return RedirectToLogin();
     }

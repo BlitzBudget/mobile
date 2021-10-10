@@ -64,7 +64,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   }
 
   WalletState _convertToMessage(Failure failure) {
-    debugPrint('Converting login failure to message ${failure.toString()} ');
+    debugPrint('Converting wallet failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
       return RedirectToLogin();
     }

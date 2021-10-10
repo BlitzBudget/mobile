@@ -83,7 +83,7 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
   }
 
   BankAccountState _convertToMessage(Failure failure) {
-    debugPrint('Converting login failure to message ${failure.toString()} ');
+    debugPrint('Converting bank account failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
       return RedirectToLogin();
     }

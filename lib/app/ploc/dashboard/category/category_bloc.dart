@@ -35,7 +35,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   CategoryState _convertToMessage(Failure failure) {
-    debugPrint('Converting login failure to message ${failure.toString()} ');
+    debugPrint('Converting category failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
       return RedirectToLogin();
     }

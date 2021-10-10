@@ -81,7 +81,7 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
   }
 
   GoalState _convertToMessage(Failure failure) {
-    debugPrint('Converting login failure to message ${failure.toString()} ');
+    debugPrint('Converting goal failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
       return RedirectToLogin();
     }

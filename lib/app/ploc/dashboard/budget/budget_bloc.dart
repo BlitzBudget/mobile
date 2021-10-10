@@ -78,7 +78,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   }
 
   BudgetState _convertToMessage(Failure failure) {
-    debugPrint('Converting login failure to message ${failure.toString()} ');
+    debugPrint('Converting budget failure to message ${failure.toString()} ');
     if (failure is FetchDataFailure) {
       return RedirectToLogin();
     }
