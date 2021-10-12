@@ -6,7 +6,6 @@ import 'package:mobile_blitzbudget/app/ploc/dashboard/transaction/transaction_bl
 import 'package:mobile_blitzbudget/app/screens/dashboard/transaction/fetch/transaction_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/wallet_dialog.dart';
 import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
-import 'package:mobile_blitzbudget/injection_container.dart';
 
 import '../../transaction_detail_tab.dart';
 
@@ -23,17 +22,16 @@ class _BodyState extends State<Body> {
   static const _itemsLength = 50;
   final _androidRefreshKey = GlobalKey<RefreshIndicatorState>();
   late String transactionNames;
-  TransactionBloc transactionBloc = TransactionBloc(
-      updateTransactionUseCase: getIt(),
-      addTransactionUseCase: getIt(),
-      deleteTransactionUseCase: getIt(),
-      fetchTransactionUseCase: getIt());
 
   @override
   void initState() {
-    transactionBloc.add(const Fetch());
+    _dispatchFetch();
     _setData();
     super.initState();
+  }
+
+  void _dispatchFetch() {
+    BlocProvider.of<TransactionBloc>(context).add(const Fetch());
   }
 
   void _setData() {
@@ -164,41 +162,39 @@ class _BodyState extends State<Body> {
     /// Show a slightly different color palette. Show poppy-ier colors on iOS
     /// due to lighter contrasting bars and tone it down on Android.
     final color = defaultTargetPlatform == TargetPlatform.iOS
-        ? Colors.black
-        : Colors.black;
+        ? Colors.amberAccent
+        : Colors.amber;
 
-    return BlocListener<TransactionBloc, TransactionState>(
+    return BlocConsumer<TransactionBloc, TransactionState>(
       listener: (context, state) {
         if (state is TransactionsFetched) {
           debugPrint(
               'The transaction Model response - ${state.transactionModel}');
-          _displayTransactions(index, color, context);
         }
       },
-    );
-  }
-
-  void _displayTransactions(int index, Color color, BuildContext context) {
-    SafeArea(
-      top: false,
-      bottom: false,
-      child: Hero(
-        tag: index,
-        child: HeroAnimatingTransactionCard(
-          transaction: transactionNames[index],
-          color: color,
-          heroAnimation: const AlwaysStoppedAnimation(0),
-          onPressed: () => Navigator.of(context).push<void>(
-            MaterialPageRoute(
-              builder: (context) => TransactionDetailTab(
-                id: index,
-                transaction: transactionNames[index],
-                color: color,
+      builder: (context, state) {
+        return SafeArea(
+          top: false,
+          bottom: false,
+          child: Hero(
+            tag: index,
+            child: HeroAnimatingTransactionCard(
+              transaction: transactionNames[index],
+              color: color,
+              heroAnimation: const AlwaysStoppedAnimation(0),
+              onPressed: () => Navigator.of(context).push<void>(
+                MaterialPageRoute(
+                  builder: (context) => TransactionDetailTab(
+                    id: index,
+                    transaction: transactionNames[index],
+                    color: color,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
