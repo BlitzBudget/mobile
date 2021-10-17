@@ -91,7 +91,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
           case 1:
             return CupertinoTabView(
               defaultTitle: OverviewTab.title,
-              builder: (context) => const OverviewTab(),
+              builder: (context) => const Body(),
             );
           case 2:
             return CupertinoTabView(
@@ -167,7 +167,7 @@ class _AndroidDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => const OverviewTab()));
+                  MaterialPageRoute(builder: (context) => const Body()));
             },
           ),
           ListTile(

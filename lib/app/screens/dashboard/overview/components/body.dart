@@ -16,10 +16,10 @@ class OverviewTab extends StatefulWidget {
   static const iosIcon = Icon(Mdi.chartArc);
 
   @override
-  _OverviewTabState createState() => _OverviewTabState();
+  _BodyState createState() => _BodyState();
 }
 
-class _OverviewTabState extends State<OverviewTab> {
+class _BodyState extends State<OverviewTab> {
   static const _itemsLength = 20;
 
   late List<String> titles;
