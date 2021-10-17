@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:mdi/mdi.dart';
 
-import '../../../widgets/dashboard_widget.dart';
+import '../../../../widgets/dashboard_widget.dart';
 
 class OverviewTab extends StatefulWidget {
   const OverviewTab({
     Key? key,
   }) : super(key: key);
+
   static const title = 'Overview';
   static const androidIcon = Icon(Mdi.chartArc);
   static const iosIcon = Icon(Mdi.chartArc);
