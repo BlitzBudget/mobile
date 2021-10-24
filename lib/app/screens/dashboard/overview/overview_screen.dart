@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/Overview/Overview_bloc.dart';
 import 'package:mobile_blitzbudget/injection_container.dart';
 
-import 'components/body.dart';
+import 'components/overview_tab.dart';
 
 class OverviewScreen extends StatelessWidget {
   /// In the constructor, require a Todo.
