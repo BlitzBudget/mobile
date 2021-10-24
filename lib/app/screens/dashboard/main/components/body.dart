@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_blitzbudget/app/constants/constants.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/budget/budget_tab.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/overview/overview_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/profile/profile_dialog.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/settings/settings_dialog.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/goal/goal_tab.dart';
-import 'package:mobile_blitzbudget/app/screens/dashboard/overview/components/overview_tab.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/transaction/fetch/transaction_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_new_wallet.dart';
 import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
@@ -74,7 +74,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
           BottomNavigationBarItem(
               label: TransactionScreen.title, icon: TransactionScreen.iosIcon),
           BottomNavigationBarItem(
-              label: OverviewTab.title, icon: OverviewTab.iosIcon),
+              label: OverviewScreen.title, icon: OverviewScreen.iosIcon),
           BottomNavigationBarItem(icon: plusIcon),
           BottomNavigationBarItem(
               label: BudgetTab.title, icon: BudgetTab.iosIcon),
@@ -90,12 +90,12 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
             );
           case 1:
             return CupertinoTabView(
-              defaultTitle: OverviewTab.title,
-              builder: (context) => const Body(),
+              defaultTitle: OverviewScreen.title,
+              builder: (context) => const OverviewScreen(),
             );
           case 2:
             return CupertinoTabView(
-              defaultTitle: OverviewTab.title,
+              defaultTitle: OverviewScreen.title,
               builder: (context) => const AddNewWallet(),
             );
           case 3:
@@ -162,12 +162,14 @@ class _AndroidDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: OverviewTab.androidIcon,
-            title: const Text(OverviewTab.title),
+            leading: OverviewScreen.androidIcon,
+            title: const Text(OverviewScreen.title),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(context,
-                  MaterialPageRoute(builder: (context) => const Body()));
+              Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const OverviewScreen()));
             },
           ),
           ListTile(

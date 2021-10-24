@@ -1,25 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
-import 'package:mdi/mdi.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/overview/overview_bloc.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/overview/overview_screen.dart';
 
 import '../../../../widgets/dashboard_widget.dart';
 
-class OverviewTab extends StatefulWidget {
-  const OverviewTab({
+class Body extends StatefulWidget {
+  const Body({
     Key? key,
   }) : super(key: key);
-
-  static const title = 'Overview';
-  static const androidIcon = Icon(Mdi.chartArc);
-  static const iosIcon = Icon(Mdi.chartArc);
 
   @override
   _BodyState createState() => _BodyState();
 }
 
-class _BodyState extends State<OverviewTab> {
+class _BodyState extends State<Body> {
   static const _itemsLength = 20;
 
   late List<String> titles;
@@ -27,10 +25,15 @@ class _BodyState extends State<OverviewTab> {
 
   @override
   void initState() {
+    _dispatchFetch();
     titles = List.generate(_itemsLength, (index) => 'generateRandomHeadline()');
     contents =
         List.generate(_itemsLength, (index) => lorem(paragraphs: 1, words: 24));
     super.initState();
+  }
+
+  void _dispatchFetch() {
+    BlocProvider.of<OverviewBloc>(context).add(const Fetch());
   }
 
   Widget _listBuilder(BuildContext context, int index) {
@@ -97,7 +100,7 @@ class _BodyState extends State<OverviewTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(OverviewTab.title),
+        title: const Text(OverviewScreen.title),
       ),
       body: ListView.builder(
         itemBuilder: _listBuilder,
