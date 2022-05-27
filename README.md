@@ -14,6 +14,10 @@ by using a bottom tab bar.
 Visually, the app presents platform-agnostic content surrounded by
 platform-specific 'chrome'.
 
+## Sonarcloud Status
+
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=BlitzBudget_mobile)
+
 # Preview
 
 ![App's platform toggling preview](adaptive-overview.gif)
