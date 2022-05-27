@@ -41,11 +41,11 @@ class MockUserAttributesRepository extends Mock
 
 void main() {
   late FetchGoalUseCase fetchGoalUseCase;
-  MockGoalRepository? mockGoalRepository;
-  MockDefaultWalletRepository? mockDefaultWalletRepository;
-  MockEndsWithDateRepository? mockEndsWithDateRepository;
-  MockStartsWithDateRepository? mockStartsWithDateRepository;
-  MockUserAttributesRepository? mockUserAttributesRepository;
+  late MockGoalRepository mockGoalRepository;
+  late MockDefaultWalletRepository mockDefaultWalletRepository;
+  late MockEndsWithDateRepository mockEndsWithDateRepository;
+  late MockStartsWithDateRepository mockStartsWithDateRepository;
+  late MockUserAttributesRepository mockUserAttributesRepository;
 
   final goalResponseModelAsString =
       fixture('responses/dashboard/goal/fetch_goal_info.json');
@@ -78,16 +78,16 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(dateString);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockEndsWithDateRepository!.readEndsWithDate())
+      when(() => mockEndsWithDateRepository.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockStartsWithDateRepository!.readStartsWithDate())
+      when(() => mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
       final Either<Failure, GoalResponse> fetchGoalMonad =
           Right<Failure, GoalResponse>(goalResponseModel);
 
-      when(() => mockGoalRepository!.fetch(
+      when(() => mockGoalRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: dateString,
@@ -96,7 +96,7 @@ void main() {
       final goalResponse = await fetchGoalUseCase.fetch();
 
       expect(goalResponse.isRight(), true);
-      verify(() => mockGoalRepository!.fetch(
+      verify(() => mockGoalRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: dateString,
@@ -109,18 +109,18 @@ void main() {
       final Either<Failure, String> dateFailure =
           Left<Failure, String>(FetchDataFailure());
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(() => mockEndsWithDateRepository!.readEndsWithDate())
+      when(() => mockEndsWithDateRepository.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockStartsWithDateRepository!.readStartsWithDate())
+      when(() => mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockUserAttributesRepository!.readUserAttributes())
+      when(() => mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userMonad));
       final Either<Failure, GoalResponse> fetchGoalMonad =
           Right<Failure, GoalResponse>(goalResponseModel);
 
-      when(() => mockGoalRepository!.fetch(
+      when(() => mockGoalRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -129,7 +129,7 @@ void main() {
       final goalResponse = await fetchGoalUseCase.fetch();
 
       expect(goalResponse.isRight(), true);
-      verify(() => mockGoalRepository!.fetch(
+      verify(() => mockGoalRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,
@@ -142,19 +142,19 @@ void main() {
       final Either<Failure, User> userFailure =
           Left<Failure, User>(FetchDataFailure());
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateFailure));
-      when(() => mockEndsWithDateRepository!.readEndsWithDate())
+      when(() => mockEndsWithDateRepository.readEndsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockStartsWithDateRepository!.readStartsWithDate())
+      when(() => mockStartsWithDateRepository.readStartsWithDate())
           .thenAnswer((_) => Future.value(dateString));
-      when(() => mockUserAttributesRepository!.readUserAttributes())
+      when(() => mockUserAttributesRepository.readUserAttributes())
           .thenAnswer((_) => Future.value(userFailure));
 
       final goalResponse = await fetchGoalUseCase.fetch();
 
       expect(goalResponse.isLeft(), true);
-      verifyNever(() => mockGoalRepository!.fetch(
+      verifyNever(() => mockGoalRepository.fetch(
           startsWithDate: dateString,
           endsWithDate: dateString,
           defaultWallet: null,

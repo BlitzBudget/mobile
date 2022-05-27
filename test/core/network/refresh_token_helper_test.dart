@@ -69,10 +69,11 @@ void main() {
       // If refresh token is empty
       final Either<Failure, String> refreshTokenMonad =
           Left<Failure, String>(EmptyResponseFailure());
+      const clearAllStorageResponse = Right<Failure, void>('');
       when(() => mockRefreshTokenRepository.readRefreshToken())
           .thenAnswer((_) => Future.value(refreshTokenMonad));
       when(() => mockClearAllStorageRepository.clearAllStorage())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((_) => Future.value(clearAllStorageResponse));
       // assert
       expect(() => refreshTokenHelper.refreshAuthToken(constants.headers, null),
           throwsA(const TypeMatcher<UnableToRefreshTokenException>()));
@@ -91,13 +92,14 @@ void main() {
           refreshToken: userModelAsJSON['AuthenticationResult']['RefreshToken'],
           user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
           wallet: WalletModel.fromJSON(userModelAsJSON['Wallet'][0]));
+      const clearAllStorageResponse = Right<Failure, void>('');
       refreshTokenMonad = Right<Failure, String?>(userModel.refreshToken);
       final refreshTokenFuture = Future.value(refreshTokenMonad);
       // MOck Network Call then return
       when(() => mockRefreshTokenRepository.readRefreshToken())
           .thenAnswer((_) => refreshTokenFuture);
       when(() => mockClearAllStorageRepository.clearAllStorage())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((_) => Future.value(clearAllStorageResponse));
 
       final refreshTokenResponseString =
           fixture('responses/authentication/refresh_token_info.json');

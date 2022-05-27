@@ -12,8 +12,8 @@ class MockDeleteItemRemoteDataSource extends Mock
     implements DeleteItemRemoteDataSource {}
 
 void main() {
-  MockDeleteItemRemoteDataSource? mockDeleteItemRemoteDataSource;
-  DeleteItemRepositoryImpl? deleteItemRepositoryImpl;
+  late MockDeleteItemRemoteDataSource mockDeleteItemRemoteDataSource;
+  late DeleteItemRepositoryImpl deleteItemRepositoryImpl;
 
   setUp(() {
     mockDeleteItemRemoteDataSource = MockDeleteItemRemoteDataSource();
@@ -31,16 +31,16 @@ void main() {
   group('Delete Item', () {
     test('Should return FetchDataFailure ', () async {
       when(() =>
-              mockDeleteItemRemoteDataSource!.delete(itemId: '', walletId: ''))
+              mockDeleteItemRemoteDataSource.delete(itemId: '', walletId: ''))
           .thenThrow(EmptyAuthorizationTokenException());
       final deleteItemReceived =
-          await deleteItemRepositoryImpl!.delete(itemId: '', walletId: '');
+          await deleteItemRepositoryImpl.delete(itemID: '', walletID: '');
 
       /// Expect an exception to be thrown
       final f =
           deleteItemReceived.fold<Failure>((f) => f, (_) => GenericFailure());
       verify(() =>
-          mockDeleteItemRemoteDataSource!.delete(itemId: '', walletId: ''));
+          mockDeleteItemRemoteDataSource.delete(itemId: '', walletId: ''));
       expect(deleteItemReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

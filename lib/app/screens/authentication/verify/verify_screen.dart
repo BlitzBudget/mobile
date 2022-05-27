@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_blitzbudget/app/ploc/verify/verify_bloc.dart';
+
 import '../../../../injection_container.dart';
+import '../../../ploc/authentication/verify/verify_bloc.dart';
 import '../../../widgets/dashboard_widget.dart';
 import 'components/body.dart';
 

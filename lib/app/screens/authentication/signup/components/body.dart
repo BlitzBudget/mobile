@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile_blitzbudget/app/ploc/signup/signup_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/authentication/signup/signup_bloc.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/verify/verify_screen.dart';
 
 import '../../../../constants/constants.dart';
@@ -153,7 +153,7 @@ class _BodyState extends State<Body> {
       {required String? email,
       required String? password,
       required String? confirmPassword}) {
-    BlocProvider.of<SignupBloc>(context)
-        .add(SignupUser(email, password, confirmPassword));
+    BlocProvider.of<SignupBloc>(context).add(SignupUser(
+        username: email, password: password, confirmPassword: confirmPassword));
   }
 }

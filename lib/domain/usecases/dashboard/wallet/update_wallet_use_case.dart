@@ -10,7 +10,7 @@ class UpdateWalletUseCase extends UseCase {
 
   final WalletRepository? walletRepository;
 
-  Future<Either<Failure, void>> update({required Wallet updateWallet}) async {
+  Future<Either<Failure, void>> _update({required Wallet updateWallet}) async {
     return walletRepository!.update(updateWallet);
   }
 
@@ -18,13 +18,13 @@ class UpdateWalletUseCase extends UseCase {
   Future<Either<Failure, void>> updateCurrency(
       {required String? currency, required String? walletId}) async {
     final wallet = Wallet(walletId: walletId, currency: currency);
-    return update(updateWallet: wallet);
+    return _update(updateWallet: wallet);
   }
 
   /// Updates the wallet name
   Future<Either<Failure, void>> updateWalletName(
       {required String? name, required String? walletId}) async {
     final wallet = Wallet(walletId: walletId, walletName: name);
-    return update(updateWallet: wallet);
+    return _update(updateWallet: wallet);
   }
 }

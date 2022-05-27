@@ -128,4 +128,5 @@ open coverage/index.html
 dart analyze
 
 ### Activate Pre commit hook
+git config core.hooksPath .githooks/
 chmod +x .githooks/pre-commit

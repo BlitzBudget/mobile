@@ -15,7 +15,7 @@ class UpdateBankAccountUseCase extends UseCase {
   final BankAccountRepository? bankAccountRepository;
   final DefaultWalletRepository? defaultWalletRepository;
 
-  Future<Either<Failure, void>> update(
+  Future<Either<Failure, void>> _update(
       {required BankAccount updateBankAccount}) async {
     return bankAccountRepository!.update(updateBankAccount);
   }
@@ -33,7 +33,7 @@ class UpdateBankAccountUseCase extends UseCase {
         walletId: walletId,
         accountId: accountId,
         bankAccountName: bankAccountName);
-    return update(updateBankAccount: budget);
+    return _update(updateBankAccount: budget);
   }
 
   /// Updates the category id
@@ -49,7 +49,7 @@ class UpdateBankAccountUseCase extends UseCase {
         walletId: walletId,
         accountId: accountId,
         selectedAccount: selectedAccount);
-    return update(updateBankAccount: budget);
+    return _update(updateBankAccount: budget);
   }
 
   /// Updates the category id
@@ -65,6 +65,6 @@ class UpdateBankAccountUseCase extends UseCase {
         walletId: walletId,
         accountId: accountId,
         accountBalance: accountBalance);
-    return update(updateBankAccount: budget);
+    return _update(updateBankAccount: budget);
   }
 }

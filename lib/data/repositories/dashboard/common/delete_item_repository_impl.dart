@@ -7,14 +7,14 @@ import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/delete_i
 class DeleteItemRepositoryImpl implements DeleteItemRepository {
   DeleteItemRepositoryImpl({required this.deleteItemRemoteDataSource});
 
-  final DeleteItemRemoteDataSource? deleteItemRemoteDataSource;
+  late final DeleteItemRemoteDataSource deleteItemRemoteDataSource;
 
   @override
   Future<Either<Failure, void>> delete(
-      {required String walletId, required String itemId}) async {
+      {required String walletID, required String itemID}) async {
     try {
-      return Right(await deleteItemRemoteDataSource!
-          .delete(walletId: walletId, itemId: itemId));
+      return Right(await deleteItemRemoteDataSource.delete(
+          walletId: walletID, itemId: itemID));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

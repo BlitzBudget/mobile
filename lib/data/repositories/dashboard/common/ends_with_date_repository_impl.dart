@@ -6,13 +6,13 @@ import '../../../constants/constants.dart' as constants;
 class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
   EndsWithDateRepositoryImpl({required this.endsWithDateLocalDataSource});
 
-  final EndsWithDateLocalDataSource? endsWithDateLocalDataSource;
+  late final EndsWithDateLocalDataSource endsWithDateLocalDataSource;
 
   @override
   Future<String> readEndsWithDate() async {
     String endsWithDate;
     try {
-      endsWithDate = await endsWithDateLocalDataSource!.readEndsWithDate();
+      endsWithDate = await endsWithDateLocalDataSource.readEndsWithDate();
     } on Exception {
       // Caculate the end date from now
       final _nowDate = DateTime.now();
@@ -29,6 +29,6 @@ class EndsWithDateRepositoryImpl implements EndsWithDateRepository {
 
   @override
   Future<void> writeEndsWithDate(String value) async {
-    return endsWithDateLocalDataSource!.writeEndsWithDate(value);
+    return endsWithDateLocalDataSource.writeEndsWithDate(value);
   }
 }

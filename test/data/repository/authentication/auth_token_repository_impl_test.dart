@@ -16,8 +16,8 @@ class MockAuthTokenLocalDataSource extends Mock
     implements AuthTokenLocalDataSource {}
 
 void main() {
-  MockAuthTokenLocalDataSource? mockAuthTokenLocalDataSource;
-  AuthTokenRepositoryImpl? authTokenRepositoryImpl;
+  late MockAuthTokenLocalDataSource mockAuthTokenLocalDataSource;
+  late AuthTokenRepositoryImpl authTokenRepositoryImpl;
 
   setUp(() {
     mockAuthTokenLocalDataSource = MockAuthTokenLocalDataSource();
@@ -34,14 +34,14 @@ void main() {
 
   group('Read Auth Token', () {
     test('Should return No Value in Cache Exception', () async {
-      when(() => mockAuthTokenLocalDataSource!.readAuthToken())
+      when(() => mockAuthTokenLocalDataSource.readAuthToken())
           .thenThrow(NoValueInCacheException());
-      final authTokenReceived = await authTokenRepositoryImpl!.readAuthToken();
+      final authTokenReceived = await authTokenRepositoryImpl.readAuthToken();
 
       /// Expect an exception to be thrown
       final f =
           authTokenReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockAuthTokenLocalDataSource!.readAuthToken());
+      verify(() => mockAuthTokenLocalDataSource.readAuthToken());
       expect(authTokenReceived.isLeft(), equals(true));
       expect(f, equals(EmptyResponseFailure()));
     });
@@ -55,12 +55,12 @@ void main() {
       final authToken = userModelAsJSON['AuthenticationResult']['IdToken'];
       final userModel = UserResponse(authenticationToken: authToken);
 
-      when(() => mockAuthTokenLocalDataSource!.writeAuthToken(authToken))
+      when(() => mockAuthTokenLocalDataSource.writeAuthToken(authToken))
           .thenAnswer((_) => Future.value());
 
-      await authTokenRepositoryImpl!.writeAuthToken(userModel);
+      await authTokenRepositoryImpl.writeAuthToken(userModel);
 
-      verify(() => mockAuthTokenLocalDataSource!.writeAuthToken(authToken));
+      verify(() => mockAuthTokenLocalDataSource.writeAuthToken(authToken));
     });
   });
 }

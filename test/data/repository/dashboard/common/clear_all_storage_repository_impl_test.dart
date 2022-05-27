@@ -10,9 +10,9 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
 
 void main() {
-  MockSharedPreferences? mockSharedPreferences;
-  MockFlutterSecureStorage? mockFlutterSecureStorage;
-  ClearAllStorageRepositoryImpl? clearAllStorageRepositoryImpl;
+  late MockSharedPreferences mockSharedPreferences;
+  late MockFlutterSecureStorage mockFlutterSecureStorage;
+  late ClearAllStorageRepositoryImpl clearAllStorageRepositoryImpl;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
@@ -31,13 +31,13 @@ void main() {
 
   group('Clear All Storage', () {
     test('Should clear all storage', () async {
-      when(() => mockSharedPreferences!.clear())
+      when(() => mockSharedPreferences.clear())
           .thenAnswer((_) => Future.value(true));
-      when(() => mockFlutterSecureStorage!.deleteAll())
+      when(() => mockFlutterSecureStorage.deleteAll())
           .thenAnswer((_) => Future.value());
-      await clearAllStorageRepositoryImpl!.clearAllStorage();
-      verify(() => mockSharedPreferences!.clear());
-      verify(() => mockFlutterSecureStorage!.deleteAll());
+      await clearAllStorageRepositoryImpl.clearAllStorage();
+      verify(() => mockSharedPreferences.clear());
+      verify(() => mockFlutterSecureStorage.deleteAll());
     });
   });
 }

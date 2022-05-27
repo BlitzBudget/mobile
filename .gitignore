@@ -74,5 +74,6 @@
 .vscode/settings.json
 
 # Remove Coverage
-**/coverage/
-**/coverage/Icov.info
+**/coverage/**
+**/.settings
+**.project

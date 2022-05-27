@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_blitzbudget/app/ploc/login/login_bloc.dart';
 import 'package:mobile_blitzbudget/injection_container.dart';
+
+import '../../../ploc/authentication/login/login_bloc.dart';
 import 'components/body.dart';
 
 class LoginScreen extends StatelessWidget {

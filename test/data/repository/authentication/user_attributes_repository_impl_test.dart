@@ -12,6 +12,7 @@ import 'package:mobile_blitzbudget/data/model/user_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/authentication/user_attributes_repository_impl.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
+import 'package:mobile_blitzbudget/domain/entities/user.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -44,18 +45,15 @@ void main() {
   );
 
   group('Read User Attributes', () {
-    final loginResponseAsString =
-        fixture('responses/authentication/login_info.json');
-    final userAttributesAsMap =
-        jsonDecode(loginResponseAsString)['UserAttributes'];
-    final userAttributeAsString = jsonEncode(userAttributesAsMap);
+    const userAttributeMapAsString =
+        '{"user_id":"User#2020-12-21T20:32:06.003Z","email":"nagarjun_nagesh@outlook.com","name":"Nagarjun","locale":"en","family_name":"Nagesh","exportFileFormat":"XLS"}';
     const email = 'nagarjun_nagesh@outlook.com';
-    const familyName = ' ';
+    const familyName = 'Nagesh';
     const fileFormat = 'XLS';
-    const locale = 'en-US';
-    const name = 'nagarjun_nagesh';
+    const locale = 'en';
+    const name = 'Nagarjun';
     const userId = 'User#2020-12-21T20:32:06.003Z';
-    const userAttributes = UserModel(
+    const userAttributes = User(
         email: email,
         familyName: familyName,
         fileFormat: fileFormat,
@@ -79,7 +77,7 @@ void main() {
 
     test('Should return Valid Response', () async {
       when(() => mockUserAttributesLocalDataSource!.readUserAttributes())
-          .thenAnswer((_) => Future.value(userAttributeAsString));
+          .thenAnswer((_) => Future.value(userAttributeMapAsString));
       final userAttributesReceived =
           await userAttributesRepositoryImpl!.readUserAttributes();
 
@@ -135,7 +133,7 @@ void main() {
         user: UserModel.fromJSON(userModelAsJSON['UserAttributes']),
         wallet: WalletModel.fromJSON(userModelAsJSON['Wallet'][0]));
     final encodedUser = userResponse.user as UserModel;
-    final encodedUserString = jsonEncode(encodedUser.toJSON());
+    final encodedUserString = jsonEncode(encodedUser.toJSONForUser());
 
     test('Should write user attributes', () async {
       when(() => mockUserAttributesLocalDataSource!

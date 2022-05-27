@@ -3,5 +3,5 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
 mixin DeleteItemRepository {
   Future<Either<Failure, void>> delete(
-      {required String walletId, required String itemId});
+      {required String walletID, required String itemID});
 }

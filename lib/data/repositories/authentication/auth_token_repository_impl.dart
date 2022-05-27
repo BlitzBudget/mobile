@@ -10,12 +10,12 @@ import '../../datasource/local/authentication/auth_token_local_data_source.dart'
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
   AuthTokenRepositoryImpl({required this.authTokenLocalDataSource});
 
-  final AuthTokenLocalDataSource? authTokenLocalDataSource;
+  final AuthTokenLocalDataSource authTokenLocalDataSource;
 
   @override
   Future<Either<Failure, String>> readAuthToken() async {
     try {
-      return Right(await authTokenLocalDataSource!.readAuthToken());
+      return Right(await authTokenLocalDataSource.readAuthToken());
     } on Exception catch (e) {
       return Left(GenericException.convertExceptionToFailure(e));
     }
@@ -23,7 +23,7 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
 
   @override
   Future<void> writeAuthToken(UserResponse? userResponse) async {
-    return authTokenLocalDataSource!
+    return authTokenLocalDataSource
         .writeAuthToken(userResponse!.authenticationToken);
   }
 }

@@ -21,19 +21,11 @@ class MockDefaultWalletRepository extends Mock
 
 void main() {
   late UpdateBudgetUseCase updateBudgetUseCase;
-  MockBudgetRepository? mockBudgetRepository;
-  MockDefaultWalletRepository? mockDefaultWalletRepository;
+  late MockBudgetRepository mockBudgetRepository;
+  late MockDefaultWalletRepository mockDefaultWalletRepository;
 
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON = jsonDecode(budgetModelAsString);
-  final budget = Budget(
-      walletId: budgetModelAsJSON['walletId'],
-      budgetId: budgetModelAsJSON['budgetId'],
-      planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
-      categoryId: budgetModelAsJSON['category'],
-      categoryType:
-          parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for']);
 
   setUp(() {
     mockBudgetRepository = MockBudgetRepository();
@@ -41,35 +33,6 @@ void main() {
     updateBudgetUseCase = UpdateBudgetUseCase(
         budgetRepository: mockBudgetRepository,
         defaultWalletRepository: mockDefaultWalletRepository);
-  });
-
-  group('Update', () {
-    test('Success', () async {
-      const Either<Failure, void> updateBudgetMonad = Right<Failure, void>('');
-
-      when(() => mockBudgetRepository!.update(budget))
-          .thenAnswer((_) => Future.value(updateBudgetMonad));
-
-      final budgetResponse =
-          await updateBudgetUseCase.update(updateBudget: budget);
-
-      expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository!.update(budget));
-    });
-
-    test('Failure', () async {
-      final Either<Failure, void> updateBudgetMonad =
-          Left<Failure, void>(FetchDataFailure());
-
-      when(() => mockBudgetRepository!.update(budget))
-          .thenAnswer((_) => Future.value(updateBudgetMonad));
-
-      final budgetResponse =
-          await updateBudgetUseCase.update(updateBudget: budget);
-
-      expect(budgetResponse.isLeft(), true);
-      verify(() => mockBudgetRepository!.update(budget));
-    });
   });
 
   group('UpdatePlanned', () {
@@ -83,16 +46,16 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updatePlanned(
           budgetId: budgetModel.budgetId, planned: budgetModel.planned);
 
       expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository!.update(budgetModel));
+      verify(() => mockBudgetRepository.update(budgetModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -101,9 +64,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updatePlanned(
@@ -113,7 +76,7 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(budgetResponse.isLeft(), true);
-      verify(() => mockBudgetRepository!.update(budgetModel));
+      verify(() => mockBudgetRepository.update(budgetModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -122,9 +85,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updatePlanned(
@@ -134,7 +97,7 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(budgetResponse.isLeft(), true);
-      verifyNever(() => mockBudgetRepository!.update(budgetModel));
+      verifyNever(() => mockBudgetRepository.update(budgetModel));
     });
   });
 
@@ -149,9 +112,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateDateMeantFor(
@@ -159,7 +122,7 @@ void main() {
           dateMeantFor: budgetModel.dateMeantFor);
 
       expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository!.update(budgetModel));
+      verify(() => mockBudgetRepository.update(budgetModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -168,9 +131,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateDateMeantFor(
@@ -181,7 +144,7 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(budgetResponse.isLeft(), true);
-      verify(() => mockBudgetRepository!.update(budgetModel));
+      verify(() => mockBudgetRepository.update(budgetModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -190,9 +153,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateDateMeantFor(
@@ -203,7 +166,7 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(budgetResponse.isLeft(), true);
-      verifyNever(() => mockBudgetRepository!.update(budgetModel));
+      verifyNever(() => mockBudgetRepository.update(budgetModel));
     });
   });
 
@@ -219,16 +182,16 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateCategoryId(
           budgetId: budgetModel.budgetId, categoryId: budgetModel.categoryId);
 
       expect(budgetResponse.isRight(), true);
-      verify(() => mockBudgetRepository!.update(budgetModel));
+      verify(() => mockBudgetRepository.update(budgetModel));
     });
 
     test('Failure Response: Failure', () async {
@@ -237,9 +200,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Right<Failure, String>(budgetModel.walletId!);
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateCategoryId(
@@ -249,7 +212,7 @@ void main() {
 
       expect(f, equals(FetchDataFailure()));
       expect(budgetResponse.isLeft(), true);
-      verify(() => mockBudgetRepository!.update(budgetModel));
+      verify(() => mockBudgetRepository.update(budgetModel));
     });
 
     test('Read Wallet Id Failure: Failure', () async {
@@ -258,9 +221,9 @@ void main() {
       final Either<Failure, String> dateStringMonad =
           Left<Failure, String>(FetchDataFailure());
 
-      when(() => mockDefaultWalletRepository!.readDefaultWallet())
+      when(() => mockDefaultWalletRepository.readDefaultWallet())
           .thenAnswer((_) => Future.value(dateStringMonad));
-      when(() => mockBudgetRepository!.update(budgetModel))
+      when(() => mockBudgetRepository.update(budgetModel))
           .thenAnswer((_) => Future.value(updateBudgetMonad));
 
       final budgetResponse = await updateBudgetUseCase.updateCategoryId(
@@ -270,7 +233,7 @@ void main() {
 
       expect(f, equals(EmptyResponseFailure()));
       expect(budgetResponse.isLeft(), true);
-      verifyNever(() => mockBudgetRepository!.update(budgetModel));
+      verifyNever(() => mockBudgetRepository.update(budgetModel));
     });
   });
 }
