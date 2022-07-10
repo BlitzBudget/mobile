@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:mobile_blitzbudget/app/constants/theme.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../widgets/rounded_button.dart';
@@ -11,32 +11,55 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     const welcomeToBlitzBudget = 'WELCOME TO BlitzBudget';
-    const startButton = 'START';
+    const startButton = 'GET STARTED';
 
     /// This size provide us total height and width of our screen
     return Background(
-      child: SingleChildScrollView(
+      child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              welcomeToBlitzBudget,
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Image.asset('assets/images/business-name/business-name-logo.png',
+                scale: 1),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(right: 48),
+                  child: Text.rich(TextSpan(
+                    text: welcomeToBlitzBudget,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 58,
+                        fontWeight: FontWeight.w600),
+                  )),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 24),
+                  child: Text('Fully coded Flutter widgets and screens.',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w200)),
+                ),
+              ],
             ),
-            SizedBox(height: size.height * 0.05),
-            SvgPicture.asset(
-              'assets/icons/chat.svg',
-              height: size.height * 0.45,
-            ),
-            SizedBox(height: size.height * 0.05),
-            RoundedButton(
-              text: startButton,
-              press: () {
-                /// Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, loginRoute);
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: RoundedButton(
+                  text: startButton,
+                  textColor: ArgonColors.text,
+                  color: ArgonColors.secondary,
+                  press: () {
+                    Navigator.pushNamed(context, loginRoute);
+                  },
+                ),
+              ),
             )
           ],
         ),

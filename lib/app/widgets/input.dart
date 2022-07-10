@@ -11,7 +11,7 @@ class Input extends StatelessWidget {
       required this.onChanged,
       this.autofocus = false,
       this.borderColor = ArgonColors.border,
-      required this.controller})
+      this.controller})
       : super(key: key);
 
   final String placeholder;
@@ -19,7 +19,7 @@ class Input extends StatelessWidget {
   final Widget? prefixIcon;
   final Function onTap;
   final ValueChanged<String>? onChanged;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool autofocus;
   final Color borderColor;
 
