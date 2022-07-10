@@ -44,26 +44,25 @@ class CardSmall extends StatelessWidget {
                             )))),
                 Flexible(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8, bottom: 8, left: 8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(title,
-                              style: const TextStyle(
-                                  color: ArgonColors.header, fontSize: 13)),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Text(cta,
-                                style: const TextStyle(
-                                    color: ArgonColors.primary,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w600)),
-                          )
-                        ],
-                      ),
-                    ))
+                  padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: const TextStyle(
+                              color: ArgonColors.header, fontSize: 13)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(cta,
+                            style: const TextStyle(
+                                color: ArgonColors.primary,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600)),
+                      )
+                    ],
+                  ),
+                ))
               ],
             )),
       ),

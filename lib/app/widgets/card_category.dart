@@ -13,9 +13,7 @@ class CardCategory extends StatelessWidget {
   final Function tap;
   final String title;
 
-  static void defaultFunc() {
-    
-  }
+  static void defaultFunc() {}
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,8 @@ class CardCategory extends StatelessWidget {
               child: Stack(children: [
                 Container(
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(6)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6)),
                         image: DecorationImage(
                           image: NetworkImage(img),
                           fit: BoxFit.cover,

@@ -42,22 +42,22 @@ class CardHorizontal extends StatelessWidget {
                 ),
                 Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(title,
-                              style: const TextStyle(
-                                  color: ArgonColors.header, fontSize: 13)),
-                          Text(cta,
-                              style: const TextStyle(
-                                  color: ArgonColors.primary,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600))
-                        ],
-                      ),
-                    ))
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: const TextStyle(
+                              color: ArgonColors.header, fontSize: 13)),
+                      Text(cta,
+                          style: const TextStyle(
+                              color: ArgonColors.primary,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600))
+                    ],
+                  ),
+                ))
               ],
             ),
           ),
