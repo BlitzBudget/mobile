@@ -200,8 +200,7 @@ class ProfileDialog extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 10),
                                         const Align(
-                                          child: Text(
-                                              'San Francisco, USA',
+                                          child: Text('San Francisco, USA',
                                               style: TextStyle(
                                                   color: Color.fromRGBO(
                                                       50, 50, 93, 1),
