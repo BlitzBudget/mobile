@@ -1,8 +1,10 @@
+// ignore_for_file: null_argument_to_non_null_type
+
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:matcher/matcher.dart';
+import 'package:http/http.dart' as http;
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
@@ -18,7 +20,6 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/clear_all_storage_repository.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:http/http.dart' as http;
 
 import '../../fixtures/fixture_reader.dart';
 

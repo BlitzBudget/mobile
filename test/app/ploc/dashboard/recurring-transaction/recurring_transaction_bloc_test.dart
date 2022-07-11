@@ -2,16 +2,16 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/recurring-transaction/recurring_transaction_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/recurring-transaction/recurring_transaction_constants.dart'
+    as constants;
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/recurring-transaction/delete_recurring_transaction_use_case.dart'
     as delete_recurring_transaction_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/recurring-transaction/update_recurring_transaction_use_case.dart'
     as update_recurring_transaction_use_case;
-import 'package:mobile_blitzbudget/app/ploc/dashboard/recurring-transaction/recurring_transaction_constants.dart'
-    as constants;
+import 'package:mocktail/mocktail.dart';
 
 class MockDeleteRecurringTransactionUseCase extends Mock
     implements

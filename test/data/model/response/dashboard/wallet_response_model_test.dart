@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/wallet_response_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/wallet_response.dart';
+import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 

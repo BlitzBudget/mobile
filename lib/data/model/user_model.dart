@@ -1,8 +1,7 @@
 import 'dart:developer' as developer;
 
-import 'package:mobile_blitzbudget/domain/entities/user.dart';
-
 import 'package:mobile_blitzbudget/core/utils/utils.dart';
+import 'package:mobile_blitzbudget/domain/entities/user.dart';
 
 class UserModel extends User {
   const UserModel(

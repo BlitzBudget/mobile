@@ -5,6 +5,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
+import './login_constants.dart' as constants;
 import '../../../../core/failure/authorization_failure.dart';
 import '../../../../core/failure/failure.dart';
 import '../../../../domain/usecases/authentication/forgot_password.dart'
@@ -12,7 +13,6 @@ import '../../../../domain/usecases/authentication/forgot_password.dart'
 import '../../../../domain/usecases/authentication/login_user.dart'
     as login_usecase;
 import '../../../constants/constants.dart' as app_constants;
-import './login_constants.dart' as constants;
 
 part 'login_event.dart';
 part 'login_state.dart';

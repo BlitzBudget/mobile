@@ -2,13 +2,13 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/category/category_bloc.dart';
-import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
-import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:mobile_blitzbudget/domain/usecases/dashboard/category/delete_category_use_case.dart'
-    as delete_category_usecase;
 import 'package:mobile_blitzbudget/app/ploc/dashboard/category/category_constants.dart'
     as constants;
+import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
+import 'package:mobile_blitzbudget/core/failure/failure.dart';
+import 'package:mobile_blitzbudget/domain/usecases/dashboard/category/delete_category_use_case.dart'
+    as delete_category_usecase;
+import 'package:mocktail/mocktail.dart';
 
 class MockDeleteCategoryUseCase extends Mock
     implements delete_category_usecase.DeleteCategoryUseCase {}

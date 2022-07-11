@@ -6,11 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
+
+import './change_password_constants.dart' as constants;
 import '../../../../domain/usecases/authentication/change_password.dart'
     as change_password_usecase;
 import '../../../../domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
     as clear_all_storage_usecase;
-import './change_password_constants.dart' as constants;
 
 part 'change_password_event.dart';
 part 'change_password_state.dart';

@@ -2,12 +2,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/app/ploc/authentication/signup/signup_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/authentication/signup/signup_constants.dart'
+    as constants;
 import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/signup_user.dart'
     as signup_usecase;
-import 'package:mobile_blitzbudget/app/ploc/authentication/signup/signup_constants.dart'
-    as constants;
 import 'package:mocktail/mocktail.dart';
 
 class MockSignupUser extends Mock implements signup_usecase.SignupUser {}

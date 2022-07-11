@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 
+import './signup_constants.dart' as constants;
 import '../../../../domain/usecases/authentication/signup_user.dart'
     as signup_usecase;
 import '../../../constants/constants.dart' as app_constants;
-import './signup_constants.dart' as constants;
 
 part 'signup_event.dart';
 part 'signup_state.dart';

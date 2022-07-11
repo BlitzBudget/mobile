@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_blitzbudget/app/constants/theme.dart';
 import 'package:mobile_blitzbudget/app/widgets/input.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:mobile_blitzbudget/app/constants/theme.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
   const Navbar(

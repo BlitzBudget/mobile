@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mobile_blitzbudget/core/error/api_exception.dart';
 import 'package:mobile_blitzbudget/core/network/network_helper.dart';
 import 'package:mobile_blitzbudget/core/network/network_info.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mocktail/mocktail.dart';
-import 'package:http/http.dart' as http;
 
 import '../../fixtures/fixture_reader.dart';
 

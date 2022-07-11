@@ -2,6 +2,7 @@ import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 
 import '../failure/failure.dart';
 
+// ignore: avoid_classes_with_only_static_members
 ///
 /// Authentication Flow Exceptions
 ///
