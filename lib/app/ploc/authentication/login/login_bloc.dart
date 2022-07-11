@@ -32,7 +32,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     await processLoginOrForgotPassword(event, emit);
   }
 
-  Future<void> processLoginOrForgotPassword(LoginEvent event, Emitter<LoginState> emit) async {
+  Future<void> processLoginOrForgotPassword(
+      LoginEvent event, Emitter<LoginState> emit) async {
     debugPrint('Bloc Login executed for the user ${event.username} ');
 
     final email = event.username?.toLowerCase().trim() ?? '';
@@ -47,7 +48,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Future<void> _processAPICall(LoginEvent event, String email, Emitter<LoginState> emit) async {
+  Future<void> _processAPICall(
+      LoginEvent event, String email, Emitter<LoginState> emit) async {
     if (event is LoginUser) {
       final userResponse =
           await loginUser.loginUser(email: email, password: event.password);
