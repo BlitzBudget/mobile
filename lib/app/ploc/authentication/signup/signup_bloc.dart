@@ -15,38 +15,36 @@ part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  SignupBloc({required this.signupUser}) : super(Empty());
+  SignupBloc({required this.signupUser}) : super(Empty()) {
+    on<LoginUser>((event, emit) => emit(RedirectToLogin()));
+    on<SignupUser>(_onSignupUser);
+  }
 
   final signup_usecase.SignupUser signupUser;
 
-  Stream<SignupState> mapEventToState(
-    SignupEvent event,
-  ) async* {
-    if (event is LoginUser) {
-      yield RedirectToLogin();
-    } else if (event is SignupUser) {
-      yield Loading();
-
-      yield* processSignup(event);
-    }
+  Future<void> _onSignupUser(
+      SignupUser event, Emitter<SignupState> emit) async {
+    emit(Loading());
+    await processSignup(event, emit);
   }
 
-  Stream<SignupState> processSignup(SignupUser event) async* {
+  Future<void> processSignup(
+      SignupUser event, Emitter<SignupState> emit) async {
     if (event.confirmPassword == null || event.confirmPassword!.isEmpty) {
-      yield const Error(message: constants.CONFIRM_PASSWORD_EMPTY);
+      emit(const Error(message: constants.CONFIRM_PASSWORD_EMPTY));
     } else if (event.confirmPassword != event.password) {
-      yield const Error(message: constants.PASSWORD_MISMATCH);
+      emit(const Error(message: constants.PASSWORD_MISMATCH));
     } else if (!app_constants.passwordExp.hasMatch(event.password!)) {
-      yield const Error(message: constants.PASSWORD_INVALID);
+      emit(const Error(message: constants.PASSWORD_INVALID));
     } else {
       final email = event.username!.toLowerCase().trim();
       final signupUserResponse = await signupUser.signupUser(
           email: email, password: event.confirmPassword);
 
-      yield signupUserResponse.fold(
+      emit(signupUserResponse.fold(
         _convertToMessage,
         (_) => RedirectToVerification(),
-      );
+      ));
     }
   }
 

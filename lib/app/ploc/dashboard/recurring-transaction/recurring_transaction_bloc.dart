@@ -22,58 +22,84 @@ class RecurringTransactionBloc
   RecurringTransactionBloc(
       {required this.deleteRecurringTransactionUseCase,
       required this.updateRecurringTransactionUseCase})
-      : super(Empty());
+      : super(Empty()) {
+    on<UpdateAccountID>(_onUpdateAccountID);
+    on<UpdateAmount>(_onUpdateAmount);
+    on<UpdateCategoryID>(_onUpdateCategoryID);
+    on<UpdateDescription>(_onUpdateDescription);
+    on<UpdateRecurrence>(_onUpdateRecurrence);
+    on<UpdateTags>(_onUpdateTags);
+    on<Delete>(_onDelete);
+  }
 
   final update_recurring_transaction_use_case.UpdateRecurringTransactionUseCase
       updateRecurringTransactionUseCase;
   final delete_recurring_transaction_use_case.DeleteRecurringTransactionUseCase
       deleteRecurringTransactionUseCase;
 
-  Stream<RecurringTransactionState> mapEventToState(
-    RecurringTransactionEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onUpdateAccountID(
+      UpdateAccountID event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final updateResponse =
+        await updateRecurringTransactionUseCase.updateAccountId(
+            accountId: event.accountId,
+            recurringTransactionId: event.recurringTransactionId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
 
-    if (event is UpdateAccountID) {
-      final updateResponse =
-          await updateRecurringTransactionUseCase.updateAccountId(
-              accountId: event.accountId,
-              recurringTransactionId: event.recurringTransactionId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateAmount) {
-      final updateResponse =
-          await updateRecurringTransactionUseCase.updateAmount(
-              newAmount: event.amount,
-              recurringTransactionId: event.recurringTransactionId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateCategoryID) {
-      final updateResponse =
-          await updateRecurringTransactionUseCase.updateCategoryId(
-              categoryId: event.category,
-              recurringTransactionId: event.recurringTransactionId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateDescription) {
-      final updateResponse =
-          await updateRecurringTransactionUseCase.updateDescription(
-              description: event.description,
-              recurringTransactionId: event.recurringTransactionId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateRecurrence) {
-      final updateResponse =
-          await updateRecurringTransactionUseCase.updateRecurrence(
-              recurrence: event.recurrence,
-              recurringTransactionId: event.recurringTransactionId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateTags) {
-      final updateResponse = await updateRecurringTransactionUseCase.updateTags(
-          tags: event.tags,
-          recurringTransactionId: event.recurringTransactionId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Delete) {
-      final deleteResponse = await deleteRecurringTransactionUseCase.delete(
-          itemID: event.recurringTransactionId!);
-      yield deleteResponse.fold(_convertToMessage, _successResponse);
-    }
+  FutureOr<void> _onUpdateAmount(
+      UpdateAmount event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateRecurringTransactionUseCase.updateAmount(
+        newAmount: event.amount,
+        recurringTransactionId: event.recurringTransactionId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateCategoryID(
+      UpdateCategoryID event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final updateResponse =
+        await updateRecurringTransactionUseCase.updateCategoryId(
+            categoryId: event.category,
+            recurringTransactionId: event.recurringTransactionId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateDescription(
+      UpdateDescription event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final updateResponse =
+        await updateRecurringTransactionUseCase.updateDescription(
+            description: event.description,
+            recurringTransactionId: event.recurringTransactionId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateRecurrence(
+      UpdateRecurrence event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final updateResponse =
+        await updateRecurringTransactionUseCase.updateRecurrence(
+            recurrence: event.recurrence,
+            recurringTransactionId: event.recurringTransactionId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateTags(
+      UpdateTags event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateRecurringTransactionUseCase.updateTags(
+        tags: event.tags, recurringTransactionId: event.recurringTransactionId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onDelete(
+      Delete event, Emitter<RecurringTransactionState> emit) async {
+    emit(Loading());
+    final deleteResponse = await deleteRecurringTransactionUseCase.delete(
+        itemID: event.recurringTransactionId!);
+    emit(deleteResponse.fold(_convertToMessage, _successResponse));
   }
 
   RecurringTransactionState _successResponse(void r) {

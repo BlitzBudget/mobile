@@ -13,20 +13,18 @@ part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  CategoryBloc({required this.deleteCategoryUseCase}) : super(Empty());
+  CategoryBloc({required this.deleteCategoryUseCase}) : super(Empty()) {
+    on<Delete>(_onDelete);
+  }
 
   final delete_category_usecase.DeleteCategoryUseCase deleteCategoryUseCase;
 
-  Stream<CategoryState> mapEventToState(
-    CategoryEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onDelete(Delete event, Emitter<CategoryState> emit) async {
+    emit(Loading());
 
-    if (event is Delete) {
-      final deleteResponse =
-          await deleteCategoryUseCase.delete(itemId: event.deleteItemId!);
-      yield deleteResponse.fold(_convertToMessage, _successResponse);
-    }
+    final deleteResponse =
+        await deleteCategoryUseCase.delete(itemId: event.deleteItemId!);
+    emit(deleteResponse.fold(_convertToMessage, _successResponse));
   }
 
   CategoryState _successResponse(void r) {

@@ -25,37 +25,52 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       required this.updateWalletUseCase,
       required this.addWalletUseCase,
       required this.deleteWalletUseCase})
-      : super(Empty());
+      : super(Empty()) {
+    on<Fetch>(_onFetch);
+    on<Add>(_onAdd);
+    on<Delete>(_onDelete);
+    on<UpdateWalletName>(_onUpdateWalletName);
+    on<UpdateCurrency>(_onUpdateCurrency);
+  }
 
   final fetch_wallet_use_case.FetchWalletUseCase fetchWalletUseCase;
   final update_wallet_use_case.UpdateWalletUseCase updateWalletUseCase;
   final add_wallet_use_case.AddWalletUseCase addWalletUseCase;
   final delete_wallet_use_case.DeleteWalletUseCase deleteWalletUseCase;
 
-  Stream<WalletState> mapEventToState(
-    WalletEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onFetch(Fetch event, Emitter<WalletState> emit) async {
+    emit(Loading());
+    final fetchResponse = await fetchWalletUseCase.fetch();
+    emit(fetchResponse.fold(_convertToMessage, _successResponse));
+  }
 
-    if (event is Fetch) {
-      final fetchResponse = await fetchWalletUseCase.fetch();
-      yield fetchResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Add) {
-      final addResponse = await addWalletUseCase.add(currency: event.currency);
-      yield addResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Delete) {
-      final deleteResponse =
-          await deleteWalletUseCase.delete(itemId: event.walletId!);
-      yield deleteResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateWalletName) {
-      final updateResponse = await updateWalletUseCase.updateWalletName(
-          name: event.walletName, walletId: event.walletId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateCurrency) {
-      final updateResponse = await updateWalletUseCase.updateCurrency(
-          currency: event.currency, walletId: event.walletId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    }
+  FutureOr<void> _onAdd(Add event, Emitter<WalletState> emit) async {
+    emit(Loading());
+    final addResponse = await addWalletUseCase.add(currency: event.currency);
+    emit(addResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onDelete(Delete event, Emitter<WalletState> emit) async {
+    emit(Loading());
+    final deleteResponse =
+        await deleteWalletUseCase.delete(itemId: event.walletId!);
+    emit(deleteResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateWalletName(
+      UpdateWalletName event, Emitter<WalletState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateWalletUseCase.updateWalletName(
+        name: event.walletName, walletId: event.walletId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateCurrency(
+      UpdateCurrency event, Emitter<WalletState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateWalletUseCase.updateCurrency(
+        currency: event.currency, walletId: event.walletId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
   }
 
   WalletState _successResponse(void r) {

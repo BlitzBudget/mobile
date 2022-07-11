@@ -26,7 +26,13 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
       {required this.addBankAccountUseCase,
       required this.updateBankAccountUseCase,
       required this.deleteBankAccountUseCase})
-      : super(Empty());
+      : super(Empty()) {
+    on<Add>(_onAdd);
+    on<UpdateAccountBalance>(_onUpdateAccountBalance);
+    on<UpdateBankAccountName>(_onUpdateBankAccountName);
+    on<UpdateSelectedAccount>(_onUpdateSelectedAccount);
+    on<Delete>(_onDelete);
+  }
 
   final add_bank_account_usecase.AddBankAccountUseCase addBankAccountUseCase;
   final update_bank_account_usecase.UpdateBankAccountUseCase
@@ -34,47 +40,52 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
   final delete_bank_account_usecase.DeleteBankAccountUseCase
       deleteBankAccountUseCase;
 
-  Stream<BankAccountState> mapEventToState(
-    BankAccountEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onAdd(Add event, Emitter<BankAccountState> emit) async {
+    emit(Loading());
+    final addBankAccount = BankAccount(
+        accountBalance: event.accountBalance,
+        accountId: event.accountId,
+        walletId: event.walletId,
+        bankAccountName: event.bankAccountName,
+        selectedAccount: event.selectedAccount,
+        linked: event.linked,
+        accountSubType: event.accountSubType,
+        accountType: event.accountType);
+    final addResponse =
+        await addBankAccountUseCase.add(addBankAccount: addBankAccount);
 
-    if (event is Add) {
-      final addBankAccount = BankAccount(
-          accountBalance: event.accountBalance,
-          accountId: event.accountId,
-          walletId: event.walletId,
-          bankAccountName: event.bankAccountName,
-          selectedAccount: event.selectedAccount,
-          linked: event.linked,
-          accountSubType: event.accountSubType,
-          accountType: event.accountType);
-      final addResponse =
-          await addBankAccountUseCase.add(addBankAccount: addBankAccount);
+    emit(addResponse.fold(_convertToMessage, _successResponse));
+  }
 
-      yield addResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateAccountBalance) {
-      final updateResponse =
-          await updateBankAccountUseCase.updateAccountBalance(
-              accountBalance: event.accountBalance, accountId: event.accountId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateBankAccountName) {
-      final updateResponse =
-          await updateBankAccountUseCase.updateBankAccountName(
-              bankAccountName: event.bankAccountName,
-              accountId: event.accountId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateSelectedAccount) {
-      final updateResponse =
-          await updateBankAccountUseCase.updateSelectedAccount(
-              selectedAccount: event.selectedAccount,
-              accountId: event.accountId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Delete) {
-      final deleteResponse =
-          await deleteBankAccountUseCase.delete(itemId: event.deleteItemId!);
-      yield deleteResponse.fold(_convertToMessage, _successResponse);
-    }
+  FutureOr<void> _onUpdateAccountBalance(
+      UpdateAccountBalance event, Emitter<BankAccountState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateBankAccountUseCase.updateAccountBalance(
+        accountBalance: event.accountBalance, accountId: event.accountId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateBankAccountName(
+      UpdateBankAccountName event, Emitter<BankAccountState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateBankAccountUseCase.updateBankAccountName(
+        bankAccountName: event.bankAccountName, accountId: event.accountId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateSelectedAccount(
+      UpdateSelectedAccount event, Emitter<BankAccountState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateBankAccountUseCase.updateSelectedAccount(
+        selectedAccount: event.selectedAccount, accountId: event.accountId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onDelete(Delete event, Emitter<BankAccountState> emit) async {
+    emit(Loading());
+    final deleteResponse =
+        await deleteBankAccountUseCase.delete(itemId: event.deleteItemId!);
+    emit(deleteResponse.fold(_convertToMessage, _successResponse));
   }
 
   BankAccountState _successResponse(void r) {
