@@ -2,20 +2,20 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/wallet/wallet_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/wallet/wallet_constants.dart'
+    as constants;
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/wallet/add_wallet_use_case.dart'
     as add_wallet_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/wallet/delete_wallet_use_case.dart'
     as delete_wallet_usecase;
-import 'package:mobile_blitzbudget/domain/usecases/dashboard/wallet/update_wallet_use_case.dart'
-    as update_wallet_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/wallet/fetch_wallet_use_case.dart'
     as fetch_wallet_usecase;
-import 'package:mobile_blitzbudget/app/ploc/dashboard/wallet/wallet_constants.dart'
-    as constants;
+import 'package:mobile_blitzbudget/domain/usecases/dashboard/wallet/update_wallet_use_case.dart'
+    as update_wallet_usecase;
+import 'package:mocktail/mocktail.dart';
 
 class MockAddWalletUsecase extends Mock
     implements add_wallet_usecase.AddWalletUseCase {}

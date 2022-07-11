@@ -27,50 +27,69 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
       required this.deleteBudgetUseCase,
       required this.updateBudgetUseCase,
       required this.addBudgetUseCase})
-      : super(Empty());
+      : super(Empty()) {
+    on<Add>(_onAdd);
+    on<UpdateCategoryId>(_onUpdateCategoryId);
+    on<UpdateDateMeantFor>(_onUpdateDateMeantFor);
+    on<UpdatePlanned>(_onUpdatePlanned);
+    on<Delete>(_onDelete);
+    on<Fetch>(_onFetch);
+  }
 
   final add_budget_usecase.AddBudgetUseCase addBudgetUseCase;
   final update_budget_usecase.UpdateBudgetUseCase updateBudgetUseCase;
   final delete_budget_usecase.DeleteBudgetUseCase deleteBudgetUseCase;
   final fetch_budget_usecase.FetchBudgetUseCase fetchBudgetUseCase;
 
-  @override
-  Stream<BudgetState> mapEventToState(
-    BudgetEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onAdd(Add event, Emitter<BudgetState> emit) async {
+    emit(Loading());
+    final addBudget = Budget(
+        walletId: event.walletId,
+        planned: event.planned,
+        dateMeantFor: event.dateMeantFor,
+        categoryId: event.categoryId,
+        budgetId: event.budgetId,
+        categoryType: event.categoryType,
+        used: event.used);
+    final addResponse = await addBudgetUseCase.add(addBudget: addBudget);
+    emit(addResponse.fold(_convertToMessage, _successResponse));
+  }
 
-    if (event is Add) {
-      final addBudget = Budget(
-          walletId: event.walletId,
-          planned: event.planned,
-          dateMeantFor: event.dateMeantFor,
-          categoryId: event.categoryId,
-          budgetId: event.budgetId,
-          categoryType: event.categoryType,
-          used: event.used);
-      final addResponse = await addBudgetUseCase.add(addBudget: addBudget);
-      yield addResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateCategoryId) {
-      final updateResponse = await updateBudgetUseCase.updateCategoryId(
-          categoryId: event.categoryId, budgetId: event.budgetId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdateDateMeantFor) {
-      final updateResponse = await updateBudgetUseCase.updateDateMeantFor(
-          dateMeantFor: event.dateMeantFor, budgetId: event.budgetId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is UpdatePlanned) {
-      final updateResponse = await updateBudgetUseCase.updatePlanned(
-          planned: event.planned, budgetId: event.budgetId);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Delete) {
-      final deleteResponse =
-          await deleteBudgetUseCase.delete(itemID: event.deleteItemId!);
-      yield deleteResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Fetch) {
-      final fetchResponse = await fetchBudgetUseCase.fetch();
-      yield fetchResponse.fold(_convertToMessage, _successResponse);
-    }
+  FutureOr<void> _onUpdateCategoryId(
+      UpdateCategoryId event, Emitter<BudgetState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateBudgetUseCase.updateCategoryId(
+        categoryId: event.categoryId, budgetId: event.budgetId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdateDateMeantFor(
+      UpdateDateMeantFor event, Emitter<BudgetState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateBudgetUseCase.updateDateMeantFor(
+        dateMeantFor: event.dateMeantFor, budgetId: event.budgetId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onUpdatePlanned(
+      UpdatePlanned event, Emitter<BudgetState> emit) async {
+    emit(Loading());
+    final updateResponse = await updateBudgetUseCase.updatePlanned(
+        planned: event.planned, budgetId: event.budgetId);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onDelete(Delete event, Emitter<BudgetState> emit) async {
+    emit(Loading());
+    final deleteResponse =
+        await deleteBudgetUseCase.delete(itemID: event.deleteItemId!);
+    emit(deleteResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onFetch(Fetch event, Emitter<BudgetState> emit) async {
+    emit(Loading());
+    final fetchResponse = await fetchBudgetUseCase.fetch();
+    emit(fetchResponse.fold(_convertToMessage, _successResponse));
   }
 
   BudgetState _successResponse(void r) {

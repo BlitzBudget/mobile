@@ -5,9 +5,9 @@ import 'package:mobile_blitzbudget/app/ploc/authentication/change_password/chang
 import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
-import 'package:mobile_blitzbudget/domain/usecases/dashboard/common/clear_all_storage_use_case.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/change_password.dart'
     as change_password_usecase;
+import 'package:mobile_blitzbudget/domain/usecases/dashboard/common/clear_all_storage_use_case.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockClearAllStorageUseCase extends Mock

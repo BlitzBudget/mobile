@@ -3,7 +3,6 @@ import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/persistence/key_value_store_impl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:matcher/matcher.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 

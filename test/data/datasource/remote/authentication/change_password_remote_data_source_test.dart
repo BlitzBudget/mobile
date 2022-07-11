@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
+import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 import 'package:mobile_blitzbudget/data/datasource/remote/authentication/change_password_remote_data_source.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
 
 class MockHTTPClientImpl extends Mock implements HTTPClientImpl {}
 

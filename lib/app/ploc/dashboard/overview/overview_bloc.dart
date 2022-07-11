@@ -14,20 +14,17 @@ part 'overview_event.dart';
 part 'overview_state.dart';
 
 class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
-  OverviewBloc({required this.fetchOverviewUseCase}) : super(Empty());
+  OverviewBloc({required this.fetchOverviewUseCase}) : super(Empty()) {
+    on<Fetch>(_onFetch);
+  }
 
   final fetch_overview_usecase.FetchOverviewUseCase fetchOverviewUseCase;
 
-  @override
-  Stream<OverviewState> mapEventToState(
-    OverviewEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onFetch(Fetch event, Emitter<OverviewState> emit) async {
+    emit(Loading());
 
-    if (event is Fetch) {
-      final fetchResponse = await fetchOverviewUseCase.fetch();
-      yield fetchResponse.fold(_convertToMessage, _successResponse);
-    }
+    final fetchResponse = await fetchOverviewUseCase.fetch();
+    emit(fetchResponse.fold(_convertToMessage, _successResponse));
   }
 
   OverviewState _successResponse(void r) {

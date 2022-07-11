@@ -28,52 +28,61 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
       required this.fetchGoalUseCase,
       required this.addGoalUseCase,
       required this.deleteGoalUseCase})
-      : super(Empty());
+      : super(Empty()) {
+    on<Add>(_onAdd);
+    on<Update>(_onUpdate);
+    on<Fetch>(_onFetch);
+    on<Delete>(_onDelete);
+  }
 
   final delete_goal_usecase.DeleteGoalUseCase deleteGoalUseCase;
   final add_goal_usecase.AddGoalUseCase addGoalUseCase;
   final fetch_goal_usecase.FetchGoalUseCase fetchGoalUseCase;
   final update_goal_usecase.UpdateGoalUseCase updateGoalUseCase;
 
-  @override
-  Stream<GoalState> mapEventToState(
-    GoalEvent event,
-  ) async* {
-    yield Loading();
+  FutureOr<void> _onAdd(Add event, Emitter<GoalState> emit) async {
+    emit(Loading());
+    final addGoal = Goal(
+        walletId: event.walletId,
+        goalId: event.goalId,
+        goalType: event.goalType,
+        targetType: event.targetType,
+        monthlyContribution: event.monthlyContribution,
+        targetAmount: event.targetAmount,
+        targetDate: event.targetDate,
+        targetId: event.targetId);
+    final addResponse = await addGoalUseCase.add(addGoal: addGoal);
+    emit(addResponse.fold(_convertToMessage, _successResponse));
+  }
 
-    if (event is Delete) {
-      final deleteResponse =
-          await deleteGoalUseCase.delete(itemID: event.deleteItemId!);
-      yield deleteResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Update) {
-      final updateGoal = Goal(
-          walletId: event.walletId,
-          goalId: event.goalId,
-          goalType: event.goalType,
-          targetType: event.targetType,
-          monthlyContribution: event.monthlyContribution,
-          targetAmount: event.targetAmount,
-          targetDate: event.targetDate,
-          targetId: event.targetId);
-      final updateResponse =
-          await updateGoalUseCase.update(updateGoal: updateGoal);
-      yield updateResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Add) {
-      final addGoal = Goal(
-          walletId: event.walletId,
-          goalId: event.goalId,
-          goalType: event.goalType,
-          targetType: event.targetType,
-          monthlyContribution: event.monthlyContribution,
-          targetAmount: event.targetAmount,
-          targetDate: event.targetDate,
-          targetId: event.targetId);
-      final addResponse = await addGoalUseCase.add(addGoal: addGoal);
-      yield addResponse.fold(_convertToMessage, _successResponse);
-    } else if (event is Fetch) {
-      final fetchResponse = await fetchGoalUseCase.fetch();
-      yield fetchResponse.fold(_convertToMessage, _successResponse);
-    }
+  FutureOr<void> _onUpdate(Update event, Emitter<GoalState> emit) async {
+    emit(Loading());
+    final updateGoal = Goal(
+        walletId: event.walletId,
+        goalId: event.goalId,
+        goalType: event.goalType,
+        targetType: event.targetType,
+        monthlyContribution: event.monthlyContribution,
+        targetAmount: event.targetAmount,
+        targetDate: event.targetDate,
+        targetId: event.targetId);
+    final updateResponse =
+        await updateGoalUseCase.update(updateGoal: updateGoal);
+    emit(updateResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onFetch(Fetch event, Emitter<GoalState> emit) async {
+    emit(Loading());
+    final fetchResponse = await fetchGoalUseCase.fetch();
+    emit(fetchResponse.fold(_convertToMessage, _successResponse));
+  }
+
+  FutureOr<void> _onDelete(Delete event, Emitter<GoalState> emit) async {
+    emit(Loading());
+
+    final deleteResponse =
+        await deleteGoalUseCase.delete(itemID: event.deleteItemId!);
+    emit(deleteResponse.fold(_convertToMessage, _successResponse));
   }
 
   GoalState _successResponse(void r) {

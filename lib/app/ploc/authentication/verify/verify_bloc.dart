@@ -14,43 +14,46 @@ part 'verify_event.dart';
 part 'verify_state.dart';
 
 class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
-  VerifyBloc({required this.verifyUser}) : super(Empty());
+  VerifyBloc({required this.verifyUser}) : super(Empty()) {
+    on<ResendVerificatonCode>(_onResendVerificatonCode);
+    on<VerifyUser>(_onVerifyUser);
+  }
 
   final verify_usecase.VerifyUser verifyUser;
 
-  @override
-  Stream<VerifyState> mapEventToState(
-    VerifyEvent event,
-  ) async* {
-    if (event is ResendVerificatonCode) {
-      yield Loading();
+  Future<void> _onResendVerificatonCode(
+      ResendVerificatonCode event, Emitter<VerifyState> emit) async {
+    emit(Loading());
 
-      yield* processResendVerificationCode(event);
-    } else if (event is VerifyUser) {
-      yield Loading();
-
-      yield* processVerify(event);
-    }
+    await processResendVerificationCode(event, emit);
   }
 
-  Stream<VerifyState> processResendVerificationCode(
-      ResendVerificatonCode event) async* {
+  Future<void> _onVerifyUser(
+      VerifyUser event, Emitter<VerifyState> emit) async {
+    emit(Loading());
+
+    await processVerify(event, emit);
+  }
+
+  Future<void> processResendVerificationCode(
+      ResendVerificatonCode event, Emitter<VerifyState> emit) async {
     final email = event.email!.toLowerCase().trim();
     final resendVerificationResponse =
         await verifyUser.resendVerificationCode(email: email);
-    yield resendVerificationResponse.fold(
+    emit(resendVerificationResponse.fold(
       _convertToMessage,
       (_) => ResendVerificationCodeSuccessful(),
-    );
+    ));
   }
 
-  Stream<VerifyState> processVerify(VerifyUser event) async* {
+  Future<void> processVerify(
+      VerifyUser event, Emitter<VerifyState> emit) async {
     if (event.verificationCode == null && event.verificationCode!.isEmpty) {
-      yield const Error(message: constants.VERIFICATION_CODE_EMPTY);
+      emit(const Error(message: constants.VERIFICATION_CODE_EMPTY));
     } else if (event.verificationCode!.length != 6) {
-      yield const Error(message: constants.VERIFICATION_CODE_LENGTH_MISMATCH);
+      emit(const Error(message: constants.VERIFICATION_CODE_LENGTH_MISMATCH));
     } else {
-      yield Loading();
+      emit(Loading());
 
       final email = event.email!.toLowerCase().trim();
       final verifyUserResponse = await verifyUser.verifyUser(
@@ -59,10 +62,10 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
           useVerifyURL: event.useVerifyURL,
           verificationCode: event.verificationCode);
 
-      yield verifyUserResponse.fold(
+      emit(verifyUserResponse.fold(
         _convertToMessage,
         (_) => RedirectToDashboard(),
-      );
+      ));
     }
   }
 

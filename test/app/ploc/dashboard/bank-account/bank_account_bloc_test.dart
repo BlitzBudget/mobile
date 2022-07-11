@@ -2,12 +2,13 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/bank-account/bank_account_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/bank-account/bank_account_constants.dart'
+    as constants;
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_sub_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/add_bank_account_use_case.dart'
     as add_bank_account_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/delete_bank_account_use_case.dart'
@@ -16,8 +17,7 @@ import 'package:mobile_blitzbudget/domain/usecases/dashboard/bank-account/update
     as update_bank_account_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/common/clear_all_storage_use_case.dart'
     as clear_all_storage_usecase;
-import 'package:mobile_blitzbudget/app/ploc/dashboard/bank-account/bank_account_constants.dart'
-    as constants;
+import 'package:mocktail/mocktail.dart';
 
 class MockAddBankAccountUsecase extends Mock
     implements add_bank_account_usecase.AddBankAccountUseCase {}

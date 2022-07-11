@@ -2,23 +2,23 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/goal/goal_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/goal/goal_constants.dart'
+    as constants;
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/goal_response.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/add_goal_use_case.dart'
     as add_goal_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/delete_goal_use_case.dart'
     as delete_goal_usecase;
-import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/update_goal_use_case.dart'
-    as update_goal_usecase;
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/fetch_goal_use_case.dart'
     as fetch_goal_usecase;
-import 'package:mobile_blitzbudget/app/ploc/dashboard/goal/goal_constants.dart'
-    as constants;
+import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/update_goal_use_case.dart'
+    as update_goal_usecase;
+import 'package:mocktail/mocktail.dart';
 
 class MockAddGoalUsecase extends Mock
     implements add_goal_usecase.AddGoalUseCase {}

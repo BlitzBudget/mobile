@@ -10,32 +10,17 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height,
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Image.asset(
-              'assets/images/main_top.png',
-              width: size.width * 0.3,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Image.asset(
-              'assets/images/main_bottom.png',
-              width: size.width * 0.2,
-            ),
-          ),
-          child,
-        ],
-      ),
-    );
+    return Scaffold(
+        body: Stack(children: <Widget>[
+      Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/onboard-background.png'),
+                  fit: BoxFit.cover))),
+      Padding(
+          padding:
+              const EdgeInsets.only(top: 73, left: 32, right: 32, bottom: 16),
+          child: child)
+    ]));
   }
 }

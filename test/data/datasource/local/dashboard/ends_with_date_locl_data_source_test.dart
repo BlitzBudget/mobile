@@ -3,7 +3,6 @@ import 'package:mobile_blitzbudget/core/error/generic_exception.dart';
 import 'package:mobile_blitzbudget/core/persistence/key_value_store_impl.dart';
 import 'package:mobile_blitzbudget/data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:matcher/matcher.dart';
 
 class MockKeyValueStoreImpl extends Mock implements KeyValueStoreImpl {}
 
