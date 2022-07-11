@@ -34,7 +34,6 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   final delete_budget_usecase.DeleteBudgetUseCase deleteBudgetUseCase;
   final fetch_budget_usecase.FetchBudgetUseCase fetchBudgetUseCase;
 
-  @override
   Stream<BudgetState> mapEventToState(
     BudgetEvent event,
   ) async* {

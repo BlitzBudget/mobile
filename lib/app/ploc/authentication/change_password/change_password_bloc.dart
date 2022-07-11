@@ -25,7 +25,6 @@ class ChangePasswordBloc
   final change_password_usecase.ChangePassword changePassword;
   final clear_all_storage_usecase.ClearAllStorageUseCase clearAllStorageUseCase;
 
-  @override
   Stream<ChangePasswordState> mapEventToState(
     ChangePasswordEvent event,
   ) async* {

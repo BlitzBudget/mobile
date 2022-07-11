@@ -18,7 +18,6 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
 
   final fetch_overview_usecase.FetchOverviewUseCase fetchOverviewUseCase;
 
-  @override
   Stream<OverviewState> mapEventToState(
     OverviewEvent event,
   ) async* {

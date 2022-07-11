@@ -29,7 +29,6 @@ class RecurringTransactionBloc
   final delete_recurring_transaction_use_case.DeleteRecurringTransactionUseCase
       deleteRecurringTransactionUseCase;
 
-  @override
   Stream<RecurringTransactionState> mapEventToState(
     RecurringTransactionEvent event,
   ) async* {

@@ -35,7 +35,6 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
   final fetch_goal_usecase.FetchGoalUseCase fetchGoalUseCase;
   final update_goal_usecase.UpdateGoalUseCase updateGoalUseCase;
 
-  @override
   Stream<GoalState> mapEventToState(
     GoalEvent event,
   ) async* {

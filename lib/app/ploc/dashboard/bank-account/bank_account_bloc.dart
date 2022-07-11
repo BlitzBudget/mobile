@@ -34,7 +34,6 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
   final delete_bank_account_usecase.DeleteBankAccountUseCase
       deleteBankAccountUseCase;
 
-  @override
   Stream<BankAccountState> mapEventToState(
     BankAccountEvent event,
   ) async* {

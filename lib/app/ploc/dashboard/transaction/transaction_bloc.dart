@@ -39,7 +39,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final delete_transaction_use_case.DeleteTransactionUseCase
       deleteTransactionUseCase;
 
-  @override
   Stream<TransactionState> mapEventToState(
     TransactionEvent event,
   ) async* {

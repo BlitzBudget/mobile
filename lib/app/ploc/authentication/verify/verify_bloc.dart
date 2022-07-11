@@ -18,7 +18,6 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
 
   final verify_usecase.VerifyUser verifyUser;
 
-  @override
   Stream<VerifyState> mapEventToState(
     VerifyEvent event,
   ) async* {

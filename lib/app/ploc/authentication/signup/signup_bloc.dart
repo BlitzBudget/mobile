@@ -19,7 +19,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   final signup_usecase.SignupUser signupUser;
 
-  @override
   Stream<SignupState> mapEventToState(
     SignupEvent event,
   ) async* {

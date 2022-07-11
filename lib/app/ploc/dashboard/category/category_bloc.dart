@@ -17,7 +17,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   final delete_category_usecase.DeleteCategoryUseCase deleteCategoryUseCase;
 
-  @override
   Stream<CategoryState> mapEventToState(
     CategoryEvent event,
   ) async* {

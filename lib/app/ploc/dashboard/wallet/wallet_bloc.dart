@@ -32,7 +32,6 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final add_wallet_use_case.AddWalletUseCase addWalletUseCase;
   final delete_wallet_use_case.DeleteWalletUseCase deleteWalletUseCase;
 
-  @override
   Stream<WalletState> mapEventToState(
     WalletEvent event,
   ) async* {

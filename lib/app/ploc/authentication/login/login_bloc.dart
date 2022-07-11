@@ -24,7 +24,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   late final login_usecase.LoginUser loginUser;
   late final forgot_password_usecase.ForgotPassword forgotPassword;
 
-  @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
