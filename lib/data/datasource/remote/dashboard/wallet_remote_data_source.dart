@@ -40,7 +40,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
     };
 
     if (isNotEmpty(defaultWallet)) {
-      contentBody['walletId'] = defaultWallet;
+      contentBody['pk'] = defaultWallet;
     } else {
       contentBody['userId'] = userId;
     }

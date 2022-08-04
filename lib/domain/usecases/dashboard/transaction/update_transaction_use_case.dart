@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
+// ignore: unused_import
 import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
@@ -51,36 +52,6 @@ class UpdateTransactionUseCase extends UseCase {
     return _update(updateTransaction: transaction);
   }
 
-  /// Updates the account id
-  Future<Either<Failure, void>> updateAccountId(
-      {required String? accountId, required String? transactionId}) async {
-    final defaultWalletResponse =
-        await defaultWalletRepository!.readDefaultWallet();
-    if (defaultWalletResponse.isLeft()) {
-      return Left(EmptyResponseFailure());
-    }
-    final walletId = defaultWalletResponse.getOrElse(() => '');
-    final transaction = Transaction(
-        walletId: walletId, transactionId: transactionId, accountId: accountId);
-    return _update(updateTransaction: transaction);
-  }
-
-  /// Updates the date meant for
-  Future<Either<Failure, void>> updateDateMeantFor(
-      {required String? dateMeantFor, required String? transactionId}) async {
-    final defaultWalletResponse =
-        await defaultWalletRepository!.readDefaultWallet();
-    if (defaultWalletResponse.isLeft()) {
-      return Left(EmptyResponseFailure());
-    }
-    final walletId = defaultWalletResponse.getOrElse(() => '');
-    final transaction = Transaction(
-        walletId: walletId,
-        transactionId: transactionId,
-        dateMeantFor: dateMeantFor);
-    return _update(updateTransaction: transaction);
-  }
-
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
       {required String? categoryId, required String? transactionId}) async {
@@ -94,22 +65,6 @@ class UpdateTransactionUseCase extends UseCase {
         walletId: walletId,
         transactionId: transactionId,
         categoryId: categoryId);
-    return _update(updateTransaction: transaction);
-  }
-
-  /// Updates the recurrence
-  Future<Either<Failure, void>> updateRecurrence(
-      {required Recurrence? recurrence, required String? transactionId}) async {
-    final defaultWalletResponse =
-        await defaultWalletRepository!.readDefaultWallet();
-    if (defaultWalletResponse.isLeft()) {
-      return Left(EmptyResponseFailure());
-    }
-    final walletId = defaultWalletResponse.getOrElse(() => '');
-    final transaction = Transaction(
-        walletId: walletId,
-        transactionId: transactionId,
-        recurrence: recurrence);
     return _update(updateTransaction: transaction);
   }
 

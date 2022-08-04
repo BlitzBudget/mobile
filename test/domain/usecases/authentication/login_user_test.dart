@@ -4,6 +4,7 @@ import 'package:mobile_blitzbudget/core/failure/authorization_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/user_response.dart';
+import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/access_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
@@ -11,6 +12,8 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_to
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/login_user.dart';
 import 'package:mocktail/mocktail.dart';
+
+import '../dashboard/bank-account/update_bank_account_use_case_test.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -31,6 +34,7 @@ void main() {
   MockAuthTokenRepository? mockAuthTokenRepository;
   MockRefreshTokenRepository? mockRefreshTokenRepository;
   MockUserAttributesRepository? mockUserAttributesRepository;
+  MockDefaultWalletRepository? mockDefaultWalletRepository;
   late LoginUser loginUser;
 
   setUp(() {
@@ -39,19 +43,23 @@ void main() {
     mockAuthTokenRepository = MockAuthTokenRepository();
     mockRefreshTokenRepository = MockRefreshTokenRepository();
     mockUserAttributesRepository = MockUserAttributesRepository();
+    mockDefaultWalletRepository = MockDefaultWalletRepository();
     loginUser = LoginUser(
         accessTokenRepository: mockAccessTokenRepository,
         authenticationRepository: mockAuthenticationRepository,
         authTokenRepository: mockAuthTokenRepository,
         refreshTokenRepository: mockRefreshTokenRepository,
-        userAttributesRepository: mockUserAttributesRepository);
+        userAttributesRepository: mockUserAttributesRepository,
+        defaultWalletRepository: mockDefaultWalletRepository);
   });
 
   group('Success: LoginUser', () {
     test('Should receive a successful response', () async {
       const userEmail = 'nagarjun_nagesh@outlook.com';
       const userPassword = 'password';
-      const optionResponse = Some(UserResponse());
+      const walletId = 'walletId';
+      const wallet = Wallet(walletId: walletId);
+      const optionResponse = Some(UserResponse(wallet: wallet));
       const eitherUserResponseMonad =
           Right<Failure, Option<UserResponse>>(optionResponse);
       when(() => mockAuthenticationRepository!
@@ -69,6 +77,8 @@ void main() {
       when(() => mockAccessTokenRepository!.writeAccessToken(
               optionResponse.getOrElse(() => const UserResponse())))
           .thenAnswer((_) => Future.value());
+      when(() => mockDefaultWalletRepository!.writeDefaultWallet(walletId))
+          .thenAnswer((_) => Future.value());
 
       await loginUser.loginUser(email: userEmail, password: userPassword);
       verify(() => mockAuthenticationRepository!
@@ -81,6 +91,7 @@ void main() {
           optionResponse.getOrElse(() => const UserResponse())));
       verify(() => mockAccessTokenRepository!.writeAccessToken(
           optionResponse.getOrElse(() => const UserResponse())));
+      verify(() => mockDefaultWalletRepository!.writeDefaultWallet(walletId));
     });
   });
 

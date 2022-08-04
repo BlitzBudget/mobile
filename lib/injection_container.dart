@@ -104,7 +104,8 @@ Future<void> init() async {
       userAttributesRepository: getIt(),
       refreshTokenRepository: getIt(),
       accessTokenRepository: getIt(),
-      authTokenRepository: getIt()));
+      authTokenRepository: getIt(),
+      defaultWalletRepository: getIt()));
   // ignore: cascade_invocations
   getIt.registerLazySingleton(
       () => SignupUser(authenticationRepository: getIt()));
@@ -199,8 +200,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UpdateTransactionUseCase(
       transactionRepository: getIt(), defaultWalletRepository: getIt()));
   // ignore: cascade_invocations
-  getIt.registerLazySingleton(
-      () => AddTransactionUseCase(transactionRepository: getIt()));
+  getIt.registerLazySingleton(() => AddTransactionUseCase(
+      transactionRepository: getIt(), defaultWalletRepository: getIt()));
   // ignore: cascade_invocations
   getIt.registerLazySingleton(() => DeleteTransactionUseCase(
       defaultWalletRepository: getIt(), deleteItemRepository: getIt()));

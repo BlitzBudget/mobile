@@ -8,38 +8,26 @@ class WalletModel extends Wallet {
     String? userId,
     String? walletName,
     String? currency,
-    double? totalDebtBalance,
-    double? walletBalance,
-    double? totalAssetBalance,
   }) : super(
             userId: userId,
             currency: currency,
             walletId: walletId,
-            walletName: walletName,
-            totalDebtBalance: totalDebtBalance,
-            walletBalance: walletBalance,
-            totalAssetBalance: totalAssetBalance);
+            walletName: walletName);
 
   /// Map JSON Wallet to List of object
   factory WalletModel.fromJSON(Map<String, dynamic> wallet) {
     return WalletModel(
-        walletId: parseDynamicAsString(wallet['walletId']),
-        userId: parseDynamicAsString(wallet['userId']),
+        walletId: parseDynamicAsString(wallet['sk']),
+        userId: parseDynamicAsString(wallet['pk']),
         walletName: parseDynamicAsString(wallet['wallet_name']),
-        currency: parseDynamicAsString(wallet['currency']),
-        totalDebtBalance: parseDynamicAsDouble(wallet['total_debt_balance']),
-        walletBalance: parseDynamicAsDouble(wallet['wallet_balance']),
-        totalAssetBalance: parseDynamicAsDouble(wallet['total_asset_balance']));
+        currency: parseDynamicAsString(wallet['wallet_currency']));
   }
 
   /// Wallet to JSON
   Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'userId': userId,
-        'currency': currency,
-        'walletName': walletName,
-        'totalDebtBalance': totalDebtBalance,
-        'totalAssetBalance': totalAssetBalance,
-        'walletBalance': walletBalance
+        'sk': walletId,
+        'pk': userId,
+        'wallet_currency': currency,
+        'wallet_name': walletName
       };
 }

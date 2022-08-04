@@ -42,8 +42,13 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<Either<Failure, void>> add(Transaction addTransaction) async {
     try {
-      return Right(await transactionRemoteDataSource!
-          .update(addTransaction as TransactionModel));
+      final transactionModel = TransactionModel(
+          amount: addTransaction.amount,
+          categoryId: addTransaction.description,
+          description: addTransaction.description,
+          tags: addTransaction.tags,
+          walletId: addTransaction.walletId);
+      return Right(await transactionRemoteDataSource!.add(transactionModel));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

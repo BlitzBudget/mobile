@@ -33,11 +33,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     on<Fetch>(_onFetch);
     on<Add>(_onAdd);
     on<Delete>(_onDelete);
-    on<UpdateAccountID>(_onUpdateAccountID);
     on<UpdateAmount>(_onUpdateAmount);
     on<UpdateCategoryID>(_onUpdateCategoryID);
     on<UpdateDescription>(_onUpdateDescription);
-    on<UpdateRecurrence>(_onUpdateRecurrence);
     on<UpdateTags>(_onUpdateTags);
   }
 
@@ -58,16 +56,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   FutureOr<void> _onAdd(Add event, Emitter<TransactionState> emit) async {
     emit(Loading());
     final addTransaction = Transaction(
-        transactionId: event.transactionId,
-        walletId: event.walletId,
         amount: event.amount,
         description: event.description,
-        accountId: event.accountId,
-        dateMeantFor: event.dateMeantFor,
         categoryId: event.categoryId,
-        recurrence: event.recurrence,
-        categoryType: event.categoryType,
-        categoryName: event.categoryName,
         tags: event.tags);
     final addResponse =
         await addTransactionUseCase.add(addTransaction: addTransaction);
@@ -79,14 +70,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     final deleteResponse =
         await deleteTransactionUseCase.delete(itemID: event.transactionId!);
     emit(deleteResponse.fold(_convertToMessage, _successResponse));
-  }
-
-  FutureOr<void> _onUpdateAccountID(
-      UpdateAccountID event, Emitter<TransactionState> emit) async {
-    emit(Loading());
-    final updateResponse = await updateTransactionUseCase.updateAccountId(
-        accountId: event.accountId, transactionId: event.transactionId);
-    emit(updateResponse.fold(_convertToMessage, _successResponse));
   }
 
   FutureOr<void> _onUpdateAmount(
@@ -110,14 +93,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     emit(Loading());
     final updateResponse = await updateTransactionUseCase.updateDescription(
         description: event.description, transactionId: event.transactionId);
-    emit(updateResponse.fold(_convertToMessage, _successResponse));
-  }
-
-  FutureOr<void> _onUpdateRecurrence(
-      UpdateRecurrence event, Emitter<TransactionState> emit) async {
-    emit(Loading());
-    final updateResponse = await updateTransactionUseCase.updateRecurrence(
-        recurrence: event.recurrence, transactionId: event.transactionId);
     emit(updateResponse.fold(_convertToMessage, _successResponse));
   }
 

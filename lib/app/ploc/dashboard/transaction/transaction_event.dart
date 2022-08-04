@@ -32,28 +32,18 @@ abstract class TransactionEvent extends Equatable {
 
 class Add extends TransactionEvent {
   const Add({
-    required final String? transactionId,
-    required final String? walletId,
+    final String? transactionId,
+    final String? walletId,
     required final double? amount,
     required final String? description,
-    required final String? accountId,
-    required final String? dateMeantFor,
-    required final String? categoryId,
-    required final Recurrence? recurrence,
-    required final CategoryType? categoryType,
-    required final String? categoryName,
-    required final List<String>? tags,
+    final String? categoryId,
+    final List<String>? tags,
   }) : super(
             transactionId: transactionId,
             walletId: walletId,
             amount: amount,
             description: description,
-            accountId: accountId,
-            dateMeantFor: dateMeantFor,
             categoryId: categoryId,
-            recurrence: recurrence,
-            categoryType: categoryType,
-            categoryName: categoryName,
             tags: tags);
 }
 

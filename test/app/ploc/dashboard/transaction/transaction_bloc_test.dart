@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,11 +37,8 @@ class MockFetchTransactionUseCase extends Mock
 void main() {
   const TRANSACTION_ID = 'transactionID';
   const DESCRIPTION = 'description';
-  const ACCOUNT_ID = 'accountId';
   const CATEGORY_ID = 'categoryID';
-  const CATEGORY_NAME = 'categoryName';
   const WALLET_ID = 'wallet_id';
-  const DATE_MEANT_FOR = 'date_meant_for';
   final tags = {'1', '2', '3'}.toList();
 
   late MockDeleteTransactionUseCase mockDeleteTransactionUseCase;
@@ -47,20 +46,10 @@ void main() {
   late MockAddTransactionUseCase mockAddTransactionUseCase;
   late MockFetchTransactionUseCase mockFetchTransactionUseCase;
   const positiveMonadResponse = Right<Failure, void>('');
-  final addTransaction = Transaction(
-      walletId: WALLET_ID,
-      amount: 1,
-      accountId: ACCOUNT_ID,
-      dateMeantFor: DATE_MEANT_FOR,
-      categoryId: CATEGORY_ID,
-      transactionId: TRANSACTION_ID,
-      description: DESCRIPTION,
-      recurrence: Recurrence.biMonthly,
-      categoryType: CategoryType.expense,
-      categoryName: CATEGORY_NAME,
-      tags: tags);
 
   setUp(() {
+    // Fallback value for Transaction
+    registerFallbackValue(const Transaction());
     mockDeleteTransactionUseCase = MockDeleteTransactionUseCase();
     mockUpdateTransactionUseCase = MockUpdateTransactionUseCase();
     mockAddTransactionUseCase = MockAddTransactionUseCase();
@@ -94,8 +83,8 @@ void main() {
       'Emits [Success] states for add transaction success',
       build: () {
         const fetchResponse = Right<Failure, void>('');
-        when(() =>
-                mockAddTransactionUseCase.add(addTransaction: addTransaction))
+        when(() => mockAddTransactionUseCase.add(
+                addTransaction: any(named: 'addTransaction')))
             .thenAnswer((_) => Future.value(fetchResponse));
         return TransactionBloc(
           deleteTransactionUseCase: mockDeleteTransactionUseCase,
@@ -107,33 +96,10 @@ void main() {
       act: (bloc) => bloc.add(Add(
           walletId: WALLET_ID,
           amount: 1,
-          accountId: ACCOUNT_ID,
-          dateMeantFor: DATE_MEANT_FOR,
           categoryId: CATEGORY_ID,
           transactionId: TRANSACTION_ID,
           description: DESCRIPTION,
-          recurrence: Recurrence.biMonthly,
-          categoryType: CategoryType.expense,
-          categoryName: CATEGORY_NAME,
           tags: tags)),
-      expect: () => [Loading(), Success()],
-    );
-
-    blocTest<TransactionBloc, TransactionState>(
-      'Emits [Success] states for update account id success',
-      build: () {
-        when(() => mockUpdateTransactionUseCase.updateAccountId(
-                accountId: ACCOUNT_ID, transactionId: TRANSACTION_ID))
-            .thenAnswer((_) => Future.value(positiveMonadResponse));
-        return TransactionBloc(
-          deleteTransactionUseCase: mockDeleteTransactionUseCase,
-          updateTransactionUseCase: mockUpdateTransactionUseCase,
-          addTransactionUseCase: mockAddTransactionUseCase,
-          fetchTransactionUseCase: mockFetchTransactionUseCase,
-        );
-      },
-      act: (bloc) => bloc.add(const UpdateAccountID(
-          accountId: ACCOUNT_ID, transactionId: TRANSACTION_ID)),
       expect: () => [Loading(), Success()],
     );
 
@@ -188,25 +154,6 @@ void main() {
       },
       act: (bloc) => bloc.add(const UpdateDescription(
           description: DESCRIPTION, transactionId: TRANSACTION_ID)),
-      expect: () => [Loading(), Success()],
-    );
-
-    blocTest<TransactionBloc, TransactionState>(
-      'Emits [Success] states for update recurrence success',
-      build: () {
-        when(() => mockUpdateTransactionUseCase.updateRecurrence(
-                recurrence: Recurrence.biMonthly,
-                transactionId: TRANSACTION_ID))
-            .thenAnswer((_) => Future.value(positiveMonadResponse));
-        return TransactionBloc(
-          deleteTransactionUseCase: mockDeleteTransactionUseCase,
-          updateTransactionUseCase: mockUpdateTransactionUseCase,
-          addTransactionUseCase: mockAddTransactionUseCase,
-          fetchTransactionUseCase: mockFetchTransactionUseCase,
-        );
-      },
-      act: (bloc) => bloc.add(const UpdateRecurrence(
-          recurrence: Recurrence.biMonthly, transactionId: TRANSACTION_ID)),
       expect: () => [Loading(), Success()],
     );
 
@@ -270,8 +217,8 @@ void main() {
       build: () {
         final failureMonadResponse =
             Left<Failure, TransactionResponse>(GenericAPIFailure());
-        when(() =>
-                mockAddTransactionUseCase.add(addTransaction: addTransaction))
+        when(() => mockAddTransactionUseCase.add(
+                addTransaction: any(named: 'addTransaction')))
             .thenAnswer((_) => Future.value(failureMonadResponse));
         return TransactionBloc(
           deleteTransactionUseCase: mockDeleteTransactionUseCase,
@@ -283,35 +230,10 @@ void main() {
       act: (bloc) => bloc.add(Add(
           walletId: WALLET_ID,
           amount: 1,
-          accountId: ACCOUNT_ID,
-          dateMeantFor: DATE_MEANT_FOR,
           categoryId: CATEGORY_ID,
           transactionId: TRANSACTION_ID,
           description: DESCRIPTION,
-          recurrence: Recurrence.biMonthly,
-          categoryType: CategoryType.expense,
-          categoryName: CATEGORY_NAME,
           tags: tags)),
-      expect: () =>
-          [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
-    );
-
-    blocTest<TransactionBloc, TransactionState>(
-      'Emits [Error] states for update category id success',
-      build: () {
-        final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
-        when(() => mockUpdateTransactionUseCase.updateAccountId(
-                accountId: ACCOUNT_ID, transactionId: TRANSACTION_ID))
-            .thenAnswer((_) => Future.value(failureMonadResponse));
-        return TransactionBloc(
-          deleteTransactionUseCase: mockDeleteTransactionUseCase,
-          updateTransactionUseCase: mockUpdateTransactionUseCase,
-          addTransactionUseCase: mockAddTransactionUseCase,
-          fetchTransactionUseCase: mockFetchTransactionUseCase,
-        );
-      },
-      act: (bloc) => bloc.add(const UpdateAccountID(
-          accountId: ACCOUNT_ID, transactionId: TRANSACTION_ID)),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -372,27 +294,6 @@ void main() {
       },
       act: (bloc) => bloc.add(const UpdateDescription(
           description: DESCRIPTION, transactionId: TRANSACTION_ID)),
-      expect: () =>
-          [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
-    );
-
-    blocTest<TransactionBloc, TransactionState>(
-      'Emits [Error] states for update recurrence success',
-      build: () {
-        final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
-        when(() => mockUpdateTransactionUseCase.updateRecurrence(
-                recurrence: Recurrence.biMonthly,
-                transactionId: TRANSACTION_ID))
-            .thenAnswer((_) => Future.value(failureMonadResponse));
-        return TransactionBloc(
-          deleteTransactionUseCase: mockDeleteTransactionUseCase,
-          updateTransactionUseCase: mockUpdateTransactionUseCase,
-          addTransactionUseCase: mockAddTransactionUseCase,
-          fetchTransactionUseCase: mockFetchTransactionUseCase,
-        );
-      },
-      act: (bloc) => bloc.add(const UpdateRecurrence(
-          recurrence: Recurrence.biMonthly, transactionId: TRANSACTION_ID)),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -460,8 +361,8 @@ void main() {
       build: () {
         final failureMonadResponse =
             Left<Failure, TransactionResponse>(FetchDataFailure());
-        when(() =>
-                mockAddTransactionUseCase.add(addTransaction: addTransaction))
+        when(() => mockAddTransactionUseCase.add(
+                addTransaction: any(named: 'addTransaction')))
             .thenAnswer((_) => Future.value(failureMonadResponse));
         return TransactionBloc(
           deleteTransactionUseCase: mockDeleteTransactionUseCase,
@@ -473,34 +374,10 @@ void main() {
       act: (bloc) => bloc.add(Add(
           walletId: WALLET_ID,
           amount: 1,
-          accountId: ACCOUNT_ID,
-          dateMeantFor: DATE_MEANT_FOR,
           categoryId: CATEGORY_ID,
           transactionId: TRANSACTION_ID,
           description: DESCRIPTION,
-          recurrence: Recurrence.biMonthly,
-          categoryType: CategoryType.expense,
-          categoryName: CATEGORY_NAME,
           tags: tags)),
-      expect: () => [Loading(), RedirectToLogin()],
-    );
-
-    blocTest<TransactionBloc, TransactionState>(
-      'Emits [Error] states for update category id success',
-      build: () {
-        final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
-        when(() => mockUpdateTransactionUseCase.updateAccountId(
-                accountId: ACCOUNT_ID, transactionId: TRANSACTION_ID))
-            .thenAnswer((_) => Future.value(failureMonadResponse));
-        return TransactionBloc(
-          deleteTransactionUseCase: mockDeleteTransactionUseCase,
-          updateTransactionUseCase: mockUpdateTransactionUseCase,
-          addTransactionUseCase: mockAddTransactionUseCase,
-          fetchTransactionUseCase: mockFetchTransactionUseCase,
-        );
-      },
-      act: (bloc) => bloc.add(const UpdateAccountID(
-          accountId: ACCOUNT_ID, transactionId: TRANSACTION_ID)),
       expect: () => [Loading(), RedirectToLogin()],
     );
 
@@ -558,26 +435,6 @@ void main() {
       },
       act: (bloc) => bloc.add(const UpdateDescription(
           description: DESCRIPTION, transactionId: TRANSACTION_ID)),
-      expect: () => [Loading(), RedirectToLogin()],
-    );
-
-    blocTest<TransactionBloc, TransactionState>(
-      'Emits [Error] states for update recurrence success',
-      build: () {
-        final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
-        when(() => mockUpdateTransactionUseCase.updateRecurrence(
-                recurrence: Recurrence.biMonthly,
-                transactionId: TRANSACTION_ID))
-            .thenAnswer((_) => Future.value(failureMonadResponse));
-        return TransactionBloc(
-          deleteTransactionUseCase: mockDeleteTransactionUseCase,
-          updateTransactionUseCase: mockUpdateTransactionUseCase,
-          addTransactionUseCase: mockAddTransactionUseCase,
-          fetchTransactionUseCase: mockFetchTransactionUseCase,
-        );
-      },
-      act: (bloc) => bloc.add(const UpdateRecurrence(
-          recurrence: Recurrence.biMonthly, transactionId: TRANSACTION_ID)),
       expect: () => [Loading(), RedirectToLogin()],
     );
 

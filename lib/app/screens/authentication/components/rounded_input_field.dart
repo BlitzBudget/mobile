@@ -10,6 +10,7 @@ class RoundedInputField extends StatelessWidget {
       this.icon = Icons.person,
       this.onChanged,
       this.autofocus,
+      this.textInputType = TextInputType.text,
       this.initialValue = ''})
       : super(key: key);
 
@@ -17,12 +18,14 @@ class RoundedInputField extends StatelessWidget {
   final IconData icon;
   final ValueChanged<String>? onChanged;
   final bool? autofocus;
+  final TextInputType textInputType;
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
         initialValue: initialValue,
+        keyboardType: textInputType,
         autofocus: autofocus!,
         onChanged: onChanged,
         cursorColor: primaryColor,

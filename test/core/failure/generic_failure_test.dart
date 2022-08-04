@@ -12,4 +12,15 @@ void main() {
       },
     );
   });
+
+  group('Is an APIFailure', () {
+    test(
+      'EmptyWalletFailure',
+      () async {
+        final genericFailure = EmptyWalletFailure();
+        // assert
+        expect(genericFailure, isA<GenericFailure>());
+      },
+    );
+  });
 }

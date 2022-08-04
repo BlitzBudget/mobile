@@ -16,18 +16,11 @@ void main() {
       ?.toList();
   final transactionModel = TransactionModel(
       walletId: transactionModelAsJSON['walletId'],
-      accountId: transactionModelAsJSON['account'],
       transactionId: transactionModelAsJSON['transactionId'],
       amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
       description: transactionModelAsJSON['description'],
-      recurrence:
-          parseDynamicAsRecurrence(transactionModelAsJSON['recurrence']),
-      categoryType:
-          parseDynamicAsCategoryType(transactionModelAsJSON['category_type']),
-      categoryName: transactionModelAsJSON['category_name'],
       tags: tags,
-      categoryId: transactionModelAsJSON['category'],
-      dateMeantFor: transactionModelAsJSON['date_meant_for']);
+      categoryId: transactionModelAsJSON['category']);
   test(
     'Should be a subclass of Transaction entity',
     () async {
