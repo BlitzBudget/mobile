@@ -27,12 +27,12 @@ void main() {
       final fetchWalletAsJSON = jsonDecode(fetchWalletAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet = fetchWalletAsJSON['Wallet'][0]['walletId'];
+      final defaultWallet = fetchWalletAsJSON['Wallet'][0]['sk'];
       String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
         'endsWithDate': endsWithDate,
-        'walletId': defaultWallet
+        'pk': defaultWallet
       };
       // arrange
       when(() => mockHTTPClientImpl!.post(constants.walletURL,
@@ -49,7 +49,7 @@ void main() {
           body: jsonEncode(contentBody), headers: constants.headers));
 
       expect(wallet.wallets!.first.walletId,
-          equals(fetchWalletAsJSON['Wallet'][0]['walletId']));
+          equals(fetchWalletAsJSON['Wallet'][0]['sk']));
     });
   });
 

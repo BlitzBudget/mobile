@@ -70,14 +70,7 @@ void main() {
             transactionId: addTransactionAsJSON['body-json']['transactionId'],
             amount: parseDynamicAsDouble(
                 addTransactionAsJSON['body-json']['amount']),
-            categoryType: parseDynamicAsCategoryType(
-                addTransactionAsJSON['body-json']['categoryType']),
-            categoryName: addTransactionAsJSON['body-json']['categoryName'],
             description: addTransactionAsJSON['body-json']['description'],
-            dateMeantFor: addTransactionAsJSON['body-json']['dateMeantFor'],
-            recurrence: parseDynamicAsRecurrence(
-                addTransactionAsJSON['body-json']['recurrence']),
-            accountId: addTransactionAsJSON['body-json']['account'],
             tags: tags);
         // arrange
         when(() => mockHTTPClientImpl!.put(constants.transactionURL,

@@ -21,8 +21,8 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image.asset('assets/images/business-name/business-name-logo.png',
-                scale: 1),
+            Image.asset(
+                'assets/images/business-name/favicon-business-name.ico'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -33,13 +33,13 @@ class Body extends StatelessWidget {
                     text: welcomeToBlitzBudget,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 58,
+                        fontSize: 48,
                         fontWeight: FontWeight.w600),
                   )),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 24),
-                  child: Text('Fully coded Flutter widgets and screens.',
+                  child: Text('Understand your finances better',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,

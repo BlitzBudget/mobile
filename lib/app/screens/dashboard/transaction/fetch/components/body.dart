@@ -1,7 +1,10 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_blitzbudget/app/constants/constants.dart';
 import 'package:mobile_blitzbudget/app/ploc/dashboard/transaction/transaction_bloc.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/transaction/fetch/transaction_screen.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/wallet_dialog.dart';
@@ -71,6 +74,11 @@ class _BodyState extends State<Body> {
           IconButton(
             icon: const Icon(Icons.shuffle),
             onPressed: _togglePlatform,
+          ),
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () =>
+                {Navigator.pushNamed(context, '/add-transactions')},
           ),
         ],
       ),

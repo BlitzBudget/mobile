@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xFF6F35A5);
-const primaryLightColor = Color(0xFFF1E6FF);
-const primaryDisabledColor = Color(0xFF7848A5);
-const secondaryColor = Color(0xFF6C757D);
+const primaryColor = Color.fromRGBO(94, 114, 228, 1);
+const primaryLightColor = Color.fromRGBO(247, 250, 252, 1);
+const primaryDisabledColor = Color.fromRGBO(247, 250, 252, 1);
+const secondaryColor = Color.fromRGBO(247, 250, 252, 1);
 
 // Routes
 const String dashboardRoute = '/dashboard';
@@ -13,6 +13,8 @@ const String initialRoute = '/';
 const String welcomeRoute = '/welcome';
 const String verifyRoute = '/verify';
 const String forgotPasswordRoute = '/forgot-password';
+
+const String addTransactionRoute = '/add-transactions';
 
 // Profile Tab
 const String logoutDescription = 'Are you sure?';

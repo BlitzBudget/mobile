@@ -6,6 +6,7 @@ import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/transaction/transaction_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/repositories/dashboard/transaction/transaction_repository_impl.dart';
+import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -17,6 +18,8 @@ void main() {
   TransactionRepositoryImpl? transactionRepositoryImpl;
 
   setUp(() {
+    // Fallback value for Transaction
+    registerFallbackValue(const Transaction());
     mockTransactionRemoteDataSource = MockTransactionRemoteDataSource();
     transactionRepositoryImpl = TransactionRepositoryImpl(
         transactionRemoteDataSource: mockTransactionRemoteDataSource);
@@ -68,8 +71,8 @@ void main() {
 
   group('Add Transactions', () {
     test('Should return FetchDataFailure ', () async {
-      const transactionModel = TransactionModel();
-      when(() => mockTransactionRemoteDataSource!.update(transactionModel))
+      const transactionModel = Transaction();
+      when(() => mockTransactionRemoteDataSource!.update(any()))
           .thenThrow(EmptyAuthorizationTokenException());
       final transactionReceived =
           await transactionRepositoryImpl!.add(transactionModel);
@@ -77,7 +80,7 @@ void main() {
       /// Expect an exception to be thrown
       final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockTransactionRemoteDataSource!.update(transactionModel));
+      verify(() => mockTransactionRemoteDataSource!.update(any()));
       expect(transactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

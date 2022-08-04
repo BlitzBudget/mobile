@@ -11,15 +11,10 @@ void main() {
   final walletModelAsString = fixture('models/get/wallet/wallet_model.json');
   final walletModelAsJSON = jsonDecode(walletModelAsString);
   final walletModel = WalletModel(
-      walletId: walletModelAsJSON['walletId'],
-      userId: walletModelAsJSON['userId'],
-      currency: parseDynamicAsString(walletModelAsJSON['currency']),
-      walletName: walletModelAsJSON['wallet_name'],
-      totalAssetBalance:
-          parseDynamicAsDouble(walletModelAsJSON['total_asset_balance']),
-      totalDebtBalance:
-          parseDynamicAsDouble(walletModelAsJSON['total_debt_balance']),
-      walletBalance: parseDynamicAsDouble(walletModelAsJSON['wallet_balance']));
+      walletId: walletModelAsJSON['sk'],
+      userId: walletModelAsJSON['pk'],
+      currency: parseDynamicAsString(walletModelAsJSON['wallet_currency']),
+      walletName: walletModelAsJSON['wallet_name']);
   test(
     'Should be a subclass of Wallet entity',
     () async {

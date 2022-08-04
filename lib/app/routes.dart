@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/transaction/add/add_transaction_screen.dart';
 
 import 'constants/constants.dart';
 import 'screens/authentication/forgot-password/forgot_password_screen.dart';
@@ -12,4 +13,5 @@ final routes = {
   dashboardRoute: (BuildContext context) => const DashboardScreen(),
   forgotPasswordRoute: (BuildContext context) => const ForgotPasswordScreen(),
   initialRoute: (BuildContext context) => const WelcomeScreen(),
+  addTransactionRoute: (BuildContext context) => const AddTransactionScreen(),
 };
