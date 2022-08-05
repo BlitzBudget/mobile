@@ -20,6 +20,7 @@ void main() {
   setUp(() {
     // Fallback value for Transaction
     registerFallbackValue(const Transaction());
+    registerFallbackValue(const TransactionModel());
     mockTransactionRemoteDataSource = MockTransactionRemoteDataSource();
     transactionRepositoryImpl = TransactionRepositoryImpl(
         transactionRemoteDataSource: mockTransactionRemoteDataSource);
@@ -72,7 +73,7 @@ void main() {
   group('Add Transactions', () {
     test('Should return FetchDataFailure ', () async {
       const transactionModel = Transaction();
-      when(() => mockTransactionRemoteDataSource!.update(any()))
+      when(() => mockTransactionRemoteDataSource!.add(any()))
           .thenThrow(EmptyAuthorizationTokenException());
       final transactionReceived =
           await transactionRepositoryImpl!.add(transactionModel);
@@ -80,7 +81,7 @@ void main() {
       /// Expect an exception to be thrown
       final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockTransactionRemoteDataSource!.update(any()));
+      verify(() => mockTransactionRemoteDataSource!.add(any()));
       expect(transactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });
