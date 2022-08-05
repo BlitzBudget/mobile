@@ -10,7 +10,6 @@ import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
-import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/transaction/add_transaction_use_case.dart'
     as add_transaction_use_case;

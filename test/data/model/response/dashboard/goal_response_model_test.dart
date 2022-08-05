@@ -1,16 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
-import 'package:mobile_blitzbudget/data/model/date_model.dart';
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/goal_response_model.dart';
-import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
-import 'package:mobile_blitzbudget/domain/entities/date.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/goal_response.dart';
-import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -159,39 +153,5 @@ GoalResponseModel convertToResponseModel(
           ?.map<dynamic>((dynamic model) => GoalModel.fromJSON(model)) ??
       <Goal>[]);
 
-  /// Convert BankAccount from the response JSON to List<BankAccount>
-  /// If Empty then return an empty object list
-  final responseBankAccounts = goalResponseModelAsJSON['BankAccount'];
-  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
-          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
-      <BankAccount>[]);
-
-  /// Convert Dates from the response JSON to List<Date>
-  /// If Empty then return an empty object list
-  final responseDate = goalResponseModelAsJSON['Date'];
-  final convertedDates = List<Date>.from(responseDate
-          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
-      <Date>[]);
-
-  final responseWallet = goalResponseModelAsJSON['Wallet'];
-  Wallet? convertedWallet;
-
-  /// Check if the response is a string or a list
-  ///
-  /// If string then convert them into a wallet
-  /// If List then convert them into list of wallets and take the first wallet.
-  if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
-  } else if (responseWallet is List) {
-    final convertedWallets = List<Wallet>.from(responseWallet
-        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
-
-    convertedWallet = convertedWallets[0];
-  }
-  return GoalResponseModel(
-      goals: convertedGoals,
-      bankAccounts: convertedBankAccounts,
-      dates: convertedDates,
-      wallet: convertedWallet);
+  return GoalResponseModel(goals: convertedGoals);
 }

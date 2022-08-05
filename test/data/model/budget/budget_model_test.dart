@@ -11,13 +11,12 @@ void main() {
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON = jsonDecode(budgetModelAsString);
   final budgetModel = BudgetModel(
-      walletId: budgetModelAsJSON['walletId'],
-      budgetId: budgetModelAsJSON['budgetId'],
+      walletId: budgetModelAsJSON['pk'],
+      budgetId: budgetModelAsJSON['sk'],
       planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
       category: budgetModelAsJSON['category'],
-      categoryType:
-          parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for']);
+      creationDate:
+          parseDynamicAsCategoryType(budgetModelAsJSON['creation_date']));
   test(
     'Should be a subclass of Budget entity',
     () async {

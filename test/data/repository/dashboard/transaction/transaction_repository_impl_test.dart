@@ -55,16 +55,15 @@ void main() {
       when(() => mockTransactionRemoteDataSource!.fetch(
           defaultWallet: '',
           endsWithDate: '',
-          startsWithDate: '',
-          userId: '')).thenThrow(EmptyAuthorizationTokenException());
-      final transactionReceived = await transactionRepositoryImpl!.fetch(
-          defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
+          startsWithDate: '')).thenThrow(EmptyAuthorizationTokenException());
+      final transactionReceived = await transactionRepositoryImpl!
+          .fetch(defaultWallet: '', endsWithDate: '', startsWithDate: '');
 
       /// Expect an exception to be thrown
       final f =
           transactionReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockTransactionRemoteDataSource!.fetch(
-          defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
+      verify(() => mockTransactionRemoteDataSource!
+          .fetch(defaultWallet: '', endsWithDate: '', startsWithDate: ''));
       expect(transactionReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

@@ -8,38 +8,27 @@ class BudgetModel extends Budget {
     String? budgetId,
     String? walletId,
     double? planned,
-    double? used,
-    String? dateMeantFor,
     String? category,
-    CategoryType? categoryType,
   }) : super(
             walletId: walletId,
             planned: planned,
-            dateMeantFor: dateMeantFor,
             categoryId: category,
-            categoryType: categoryType,
-            budgetId: budgetId,
-            used: used);
+            budgetId: budgetId);
 
   /// Map JSON Budget to List of object
   factory BudgetModel.fromJSON(Map<String, dynamic> budget) {
     return BudgetModel(
-        budgetId: parseDynamicAsString(budget['budgetId']),
-        walletId: parseDynamicAsString(budget['walletId']),
+        budgetId: parseDynamicAsString(budget['sk']),
+        walletId: parseDynamicAsString(budget['pk']),
         planned: parseDynamicAsDouble(budget['planned']),
-        used: parseDynamicAsDouble(budget['used']),
-        category: parseDynamicAsString(budget['category']),
-        dateMeantFor: parseDynamicAsString(budget['date_meant_for']),
-        categoryType: parseDynamicAsCategoryType(budget['category_type']));
+        category: parseDynamicAsString(budget['category']),);
   }
 
   /// Budget to JSON
   Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'budgetId': budgetId,
-        'dateMeantFor': dateMeantFor,
+        'pk': walletId,
+        'sk': budgetId,
         'planned': planned,
         'category': categoryId,
-        'categoryType': categoryType.name
       };
 }

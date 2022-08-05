@@ -4,11 +4,6 @@ import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dar
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
-import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
-
-Recurrence? parseDynamicAsRecurrence(dynamic obj) {
-  return (obj is String) ? stringToEnum(obj, Recurrence.values) : null;
-}
 
 CategoryType? parseDynamicAsCategoryType(dynamic obj) {
   return (obj is String) ? stringToEnum(obj, CategoryType.values) : null;

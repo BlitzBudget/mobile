@@ -9,7 +9,6 @@ abstract class TransactionEvent extends Equatable {
       this.accountId,
       this.dateMeantFor,
       this.categoryId,
-      this.recurrence,
       this.categoryType,
       this.categoryName,
       this.tags});
@@ -21,7 +20,6 @@ abstract class TransactionEvent extends Equatable {
   final String? accountId;
   final String? dateMeantFor;
   final String? categoryId;
-  final Recurrence? recurrence;
   final CategoryType? categoryType;
   final String? categoryName;
   final List<String>? tags;
@@ -79,13 +77,6 @@ class UpdateCategoryID extends TransactionEvent {
   const UpdateCategoryID(
       {required final String? categoryID, required final String? transactionId})
       : super(categoryId: categoryID, transactionId: transactionId);
-}
-
-class UpdateRecurrence extends TransactionEvent {
-  const UpdateRecurrence(
-      {required final Recurrence? recurrence,
-      required final String? transactionId})
-      : super(recurrence: recurrence, transactionId: transactionId);
 }
 
 class UpdateTags extends TransactionEvent {

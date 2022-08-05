@@ -27,8 +27,8 @@ class GoalModel extends Goal {
   /// Map JSON Goal to List of object
   factory GoalModel.fromJSON(Map<String, dynamic> goal) {
     return GoalModel(
-        walletId: parseDynamicAsString(goal['walletId']),
-        goalId: parseDynamicAsString(goal['goalId']),
+        walletId: parseDynamicAsString(goal['pk']),
+        goalId: parseDynamicAsString(goal['sk']),
         goalType: parseDynamicAsGoalType(goal['goal_type']),
         targetType: parseDynamicAsTargetType(goal['target_type']),
         monthlyContribution: parseDynamicAsDouble(goal['monthly_contribution']),

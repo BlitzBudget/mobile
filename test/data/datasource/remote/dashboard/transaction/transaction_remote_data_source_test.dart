@@ -29,13 +29,11 @@ void main() {
       final fetchTransactionAsJSON = jsonDecode(fetchTransactionAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet =
-          fetchTransactionAsJSON['Transaction'][0]['transactionId'];
-      String? userId;
+      final defaultWallet = fetchTransactionAsJSON[0]['sk'];
       final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
-        'walletId': defaultWallet
+        'starts_with_date': startsWithDate,
+        'ends_with_date': endsWithDate,
+        'wallet_id': defaultWallet
       };
       // arrange
       when(() => mockHTTPClientImpl!.post(constants.transactionURL,
@@ -45,14 +43,15 @@ void main() {
       final transactions = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       // assert
       verify(() => mockHTTPClientImpl!.post(constants.transactionURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(transactions.categories!.last.categoryId,
-          equals(fetchTransactionAsJSON['Category'][0]['categoryId']));
+      expect(
+        transactions.transactions != null,
+        equals(true),
+      );
     });
   });
   group('Attempt to add a transaction', () {

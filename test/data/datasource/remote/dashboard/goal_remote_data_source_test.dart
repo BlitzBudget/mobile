@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
-
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/goal_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/goal/goal_model.dart';
-
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -30,7 +28,7 @@ void main() {
       final fetchWalletAsJSON = jsonDecode(fetchWalletAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet = fetchWalletAsJSON['Goal'][0]['walletId'];
+      final defaultWallet = fetchWalletAsJSON[0]['pk'];
       String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -51,8 +49,8 @@ void main() {
       verify(() => mockHTTPClientImpl!.post(constants.goalURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(goals.goals!.last.goalId,
-          equals(fetchWalletAsJSON['Goal'][0]['goalId']));
+      expect(goals.goals!.last.goalId, equals(fetchWalletAsJSON.last['sk']));
+      expect(goals.goals!.last.walletId, equals(fetchWalletAsJSON.last['pk']));
     });
   });
 

@@ -9,7 +9,6 @@ import 'package:mobile_blitzbudget/domain/entities/response/transaction_response
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 
 import '../../../../domain/entities/category/category_type.dart';
-import '../../../../domain/entities/transaction/recurrence.dart';
 import '../../../../domain/usecases/dashboard/transaction/add_transaction_use_case.dart'
     as add_transaction_use_case;
 import '../../../../domain/usecases/dashboard/transaction/delete_transaction_use_case.dart'

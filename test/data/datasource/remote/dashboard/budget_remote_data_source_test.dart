@@ -30,7 +30,7 @@ void main() {
       final fetchBudgetAsJSON = jsonDecode(fetchBudgetAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet = fetchBudgetAsJSON['Budget'][0]['walletId'];
+      final defaultWallet = fetchBudgetAsJSON[0]['pk'];
       String? userId;
       final contentBody = <String, dynamic>{
         'startsWithDate': startsWithDate,
@@ -51,8 +51,8 @@ void main() {
       verify(() => mockHTTPClientImpl!.post(constants.budgetURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(budget.budgets!.first.budgetId,
-          equals(fetchBudgetAsJSON['Budget'][0]['budgetId']));
+      expect(
+          budget.budgets!.first.budgetId, equals(fetchBudgetAsJSON[0]['sk']));
     });
   });
 

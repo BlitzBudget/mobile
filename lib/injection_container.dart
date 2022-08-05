@@ -33,18 +33,15 @@ import 'data/datasource/local/dashboard/ends_with_date_local_data_source.dart';
 import 'data/datasource/local/dashboard/starts_with_date_local_data_source.dart';
 import 'data/datasource/remote/authentication/authentication_remote_data_source.dart';
 import 'data/datasource/remote/authentication/user_attributes_remote_data_source.dart';
-import 'data/datasource/remote/dashboard/bank_account_remote_data_source.dart';
 import 'data/datasource/remote/dashboard/budget_remote_data_source.dart';
 import 'data/datasource/remote/dashboard/category_remote_data_source.dart';
 import 'data/datasource/remote/dashboard/common/delete_item_remote_data_source.dart';
 import 'data/datasource/remote/dashboard/overview_remote_data_source.dart';
-import 'data/datasource/remote/dashboard/transaction/recurring_transaction_remote_data_source.dart';
 import 'data/datasource/remote/dashboard/transaction/transaction_remote_data_source.dart';
 import 'data/datasource/remote/dashboard/wallet_remote_data_source.dart';
 import 'data/repositories/authentication/access_token_repository_impl.dart';
 import 'data/repositories/authentication/auth_token_repository_impl.dart';
 import 'data/repositories/authentication/refresh_token_repository_impl.dart';
-import 'data/repositories/dashboard/bank_account_repository_impl.dart';
 import 'data/repositories/dashboard/budget_repository_impl.dart';
 import 'data/repositories/dashboard/category_repository_impl.dart';
 import 'data/repositories/dashboard/common/default_wallet_repository_impl.dart';
@@ -53,11 +50,9 @@ import 'data/repositories/dashboard/common/ends_with_date_repository_impl.dart';
 import 'data/repositories/dashboard/common/starts_with_date_repository_impl.dart';
 import 'data/repositories/dashboard/goal_repository_impl.dart';
 import 'data/repositories/dashboard/overview_repository_impl.dart';
-import 'data/repositories/dashboard/transaction/recurring_transaction_repository_impl.dart';
 import 'data/repositories/dashboard/transaction/transaction_repository_impl.dart';
 import 'data/repositories/dashboard/wallet_repository_impl.dart';
 import 'domain/repositories/authentication/auth_token_repository.dart';
-import 'domain/repositories/dashboard/bank_account_repository.dart';
 import 'domain/repositories/dashboard/budget_repository.dart';
 import 'domain/repositories/dashboard/category_repository.dart';
 import 'domain/repositories/dashboard/common/clear_all_storage_repository.dart';
@@ -67,7 +62,6 @@ import 'domain/repositories/dashboard/common/ends_with_date_repository.dart';
 import 'domain/repositories/dashboard/common/starts_with_date_repository.dart';
 import 'domain/repositories/dashboard/goal_repository.dart';
 import 'domain/repositories/dashboard/overview_repository.dart';
-import 'domain/repositories/dashboard/transaction/recurring_transaction_repository.dart';
 import 'domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'domain/repositories/dashboard/wallet_repository.dart';
 import 'domain/usecases/authentication/signup_user.dart';
@@ -84,8 +78,6 @@ import 'domain/usecases/dashboard/goal/delete_goal_use_case.dart';
 import 'domain/usecases/dashboard/goal/fetch_goal_use_case.dart';
 import 'domain/usecases/dashboard/goal/update_goal_use_case.dart';
 import 'domain/usecases/dashboard/overview/fetch_overview_use_case.dart';
-import 'domain/usecases/dashboard/recurring-transaction/delete_recurring_transaction_use_case.dart';
-import 'domain/usecases/dashboard/recurring-transaction/update_recurring_transaction_use_case.dart';
 import 'domain/usecases/dashboard/transaction/add_transaction_use_case.dart';
 import 'domain/usecases/dashboard/transaction/delete_transaction_use_case.dart';
 import 'domain/usecases/dashboard/transaction/fetch_transaction_use_case.dart';
@@ -232,16 +224,6 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => DeleteWalletUseCase(
       userAttributesRepository: getIt(), walletRepository: getIt()));
 
-  // Recurring Transaction
-
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton(() => UpdateRecurringTransactionUseCase(
-      defaultWalletRepository: getIt(),
-      recurringTransactionRepository: getIt()));
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton(() => DeleteRecurringTransactionUseCase(
-      defaultWalletRepository: getIt(), deleteItemRepository: getIt()));
-
   // Overview
   // ignore: cascade_invocations
   getIt.registerLazySingleton(() => FetchOverviewUseCase(
@@ -308,11 +290,6 @@ Future<void> init() async {
   getIt.registerLazySingleton<OverviewRepository>(
       () => OverviewRepositoryImpl(overviewRemoteDataSource: getIt()));
 
-  // Bank Account
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton<BankAccountRepository>(
-      () => BankAccountRepositoryImpl(bankAccountRemoteDataSource: getIt()));
-
   // Budget
   // ignore: cascade_invocations
   getIt.registerLazySingleton<BudgetRepository>(
@@ -327,12 +304,6 @@ Future<void> init() async {
   // ignore: cascade_invocations
   getIt.registerLazySingleton<GoalRepository>(
       () => GoalRepositoryImpl(goalRemoteDataSource: getIt()));
-
-  // Recurring Transaction
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton<RecurringTransactionRepository>(() =>
-      RecurringTransactionRepositoryImpl(
-          recurringTransactionRemoteDataSource: getIt()));
 
   // Wallet
 
@@ -365,17 +336,11 @@ Future<void> init() async {
   getIt.registerLazySingleton<OverviewRemoteDataSource>(
       () => OverviewRemoteDataSourceImpl(httpClient: getIt()));
   // ignore: cascade_invocations
-  getIt.registerLazySingleton<BankAccountRemoteDataSource>(
-      () => BankAccountRemoteDataSourceImpl(httpClient: getIt()));
-  // ignore: cascade_invocations
   getIt.registerLazySingleton<BudgetRemoteDataSource>(
       () => BudgetRemoteDataSourceImpl(httpClient: getIt()));
   // ignore: cascade_invocations
   getIt.registerLazySingleton<CategoryRemoteDataSource>(
       () => CategoryRemoteDataSourceImpl(httpClient: getIt()));
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton<RecurringTransactionRemoteDataSource>(
-      () => RecurringTransactionRemoteDataSourceImpl(httpClient: getIt()));
   // ignore: cascade_invocations
   getIt.registerLazySingleton<WalletRemoteDataSource>(
       () => WalletRemoteDataSourceImpl(httpClient: getIt()));

@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/core/failure/generic_failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/transaction_response.dart';
-import 'package:mobile_blitzbudget/domain/entities/user.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/ends_with_date_repository.dart';
@@ -29,16 +28,11 @@ class FetchTransactionUseCase extends UseCase {
     final startsWithDate = await startsWithDateRepository!.readStartsWithDate();
     final endsWithDate = await endsWithDateRepository!.readEndsWithDate();
     final defaultWallet = await defaultWalletRepository!.readDefaultWallet();
-    String? userId, wallet;
+    String? wallet;
 
     /// Get User id only when the default wallet is empty
     if (defaultWallet.isLeft()) {
-      final userResponse = await userAttributesRepository!.readUserAttributes();
-      if (userResponse.isRight()) {
-        userId = userResponse.getOrElse(() => const User())!.userId;
-      } else {
-        return Left(EmptyResponseFailure());
-      }
+      return Left(EmptyWalletFailure());
     } else {
       wallet = defaultWallet.getOrElse(() => '');
     }
@@ -46,8 +40,7 @@ class FetchTransactionUseCase extends UseCase {
     return transactionRepository!.fetch(
         startsWithDate: startsWithDate,
         endsWithDate: endsWithDate,
-        defaultWallet: wallet,
-        userId: userId);
+        defaultWallet: wallet);
 
     // TODO if default wallet is empty then store them
   }

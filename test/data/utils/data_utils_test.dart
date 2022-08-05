@@ -5,30 +5,8 @@ import 'package:mobile_blitzbudget/domain/entities/bank-account/account_type.dar
 import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
-import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 
 void main() {
-  group('parseDynamicAsRecurrence', () {
-    test(
-      'parseDynamicAsRecurrence with valid data',
-      () async {
-        final recurrence = parseDynamicAsRecurrence(Recurrence.weekly.name);
-        // assert
-        expect(recurrence, isA<Recurrence>());
-        expect(recurrence, equals(Recurrence.weekly));
-      },
-    );
-
-    test(
-      'parseDynamicAsRecurrence with invalid data',
-      () async {
-        final recurrence = parseDynamicAsRecurrence('');
-        // assert
-        expect(recurrence, equals(null));
-      },
-    );
-  });
-
   group('parseDynamicAsCategoryType', () {
     test(
       'parseDynamicAsCategoryType with valid data',
