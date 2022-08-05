@@ -1,9 +1,6 @@
 {
-    "currency": "Euro",
-    "walletName": "Euro Wallet",
-    "walletId": "Wallet#2020-12-21T20:35:49.295Z",
-    "totalDebtBalance": 0,
-    "walletBalance": 200,
-    "totalAssetBalance": 200,
-    "userId": "User#2020-12-21T20:32:06.003Z"
-  }
+  "sk": "Wallet#2020-12-21T20:35:49.295Z",
+  "pk": "User#2020-12-21T20:32:06.003Z",
+  "wallet_currency": "Euro",
+  "wallet_name": "Euro Wallet"
+}
