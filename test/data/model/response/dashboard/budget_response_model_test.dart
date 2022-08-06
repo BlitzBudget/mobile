@@ -51,7 +51,6 @@ void main() {
       expect(budgetResponseModelWithEmptyBudgetFromJSON,
           equals(budgetResponseModelWithEmptyBudgetConverted));
     });
-
   });
 }
 
