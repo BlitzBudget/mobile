@@ -12,15 +12,15 @@ void main() {
       fixture('models/get/goal/emergency_fund_model.json');
   final goalModelAsJSON = jsonDecode(goalModelAsString);
   final goalModel = GoalModel(
-      walletId: goalModelAsJSON['walletId'],
-      goalId: goalModelAsJSON['goalId'],
-      goalType: parseDynamicAsGoalType(goalModelAsJSON['goal_type']),
-      targetType: parseDynamicAsTargetType(goalModelAsJSON['target_type']),
-      monthlyContribution:
-          parseDynamicAsDouble(goalModelAsJSON['monthly_contribution']),
-      targetAmount: parseDynamicAsDouble(goalModelAsJSON['final_amount']),
-      targetDate: goalModelAsJSON['preferable_target_date'],
-      targetId: goalModelAsJSON['target_id']);
+      walletId: parseDynamicAsString(goalModelAsJSON['pk']),
+      goalId: parseDynamicAsString(goalModelAsJSON['sk']),
+      currentAmount: parseDynamicAsDouble(goalModelAsJSON['current_amount']),
+      goalName: parseDynamicAsString(goalModelAsJSON['goal_name']),
+      goalAchieved: parseDynamicAsBool(goalModelAsJSON['goal_achieved']),
+      targetAmount: parseDynamicAsDouble(goalModelAsJSON['target_amount']),
+      targetDate: parseDynamicAsString(goalModelAsJSON['target_date']),
+      creationDate: parseDynamicAsString(goalModelAsJSON['creation_date']),
+      updateDate: parseDynamicAsString(goalModelAsJSON['updated_date']));
   test(
     'Should be a subclass of Goal entity',
     () async {

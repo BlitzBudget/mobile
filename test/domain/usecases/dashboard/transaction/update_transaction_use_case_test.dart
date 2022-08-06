@@ -41,7 +41,7 @@ void main() {
 
   group('UpdateAmount', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'],
+        walletId: transactionModelAsJSON['pk'],
         transactionId: transactionModelAsJSON['accountId'],
         amount: parseDynamicAsDouble(transactionModelAsJSON['amount']));
 
@@ -110,7 +110,7 @@ void main() {
 
   group('UpdateDescription', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'],
+        walletId: transactionModelAsJSON['pk'],
         transactionId: transactionModelAsJSON['accountId'],
         description: transactionModelAsJSON['description']);
 
@@ -182,7 +182,7 @@ void main() {
 
   group('UpdateCategoryId', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'],
+        walletId: transactionModelAsJSON['pk'],
         transactionId: transactionModelAsJSON['accountId'],
         categoryId: transactionModelAsJSON['category']);
 
@@ -254,7 +254,7 @@ void main() {
 
   group('UpdateTags', () {
     final transactionModel = Transaction(
-        walletId: transactionModelAsJSON['walletId'],
+        walletId: transactionModelAsJSON['pk'],
         transactionId: transactionModelAsJSON['accountId'],
         tags: tags);
 

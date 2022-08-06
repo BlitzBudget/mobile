@@ -49,7 +49,7 @@ void main() {
       ?.map<String>(parseDynamicAsString)
       ?.toList();
   final transaction = TransactionModel(
-      walletId: transactionModelAsJSON['walletId'],
+      walletId: transactionModelAsJSON['pk'],
       transactionId: transactionModelAsJSON['transactionId'],
       amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
       description: transactionModelAsJSON['description'],

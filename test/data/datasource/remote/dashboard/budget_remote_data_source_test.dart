@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/network/http_client.dart';
 import 'package:mobile_blitzbudget/data/constants/constants.dart' as constants;
-
 import 'package:mobile_blitzbudget/data/datasource/remote/dashboard/budget_remote_data_source.dart';
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
-
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -31,11 +29,10 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchBudgetAsJSON[0]['pk'];
-      String? userId;
       final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
-        'walletId': defaultWallet
+        'starts_with_date': startsWithDate,
+        'ends_with_date': endsWithDate,
+        'pk': defaultWallet
       };
       // arrange
       when(() => mockHTTPClientImpl!.post(constants.budgetURL,
@@ -45,8 +42,7 @@ void main() {
       final budget = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       // assert
       verify(() => mockHTTPClientImpl!.post(constants.budgetURL,
           body: jsonEncode(contentBody), headers: constants.headers));
@@ -64,13 +60,12 @@ void main() {
             fixture('responses/dashboard/budget/add_budget_info.json');
         final addBudgetAsJSON = jsonDecode(addBudgetAsString);
         final budget = BudgetModel(
-            walletId: addBudgetAsJSON['body-json']['walletId'],
-            budgetId: addBudgetAsJSON['body-json']['accountId'],
-            categoryType: parseDynamicAsCategoryType(
-                addBudgetAsJSON['body-json']['categoryType']),
+            walletId: addBudgetAsJSON['body-json']['pk'],
+            budgetId: addBudgetAsJSON['body-json']['sk'],
             planned:
                 parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-            dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor']);
+            category: addBudgetAsJSON['body-json']['category'],
+            creationDate: addBudgetAsJSON['body-json']['creation_date']);
         // arrange
         when(() => mockHTTPClientImpl!.put(constants.budgetURL,
                 body: jsonEncode(budget.toJSON()), headers: constants.headers))
@@ -92,8 +87,8 @@ void main() {
             'responses/dashboard/budget/update/update_budget_amount_info.json');
         final updateAmountAsJSON = jsonDecode(updateAmountAsString);
         final budget = BudgetModel(
-            walletId: updateAmountAsJSON['body-json']['walletId'],
-            budgetId: updateAmountAsJSON['body-json']['budgetId'],
+            walletId: updateAmountAsJSON['body-json']['pk'],
+            budgetId: updateAmountAsJSON['body-json']['sk'],
             planned: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['planned']));
         // arrange
@@ -115,8 +110,8 @@ void main() {
             'responses/dashboard/budget/update/update_budget_category_info.json');
         final updateDescriptionAsJSON = jsonDecode(updateDescriptionAsString);
         final budget = BudgetModel(
-            walletId: updateDescriptionAsJSON['body-json']['walletId'],
-            budgetId: updateDescriptionAsJSON['body-json']['budgetId'],
+            walletId: updateDescriptionAsJSON['body-json']['pk'],
+            budgetId: updateDescriptionAsJSON['body-json']['sk'],
             category: updateDescriptionAsJSON['body-json']['category']);
         // arrange
         when(() => mockHTTPClientImpl!.patch(constants.budgetURL,

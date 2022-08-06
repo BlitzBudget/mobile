@@ -15,12 +15,12 @@ void main() {
       ?.map<String>(parseDynamicAsString)
       ?.toList();
   final transactionModel = TransactionModel(
-      walletId: transactionModelAsJSON['walletId'],
-      transactionId: transactionModelAsJSON['transactionId'],
+      walletId: transactionModelAsJSON['pk'],
+      transactionId: transactionModelAsJSON['sk'],
       amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
       description: transactionModelAsJSON['description'],
       tags: tags,
-      categoryId: transactionModelAsJSON['category']);
+      categoryId: transactionModelAsJSON['category_id']);
   test(
     'Should be a subclass of Transaction entity',
     () async {

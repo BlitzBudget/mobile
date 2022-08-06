@@ -58,12 +58,9 @@ void main() {
         fixture('responses/dashboard/budget/add_budget_info.json');
     final addBudgetAsJSON = jsonDecode(addBudgetAsString);
     final budget = BudgetModel(
-        walletId: addBudgetAsJSON['body-json']['walletId'],
+        walletId: addBudgetAsJSON['body-json']['pk'],
         budgetId: addBudgetAsJSON['body-json']['accountId'],
-        categoryType: parseDynamicAsCategoryType(
-            addBudgetAsJSON['body-json']['categoryType']),
-        planned: parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']),
-        dateMeantFor: addBudgetAsJSON['body-json']['dateMeantFor']);
+        planned: parseDynamicAsDouble(addBudgetAsJSON['body-json']['planned']));
     test(
       'Valid POST call',
       () async {

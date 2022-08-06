@@ -12,10 +12,8 @@ void main() {
       fixture('models/get/category/category_model.json');
   final categoryModelAsJSON = jsonDecode(categoryModelAsString);
   final categoryModel = CategoryModel(
-      walletId: categoryModelAsJSON['walletId'],
-      categoryId: categoryModelAsJSON['categoryId'],
-      categoryTotal:
-          parseDynamicAsDouble(categoryModelAsJSON['category_total']),
+      userId: categoryModelAsJSON['pk'],
+      categoryId: categoryModelAsJSON['sk'],
       categoryType:
           parseDynamicAsCategoryType(categoryModelAsJSON['category_type']),
       categoryName: categoryModelAsJSON['category_name']);

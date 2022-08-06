@@ -29,11 +29,10 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchWalletAsJSON[0]['pk'];
-      String? userId;
       final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
-        'walletId': defaultWallet
+        'starts_with_date': startsWithDate,
+        'ends_with_date': endsWithDate,
+        'pk': defaultWallet
       };
       // arrange
       when(() => mockHTTPClientImpl!.post(constants.goalURL,
@@ -43,8 +42,7 @@ void main() {
       final goals = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       // assert
       verify(() => mockHTTPClientImpl!.post(constants.goalURL,
           body: jsonEncode(contentBody), headers: constants.headers));
@@ -62,19 +60,16 @@ void main() {
             fixture('responses/dashboard/goal/add_goal_info.json');
         final addGoalAsJSON = jsonDecode(addGoalAsString);
         final goal = GoalModel(
-            walletId: addGoalAsJSON['body-json']['walletId'],
-            goalId: addGoalAsJSON['body-json']['id'],
-            goalType:
-                parseDynamicAsGoalType(addGoalAsJSON['body-json']['goalType']),
-            monthlyContribution: parseDynamicAsDouble(
-                addGoalAsJSON['body-json']['monthlyContribution']),
-            targetAmount: parseDynamicAsDouble(
-                addGoalAsJSON['body-json']['targetAmount']),
-            targetDate:
-                parseDynamicAsString(addGoalAsJSON['body-json']['targetDate']),
-            targetId: addGoalAsJSON['body-json']['targetId'],
-            targetType: parseDynamicAsTargetType(
-                addGoalAsJSON['body-json']['targetType']));
+            walletId: parseDynamicAsString(addGoalAsJSON['pk']),
+            goalId: parseDynamicAsString(addGoalAsJSON['sk']),
+            currentAmount:
+                parseDynamicAsDouble(addGoalAsJSON['current_amount']),
+            goalName: parseDynamicAsString(addGoalAsJSON['goal_name']),
+            goalAchieved: parseDynamicAsBool(addGoalAsJSON['goal_achieved']),
+            targetAmount: parseDynamicAsDouble(addGoalAsJSON['target_amount']),
+            targetDate: parseDynamicAsString(addGoalAsJSON['target_date']),
+            creationDate: parseDynamicAsString(addGoalAsJSON['creation_date']),
+            updateDate: parseDynamicAsString(addGoalAsJSON['updated_date']));
 
         // arrange
         when(() => mockHTTPClientImpl!.put(constants.goalURL,
@@ -97,8 +92,8 @@ void main() {
             'responses/dashboard/goal/update/update_goal_target_amount_info.json');
         final updateAmountAsJSON = jsonDecode(updateAmountAsString);
         final goal = GoalModel(
-            walletId: updateAmountAsJSON['body-json']['walletId'],
-            goalId: updateAmountAsJSON['body-json']['goalId'],
+            walletId: updateAmountAsJSON['body-json']['pk'],
+            goalId: updateAmountAsJSON['body-json']['sk'],
             targetAmount: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['targetAmount']));
         // arrange
@@ -120,9 +115,9 @@ void main() {
             'responses/dashboard/goal/update/update_goal_target_date_info.json');
         final updateTargetDateAsJSON = jsonDecode(updateTargetDateAsString);
         final goal = GoalModel(
-            walletId: updateTargetDateAsJSON['body-json']['walletId'],
-            goalId: updateTargetDateAsJSON['body-json']['goalId'],
-            targetDate: updateTargetDateAsJSON['body-json']['targetDate']);
+            walletId: updateTargetDateAsJSON['body-json']['pk'],
+            goalId: updateTargetDateAsJSON['body-json']['sk'],
+            targetDate: updateTargetDateAsJSON['body-json']['target_date']);
         // arrange
         when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
@@ -136,15 +131,16 @@ void main() {
     );
 
     test(
-      'Should update a goals target id',
+      'Should update a goals current amount',
       () async {
         final updateTargetIdAsString = fixture(
-            'responses/dashboard/goal/update/update_goal_target_id_info.json');
+            'responses/dashboard/goal/update/update_goal_current_amount_info.json');
         final updateTargetIdAsJSON = jsonDecode(updateTargetIdAsString);
         final goal = GoalModel(
-            walletId: updateTargetIdAsJSON['body-json']['walletId'],
-            goalId: updateTargetIdAsJSON['body-json']['goalId'],
-            targetId: updateTargetIdAsJSON['body-json']['targetId']);
+            walletId: parseDynamicAsString(updateTargetIdAsJSON['pk']),
+            goalId: parseDynamicAsString(updateTargetIdAsJSON['sk']),
+            currentAmount:
+                parseDynamicAsDouble(updateTargetIdAsJSON['current_amount']));
         // arrange
         when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
@@ -158,45 +154,19 @@ void main() {
     );
 
     test(
-      'Should update a goals target type',
+      'Should update a goals goal name',
       () async {
         final updateTargetIdAsString = fixture(
-            'responses/dashboard/goal/update/update_goal_target_type_info.json');
+            'responses/dashboard/goal/update/update_goal_goal_name_info.json');
         final updateTargetIdAsJSON = jsonDecode(updateTargetIdAsString);
         final goal = GoalModel(
-            walletId: updateTargetIdAsJSON['body-json']['walletId'],
-            goalId: updateTargetIdAsJSON['body-json']['goalId'],
-            targetType: parseDynamicAsTargetType(
-                updateTargetIdAsJSON['body-json']['targetType']));
+            walletId: parseDynamicAsString(updateTargetIdAsJSON['pk']),
+            goalId: parseDynamicAsString(updateTargetIdAsJSON['sk']),
+            goalName: parseDynamicAsString(updateTargetIdAsJSON['goal_name']));
         // arrange
         when(() => mockHTTPClientImpl!.patch(constants.goalURL,
                 body: jsonEncode(goal.toJSON()), headers: constants.headers))
             .thenAnswer((_) async => updateTargetIdAsJSON);
-        // act
-        await dataSource.update(goal);
-        // assert
-        verify(() => mockHTTPClientImpl!.patch(constants.goalURL,
-            body: jsonEncode(goal.toJSON()), headers: constants.headers));
-      },
-    );
-
-    test(
-      'Should update a goals monthly contribution',
-      () async {
-        final updateMonthlyContributionAsString = fixture(
-            'responses/dashboard/goal/update/update_goal_monthly_contribution_info.json');
-        final updateMonthlyContributionAsJSON =
-            jsonDecode(updateMonthlyContributionAsString);
-        final goal = GoalModel(
-            walletId: updateMonthlyContributionAsJSON['body-json']['walletId'],
-            goalId: updateMonthlyContributionAsJSON['body-json']['goalId'],
-            monthlyContribution: parseDynamicAsDouble(
-                updateMonthlyContributionAsJSON['body-json']
-                    ['monthlyContribution']));
-        // arrange
-        when(() => mockHTTPClientImpl!.patch(constants.goalURL,
-                body: jsonEncode(goal.toJSON()), headers: constants.headers))
-            .thenAnswer((_) async => updateMonthlyContributionAsJSON);
         // act
         await dataSource.update(goal);
         // assert

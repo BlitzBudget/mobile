@@ -31,7 +31,7 @@ void main() {
         // arrange
         when(() => mockHTTPClientImpl!.post(constants.deleteCategoryURL,
                 body: jsonEncode({
-                  'walletId': walletId,
+                  'pk': walletId,
                   'category': categoryId,
                 }),
                 headers: constants.headers))
@@ -41,7 +41,7 @@ void main() {
         // assert
         verify(() => mockHTTPClientImpl!.post(constants.deleteCategoryURL,
             body: jsonEncode({
-              'walletId': walletId,
+              'pk': walletId,
               'category': categoryId,
             }),
             headers: constants.headers));

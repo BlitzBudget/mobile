@@ -30,7 +30,6 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
       : super(Empty()) {
     on<Add>(_onAdd);
     on<UpdateCategoryId>(_onUpdateCategoryId);
-    on<UpdateDateMeantFor>(_onUpdateDateMeantFor);
     on<UpdatePlanned>(_onUpdatePlanned);
     on<Delete>(_onDelete);
     on<Fetch>(_onFetch);
@@ -46,11 +45,8 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     final addBudget = Budget(
         walletId: event.walletId,
         planned: event.planned,
-        dateMeantFor: event.dateMeantFor,
         categoryId: event.categoryId,
-        budgetId: event.budgetId,
-        categoryType: event.categoryType,
-        used: event.used);
+        budgetId: event.budgetId);
     final addResponse = await addBudgetUseCase.add(addBudget: addBudget);
     emit(addResponse.fold(_convertToMessage, _successResponse));
   }
@@ -60,14 +56,6 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     emit(Loading());
     final updateResponse = await updateBudgetUseCase.updateCategoryId(
         categoryId: event.categoryId, budgetId: event.budgetId);
-    emit(updateResponse.fold(_convertToMessage, _successResponse));
-  }
-
-  FutureOr<void> _onUpdateDateMeantFor(
-      UpdateDateMeantFor event, Emitter<BudgetState> emit) async {
-    emit(Loading());
-    final updateResponse = await updateBudgetUseCase.updateDateMeantFor(
-        dateMeantFor: event.dateMeantFor, budgetId: event.budgetId);
     emit(updateResponse.fold(_convertToMessage, _successResponse));
   }
 

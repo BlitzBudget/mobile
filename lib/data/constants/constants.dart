@@ -18,8 +18,6 @@ const String userAttributesURL = '$baseURL/profile/user-attribute';
 const String changePasswordURL = '$baseURL/profile/change-password';
 
 /// Dashboard URLs
-const String bankAccountURL = '$baseURL/bank-accounts';
-const String deleteBankAccountURL = '$bankAccountURL/delete';
 const String budgetURL = '$baseURL/budgets';
 const String deleteCategoryURL = '$baseURL/categories/delete';
 const String goalURL = '$baseURL/goals';

@@ -19,7 +19,7 @@ class DeleteItemRemoteDataSourceImpl with DeleteItemRemoteDataSource {
       {required String walletId, required String itemId}) async {
     // JSON for Get budget [_jsonForGetBudget]
     final _jsonForDeleteItem = <String, dynamic>{
-      'walletId': walletId,
+      'pk': walletId,
       'itemId': itemId,
     };
 

@@ -158,13 +158,11 @@ void main() {
 }
 
 GoalResponseModel convertToResponseModel(
-    Map<String, dynamic> goalResponseModelAsJSON) {
+    List<dynamic> goalResponseModelAsJSON) {
   /// Convert goals from the response JSON to List<Goal>
   /// If Empty then return an empty object list
-  final responseGoals = goalResponseModelAsJSON['Goal'];
-  final convertedGoals = List<Goal>.from(responseGoals
-          ?.map<dynamic>((dynamic model) => GoalModel.fromJSON(model)) ??
-      <Goal>[]);
+  final convertedGoals = List<Goal>.from(goalResponseModelAsJSON
+      .map<dynamic>((dynamic model) => GoalModel.fromJSON(model)));
 
   final goalResponseModel = GoalResponseModel(goals: convertedGoals);
   return goalResponseModel;

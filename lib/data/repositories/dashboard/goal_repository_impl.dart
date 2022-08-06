@@ -40,8 +40,7 @@ class GoalRepositoryImpl implements GoalRepository {
       return Right(await goalRemoteDataSource!.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId));
+          defaultWallet: defaultWallet));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

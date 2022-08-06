@@ -28,10 +28,9 @@ void main() {
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
       final defaultWallet = fetchWalletAsJSON[0]['sk'];
-      String? userId;
       final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
+        'starts_with_date': startsWithDate,
+        'ends_with_date': endsWithDate,
         'pk': defaultWallet
       };
       // arrange
@@ -42,8 +41,7 @@ void main() {
       final wallet = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       // assert
       verify(() => mockHTTPClientImpl!.post(constants.walletURL,
           body: jsonEncode(contentBody), headers: constants.headers));
@@ -89,8 +87,8 @@ void main() {
         final updateWalletCurrencyAsJSON =
             jsonDecode(updateWalletCurrencyAsString);
         final wallet = WalletModel(
-            walletId: updateWalletCurrencyAsJSON['body-json']['walletId'],
-            userId: updateWalletCurrencyAsJSON['body-json']['walletId'],
+            walletId: updateWalletCurrencyAsJSON['body-json']['pk'],
+            userId: updateWalletCurrencyAsJSON['body-json']['pk'],
             currency: updateWalletCurrencyAsJSON['body-json']['currency']);
         // arrange
         when(() => mockHTTPClientImpl!.patch(constants.walletURL,
@@ -111,8 +109,8 @@ void main() {
             'responses/dashboard/wallet/update/update_wallet_name_info.json');
         final updateWalletNameAsJSON = jsonDecode(updateWalletNameAsString);
         final wallet = WalletModel(
-            walletId: updateWalletNameAsJSON['body-json']['walletId'],
-            userId: updateWalletNameAsJSON['body-json']['walletId'],
+            walletId: updateWalletNameAsJSON['body-json']['pk'],
+            userId: updateWalletNameAsJSON['body-json']['pk'],
             walletName: updateWalletNameAsJSON['body-json']['name']);
         // arrange
         when(() => mockHTTPClientImpl!.patch(constants.walletURL,
@@ -139,7 +137,7 @@ void main() {
         // arrange
         when(() => mockHTTPClientImpl!.post(constants.walletURL,
                 body: jsonEncode({
-                  'walletId': walletId,
+                  'pk': walletId,
                   'deleteAccount': false,
                   'referenceNumber': userId
                 }),
@@ -150,7 +148,7 @@ void main() {
         // assert
         verify(() => mockHTTPClientImpl!.post(constants.walletURL,
             body: jsonEncode({
-              'walletId': walletId,
+              'pk': walletId,
               'deleteAccount': false,
               'referenceNumber': userId
             }),

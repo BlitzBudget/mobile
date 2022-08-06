@@ -6,8 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 
 import '../../../../domain/usecases/dashboard/goal/add_goal_use_case.dart'
     as add_goal_usecase;
@@ -45,12 +43,13 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
     final addGoal = Goal(
         walletId: event.walletId,
         goalId: event.goalId,
-        goalType: event.goalType,
-        targetType: event.targetType,
-        monthlyContribution: event.monthlyContribution,
         targetAmount: event.targetAmount,
         targetDate: event.targetDate,
-        targetId: event.targetId);
+        currentAmount: event.currentAmount,
+        goalName: event.goalName,
+        goalAchieved: event.goalAchieved,
+        creationDate: event.creationDate,
+        updateDate: event.updateDate);
     final addResponse = await addGoalUseCase.add(addGoal: addGoal);
     emit(addResponse.fold(_convertToMessage, _successResponse));
   }
@@ -60,12 +59,13 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
     final updateGoal = Goal(
         walletId: event.walletId,
         goalId: event.goalId,
-        goalType: event.goalType,
-        targetType: event.targetType,
-        monthlyContribution: event.monthlyContribution,
         targetAmount: event.targetAmount,
         targetDate: event.targetDate,
-        targetId: event.targetId);
+        currentAmount: event.currentAmount,
+        goalName: event.goalName,
+        goalAchieved: event.goalAchieved,
+        creationDate: event.creationDate,
+        updateDate: event.updateDate);
     final updateResponse =
         await updateGoalUseCase.update(updateGoal: updateGoal);
     emit(updateResponse.fold(_convertToMessage, _successResponse));

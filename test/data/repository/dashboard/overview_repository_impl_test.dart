@@ -33,16 +33,15 @@ void main() {
       when(() => mockOverviewRemoteDataSource!.fetch(
           defaultWallet: '',
           endsWithDate: '',
-          startsWithDate: '',
-          userId: '')).thenThrow(EmptyAuthorizationTokenException());
+          startsWithDate: '')).thenThrow(EmptyAuthorizationTokenException());
       final overviewReceived = await overviewRepositoryImpl!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
       final f =
           overviewReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockOverviewRemoteDataSource!.fetch(
-          defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
+      verify(() => mockOverviewRemoteDataSource!
+          .fetch(defaultWallet: '', endsWithDate: '', startsWithDate: ''));
       expect(overviewReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

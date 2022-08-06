@@ -43,8 +43,7 @@ class BudgetRepositoryImpl extends BudgetRepository {
       return Right(await budgetRemoteDataSource!.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId));
+          defaultWallet: defaultWallet));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

@@ -1,32 +1,23 @@
-import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
 import 'package:mobile_blitzbudget/data/model/category/category_model.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
-import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
 import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
-import 'package:mobile_blitzbudget/domain/entities/date.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/overview_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
 import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
-
-import '../../date_model.dart';
 
 class OverviewResponseModel extends OverviewResponse {
   const OverviewResponseModel(
       {List<Transaction>? transactions,
       List<Budget>? budgets,
       List<Category>? categories,
-      List<BankAccount>? bankAccounts,
-      List<Date>? dates,
       Wallet? wallet})
       : super(
             transactions: transactions,
             budgets: budgets,
             categories: categories,
-            bankAccounts: bankAccounts,
-            dates: dates,
             wallet: wallet);
 
   factory OverviewResponseModel.fromJSON(
@@ -53,21 +44,6 @@ class OverviewResponseModel extends OverviewResponse {
             ?.map<dynamic>((dynamic model) => CategoryModel.fromJSON(model)) ??
         <Category>[]);
 
-    /// Convert BankAccount from the response JSON to List<BankAccount>
-    /// If Empty then return an empty object list
-    final responseBankAccounts = overviewResponseModel['BankAccount'];
-    final convertedBankAccounts = List<BankAccount>.from(
-        responseBankAccounts?.map<dynamic>(
-                (dynamic model) => BankAccountModel.fromJSON(model)) ??
-            <BankAccount>[]);
-
-    /// Convert Dates from the response JSON to List<Date>
-    /// If Empty then return an empty object list
-    final responseDate = overviewResponseModel['Date'];
-    final convertedDates = List<Date>.from(responseDate
-            ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
-        <Date>[]);
-
     final responseWallet = overviewResponseModel['Wallet'];
     Wallet? convertedWallet;
 
@@ -88,8 +64,6 @@ class OverviewResponseModel extends OverviewResponse {
         transactions: convertedTransactions,
         budgets: convertedBudgets,
         categories: convertedCategories,
-        bankAccounts: convertedBankAccounts,
-        dates: convertedDates,
         wallet: convertedWallet);
   }
 }

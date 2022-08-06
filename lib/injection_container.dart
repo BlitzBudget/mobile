@@ -65,9 +65,6 @@ import 'domain/repositories/dashboard/overview_repository.dart';
 import 'domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'domain/repositories/dashboard/wallet_repository.dart';
 import 'domain/usecases/authentication/signup_user.dart';
-import 'domain/usecases/dashboard/bank-account/add_bank_account_use_case.dart';
-import 'domain/usecases/dashboard/bank-account/delete_bank_account_use_case.dart';
-import 'domain/usecases/dashboard/bank-account/update_bank_account_use_case.dart';
 import 'domain/usecases/dashboard/budget/add_budget_use_case.dart';
 import 'domain/usecases/dashboard/budget/delete_budget_use_case.dart';
 import 'domain/usecases/dashboard/budget/fetch_budget_use_case.dart';
@@ -271,17 +268,6 @@ Future<void> init() async {
       endsWithDateRepository: getIt(),
       startsWithDateRepository: getIt(),
       userAttributesRepository: getIt()));
-
-  // Bank Account
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton(
-      () => AddBankAccountUseCase(bankAccountRepository: getIt()));
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton(() => UpdateBankAccountUseCase(
-      bankAccountRepository: getIt(), defaultWalletRepository: getIt()));
-  // ignore: cascade_invocations
-  getIt.registerLazySingleton(() => DeleteBankAccountUseCase(
-      bankAccountRepository: getIt(), defaultWalletRepository: getIt()));
 
   /// Repository
 

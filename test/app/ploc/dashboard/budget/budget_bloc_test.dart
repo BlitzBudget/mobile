@@ -45,11 +45,8 @@ void main() {
   const addBudget = Budget(
       walletId: WALLET_ID,
       planned: 1,
-      dateMeantFor: DATE_MEANT_FOR,
       categoryId: CATEGORY_ID,
-      categoryType: CategoryType.expense,
-      budgetId: BUDGET_ID,
-      used: 0);
+      budgetId: BUDGET_ID);
 
   setUp(() {
     mockAddBudgetUsecase = MockAddBudgetUsecase();
@@ -112,25 +109,6 @@ void main() {
       },
       act: (bloc) => bloc.add(const UpdateCategoryId(
           budgetId: BUDGET_ID, categoryId: CATEGORY_ID, walletId: WALLET_ID)),
-      expect: () => [Loading(), Success()],
-    );
-
-    blocTest<BudgetBloc, BudgetState>(
-      'Emits [Success] states for date meant for success',
-      build: () {
-        when(() => mockUpdateBudgetUseCase.updateDateMeantFor(
-                dateMeantFor: DATE_MEANT_FOR, budgetId: BUDGET_ID))
-            .thenAnswer((_) => Future.value(positiveMonadResponse));
-        return BudgetBloc(
-            addBudgetUseCase: mockAddBudgetUsecase,
-            deleteBudgetUseCase: mockDeleteBudgetUseCase,
-            updateBudgetUseCase: mockUpdateBudgetUseCase,
-            fetchBudgetUseCase: mockFetchBudgetUseCase);
-      },
-      act: (bloc) => bloc.add(const UpdateDateMeantFor(
-          budgetId: BUDGET_ID,
-          walletId: WALLET_ID,
-          dateMeantFor: DATE_MEANT_FOR)),
       expect: () => [Loading(), Success()],
     );
 
@@ -230,27 +208,6 @@ void main() {
     );
 
     blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for date meant for success',
-      build: () {
-        final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
-        when(() => mockUpdateBudgetUseCase.updateDateMeantFor(
-                dateMeantFor: DATE_MEANT_FOR, budgetId: BUDGET_ID))
-            .thenAnswer((_) => Future.value(failureMonadResponse));
-        return BudgetBloc(
-            addBudgetUseCase: mockAddBudgetUsecase,
-            deleteBudgetUseCase: mockDeleteBudgetUseCase,
-            updateBudgetUseCase: mockUpdateBudgetUseCase,
-            fetchBudgetUseCase: mockFetchBudgetUseCase);
-      },
-      act: (bloc) => bloc.add(const UpdateDateMeantFor(
-          budgetId: BUDGET_ID,
-          walletId: WALLET_ID,
-          dateMeantFor: DATE_MEANT_FOR)),
-      expect: () =>
-          [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
-    );
-
-    blocTest<BudgetBloc, BudgetState>(
       'Emits [Error] states for planned success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
@@ -343,26 +300,6 @@ void main() {
       },
       act: (bloc) => bloc.add(const UpdateCategoryId(
           budgetId: BUDGET_ID, categoryId: CATEGORY_ID, walletId: WALLET_ID)),
-      expect: () => [Loading(), RedirectToLogin()],
-    );
-
-    blocTest<BudgetBloc, BudgetState>(
-      'Emits [Error] states for date meant for success',
-      build: () {
-        final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
-        when(() => mockUpdateBudgetUseCase.updateDateMeantFor(
-                dateMeantFor: DATE_MEANT_FOR, budgetId: BUDGET_ID))
-            .thenAnswer((_) => Future.value(failureMonadResponse));
-        return BudgetBloc(
-            addBudgetUseCase: mockAddBudgetUsecase,
-            deleteBudgetUseCase: mockDeleteBudgetUseCase,
-            updateBudgetUseCase: mockUpdateBudgetUseCase,
-            fetchBudgetUseCase: mockFetchBudgetUseCase);
-      },
-      act: (bloc) => bloc.add(const UpdateDateMeantFor(
-          budgetId: BUDGET_ID,
-          walletId: WALLET_ID,
-          dateMeantFor: DATE_MEANT_FOR)),
       expect: () => [Loading(), RedirectToLogin()],
     );
 

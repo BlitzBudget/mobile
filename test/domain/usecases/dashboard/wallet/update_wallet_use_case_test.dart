@@ -33,7 +33,7 @@ void main() {
 
   group('UpdateWalletName', () {
     final walletModel = Wallet(
-        walletId: walletModelAsJSON['walletId'],
+        walletId: walletModelAsJSON['pk'],
         walletName: walletModelAsJSON['bank_account_name']);
 
     test('Success', () async {
@@ -69,7 +69,7 @@ void main() {
 
   group('updateCurrency', () {
     final walletModel = Wallet(
-        walletId: walletModelAsJSON['walletId'],
+        walletId: walletModelAsJSON['pk'],
         currency: walletModelAsJSON['currency']);
 
     test('Success', () async {
