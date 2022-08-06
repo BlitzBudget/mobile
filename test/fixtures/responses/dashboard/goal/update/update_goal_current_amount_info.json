@@ -1,8 +1,8 @@
 {
     "body-json": {
-      "walletId": "Wallet#2020-12-21T20:35:49.295Z",
-      "targetId": "Wallet#2020-12-21T20:35:49.295Z",
-      "goalId": "Goal#2021-01-04T15:46:32.520Z"
+      "pk": "Wallet#2020-12-21T20:35:49.295Z",
+      "current_amount": 21,
+      "sk": "Goal#2021-01-04T15:46:32.520Z"
     },
     "params": {
       "path": {},

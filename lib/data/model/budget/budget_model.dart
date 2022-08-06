@@ -1,6 +1,5 @@
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
-import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 
 class BudgetModel extends Budget {
   // Optional category type and Budget id fields
@@ -8,38 +7,31 @@ class BudgetModel extends Budget {
     String? budgetId,
     String? walletId,
     double? planned,
-    double? used,
-    String? dateMeantFor,
     String? category,
-    CategoryType? categoryType,
+    String? creationDate,
   }) : super(
             walletId: walletId,
             planned: planned,
-            dateMeantFor: dateMeantFor,
             categoryId: category,
-            categoryType: categoryType,
             budgetId: budgetId,
-            used: used);
+            creationDate: creationDate);
 
   /// Map JSON Budget to List of object
   factory BudgetModel.fromJSON(Map<String, dynamic> budget) {
     return BudgetModel(
-        budgetId: parseDynamicAsString(budget['budgetId']),
-        walletId: parseDynamicAsString(budget['walletId']),
-        planned: parseDynamicAsDouble(budget['planned']),
-        used: parseDynamicAsDouble(budget['used']),
-        category: parseDynamicAsString(budget['category']),
-        dateMeantFor: parseDynamicAsString(budget['date_meant_for']),
-        categoryType: parseDynamicAsCategoryType(budget['category_type']));
+      budgetId: parseDynamicAsString(budget['sk']),
+      walletId: parseDynamicAsString(budget['pk']),
+      planned: parseDynamicAsDouble(budget['planned']),
+      category: parseDynamicAsString(budget['category']),
+      creationDate: parseDynamicAsString(budget['creation_date']),
+    );
   }
 
   /// Budget to JSON
   Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'budgetId': budgetId,
-        'dateMeantFor': dateMeantFor,
+        'pk': walletId,
+        'sk': budgetId,
         'planned': planned,
         'category': categoryId,
-        'categoryType': categoryType.name
       };
 }

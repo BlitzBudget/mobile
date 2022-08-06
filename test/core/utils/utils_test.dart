@@ -1,7 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/utils/utils.dart' as utils;
-import 'package:mobile_blitzbudget/domain/entities/transaction/recurrence.dart';
 
 void main() {
   group('Capitalize', () {
@@ -124,18 +123,6 @@ void main() {
     test('Character Empty: Should return None()', () async {
       final emptyString = utils.isNotEmpty(null);
       expect(emptyString, equals(false));
-    });
-  });
-
-  group('StringToEnum', () {
-    test('Check if string to enum is successful', () async {
-      final recurrence = utils.stringToEnum('weekly', Recurrence.values);
-      expect(recurrence, equals(Recurrence.weekly));
-    });
-
-    test('Empty Recurrence: Should return false', () async {
-      final recurrence = utils.stringToEnum('', Recurrence.values);
-      expect(recurrence, equals(null));
     });
   });
 }

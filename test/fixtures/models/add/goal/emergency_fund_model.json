@@ -1,10 +1,9 @@
 {
-  "walletId": "Wallet#2020-12-21T20:35:49.295Z",
-  "goalType": "EmergencyFund",
-  "monthlyContribution": 2,
-  "targetAmount": 6,
-  "targetDate": "2021-04-28T20:05:58.286Z",
-  "targetId": "Wallet#2020-12-21T20:35:49.295Z",
-  "targetType": "Wallet",
-  "goalId": "Goal#2020-12-28T21:05:59.153Z"
+  "pk": "Wallet#2020-12-21T20:35:49.295Z",
+  "sk": "Goal#2020-12-28T21:05:59.153Z",
+  "target_amount": 20,
+  "current_amount": 12,
+  "target_date": "2020-12-28T21:05:59.153Z",
+  "goal_name": "goal name",
+  "goal_achieved": true
 }

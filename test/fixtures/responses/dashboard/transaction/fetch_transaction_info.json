@@ -1,83 +1,404 @@
-{
-    "Category": [
-      {
-        "category_type": "Expense",
-        "category_name": "Bills & Fees",
-        "category_total": -7,
-        "categoryId": "Category#2021-01-04T15:20:13.109Z",
-        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
-      }
+[
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:49:10.234271674Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[BlitzBudget] Nuxt Themes",
+    "amount": 9998,
+    "tags": [
+      "Readorb"
     ],
-    "Transaction": [
-      {
-        "date_meant_for": "Date#2021-01-04T15:20:13.088Z",
-        "recurrence": "NEVER",
-        "account": "BankAccount#2020-12-21T20:35:50.775Z",
-        "category": "Category#2021-01-04T15:20:13.109Z",
-        "amount": -2,
-        "description": "google",
-        "creation_date": "2021-01-04T15:20:36.079Z",
-        "tags": [
-          "Madrid"
-        ],
-        "transactionId": "Transaction#2021-01-04T15:20:36.079Z",
-        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
-      },
-      {
-        "date_meant_for": "Date#2021-01-04T15:20:13.088Z",
-        "recurrence": "WEEKLY",
-        "account": "BankAccount#2020-12-21T20:35:50.775Z",
-        "category": "Category#2021-01-04T15:20:13.109Z",
-        "amount": -5,
-        "description": "Recurring Transactions",
-        "creation_date": "2021-01-03T20:22:53.828Z",
-        "tags": [
-          "MADRID"
-        ],
-        "transactionId": "Transaction#2021-01-03T20:22:53.828Z",
-        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
-      }
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:45:16.664529253Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[NotionPress] Book Promotion",
+    "amount": 35507,
+    "tags": [
+      "Readorb"
     ],
-    "Budget": [],
-    "BankAccount": [
-      {
-        "account_balance": -9,
-        "linked": false,
-        "selected_account": true,
-        "account_type": "ASSET",
-        "bank_account_name": "Cash",
-        "accountId": "BankAccount#2020-12-21T20:35:50.775Z",
-        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
-      }
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:44:45.413865214Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[Readorb] Book Promotion",
+    "amount": 567,
+    "tags": [
+      "Readorb"
     ],
-    "Date": [
-      {
-        "expense_total": -2,
-        "balance": -2,
-        "income_total": 0,
-        "dateId": "Date#2020-12-27T20:22:18.263Z",
-        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
-      }
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:44:20.567547831Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[Readorb] Book Cover",
+    "amount": 2188,
+    "tags": [
+      "Readorb"
     ],
-    "RecurringTransactions": [
-      {
-        "recurrence": "WEEKLY",
-        "category_name": "Bills & Fees",
-        "account": "BankAccount#2020-12-21T20:35:50.775Z",
-        "category": "Category#2020-12-27T20:22:53.798Z",
-        "amount": -5,
-        "category_type": "Expense",
-        "description": "Recurring Transactions",
-        "creation_date": "2020-12-27T20:22:53.828Z",
-        "next_scheduled": "2021-01-10T20:22:53.828Z",
-        "tags": [
-          "MADRID"
-        ],
-        "recurringTransactionsId": "RecurringTransactions#2020-12-27T20:22:53.828Z",
-        "walletId": "Wallet#2020-12-21T20:35:49.295Z"
-      }
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:44:05.472032469Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[Readorb] Book Cover",
+    "amount": 567,
+    "tags": [
+      "Readorb"
     ],
-    "incomeTotal": 0,
-    "expenseTotal": -7,
-    "balance": -7
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:42:52.468590484Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[Readorb] Logo",
+    "amount": 565,
+    "tags": [
+      "Readorb"
+    ],
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:41:31.848997978Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[Udemy] Cyberlink Power Director",
+    "amount": 5000,
+    "tags": [
+      "Udemy"
+    ],
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:41:07.961364914Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[Udemy] Biteable Course",
+    "amount": 850,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:38:52.625767082Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[SurpriseTours] Woocommerce Multistep Checkout",
+    "amount": 1359,
+    "tags": [
+      "SurpriseTours"
+    ],
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:38:02.7866252Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[SurpriseTours] SSL Certificate One Year",
+    "amount": 4723,
+    "tags": [
+      "SurpriseTours"
+    ],
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-09T07:32:41.003809259Z",
+    "creation_date": "2018-02-13T23:00:00.000Z",
+    "category_id": "Category#2022-06-03T20:58:17.667203837Z",
+    "description": "[SurpriseTours] Woocommerce One Page Shopping",
+    "amount": 2108,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:23:48.243659574Z",
+    "creation_date": "2022-06-03T21:23:48.243659574Z",
+    "category_id": null,
+    "description": "GoDaddy Domain Name",
+    "amount": 1024,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:23:33.914325095Z",
+    "creation_date": "2022-06-03T21:23:33.914325095Z",
+    "category_id": null,
+    "description": "GoDaddy Hosting",
+    "amount": 4314,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:23:10.133308895Z",
+    "creation_date": "2022-06-03T21:23:10.133308895Z",
+    "category_id": null,
+    "description": "Woocommerce Gift card plugin",
+    "amount": 2100,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:22:54.424859678Z",
+    "creation_date": "2022-06-03T21:22:54.424859678Z",
+    "category_id": null,
+    "description": "SMS sending Blue",
+    "amount": 80,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:22:41.818103707Z",
+    "creation_date": "2022-06-03T21:22:41.818103707Z",
+    "category_id": null,
+    "description": "Genesis Child theme",
+    "amount": 3800,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:22:23.291455599Z",
+    "creation_date": "2022-06-03T21:22:23.291455599Z",
+    "category_id": null,
+    "description": "WP rocket",
+    "amount": 3300,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:22:12.060055367Z",
+    "creation_date": "2022-06-03T21:22:12.060055367Z",
+    "category_id": null,
+    "description": "Domain",
+    "amount": 1000,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:22:01.854090324Z",
+    "creation_date": "2022-06-03T21:22:01.854090324Z",
+    "category_id": null,
+    "description": "immotion Hosting",
+    "amount": 7000,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:21:34.281096255Z",
+    "creation_date": "2022-06-03T21:21:34.281096255Z",
+    "category_id": null,
+    "description": "Eww Image Optimizer",
+    "amount": 150,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:21:17.911777565Z",
+    "creation_date": "2022-06-03T21:21:17.911777565Z",
+    "category_id": null,
+    "description": "Supsystic",
+    "amount": 4046,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:21:04.945846091Z",
+    "creation_date": "2022-06-03T21:21:04.945846091Z",
+    "category_id": null,
+    "description": "The Countdown Pro",
+    "amount": 520,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:20:55.24657596Z",
+    "creation_date": "2022-06-03T21:20:55.24657596Z",
+    "category_id": null,
+    "description": "Go Pricing Comparison Table",
+    "amount": 1640,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:20:38.947487619Z",
+    "creation_date": "2022-06-03T21:20:38.947487619Z",
+    "category_id": null,
+    "description": "Go Daddy Hosting + Domain",
+    "amount": 4100,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:20:23.916200319Z",
+    "creation_date": "2022-06-03T21:20:23.916200319Z",
+    "category_id": null,
+    "description": "Gillion Theme",
+    "amount": 3213,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:20:09.598411667Z",
+    "creation_date": "2022-06-03T21:20:09.598411667Z",
+    "category_id": null,
+    "description": "WP Cost Estimation",
+    "amount": 1799,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:19:50.100477709Z",
+    "creation_date": "2022-06-03T21:19:50.100477709Z",
+    "category_id": null,
+    "description": "WP Geo ip",
+    "amount": 1357,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:19:38.666376011Z",
+    "creation_date": "2022-06-03T21:19:38.666376011Z",
+    "category_id": null,
+    "description": "WP rocket",
+    "amount": 2376,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:19:27.956478934Z",
+    "creation_date": "2022-06-03T21:19:27.956478934Z",
+    "category_id": null,
+    "description": "Imagify",
+    "amount": 676,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:19:06.902662019Z",
+    "creation_date": "2022-06-03T21:19:06.902662019Z",
+    "category_id": null,
+    "description": "Readorb Imagify",
+    "amount": 2273,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:18:57.924994504Z",
+    "creation_date": "2022-06-03T21:18:57.924994504Z",
+    "category_id": null,
+    "description": "Readorb Studio Press",
+    "amount": 2273,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
+  },
+  {
+    "pk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "sk": "Transaction#2022-06-03T21:17:10.292289603Z",
+    "creation_date": "2022-06-03T21:17:10.292289603Z",
+    "category_id": null,
+    "description": "Readorb Quform",
+    "amount": 1350,
+    "tags": null,
+    "investment_id": null,
+    "debt_id": null,
+    "goal_id": null
   }
+]

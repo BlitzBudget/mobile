@@ -7,14 +7,11 @@ class WalletResponseModel extends WalletResponse {
     List<Wallet>? wallets,
   }) : super(wallets: wallets);
 
-  factory WalletResponseModel.fromJSON(
-      Map<String, dynamic> walletResponseModel) {
+  factory WalletResponseModel.fromJSON(List<dynamic> walletResponseModel) {
     /// Convert categories from the response JSON to List<Category>
     /// If Empty then return an empty object list
-    final responseCategories = walletResponseModel['Wallet'];
-    final convertedWallet = List<Wallet>.from(responseCategories
-            ?.map<dynamic>((dynamic model) => WalletModel.fromJSON(model)) ??
-        <Wallet>[]);
+    final convertedWallet = List<Wallet>.from(walletResponseModel
+        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
     return WalletResponseModel(wallets: convertedWallet);
   }

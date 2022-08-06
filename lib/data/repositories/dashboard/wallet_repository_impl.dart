@@ -22,8 +22,7 @@ class WalletRepositoryImpl implements WalletRepository {
       final WalletResponse walletResponse = await walletRemoteDataSource!.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       return Right(walletResponse.wallets);
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));

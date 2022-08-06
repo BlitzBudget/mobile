@@ -29,13 +29,11 @@ void main() {
       final fetchTransactionAsJSON = jsonDecode(fetchTransactionAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet =
-          fetchTransactionAsJSON['Transaction'][0]['transactionId'];
-      String? userId;
+      final defaultWallet = fetchTransactionAsJSON[0]['sk'];
       final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
-        'walletId': defaultWallet
+        'starts_with_date': startsWithDate,
+        'ends_with_date': endsWithDate,
+        'wallet_id': defaultWallet
       };
       // arrange
       when(() => mockHTTPClientImpl!.post(constants.transactionURL,
@@ -45,14 +43,15 @@ void main() {
       final transactions = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       // assert
       verify(() => mockHTTPClientImpl!.post(constants.transactionURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(transactions.categories!.last.categoryId,
-          equals(fetchTransactionAsJSON['Category'][0]['categoryId']));
+      expect(
+        transactions.transactions != null,
+        equals(true),
+      );
     });
   });
   group('Attempt to add a transaction', () {
@@ -66,7 +65,7 @@ void main() {
             ?.map<String>(parseDynamicAsString)
             ?.toList();
         final transaction = TransactionModel(
-            walletId: addTransactionAsJSON['body-json']['walletId'],
+            walletId: addTransactionAsJSON['body-json']['pk'],
             transactionId: addTransactionAsJSON['body-json']['transactionId'],
             amount: parseDynamicAsDouble(
                 addTransactionAsJSON['body-json']['amount']),
@@ -95,7 +94,7 @@ void main() {
             'responses/dashboard/transaction/update/update_transaction_amount_info.json');
         final updateAmountAsJSON = jsonDecode(updateAmountAsString);
         final transaction = TransactionModel(
-            walletId: updateAmountAsJSON['body-json']['walletId'],
+            walletId: updateAmountAsJSON['body-json']['pk'],
             transactionId: updateAmountAsJSON['body-json']['transactionId'],
             amount: parseDynamicAsDouble(
                 updateAmountAsJSON['body-json']['amount']));
@@ -120,7 +119,7 @@ void main() {
             'responses/dashboard/transaction/update/update_transaction_description_info.json');
         final updateDescriptionAsJSON = jsonDecode(updateDescriptionAsString);
         final transaction = TransactionModel(
-            walletId: updateDescriptionAsJSON['body-json']['walletId'],
+            walletId: updateDescriptionAsJSON['body-json']['pk'],
             transactionId: updateDescriptionAsJSON['body-json']
                 ['transactionId'],
             description: updateDescriptionAsJSON['body-json']['description']);
@@ -148,7 +147,7 @@ void main() {
             ?.map<String>(parseDynamicAsString)
             ?.toList();
         final transaction = TransactionModel(
-            walletId: updateTagsAsJSON['body-json']['walletId'],
+            walletId: updateTagsAsJSON['body-json']['pk'],
             transactionId: updateTagsAsJSON['body-json']['transactionId'],
             tags: tags);
         // arrange
@@ -172,7 +171,7 @@ void main() {
             'responses/dashboard/transaction/update/update_transaction_category_info.json');
         final updateCategoryAsJSON = jsonDecode(updateCategoryAsString);
         final transaction = TransactionModel(
-            walletId: updateCategoryAsJSON['body-json']['walletId'],
+            walletId: updateCategoryAsJSON['body-json']['pk'],
             transactionId: updateCategoryAsJSON['body-json']['transactionId'],
             categoryId: updateCategoryAsJSON['body-json']['category']);
         // arrange
@@ -196,7 +195,7 @@ void main() {
             'responses/dashboard/transaction/update/update_transaction_account_info.json');
         final updateAccountAsJSON = jsonDecode(updateAccountAsString);
         final transaction = TransactionModel(
-            walletId: updateAccountAsJSON['body-json']['walletId'],
+            walletId: updateAccountAsJSON['body-json']['pk'],
             transactionId: updateAccountAsJSON['body-json']['transactionId'],
             categoryId: updateAccountAsJSON['body-json']['category']);
         // arrange

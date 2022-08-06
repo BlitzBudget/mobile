@@ -7,14 +7,17 @@ import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/data/model/transaction/transaction_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
 import 'package:mobile_blitzbudget/domain/entities/transaction/transaction.dart';
+import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/transaction/transaction_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/transaction/add_transaction_use_case.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
-import '../bank-account/delete_bank_account_use_case_test.dart';
 
 class MockTransactionRepository extends Mock implements TransactionRepository {}
+
+class MockDefaultWalletRepository extends Mock
+    implements DefaultWalletRepository {}
 
 void main() {
   late AddTransactionUseCase addTransactionUseCase;
@@ -28,7 +31,7 @@ void main() {
       ?.map<String>(parseDynamicAsString)
       ?.toList();
   final transaction = TransactionModel(
-      walletId: transactionModelAsJSON['walletId'],
+      walletId: transactionModelAsJSON['pk'],
       transactionId: transactionModelAsJSON['transactionId'],
       amount: parseDynamicAsDouble(transactionModelAsJSON['amount']),
       description: transactionModelAsJSON['description'],
@@ -50,7 +53,7 @@ void main() {
       const Either<Failure, void> addTransactionMonad =
           Right<Failure, void>('');
       const Either<Failure, String> walletIdMonad =
-          Right<Failure, String>('walletId');
+          Right<Failure, String>('pk');
 
       when(() => mockTransactionRepository!.add(any()))
           .thenAnswer((_) => Future.value(addTransactionMonad));
@@ -69,7 +72,7 @@ void main() {
       final Either<Failure, void> addTransactionMonad =
           Left<Failure, void>(FetchDataFailure());
       const Either<Failure, String> walletIdMonad =
-          Right<Failure, String>('walletId');
+          Right<Failure, String>('pk');
 
       when(() => mockTransactionRepository!.add(any()))
           .thenAnswer((_) => Future.value(addTransactionMonad));

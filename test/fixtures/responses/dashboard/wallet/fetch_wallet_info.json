@@ -1,10 +1,16 @@
-{
-    "Wallet": [
-      {
-        "wallet_currency": "Euro",
-        "wallet_name":"Euro Wallet",
-        "sk": "Wallet#2020-12-21T20:35:49.295Z",
-        "pk": "User#2020-12-21T20:32:06.003Z"
-      }
-    ]
+[
+  {
+    "pk": "User#2022-06-03T20:57:08.400Z",
+    "sk": "Wallet#2022-06-03T20:59:25.352242248Z",
+    "creation_date": "2022-06-03T20:59:25.352242248Z",
+    "wallet_currency": "€",
+    "wallet_name": "Euro"
+  },
+  {
+    "pk": "User#2022-06-03T20:57:08.400Z",
+    "sk": "Wallet#2022-06-03T20:59:15.69551648Z",
+    "creation_date": "2022-06-03T20:59:15.69551648Z",
+    "wallet_currency": "₹",
+    "wallet_name": "Indian Rupee"
   }
+]

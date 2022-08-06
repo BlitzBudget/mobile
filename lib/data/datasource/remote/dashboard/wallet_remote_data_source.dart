@@ -12,8 +12,7 @@ abstract class WalletRemoteDataSource {
   Future<WalletResponseModel> fetch(
       {required String startsWithDate,
       required String endsWithDate,
-      required String? defaultWallet,
-      required String? userId});
+      required String? defaultWallet});
 
   Future<void> update(WalletModel updateWallet);
 
@@ -32,18 +31,16 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   Future<WalletResponseModel> fetch(
       {required String startsWithDate,
       required String endsWithDate,
-      required String? defaultWallet,
-      required String? userId}) async {
+      required String? defaultWallet}) async {
     final contentBody = <String, dynamic>{
-      'startsWithDate': startsWithDate,
-      'endsWithDate': endsWithDate
+      'starts_with_date': startsWithDate,
+      'ends_with_date': endsWithDate
     };
 
     if (isNotEmpty(defaultWallet)) {
       contentBody['pk'] = defaultWallet;
-    } else {
-      contentBody['userId'] = userId;
     }
+
     return httpClient!
         .post(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers)
@@ -72,7 +69,7 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
   Future<void> delete({required String walletId, required String? userId}) {
     // JSON for Get wallet [_jsonForGetWallet]
     final _jsonForDeleteWallet = <String, dynamic>{
-      'walletId': walletId,
+      'pk': walletId,
       'deleteAccount': false,
       'referenceNumber': userId
     };

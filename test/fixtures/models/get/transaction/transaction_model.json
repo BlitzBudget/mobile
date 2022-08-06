@@ -1,15 +1,11 @@
 {
-  "category_type": "Expense",
-  "category": "Category#2021-01-04T15:22:28.240Z",
-  "category_name": "Car",
-  "amount": -2,
+  "category_id": "Category#2021-01-04T15:22:28.240Z",
+  "amount": 2,
   "description": "Car",
-  "date_meant_for": "Date#2021-01-04T15:20:13.088Z",
-  "recurrence": "NEVER",
-  "account": "BankAccount#2020-12-21T20:35:50.775Z",
-  "walletId": "Wallet#2020-12-21T20:35:49.295Z",
+  "creation_date": "Date#2021-01-04T15:20:13.088Z",
+  "pk": "Wallet#2020-12-21T20:35:49.295Z",
   "tags": [
     "CAR"
   ],
-  "transactionId": "Transaction#2021-01-04T15:22:28.263Z"
+  "sk": "Transaction#2021-01-04T15:22:28.263Z"
 }

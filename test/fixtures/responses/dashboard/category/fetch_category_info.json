@@ -1,0 +1,86 @@
+[
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-18T10:37:16.214639027Z",
+        "creation_date": "2022-07-18T10:37:16.214639027Z",
+        "category_name": "BlitzBudget",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-14T18:04:41.824809549Z",
+        "creation_date": "2022-07-14T18:04:41.824809549Z",
+        "category_name": "Beauty",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-12T17:56:36.886952546Z",
+        "creation_date": "2022-07-12T17:56:36.886952546Z",
+        "category_name": "Public Transportation",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-07T16:34:37.387210901Z",
+        "creation_date": "2022-07-07T16:34:37.387210901Z",
+        "category_name": "Medical",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-07T13:25:55.077731444Z",
+        "creation_date": "2022-07-07T13:25:55.077731444Z",
+        "category_name": "Restaurants",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-07T10:54:25.636402011Z",
+        "creation_date": "2022-07-07T10:54:25.636402011Z",
+        "category_name": "Car",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-07-02T20:26:14.983735818Z",
+        "creation_date": "2022-07-02T20:26:14.983735818Z",
+        "category_name": "Personal Improvement",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-06-18T21:29:54.048530547Z",
+        "creation_date": "2022-06-18T21:29:54.048530547Z",
+        "category_name": "Salary",
+        "category_type": "Income"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-06-11T11:39:29.480381237Z",
+        "creation_date": "2022-06-11T11:39:29.480381237Z",
+        "category_name": "Groceries",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-06-10T07:39:26.000139322Z",
+        "creation_date": "2022-06-10T07:39:26.000139322Z",
+        "category_name": "House",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-06-09T08:04:22.138066147Z",
+        "creation_date": "2022-06-09T08:04:22.138066147Z",
+        "category_name": "Travel",
+        "category_type": "Expense"
+    },
+    {
+        "pk": "User#2022-06-03T20:57:08.400Z",
+        "sk": "Category#2022-06-03T20:58:17.667203837Z",
+        "creation_date": "2022-06-03T20:58:17.667203837Z",
+        "category_name": "Readorb",
+        "category_type": "Expense"
+    }
+]

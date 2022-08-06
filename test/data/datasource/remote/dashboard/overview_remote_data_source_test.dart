@@ -26,12 +26,11 @@ void main() {
       final fetchOverviewAsJSON = jsonDecode(fetchOverviewAsString);
       final startsWithDate = DateTime.now().toIso8601String();
       final endsWithDate = startsWithDate;
-      final defaultWallet = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
-      String? userId;
+      final defaultWallet = fetchOverviewAsJSON['Transaction'][0]['pk'];
       final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
-        'walletId': defaultWallet
+        'starts_with_date': startsWithDate,
+        'ends_with_date': endsWithDate,
+        'pk': defaultWallet
       };
       // arrange
       when(() => mockHTTPClientImpl!.post(constants.overviewURL,
@@ -41,49 +40,13 @@ void main() {
       final overviewResponse = await dataSource.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
+          defaultWallet: defaultWallet);
       // assert
       verify(() => mockHTTPClientImpl!.post(constants.overviewURL,
           body: jsonEncode(contentBody), headers: constants.headers));
 
-      expect(overviewResponse.dates!.last.dateId,
-          equals(fetchOverviewAsJSON['Date'][0]['dateId']));
-      expect(overviewResponse.bankAccounts!.last.accountId,
-          equals(fetchOverviewAsJSON['BankAccount'][0]['accountId']));
-    });
-
-    test('Should fetch all data for overview with user Id', () async {
-      final fetchOverviewAsString =
-          fixture('responses/dashboard/overview_info.json');
-      final fetchOverviewAsJSON = jsonDecode(fetchOverviewAsString);
-      final startsWithDate = DateTime.now().toIso8601String();
-      final endsWithDate = startsWithDate;
-      final userId = fetchOverviewAsJSON['BankAccount'][0]['walletId'];
-      String? defaultWallet;
-      final contentBody = <String, dynamic>{
-        'startsWithDate': startsWithDate,
-        'endsWithDate': endsWithDate,
-        'userId': userId
-      };
-      // arrange
-      when(() => mockHTTPClientImpl!.post(constants.overviewURL,
-              body: jsonEncode(contentBody), headers: constants.headers))
-          .thenAnswer((_) async => fetchOverviewAsJSON);
-      // act
-      final overviewResponse = await dataSource.fetch(
-          startsWithDate: startsWithDate,
-          endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId);
-      // assert
-      verify(() => mockHTTPClientImpl!.post(constants.overviewURL,
-          body: jsonEncode(contentBody), headers: constants.headers));
-
-      expect(overviewResponse.dates!.last.dateId,
-          equals(fetchOverviewAsJSON['Date'][0]['dateId']));
-      expect(overviewResponse.bankAccounts!.last.accountId,
-          equals(fetchOverviewAsJSON['BankAccount'][0]['accountId']));
+      expect(overviewResponse.transactions!.last.transactionId,
+          equals(fetchOverviewAsJSON['Transaction'][0]['sk']));
     });
   });
 }

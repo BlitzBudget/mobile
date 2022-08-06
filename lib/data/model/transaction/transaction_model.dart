@@ -23,11 +23,11 @@ class TransactionModel extends Transaction {
     final tags =
         transaction['tags']?.map<String>(parseDynamicAsString)?.toList();
     return TransactionModel(
-        transactionId: parseDynamicAsString(transaction['transactionId']),
-        walletId: parseDynamicAsString(transaction['walletId']),
+        transactionId: parseDynamicAsString(transaction['sk']),
+        walletId: parseDynamicAsString(transaction['pk']),
         amount: parseDynamicAsDouble(transaction['amount']),
         description: parseDynamicAsString(transaction['description']),
-        categoryId: parseDynamicAsString(transaction['category']),
+        categoryId: parseDynamicAsString(transaction['category_id']),
         tags: tags);
   }
 
@@ -38,6 +38,6 @@ class TransactionModel extends Transaction {
         'amount': amount,
         'description': description,
         'tags': tags,
-        'category': categoryId,
+        'category_id': categoryId,
       };
 }

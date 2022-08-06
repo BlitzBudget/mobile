@@ -12,8 +12,7 @@ abstract class GoalRemoteDataSource {
   Future<GoalResponseModel> fetch(
       {required String startsWithDate,
       required String endsWithDate,
-      required String? defaultWallet,
-      required String? userId});
+      required String? defaultWallet});
 
   Future<void> update(GoalModel updateGoal);
 
@@ -30,18 +29,16 @@ class GoalRemoteDataSourceImpl implements GoalRemoteDataSource {
   Future<GoalResponseModel> fetch(
       {required String startsWithDate,
       required String endsWithDate,
-      required String? defaultWallet,
-      required String? userId}) async {
+      required String? defaultWallet}) async {
     final contentBody = <String, dynamic>{
-      'startsWithDate': startsWithDate,
-      'endsWithDate': endsWithDate
+      'starts_with_date': startsWithDate,
+      'ends_with_date': endsWithDate
     };
 
     if (isNotEmpty(defaultWallet)) {
-      contentBody['walletId'] = defaultWallet;
-    } else {
-      contentBody['userId'] = userId;
+      contentBody['pk'] = defaultWallet;
     }
+
     return httpClient!
         .post(constants.goalURL,
             body: jsonEncode(contentBody), headers: constants.headers)

@@ -31,20 +31,6 @@ class UpdateBudgetUseCase extends UseCase {
     return _update(updateBudget: budget);
   }
 
-  /// Updates the date meant for
-  Future<Either<Failure, void>> updateDateMeantFor(
-      {required String? dateMeantFor, required String? budgetId}) async {
-    final defaultWalletResponse =
-        await defaultWalletRepository.readDefaultWallet();
-    if (defaultWalletResponse.isLeft()) {
-      return Left(EmptyResponseFailure());
-    }
-    final walletId = defaultWalletResponse.getOrElse(() => '');
-    final budget = Budget(
-        walletId: walletId, budgetId: budgetId, dateMeantFor: dateMeantFor);
-    return _update(updateBudget: budget);
-  }
-
   /// Updates the category id
   Future<Either<Failure, void>> updateCategoryId(
       {required String? categoryId, required String? budgetId}) async {

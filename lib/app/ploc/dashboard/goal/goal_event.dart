@@ -5,22 +5,24 @@ abstract class GoalEvent extends Equatable {
       {this.deleteItemId,
       this.walletId,
       this.goalId,
-      this.goalType,
-      this.targetType,
-      this.monthlyContribution,
+      this.currentAmount,
       this.targetAmount,
       this.targetDate,
-      this.targetId});
+      this.goalName,
+      this.goalAchieved,
+      this.creationDate,
+      this.updateDate});
 
   final String? deleteItemId;
   final String? walletId;
   final String? goalId;
-  final GoalType? goalType;
-  final TargetType? targetType;
-  final double? monthlyContribution;
+  final double? currentAmount;
   final double? targetAmount;
   final String? targetDate;
-  final String? targetId;
+  final String? goalName;
+  final bool? goalAchieved;
+  final String? creationDate;
+  final String? updateDate;
 
   @override
   List<Object> get props => [];
@@ -30,42 +32,46 @@ class Add extends GoalEvent {
   const Add(
       {required final String? walletId,
       required final String? goalId,
-      required final GoalType? goalType,
-      required final TargetType? targetType,
-      required final double? monthlyContribution,
+      required final double? currentAmount,
       required final double? targetAmount,
       required final String? targetDate,
-      required final String? targetId})
+      required final String? goalName,
+      required final bool? goalAchieved,
+      required final String? creationDate,
+      required final String? updateDate})
       : super(
             walletId: walletId,
             goalId: goalId,
-            goalType: goalType,
-            targetType: targetType,
-            monthlyContribution: monthlyContribution,
             targetAmount: targetAmount,
             targetDate: targetDate,
-            targetId: targetId);
+            currentAmount: currentAmount,
+            goalName: goalName,
+            goalAchieved: goalAchieved,
+            creationDate: creationDate,
+            updateDate: updateDate);
 }
 
 class Update extends GoalEvent {
   const Update(
       {required final String? walletId,
       required final String? goalId,
-      required final GoalType? goalType,
-      required final TargetType? targetType,
-      required final double? monthlyContribution,
+      required final double? currentAmount,
       required final double? targetAmount,
       required final String? targetDate,
-      required final String? targetId})
+      required final String? goalName,
+      required final bool? goalAchieved,
+      required final String? creationDate,
+      required final String? updateDate})
       : super(
             walletId: walletId,
             goalId: goalId,
-            goalType: goalType,
-            targetType: targetType,
-            monthlyContribution: monthlyContribution,
             targetAmount: targetAmount,
             targetDate: targetDate,
-            targetId: targetId);
+            currentAmount: currentAmount,
+            goalName: goalName,
+            goalAchieved: goalAchieved,
+            creationDate: creationDate,
+            updateDate: updateDate);
 }
 
 class Delete extends GoalEvent {

@@ -20,8 +20,7 @@ class OverviewRepositoryImpl implements OverviewRepository {
       return Right(await overviewRemoteDataSource!.fetch(
           startsWithDate: startsWithDate,
           endsWithDate: endsWithDate,
-          defaultWallet: defaultWallet,
-          userId: userId));
+          defaultWallet: defaultWallet));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

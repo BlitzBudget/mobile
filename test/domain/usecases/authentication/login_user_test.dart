@@ -10,10 +10,9 @@ import 'package:mobile_blitzbudget/domain/repositories/authentication/auth_token
 import 'package:mobile_blitzbudget/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/refresh_token_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
+import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
 import 'package:mobile_blitzbudget/domain/usecases/authentication/login_user.dart';
 import 'package:mocktail/mocktail.dart';
-
-import '../dashboard/bank-account/update_bank_account_use_case_test.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -27,6 +26,9 @@ class MockRefreshTokenRepository extends Mock
 
 class MockUserAttributesRepository extends Mock
     implements UserAttributesRepository {}
+
+class MockDefaultWalletRepository extends Mock
+    implements DefaultWalletRepository {}
 
 void main() {
   MockAuthenticationRepository? mockAuthenticationRepository;
@@ -57,7 +59,7 @@ void main() {
     test('Should receive a successful response', () async {
       const userEmail = 'nagarjun_nagesh@outlook.com';
       const userPassword = 'password';
-      const walletId = 'walletId';
+      const walletId = 'pk';
       const wallet = Wallet(walletId: walletId);
       const optionResponse = Some(UserResponse(wallet: wallet));
       const eitherUserResponseMonad =

@@ -48,15 +48,14 @@ void main() {
       when(() => mockGoalRemoteDataSource!.fetch(
           defaultWallet: '',
           endsWithDate: '',
-          startsWithDate: '',
-          userId: '')).thenThrow(EmptyAuthorizationTokenException());
+          startsWithDate: '')).thenThrow(EmptyAuthorizationTokenException());
       final goalReceived = await goalRepositoryImpl!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
       final f = goalReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockGoalRemoteDataSource!.fetch(
-          defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
+      verify(() => mockGoalRemoteDataSource!
+          .fetch(defaultWallet: '', endsWithDate: '', startsWithDate: ''));
       expect(goalReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

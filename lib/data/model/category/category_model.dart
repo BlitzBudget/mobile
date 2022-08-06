@@ -5,33 +5,29 @@ import 'package:mobile_blitzbudget/domain/entities/category/category_type.dart';
 class CategoryModel extends Category {
   const CategoryModel(
       {final String? categoryId,
-      final String? walletId,
+      final String? userId,
       final String? categoryName,
-      final double? categoryTotal,
       final CategoryType? categoryType})
       : super(
             categoryId: categoryId,
-            walletId: walletId,
+            userId: userId,
             categoryName: categoryName,
-            categoryTotal: categoryTotal,
             categoryType: categoryType);
 
   /// Map JSON transactions to List of object
   factory CategoryModel.fromJSON(Map<String, dynamic> category) {
     return CategoryModel(
-        categoryId: parseDynamicAsString(category['categoryId']),
-        walletId: parseDynamicAsString(category['walletId']),
+        categoryId: parseDynamicAsString(category['sk']),
+        userId: parseDynamicAsString(category['pk']),
         categoryName: parseDynamicAsString(category['category_name']),
-        categoryTotal: parseDynamicAsDouble(category['category_total']),
         categoryType: parseDynamicAsCategoryType(category['category_type']));
   }
 
   /// Budget to JSON
   Map<String, dynamic> toJSON() => <String, dynamic>{
-        'walletId': walletId,
-        'categoryId': categoryId,
-        'categoryName': categoryName,
-        'categoryTotal': categoryTotal,
-        'categoryType': categoryType.name
+        'pk': userId,
+        'sk': categoryId,
+        'category_name': categoryName,
+        'category_type': categoryType.name
       };
 }

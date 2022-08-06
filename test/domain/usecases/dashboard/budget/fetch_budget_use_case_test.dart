@@ -4,20 +4,12 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
-import 'package:mobile_blitzbudget/data/model/bank-account/bank_account_model.dart';
 import 'package:mobile_blitzbudget/data/model/budget/budget_model.dart';
-import 'package:mobile_blitzbudget/data/model/category/category_model.dart';
-import 'package:mobile_blitzbudget/data/model/date_model.dart';
 import 'package:mobile_blitzbudget/data/model/response/dashboard/budget_response_model.dart';
-import 'package:mobile_blitzbudget/data/model/wallet/wallet_model.dart';
 import 'package:mobile_blitzbudget/data/utils/data_utils.dart';
-import 'package:mobile_blitzbudget/domain/entities/bank-account/bank_account.dart';
 import 'package:mobile_blitzbudget/domain/entities/budget/budget.dart';
-import 'package:mobile_blitzbudget/domain/entities/category/category.dart';
-import 'package:mobile_blitzbudget/domain/entities/date.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/budget_response.dart';
 import 'package:mobile_blitzbudget/domain/entities/user.dart';
-import 'package:mobile_blitzbudget/domain/entities/wallet/wallet.dart';
 import 'package:mobile_blitzbudget/domain/repositories/authentication/user_attributes_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/budget_repository.dart';
 import 'package:mobile_blitzbudget/domain/repositories/dashboard/common/default_wallet_repository.dart';
@@ -53,13 +45,11 @@ void main() {
   final budgetModelAsString = fixture('models/get/budget/budget_model.json');
   final budgetModelAsJSON = jsonDecode(budgetModelAsString);
   final budget = Budget(
-      walletId: budgetModelAsJSON['walletId'],
-      budgetId: budgetModelAsJSON['budgetId'],
+      walletId: budgetModelAsJSON['pk'],
+      budgetId: budgetModelAsJSON['sk'],
       planned: parseDynamicAsDouble(budgetModelAsJSON['planned']),
       categoryId: budgetModelAsJSON['category'],
-      categoryType:
-          parseDynamicAsCategoryType(budgetModelAsJSON['category_type']),
-      dateMeantFor: budgetModelAsJSON['date_meant_for']);
+      creationDate: budgetModelAsJSON['creation_date']);
 
   final budgetResponseModelAsString =
       fixture('responses/dashboard/budget/fetch_budget_info.json');
@@ -187,57 +177,12 @@ void main() {
 }
 
 BudgetResponseModel convertToResponseModel(
-    Map<String, dynamic> budgetResponseModelAsJSON) {
+    List<dynamic> budgetResponseModelAsJSON) {
   /// Convert budgets from the response JSON to List<Budget>
   /// If Empty then return an empty object list
-  final responseBudgets = budgetResponseModelAsJSON['Budget'];
-  final convertedBudgets = List<Budget>.from(responseBudgets
-          ?.map<dynamic>((dynamic model) => BudgetModel.fromJSON(model)) ??
-      <Budget>[]);
+  final convertedBudgets = List<Budget>.from(budgetResponseModelAsJSON
+      .map<dynamic>((dynamic model) => BudgetModel.fromJSON(model)));
 
-  /// Convert categories from the response JSON to List<Category>
-  /// If Empty then return an empty object list
-  final responseCategories = budgetResponseModelAsJSON['Category'];
-  final convertedCategories = List<Category>.from(responseCategories
-          ?.map<dynamic>((dynamic model) => CategoryModel.fromJSON(model)) ??
-      <Category>[]);
-
-  /// Convert BankAccount from the response JSON to List<BankAccount>
-  /// If Empty then return an empty object list
-  final responseBankAccounts = budgetResponseModelAsJSON['BankAccount'];
-  final convertedBankAccounts = List<BankAccount>.from(responseBankAccounts
-          ?.map<dynamic>((dynamic model) => BankAccountModel.fromJSON(model)) ??
-      <BankAccount>[]);
-
-  /// Convert Dates from the response JSON to List<Date>
-  /// If Empty then return an empty object list
-  final responseDate = budgetResponseModelAsJSON['Date'];
-  final convertedDates = List<Date>.from(responseDate
-          ?.map<dynamic>((dynamic model) => DateModel.fromJSON(model)) ??
-      <Date>[]);
-
-  final dynamic responseWallet = budgetResponseModelAsJSON['Wallet'];
-  Wallet? convertedWallet;
-
-  /// Check if the response is a string or a list
-  ///
-  /// If string then convert them into a wallet
-  /// If List then convert them into list of wallets and take the first wallet.
-  if (responseWallet is Map) {
-    convertedWallet =
-        WalletModel.fromJSON(responseWallet as Map<String, dynamic>);
-  } else if (responseWallet is List) {
-    final convertedWallets = List<Wallet>.from(responseWallet
-        .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
-
-    convertedWallet = convertedWallets[0];
-  }
-
-  final budgetResponseModel = BudgetResponseModel(
-      budgets: convertedBudgets,
-      categories: convertedCategories,
-      bankAccounts: convertedBankAccounts,
-      dates: convertedDates,
-      wallet: convertedWallet);
+  final budgetResponseModel = BudgetResponseModel(budgets: convertedBudgets);
   return budgetResponseModel;
 }

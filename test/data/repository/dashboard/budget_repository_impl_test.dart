@@ -49,15 +49,14 @@ void main() {
       when(() => mockBudgetRemoteDataSource!.fetch(
           defaultWallet: '',
           endsWithDate: '',
-          startsWithDate: '',
-          userId: '')).thenThrow(EmptyAuthorizationTokenException());
+          startsWithDate: '')).thenThrow(EmptyAuthorizationTokenException());
       final budgetReceived = await budgetRepositoryImpl!.fetch(
           defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: '');
 
       /// Expect an exception to be thrown
       final f = budgetReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockBudgetRemoteDataSource!.fetch(
-          defaultWallet: '', endsWithDate: '', startsWithDate: '', userId: ''));
+      verify(() => mockBudgetRemoteDataSource!
+          .fetch(defaultWallet: '', endsWithDate: '', startsWithDate: ''));
       expect(budgetReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

@@ -7,8 +7,6 @@ import 'package:mobile_blitzbudget/app/ploc/dashboard/goal/goal_constants.dart'
 import 'package:mobile_blitzbudget/core/failure/api_failure.dart';
 import 'package:mobile_blitzbudget/core/failure/failure.dart';
 import 'package:mobile_blitzbudget/domain/entities/goal/goal.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/goal_type.dart';
-import 'package:mobile_blitzbudget/domain/entities/goal/target_type.dart';
 import 'package:mobile_blitzbudget/domain/entities/response/goal_response.dart';
 import 'package:mobile_blitzbudget/domain/usecases/dashboard/goal/add_goal_use_case.dart'
     as add_goal_usecase;
@@ -36,7 +34,10 @@ void main() {
   const GOAL_ID = 'goalID';
   const WALLET_ID = 'walletID';
   const TARGET_DATE = 'targetDate';
-  const TARGET_ID = 'targetID';
+  const CREATION_DATE = 'CREATIONDATE';
+  const CURRENT_AMOUNT = 20.1;
+  const GOAL_NAME = 'GOALNAME';
+  const UPDATE_DATE = 'UPDATEDATE';
 
   late MockAddGoalUsecase mockAddGoalUsecase;
   late MockDeleteGoalUseCase mockDeleteGoalUseCase;
@@ -46,12 +47,13 @@ void main() {
   const addGoal = Goal(
       walletId: WALLET_ID,
       goalId: GOAL_ID,
-      goalType: GoalType.buyACar,
-      targetType: TargetType.account,
-      monthlyContribution: 1,
       targetAmount: 1,
       targetDate: TARGET_DATE,
-      targetId: TARGET_ID);
+      creationDate: CREATION_DATE,
+      currentAmount: CURRENT_AMOUNT,
+      goalAchieved: true,
+      goalName: GOAL_NAME,
+      updateDate: UPDATE_DATE);
 
   setUp(() {
     mockAddGoalUsecase = MockAddGoalUsecase();
@@ -75,12 +77,13 @@ void main() {
       act: (bloc) => bloc.add(const Add(
           walletId: WALLET_ID,
           goalId: GOAL_ID,
-          goalType: GoalType.buyACar,
-          targetType: TargetType.account,
-          monthlyContribution: 1,
           targetAmount: 1,
           targetDate: TARGET_DATE,
-          targetId: TARGET_ID)),
+          creationDate: CREATION_DATE,
+          currentAmount: CURRENT_AMOUNT,
+          goalAchieved: true,
+          goalName: GOAL_NAME,
+          updateDate: UPDATE_DATE)),
       expect: () => [Loading(), Success()],
     );
 
@@ -114,12 +117,13 @@ void main() {
       act: (bloc) => bloc.add(const Update(
           walletId: WALLET_ID,
           goalId: GOAL_ID,
-          goalType: GoalType.buyACar,
-          targetType: TargetType.account,
-          monthlyContribution: 1,
           targetAmount: 1,
           targetDate: TARGET_DATE,
-          targetId: TARGET_ID)),
+          creationDate: CREATION_DATE,
+          currentAmount: CURRENT_AMOUNT,
+          goalAchieved: true,
+          goalName: GOAL_NAME,
+          updateDate: UPDATE_DATE)),
       expect: () => [Loading(), Success()],
     );
 
@@ -155,12 +159,13 @@ void main() {
       act: (bloc) => bloc.add(const Add(
           walletId: WALLET_ID,
           goalId: GOAL_ID,
-          goalType: GoalType.buyACar,
-          targetType: TargetType.account,
-          monthlyContribution: 1,
           targetAmount: 1,
           targetDate: TARGET_DATE,
-          targetId: TARGET_ID)),
+          creationDate: CREATION_DATE,
+          currentAmount: CURRENT_AMOUNT,
+          goalAchieved: true,
+          goalName: GOAL_NAME,
+          updateDate: UPDATE_DATE)),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -198,12 +203,13 @@ void main() {
       act: (bloc) => bloc.add(const Update(
           walletId: WALLET_ID,
           goalId: GOAL_ID,
-          goalType: GoalType.buyACar,
-          targetType: TargetType.account,
-          monthlyContribution: 1,
           targetAmount: 1,
           targetDate: TARGET_DATE,
-          targetId: TARGET_ID)),
+          creationDate: CREATION_DATE,
+          currentAmount: CURRENT_AMOUNT,
+          goalAchieved: true,
+          goalName: GOAL_NAME,
+          updateDate: UPDATE_DATE)),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -242,12 +248,13 @@ void main() {
       act: (bloc) => bloc.add(const Add(
           walletId: WALLET_ID,
           goalId: GOAL_ID,
-          goalType: GoalType.buyACar,
-          targetType: TargetType.account,
-          monthlyContribution: 1,
           targetAmount: 1,
           targetDate: TARGET_DATE,
-          targetId: TARGET_ID)),
+          creationDate: CREATION_DATE,
+          currentAmount: CURRENT_AMOUNT,
+          goalAchieved: true,
+          goalName: GOAL_NAME,
+          updateDate: UPDATE_DATE)),
       expect: () => [Loading(), RedirectToLogin()],
     );
 
@@ -283,12 +290,13 @@ void main() {
       act: (bloc) => bloc.add(const Update(
           walletId: WALLET_ID,
           goalId: GOAL_ID,
-          goalType: GoalType.buyACar,
-          targetType: TargetType.account,
-          monthlyContribution: 1,
           targetAmount: 1,
           targetDate: TARGET_DATE,
-          targetId: TARGET_ID)),
+          creationDate: CREATION_DATE,
+          currentAmount: CURRENT_AMOUNT,
+          goalAchieved: true,
+          goalName: GOAL_NAME,
+          updateDate: UPDATE_DATE)),
       expect: () => [Loading(), RedirectToLogin()],
     );
 

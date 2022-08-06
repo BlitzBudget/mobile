@@ -18,7 +18,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   Future<void> delete({required String walletId, required String category}) {
     // JSON for Get wallet [_jsonForGetWallet]
     final _jsonForDeleteCategory = <String, dynamic>{
-      'walletId': walletId,
+      'pk': walletId,
       'category': category
     };
 

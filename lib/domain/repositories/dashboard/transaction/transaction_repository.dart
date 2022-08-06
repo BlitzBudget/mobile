@@ -9,6 +9,5 @@ abstract class TransactionRepository {
   Future<Either<Failure, TransactionResponse>> fetch(
       {required String startsWithDate,
       required String endsWithDate,
-      required String? defaultWallet,
-      required String? userId});
+      required String? defaultWallet});
 }

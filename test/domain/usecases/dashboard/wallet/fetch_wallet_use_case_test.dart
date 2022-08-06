@@ -157,13 +157,11 @@ void main() {
 }
 
 WalletResponseModel convertToResponseModel(
-    Map<String, dynamic> walletResponseModelAsJSON) {
+    List<dynamic> walletResponseModelAsJSON) {
   /// Convert wallets from the response JSON to List<Wallet>
   /// If Empty then return an empty object list
-  final responseWallets = walletResponseModelAsJSON['Wallet'];
-  final convertedWallets = List<Wallet>.from(responseWallets
-          ?.map<dynamic>((dynamic model) => WalletModel.fromJSON(model)) ??
-      <Wallet>[]);
+  final convertedWallets = List<Wallet>.from(walletResponseModelAsJSON
+      .map<dynamic>((dynamic model) => WalletModel.fromJSON(model)));
 
   final walletResponseModel = WalletResponseModel(wallets: convertedWallets);
   return walletResponseModel;

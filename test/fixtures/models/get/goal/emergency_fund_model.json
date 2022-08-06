@@ -1,10 +1,10 @@
 {
-  "monthly_contribution": 2,
-  "preferable_target_date": "2021-04-28T20:05:58.286Z",
-  "target_id": "Wallet#2020-12-21T20:35:49.295Z",
-  "target_type": "Wallet",
-  "goal_type": "EmergencyFund",
-  "final_amount": 6,
-  "goalId": "Goal#2020-12-28T21:05:59.153Z",
-  "walletId": "Wallet#2020-12-21T20:35:49.295Z"
+  "pk": "Wallet#2020-12-21T20:35:49.295Z",
+  "creation_date": "2020-12-21T20:35:49.295Z",
+  "sk": "Goal#2020-12-28T21:05:59.153Z",
+  "target_amount": 20,
+  "current_amount": 12,
+  "target_date": "2020-12-28T21:05:59.153Z",
+  "goal_name": "goal name",
+  "goal_achieved": true
 }
