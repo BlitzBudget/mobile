@@ -31,10 +31,12 @@ class WalletRepositoryImpl implements WalletRepository {
 
   @override
   Future<Either<Failure, void>> add(
-      {required String? userId, required String? currency}) async {
+      {required String? userId,
+      required String? currency,
+      required String? name}) async {
     try {
       return Right(await walletRemoteDataSource!
-          .add(userId: userId, currency: currency));
+          .add(userId: userId, currency: currency, name: name));
     } on Exception catch (e) {
       return Left(APIException.convertExceptionToFailure(e));
     }

@@ -53,17 +53,21 @@ void main() {
           .thenAnswer((_) => Future.value(userMonad));
 
       when(() => mockWalletRepository!.add(
-              userId: wallet.wallets!.first.userId,
-              currency: wallet.wallets!.first.currency))
-          .thenAnswer((_) => Future.value(addWalletMonad));
+            userId: wallet.wallets!.first.userId,
+            currency: wallet.wallets!.first.currency,
+            name: wallet.wallets!.first.walletName,
+          )).thenAnswer((_) => Future.value(addWalletMonad));
 
-      final walletResponse =
-          await addWalletUseCase.add(currency: wallet.wallets!.first.currency);
+      final walletResponse = await addWalletUseCase.add(
+          currency: wallet.wallets!.first.currency,
+          name: wallet.wallets!.first.walletName);
 
       expect(walletResponse.isRight(), true);
       verify(() => mockWalletRepository!.add(
-          userId: wallet.wallets!.first.userId,
-          currency: wallet.wallets!.first.currency));
+            userId: wallet.wallets!.first.userId,
+            currency: wallet.wallets!.first.currency,
+            name: wallet.wallets!.first.walletName,
+          ));
     });
 
     test('Failure', () async {
@@ -74,17 +78,22 @@ void main() {
           .thenAnswer((_) => Future.value(userMonad));
 
       when(() => mockWalletRepository!.add(
-              userId: wallet.wallets!.first.userId,
-              currency: wallet.wallets!.first.currency))
-          .thenAnswer((_) => Future.value(addWalletMonad));
+            userId: wallet.wallets!.first.userId,
+            currency: wallet.wallets!.first.currency,
+            name: wallet.wallets!.first.walletName,
+          )).thenAnswer((_) => Future.value(addWalletMonad));
 
-      final walletResponse =
-          await addWalletUseCase.add(currency: wallet.wallets!.first.currency);
+      final walletResponse = await addWalletUseCase.add(
+        currency: wallet.wallets!.first.currency,
+        name: wallet.wallets!.first.walletName,
+      );
 
       expect(walletResponse.isLeft(), true);
       verify(() => mockWalletRepository!.add(
-          userId: wallet.wallets!.first.userId,
-          currency: wallet.wallets!.first.currency));
+            userId: wallet.wallets!.first.userId,
+            currency: wallet.wallets!.first.currency,
+            name: wallet.wallets!.first.walletName,
+          ));
     });
 
     test('User Attribute Failure', () async {
@@ -97,20 +106,25 @@ void main() {
           .thenAnswer((_) => Future.value(userFailure));
 
       when(() => mockWalletRepository!.add(
-              userId: wallet.wallets!.first.userId,
-              currency: wallet.wallets!.first.currency))
-          .thenAnswer((_) => Future.value(addWalletMonad));
+            userId: wallet.wallets!.first.userId,
+            currency: wallet.wallets!.first.currency,
+            name: wallet.wallets!.first.walletName,
+          )).thenAnswer((_) => Future.value(addWalletMonad));
 
-      final walletResponse =
-          await addWalletUseCase.add(currency: wallet.wallets!.first.currency);
+      final walletResponse = await addWalletUseCase.add(
+        currency: wallet.wallets!.first.currency,
+        name: wallet.wallets!.first.walletName,
+      );
       final f =
           walletResponse.fold((failure) => failure, (_) => GenericFailure());
 
       expect(f, equals(EmptyResponseFailure()));
       expect(walletResponse.isLeft(), true);
       verifyNever(() => mockWalletRepository!.add(
-          userId: wallet.wallets!.first.userId,
-          currency: wallet.wallets!.first.currency));
+            userId: wallet.wallets!.first.userId,
+            currency: wallet.wallets!.first.currency,
+            name: wallet.wallets!.first.walletName,
+          ));
     });
   });
 }

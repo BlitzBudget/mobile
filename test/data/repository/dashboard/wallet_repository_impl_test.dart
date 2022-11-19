@@ -53,14 +53,17 @@ void main() {
 
   group('Add Wallet', () {
     test('Should return FetchDataFailure ', () async {
-      when(() => mockWalletRemoteDataSource!.add(currency: '', userId: ''))
-          .thenThrow(EmptyAuthorizationTokenException());
+      when(() => mockWalletRemoteDataSource!.add(
+          currency: '',
+          userId: '',
+          name: '')).thenThrow(EmptyAuthorizationTokenException());
       final walletReceived =
-          await walletRepositoryImpl!.add(currency: '', userId: '');
+          await walletRepositoryImpl!.add(currency: '', userId: '', name: '');
 
       /// Expect an exception to be thrown
       final f = walletReceived.fold<Failure>((f) => f, (_) => GenericFailure());
-      verify(() => mockWalletRemoteDataSource!.add(currency: '', userId: ''));
+      verify(() =>
+          mockWalletRemoteDataSource!.add(currency: '', userId: '', name: ''));
       expect(walletReceived.isLeft(), equals(true));
       expect(f, equals(FetchDataFailure()));
     });

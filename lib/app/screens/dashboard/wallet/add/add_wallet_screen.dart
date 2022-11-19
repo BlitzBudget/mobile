@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
 
-import 'choose_currency.dart';
+import '../choose/choose_currency.dart';
 
 class AddNewWallet extends StatelessWidget {
   const AddNewWallet({

@@ -7,7 +7,7 @@ import 'package:mobile_blitzbudget/app/screens/dashboard/overview/overview_scree
 import 'package:mobile_blitzbudget/app/screens/dashboard/profile/profile_dialog.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/settings/settings_dialog.dart';
 import 'package:mobile_blitzbudget/app/screens/dashboard/transaction/fetch/transaction_screen.dart';
-import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_new_wallet.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_wallet_screen.dart';
 import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
 
 class Body extends StatelessWidget {

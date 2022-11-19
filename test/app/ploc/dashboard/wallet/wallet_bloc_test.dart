@@ -60,7 +60,8 @@ void main() {
     blocTest<WalletBloc, WalletState>(
       'Emits [Success] states for add wallet success',
       build: () {
-        when(() => mockAddWalletUsecase.add(currency: CURRENCY))
+        when(() =>
+                mockAddWalletUsecase.add(currency: CURRENCY, name: WALLET_NAME))
             .thenAnswer((_) => Future.value(positiveMonadResponse));
         return WalletBloc(
             addWalletUseCase: mockAddWalletUsecase,
@@ -68,14 +69,8 @@ void main() {
             updateWalletUseCase: mockUpdateWalletUseCase,
             fetchWalletUseCase: mockFetchWalletUseCase);
       },
-      act: (bloc) => bloc.add(const Add(
-          userId: USER_ID,
-          currency: CURRENCY,
-          walletId: WALLET_ID,
-          walletName: WALLET_NAME,
-          totalDebtBalance: 1,
-          walletBalance: 1,
-          totalAssetBalance: 1)),
+      act: (bloc) =>
+          bloc.add(const Add(currency: CURRENCY, walletName: WALLET_NAME)),
       expect: () => [Loading(), Success()],
     );
 
@@ -135,7 +130,8 @@ void main() {
       build: () {
         final fetchWalletResponse =
             Left<Failure, List<Wallet>>(GenericAPIFailure());
-        when(() => mockAddWalletUsecase.add(currency: CURRENCY))
+        when(() =>
+                mockAddWalletUsecase.add(currency: CURRENCY, name: WALLET_NAME))
             .thenAnswer((_) => Future.value(fetchWalletResponse));
         return WalletBloc(
             addWalletUseCase: mockAddWalletUsecase,
@@ -144,13 +140,9 @@ void main() {
             fetchWalletUseCase: mockFetchWalletUseCase);
       },
       act: (bloc) => bloc.add(const Add(
-          userId: USER_ID,
-          currency: CURRENCY,
-          walletId: WALLET_ID,
-          walletName: WALLET_NAME,
-          totalDebtBalance: 1,
-          walletBalance: 1,
-          totalAssetBalance: 1)),
+        currency: CURRENCY,
+        walletName: WALLET_NAME,
+      )),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -215,7 +207,8 @@ void main() {
       'Emits [Error] states for add wallet success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
-        when(() => mockAddWalletUsecase.add(currency: CURRENCY))
+        when(() =>
+                mockAddWalletUsecase.add(currency: CURRENCY, name: WALLET_NAME))
             .thenAnswer((_) => Future.value(failureMonadResponse));
         return WalletBloc(
             addWalletUseCase: mockAddWalletUsecase,
@@ -224,13 +217,9 @@ void main() {
             fetchWalletUseCase: mockFetchWalletUseCase);
       },
       act: (bloc) => bloc.add(const Add(
-          userId: USER_ID,
-          currency: CURRENCY,
-          walletId: WALLET_ID,
-          walletName: WALLET_NAME,
-          totalDebtBalance: 1,
-          walletBalance: 1,
-          totalAssetBalance: 1)),
+        currency: CURRENCY,
+        walletName: WALLET_NAME,
+      )),
       expect: () => [Loading(), RedirectToLogin()],
     );
 

@@ -43,20 +43,10 @@ class UpdateCurrency extends WalletEvent {
 }
 
 class Add extends WalletEvent {
-  const Add({
-    required final String? walletId,
-    required final String? userId,
-    required final String? walletName,
-    required final String? currency,
-    required final double? totalDebtBalance,
-    required final double? walletBalance,
-    required final double? totalAssetBalance,
-  }) : super(
-            walletId: walletId,
-            userId: userId,
-            walletBalance: walletBalance,
-            walletName: walletName,
-            currency: currency,
-            totalAssetBalance: totalAssetBalance,
-            totalDebtBalance: totalDebtBalance);
+  const Add(
+      {required final String? walletName, required final String? currency})
+      : super(
+          walletName: walletName,
+          currency: currency,
+        );
 }

@@ -14,7 +14,8 @@ class AddWalletUseCase extends UseCase {
   final WalletRepository? walletRepository;
   final UserAttributesRepository? userAttributesRepository;
 
-  Future<Either<Failure, void>> add({required String? currency}) async {
+  Future<Either<Failure, void>> add(
+      {required String? currency, required String? name}) async {
     final userResponse = await userAttributesRepository!.readUserAttributes();
     String? userId;
     if (userResponse.isRight()) {
@@ -23,6 +24,7 @@ class AddWalletUseCase extends UseCase {
       return Left(EmptyResponseFailure());
     }
 
-    return walletRepository!.add(userId: userId, currency: currency);
+    return walletRepository!
+        .add(userId: userId, currency: currency, name: name);
   }
 }

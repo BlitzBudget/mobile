@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_new_wallet.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_wallet_screen.dart';
 
 import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
