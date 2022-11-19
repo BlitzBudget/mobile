@@ -132,7 +132,7 @@ class AddNewWalletButton extends StatelessWidget {
       press: () {
         Navigator.pop(context);
         Navigator.push<void>(context,
-            MaterialPageRoute(builder: (context) => const AddNewWallet()));
+            MaterialPageRoute(builder: (context) => const AddWalletScreen()));
       },
     );
   }
@@ -148,7 +148,7 @@ class AddNewWalletButton extends StatelessWidget {
           CupertinoPageRoute(
             title: WalletDialog.title,
             fullscreenDialog: true,
-            builder: (context) => const AddNewWallet(),
+            builder: (context) => const AddWalletScreen(),
           ),
         );
       },

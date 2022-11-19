@@ -96,7 +96,7 @@ class _PlatformAdaptingHomePageState extends State<PlatformAdaptingHomePage> {
           case 2:
             return CupertinoTabView(
               defaultTitle: OverviewScreen.title,
-              builder: (context) => const AddNewWallet(),
+              builder: (context) => const AddWalletScreen(),
             );
           case 3:
             return CupertinoTabView(

@@ -1,50 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/app/widgets/dashboard_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/wallet/wallet_bloc.dart';
+import 'package:mobile_blitzbudget/injection_container.dart';
 
-import '../choose/choose_currency.dart';
+import 'components/body.dart';
 
-class AddNewWallet extends StatelessWidget {
-  const AddNewWallet({
-    Key? key,
-  }) : super(key: key);
+class AddWalletScreen extends StatelessWidget {
+  /// In the constructor, require a Todo.
+  const AddWalletScreen({Key? key, this.androidDrawer}) : super(key: key);
 
-  static const title = 'Add new wallet';
-
-  Widget _buildBody(BuildContext context) {
-    return const SafeArea(
-      child: Padding(
-        padding: EdgeInsets.all(24),
-        child: ChooseCurrencyList(),
-      ),
-    );
-  }
-
-  /// ===========================================================================
-  /// Non-shared code below because on iOS, the settings tab is nested inside of
-  /// the profile tab as a button in the nav bar.
-  /// ===========================================================================
-  Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(title),
-      ),
-      body: _buildBody(context),
-    );
-  }
-
-  Widget _buildIos(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(),
-      child: _buildBody(context),
-    );
-  }
+  final Widget? androidDrawer;
+  static const title = 'Wallet';
+  static const androidIcon = Icon(CupertinoIcons.news_solid);
+  static const iosIcon = Icon(CupertinoIcons.news_solid);
 
   @override
-  Widget build(context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIos,
+  BlocProvider<WalletBloc> build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => WalletBloc(
+          updateWalletUseCase: getIt(),
+          addWalletUseCase: getIt(),
+          deleteWalletUseCase: getIt(),
+          fetchWalletUseCase: getIt()),
+      child: const Scaffold(
+        body: Body(),
+      ),
     );
   }
 }
