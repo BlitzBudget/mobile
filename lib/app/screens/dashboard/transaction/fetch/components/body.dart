@@ -119,6 +119,12 @@ class _BodyState extends State<Body> {
             onPressed: _togglePlatform,
             child: const Icon(CupertinoIcons.shuffle),
           ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => Navigator.of(context, rootNavigator: true)
+                .pushNamed('/add-transactions'),
+            child: const Icon(CupertinoIcons.add_circled_solid),
+          ),
         ])),
         CupertinoSliverRefreshControl(
           onRefresh: _refreshData,

@@ -45,6 +45,12 @@ void main() {
   late MockFetchGoalUseCase mockFetchGoalUseCase;
   const positiveMonadResponse = Right<Failure, void>('');
   const addGoal = Goal(
+    targetAmount: 1,
+    targetDate: TARGET_DATE,
+    currentAmount: CURRENT_AMOUNT,
+    goalName: GOAL_NAME,
+  );
+  const updateGoal = Goal(
       walletId: WALLET_ID,
       goalId: GOAL_ID,
       targetAmount: 1,
@@ -75,15 +81,11 @@ void main() {
             fetchGoalUseCase: mockFetchGoalUseCase);
       },
       act: (bloc) => bloc.add(const Add(
-          walletId: WALLET_ID,
-          goalId: GOAL_ID,
-          targetAmount: 1,
-          targetDate: TARGET_DATE,
-          creationDate: CREATION_DATE,
-          currentAmount: CURRENT_AMOUNT,
-          goalAchieved: true,
-          goalName: GOAL_NAME,
-          updateDate: UPDATE_DATE)),
+        targetAmount: 1,
+        targetDate: TARGET_DATE,
+        currentAmount: CURRENT_AMOUNT,
+        goalName: GOAL_NAME,
+      )),
       expect: () => [Loading(), Success()],
     );
 
@@ -106,7 +108,7 @@ void main() {
     blocTest<GoalBloc, GoalState>(
       'Emits [Success] states for update category id success',
       build: () {
-        when(() => mockUpdateGoalUseCase.update(updateGoal: addGoal))
+        when(() => mockUpdateGoalUseCase.update(updateGoal: updateGoal))
             .thenAnswer((_) => Future.value(positiveMonadResponse));
         return GoalBloc(
             addGoalUseCase: mockAddGoalUsecase,
@@ -157,15 +159,11 @@ void main() {
             fetchGoalUseCase: mockFetchGoalUseCase);
       },
       act: (bloc) => bloc.add(const Add(
-          walletId: WALLET_ID,
-          goalId: GOAL_ID,
-          targetAmount: 1,
-          targetDate: TARGET_DATE,
-          creationDate: CREATION_DATE,
-          currentAmount: CURRENT_AMOUNT,
-          goalAchieved: true,
-          goalName: GOAL_NAME,
-          updateDate: UPDATE_DATE)),
+        targetAmount: 1,
+        targetDate: TARGET_DATE,
+        currentAmount: CURRENT_AMOUNT,
+        goalName: GOAL_NAME,
+      )),
       expect: () =>
           [Loading(), const Error(message: constants.GENERIC_ERROR_EXCEPTION)],
     );
@@ -192,7 +190,7 @@ void main() {
       'Emits [Error] states for update category id success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(GenericAPIFailure());
-        when(() => mockUpdateGoalUseCase.update(updateGoal: addGoal))
+        when(() => mockUpdateGoalUseCase.update(updateGoal: updateGoal))
             .thenAnswer((_) => Future.value(failureMonadResponse));
         return GoalBloc(
             addGoalUseCase: mockAddGoalUsecase,
@@ -246,15 +244,11 @@ void main() {
             fetchGoalUseCase: mockFetchGoalUseCase);
       },
       act: (bloc) => bloc.add(const Add(
-          walletId: WALLET_ID,
-          goalId: GOAL_ID,
-          targetAmount: 1,
-          targetDate: TARGET_DATE,
-          creationDate: CREATION_DATE,
-          currentAmount: CURRENT_AMOUNT,
-          goalAchieved: true,
-          goalName: GOAL_NAME,
-          updateDate: UPDATE_DATE)),
+        targetAmount: 1,
+        targetDate: TARGET_DATE,
+        currentAmount: CURRENT_AMOUNT,
+        goalName: GOAL_NAME,
+      )),
       expect: () => [Loading(), RedirectToLogin()],
     );
 
@@ -279,7 +273,7 @@ void main() {
       'Emits [Error] states for update category id success',
       build: () {
         final failureMonadResponse = Left<Failure, void>(FetchDataFailure());
-        when(() => mockUpdateGoalUseCase.update(updateGoal: addGoal))
+        when(() => mockUpdateGoalUseCase.update(updateGoal: updateGoal))
             .thenAnswer((_) => Future.value(failureMonadResponse));
         return GoalBloc(
             addGoalUseCase: mockAddGoalUsecase,

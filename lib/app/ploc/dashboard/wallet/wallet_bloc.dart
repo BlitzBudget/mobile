@@ -46,7 +46,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   FutureOr<void> _onAdd(Add event, Emitter<WalletState> emit) async {
     emit(Loading());
-    final addResponse = await addWalletUseCase.add(currency: event.currency);
+    final addResponse = await addWalletUseCase.add(
+        currency: event.currency, name: event.walletName);
     emit(addResponse.fold(_convertToMessage, _successResponse));
   }
 

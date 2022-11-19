@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_new_wallet.dart';
+import 'package:mobile_blitzbudget/app/screens/dashboard/wallet/add/add_wallet_screen.dart';
 
 import '../../../constants/constants.dart';
 import '../../../widgets/dashboard_widget.dart';
@@ -132,7 +132,7 @@ class AddNewWalletButton extends StatelessWidget {
       press: () {
         Navigator.pop(context);
         Navigator.push<void>(context,
-            MaterialPageRoute(builder: (context) => const AddNewWallet()));
+            MaterialPageRoute(builder: (context) => const AddWalletScreen()));
       },
     );
   }
@@ -148,7 +148,7 @@ class AddNewWalletButton extends StatelessWidget {
           CupertinoPageRoute(
             title: WalletDialog.title,
             fullscreenDialog: true,
-            builder: (context) => const AddNewWallet(),
+            builder: (context) => const AddWalletScreen(),
           ),
         );
       },

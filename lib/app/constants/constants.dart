@@ -15,6 +15,7 @@ const String verifyRoute = '/verify';
 const String forgotPasswordRoute = '/forgot-password';
 
 const String addTransactionRoute = '/add-transactions';
+const String addWalletRoute = '/add-wallet';
 
 // Profile Tab
 const String logoutDescription = 'Are you sure?';

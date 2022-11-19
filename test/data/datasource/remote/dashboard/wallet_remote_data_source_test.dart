@@ -61,16 +61,18 @@ void main() {
         final addWalletAsJSON = jsonDecode(addWalletAsString);
         final userId = addWalletAsJSON['body-json']['userId'];
         final currency = addWalletAsJSON['body-json']['currency'];
+        final name = addWalletAsJSON['body-json']['walletName'];
         final contentBody = <String, dynamic>{
-          'userId': userId,
-          'currency': currency,
+          'pk': userId,
+          'wallet_currency': currency,
+          'wallet_name': name,
         };
         // arrange
         when(() => mockHTTPClientImpl!.put(constants.walletURL,
                 body: jsonEncode(contentBody), headers: constants.headers))
             .thenAnswer((_) async => addWalletAsJSON);
         // act
-        await dataSource.add(userId: userId, currency: currency);
+        await dataSource.add(userId: userId, currency: currency, name: name);
         // assert
         verify(() => mockHTTPClientImpl!.put(constants.walletURL,
             body: jsonEncode(contentBody), headers: constants.headers));

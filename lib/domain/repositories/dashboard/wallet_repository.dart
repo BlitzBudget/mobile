@@ -9,7 +9,9 @@ abstract class WalletRepository {
       required String? defaultWallet,
       required String? userId});
   Future<Either<Failure, void>> add(
-      {required String? userId, required String? currency});
+      {required String? userId,
+      required String? currency,
+      required String? name});
   Future<Either<Failure, void>> update(Wallet updateWallet);
   Future<Either<Failure, void>> delete(
       {required String walletId, required String? userId});

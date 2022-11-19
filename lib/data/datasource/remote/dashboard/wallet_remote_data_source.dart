@@ -18,7 +18,10 @@ abstract class WalletRemoteDataSource {
 
   Future<void> delete({required String walletId, required String? userId});
 
-  Future<void> add({required String? userId, required String? currency});
+  Future<void> add(
+      {required String? userId,
+      required String? currency,
+      required String? name});
 }
 
 class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
@@ -84,11 +87,15 @@ class WalletRemoteDataSourceImpl implements WalletRemoteDataSource {
 
   /// Add Wallet
   @override
-  Future<void> add({required String? userId, required String? currency}) {
+  Future<void> add(
+      {required String? userId,
+      required String? currency,
+      required String? name}) {
     // JSON for Get budget [_jsonForAddWallet]
     final _jsonForAddWallet = <String, dynamic>{
-      'userId': userId,
-      'currency': currency,
+      'pk': userId,
+      'wallet_currency': currency,
+      'wallet_name': name,
     };
 
     return httpClient!

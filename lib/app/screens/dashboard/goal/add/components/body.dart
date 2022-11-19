@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_blitzbudget/app/constants/constants.dart';
-import 'package:mobile_blitzbudget/app/ploc/dashboard/transaction/transaction_bloc.dart';
+import 'package:mobile_blitzbudget/app/ploc/dashboard/goal/goal_bloc.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/components/rounded_input_field.dart';
 import 'package:mobile_blitzbudget/app/screens/authentication/forgot-password/components/background.dart';
 import 'package:mobile_blitzbudget/app/widgets/linear_loading_indicator.dart';
@@ -22,27 +22,31 @@ class _BodyState extends State<Body> {
   bool _btnEnabled = true;
 
   TextEditingController? controller;
-  String? description;
-  double amount = 0;
-  final login = 'Add Transaction';
-  final amountText = 'Amount';
-  final descriptionText = 'Description';
-  String continueButton = 'Add Transactions';
+  double currentAmount = 0;
+  double targetAmount = 0;
+  String? targetDate;
+  String? goalName;
+
+  final login = 'Add Goal';
+  final currentAmountText = 'Current Amount';
+  final targetAmountText = 'Target Amount';
+  final targetDateText = 'Target Date';
+  final goalNameText = 'Goal Name';
+  String continueButton = 'Add Goals';
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return BlocConsumer<TransactionBloc, TransactionState>(
-        listener: (context, state) {
-      debugPrint('The Transaction listener has been called');
-      continueButton = 'Add Transactions';
+    return BlocConsumer<GoalBloc, GoalState>(listener: (context, state) {
+      debugPrint('The Goal listener has been called');
+      continueButton = 'Add Goals';
       _btnEnabled = true;
 
       if (state is Success) {
         Navigator.pushNamed(context, dashboardRoute);
       } else if (state is Error) {
         // TODO Print error
-        debugPrint('The Transaction encountered an error ${state.message}');
+        debugPrint('The Goal encountered an error ${state.message}');
       } else if (state is Loading) {
         continueButton = 'Loading';
         _btnEnabled = false;
@@ -65,24 +69,38 @@ class _BodyState extends State<Body> {
               ),
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
-                  hintText: descriptionText,
+                  hintText: currentAmountText,
+                  textInputType: TextInputType.number,
                   onChanged: (value) {
-                    description = value;
+                    currentAmount = double.parse(value);
                   },
                   autofocus: true),
               RoundedInputField(
-                  hintText: amountText,
-                  textInputType: TextInputType.number,
-                  onChanged: (value) {
-                    amount = double.parse(value);
-                  },
-                  autofocus: true),
+                hintText: targetAmountText,
+                textInputType: TextInputType.number,
+                onChanged: (value) {
+                  targetAmount = double.parse(value);
+                },
+              ),
+              RoundedInputField(
+                hintText: targetDateText,
+                textInputType: TextInputType.datetime,
+                onChanged: (value) {
+                  targetDate = value;
+                },
+              ),
+              RoundedInputField(
+                hintText: goalNameText,
+                onChanged: (value) {
+                  goalName = value;
+                },
+              ),
               RoundedButton(
                 text: continueButton,
 
                 /// Disable press if button is disabled
                 press: () async {
-                  _dispatchAddTransaction();
+                  _dispatchAddGoal();
                 },
                 enabled: _btnEnabled,
               ),
@@ -94,8 +112,11 @@ class _BodyState extends State<Body> {
     });
   }
 
-  void _dispatchAddTransaction() {
-    BlocProvider.of<TransactionBloc>(context)
-        .add(Add(amount: amount, description: description));
+  void _dispatchAddGoal() {
+    BlocProvider.of<GoalBloc>(context).add(Add(
+        currentAmount: currentAmount,
+        targetAmount: targetAmount,
+        targetDate: targetDate,
+        goalName: goalName));
   }
 }
