@@ -29,26 +29,17 @@ abstract class GoalEvent extends Equatable {
 }
 
 class Add extends GoalEvent {
-  const Add(
-      {required final String? walletId,
-      required final String? goalId,
-      required final double? currentAmount,
-      required final double? targetAmount,
-      required final String? targetDate,
-      required final String? goalName,
-      required final bool? goalAchieved,
-      required final String? creationDate,
-      required final String? updateDate})
-      : super(
-            walletId: walletId,
-            goalId: goalId,
-            targetAmount: targetAmount,
-            targetDate: targetDate,
-            currentAmount: currentAmount,
-            goalName: goalName,
-            goalAchieved: goalAchieved,
-            creationDate: creationDate,
-            updateDate: updateDate);
+  const Add({
+    required final double? currentAmount,
+    required final double? targetAmount,
+    required final String? targetDate,
+    required final String? goalName,
+  }) : super(
+          targetAmount: targetAmount,
+          targetDate: targetDate,
+          currentAmount: currentAmount,
+          goalName: goalName,
+        );
 }
 
 class Update extends GoalEvent {
